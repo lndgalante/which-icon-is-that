@@ -6,6 +6,7 @@
 
 🔎 Find your icon name and icon pack only by dragging and dropping your SVG
 📦 All popular icon packs supported (i.e feather icons, font awesome)
+🆕 Icon packs always updated with the latest versions
 📎 Code snippets to import the icon library for your framework (i.e react-icons)
 ✨ Delightful experience + damn fast!
 
