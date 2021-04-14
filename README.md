@@ -1,6 +1,13 @@
-# WhichIconIsThat
+<div align="center">
+  <h1>WhichIconIsThat</h1>
+</div>
 
-> Tired of finding which icon is that?
+## Features
+
+🔎 Find your icon name and icon pack only by dragging and dropping your SVG
+📦 All popular icon packs supported (i.e feather icons, font awesome)
+📎 Code snippets to import the icon library for your framework (i.e react-icons)
+✨ Delightful experience + damn fast!
 
 ## Development
 
@@ -15,21 +22,6 @@ Server-side
 ```bash
 deno run --allow-read --allow-net ../server/app.ts
 ```
-
-## Features
-
-- 🔎 Find your icon name and icon pack only by dragging and dropping your SVG
-- 📦 All popular icon packs supported (i.e feather icons, font awesome)
-- 📎 Code snippets to import the icon library for your framework (i.e react-icons)
-- ✨ Delightful experience + damn fast!
-
-## Services
-
-- Vercel
-- Upstash
-- Plausible
-- Deno Deploy
-- FeedbackFish
 
 ## Roadmap
 
@@ -91,3 +83,11 @@ Release date: Monday 3, May
 - [ ] Backend and Frontend external code review
 
 * [ ] Publish in ProductHunt
+
+## Services
+
+- Vercel
+- Upstash
+- Plausible
+- Deno Deploy
+- FeedbackFish
