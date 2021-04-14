@@ -85,6 +85,8 @@ Release date: Monday 3, May
 
 * [ ] Publish in ProductHunt
 
+- [ ] Publish in developer/design/utilities list
+
 ## Services
 
 - Vercel
