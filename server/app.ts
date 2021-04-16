@@ -1,28 +1,13 @@
 import { Application, Router } from 'https://deno.land/x/oak/mod.ts';
 
 // helpers
-import { createSvgMap } from './helpers.ts';
+import { preloadData } from './preload.ts';
+import { connectToRedis } from './redis.ts';
+import { getIconLink, getIconPackWebsite } from './icons.ts';
 
-// types
-type PacksNames = keyof typeof ICONS_LINKS;
-
-// constants
-const svgs = await createSvgMap();
-
-const ICONS_LINKS = {
-  feather: 'https://feathericons.com',
-  bootstrap: 'https://icons.getbootstrap.com',
-};
-
-function getIconLink(iconPack: PacksNames, iconName: string) {
-  const links = {
-    feather: (iconName: string) => `https://feathericons.com/?query=${iconName}`,
-    bootstrap: (iconName: string) => `https://icons.getbootstrap.com/icons/${iconName}`,
-  };
-  const getIconPackLink = links[iconPack];
-
-  return getIconPackLink(iconName);
-}
+// initial data
+const redis = await connectToRedis();
+await preloadData(redis);
 
 // server
 const app = new Application();
@@ -39,18 +24,26 @@ router.post('/icon', async ({ request, response }) => {
     return;
   }
 
-  const isFound = svgs.has(hash);
+  try {
+    const svgJson = await redis.get(hash);
+    const isFound = typeof svgJson !== 'undefined';
 
-  if (isFound) {
-    const svg = svgs.get(hash);
-    const pack = ICONS_LINKS[svg.pack as PacksNames];
-    const icon = getIconLink(svg.pack, svg.name);
-    const links = { pack, icon };
+    if (isFound) {
+      const svg = JSON.parse(svgJson);
+      const { pack: iconPackName, name: iconName } = svg;
 
-    response.status = 200;
-    response.body = { success: true, data: { svg, links } };
-  } else {
-    response.status = 400;
+      const pack = getIconPackWebsite(iconPackName);
+      const icon = getIconLink(iconPackName, iconName);
+      const links = { pack, icon };
+
+      response.status = 200;
+      response.body = { success: true, data: { svg, links } };
+    } else {
+      response.status = 404;
+      response.body = { success: false };
+    }
+  } catch (error) {
+    response.status = 500;
     response.body = { success: false };
   }
 });
