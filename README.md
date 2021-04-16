@@ -21,7 +21,7 @@ cd client/ && yarn dev
 Server-side
 
 ```bash
-deno run --allow-read --allow-net ../server/app.ts
+deno run --unstable --allow-read --allow-write --allow-net app.ts
 ```
 
 ## Roadmap
@@ -51,11 +51,13 @@ Release date: Monday 3, May
   - [ ] Weather Icons
   - [ ] css.gg
 
+- [ ] Remove svg parent tag to have more probabilities to find a icon
+
 * [ ] Refactorize to download icons instead of having them locally
-  1. Download icons
-  2. Save it to upstash
-  3. Run it in a cron each day
-  4. Endpoint reads from upstash redis
+      [x] Download icons
+      [x] Save it to upstash
+      [ ] Run it in a cron each day
+      [ ] Endpoint reads from upstash redis
 
 - [ ] Try Preactjs on Next.js build
 
