@@ -1,7 +1,7 @@
 import { Application, Router } from 'https://deno.land/x/oak/mod.ts';
 
 // helpers
-import { preloadData } from './preload.ts';
+// import { preloadData } from './preload.ts';
 import { connectToRedis } from './redis.ts';
 import { getIconLink, getIconPackWebsite, getIconSource } from './icons.ts';
 
