@@ -33,6 +33,17 @@ const ICONS_LIST = [
   { packName: 'feather', owner: 'feathericons', repo: 'feather' },
 ];
 
+export function getIconSource(iconPack: PacksNames, iconFileName: string) {
+  const links = {
+    feather: (iconFileName: string) => `https://github.com/feathericons/feather/blob/master/icons/${iconFileName}`,
+    bootstrap: (iconFileName: string) => `https://github.com/twbs/icons/blob/main/icons/${iconFileName}`,
+  };
+  const getIconSourceLinkFn = links[iconPack];
+  const iconSourceLink = getIconSourceLinkFn(iconFileName);
+
+  return iconSourceLink;
+}
+
 export function getIconLink(iconPack: PacksNames, iconName: string) {
   const links = {
     feather: (iconName: string) => `${ICONS_LINKS.feather}/?query=${iconName}`,

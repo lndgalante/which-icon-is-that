@@ -3,11 +3,11 @@ import { Application, Router } from 'https://deno.land/x/oak/mod.ts';
 // helpers
 import { preloadData } from './preload.ts';
 import { connectToRedis } from './redis.ts';
-import { getIconLink, getIconPackWebsite } from './icons.ts';
+import { getIconLink, getIconPackWebsite, getIconSource } from './icons.ts';
 
 // initial data
 const redis = await connectToRedis();
-await preloadData(redis);
+// await preloadData(redis);
 
 // server
 const app = new Application();
@@ -29,12 +29,13 @@ router.post('/icon', async ({ request, response }) => {
     const isFound = typeof svgJson !== 'undefined';
 
     if (isFound) {
-      const svg = JSON.parse(svgJson);
-      const { pack: iconPackName, name: iconName } = svg;
+      const svg = JSON.parse(svgJson as string);
+      const { pack: iconPackName, name: iconName, fileName: iconFileName } = svg;
 
       const pack = getIconPackWebsite(iconPackName);
       const icon = getIconLink(iconPackName, iconName);
-      const links = { pack, icon };
+      const source = getIconSource(iconPackName, iconFileName);
+      const links = { pack, icon, source };
 
       response.status = 200;
       response.body = { success: true, data: { svg, links } };
