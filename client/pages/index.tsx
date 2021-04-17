@@ -1,5 +1,4 @@
 import Head from 'next/head';
-import { md5 } from 'pure-md5';
 import Lottie from 'react-lottie';
 import { FaGithubAlt } from 'react-icons/fa';
 import { useDropzone } from 'react-dropzone';
@@ -20,38 +19,28 @@ import {
   Icon,
 } from '@chakra-ui/react';
 
+// lib
+import { api } from 'lib/api';
+import { FoundIcon } from 'lib/types';
+import { lottieOptions } from 'lib/lottie';
+import { createHash, delay } from 'lib/helpers';
+
 // components
 import { ICONS_LOGOS } from 'components/icons';
-
-// assets
-import * as animationData from 'assets/loading.json';
-
-// helpers
-const createHash = (value: string): string => md5(value.replace(/\s/g, ''));
-
-const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
-
-// constants
-const API_URL = process.env.NEXT_PUBLIC_API_URL;
-
-const lottieOptions = {
-  loop: true,
-  autoplay: true,
-  animationData: animationData,
-  rendererSettings: { preserveAspectRatio: 'xMidYMid slice' },
-};
 
 export default function Home() {
   // chakra hooks
   const toast = useToast();
 
   // react hooks
-  const [foundIcon, setFoundIcon] = useState(null);
+  const [foundIcon, setFoundIcon] = useState<FoundIcon | null>(null);
   const [status, setStatus] = useState<'idle' | 'pending' | 'rejected'>('idle');
 
   // effects
   useEffect(() => {
-    if (foundIcon?.success === false) {
+    const iconNotFound = foundIcon?.success === false;
+
+    if (iconNotFound) {
       toast({ title: `We couldn't find your icon`, status: 'error' });
     }
   }, [foundIcon]);
@@ -72,10 +61,9 @@ export default function Home() {
       setFoundIcon(null);
       setStatus('pending');
 
-      const response = await fetch(`${API_URL}/icon`, { method: 'POST', body: JSON.stringify({ hash }) });
-      const data = await response.json();
-
+      const data = await api.getIconData(hash);
       await delay(800);
+
       setFoundIcon(data);
     } catch {
       setStatus('rejected');
