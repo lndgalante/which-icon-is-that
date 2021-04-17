@@ -1,14 +1,11 @@
-import { config } from 'https://deno.land/x/dotenv/mod.ts';
 import { connect, Redis } from 'https://deno.land/x/redis/mod.ts';
-
-const { REDIS_HOSTNAME, REDIS_PASSWORD, REDIS_PORT } = config();
 
 export async function connectToRedis() {
   const redis: Redis = await connect({
-    hostname: REDIS_HOSTNAME,
-    password: REDIS_PASSWORD,
-    port: REDIS_PORT,
     tls: true,
+    port: Deno.env.get('REDIS_PORT') as string,
+    hostname: Deno.env.get('REDIS_HOSTNAME') as string,
+    password: Deno.env.get('REDIS_PASSWORD') as string,
   });
 
   return redis;

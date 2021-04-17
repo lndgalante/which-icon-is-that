@@ -1,3 +1,4 @@
+import 'https://deno.land/x/dotenv/load.ts';
 import { Application, Router } from 'https://deno.land/x/oak/mod.ts';
 
 // helpers
