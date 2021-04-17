@@ -1,81 +1,25 @@
-import Head from 'next/head';
-import Lottie from 'react-lottie';
-import { FaGithubAlt } from 'react-icons/fa';
+import { useRouter } from 'next/router';
 import { useDropzone } from 'react-dropzone';
-import { Fragment, useState, useEffect } from 'react';
-import {
-  Tag,
-  Text,
-  Input,
-  Stack,
-  Center,
-  HStack,
-  Tooltip,
-  TagLabel,
-  SlideFade,
-  Link,
-  TagRightIcon,
-  useToast,
-  Icon,
-} from '@chakra-ui/react';
+import { Text, Input, Stack, Center, useToast } from '@chakra-ui/react';
 
 // lib
-import { api } from 'lib/api';
-import { FoundIcon } from 'lib/types';
-import { lottieOptions } from 'lib/lottie';
-import { createHash, delay } from 'lib/helpers';
+import { createHash } from '@lib/hash';
 
 // components
-import { ICONS_LOGOS } from 'components/icons';
+import { Main } from 'components/Main';
 
 export default function Home() {
   // chakra hooks
   const toast = useToast();
 
-  // react hooks
-  const [foundIcon, setFoundIcon] = useState<FoundIcon | null>(null);
-  const [status, setStatus] = useState<'idle' | 'pending' | 'rejected'>('idle');
+  // next hooks
+  const router = useRouter();
 
-  // effects
-  useEffect(() => {
-    const iconNotFound = foundIcon?.success === false;
-
-    if (iconNotFound) {
-      toast({ title: `We couldn't find your icon`, status: 'error' });
-    }
-  }, [foundIcon]);
-
-  useEffect(() => {
-    const isError = status === 'rejected';
-
-    if (isError) {
-      toast({ title: `Ups! Something happened, please try again`, status: 'error' });
-    }
-  }, [status]);
-
-  // helpers
-  async function fetchIcon(svg: string) {
-    try {
-      const hash = createHash(svg);
-
-      setFoundIcon(null);
-      setStatus('pending');
-
-      const data = await api.getIconData(hash);
-      await delay(800);
-
-      setFoundIcon(data);
-    } catch {
-      setStatus('rejected');
-    } finally {
-      setStatus('idle');
-    }
-  }
+  // dropzone hooks
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 
   // handlers
-  function onDrop(acceptedFiles) {
-    const [file] = acceptedFiles;
-
+  function onDrop([file]) {
     if (file.type !== 'image/svg+xml') {
       return toast({ title: `Only SVG files are supported`, status: 'error' });
     }
@@ -84,29 +28,13 @@ export default function Home() {
 
     reader.onabort = () => toast({ title: 'File reading was aborted', status: 'warning' });
     reader.onerror = () => toast({ title: 'File reading has failed', status: 'error' });
-    reader.onload = () => fetchIcon(reader.result as string);
+    reader.onload = () => router.push(`/${createHash(reader.result as string)}`, undefined, { shallow: true });
 
     reader.readAsText(file);
   }
 
-  // dropzone hooks
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
-
-  // constants
-  const isLoading = status === 'pending';
-
   return (
-    <Center
-      as='main'
-      height='100vh'
-      flexDirection='column'
-      bgGradient='linear-gradient(to top, #fdcbf1 0%, #fdcbf1 1%, #e6dee9 100%)'
-    >
-      <Head>
-        <title>Which Icon Is That</title>
-        <link rel='icon' href='/favicon.ico' />
-      </Head>
-
+    <Main>
       <Stack width={320}>
         <Center
           {...getRootProps()}
@@ -128,51 +56,12 @@ export default function Home() {
           _hover={{ boxShadow: 'lg', transform: 'scale(1.025)' }}
           _focus={{ boxShadow: 'lg', transform: 'scale(1.025)', outline: 'none' }}
         >
+          {/* @ts-expect-error */}
           <Input {...getInputProps()} />
 
-          {isLoading ? (
-            <Fragment>
-              <Text fontSize='sm'>Uploading and detecting your icon pack</Text>
-              <Stack position='absolute' bottom={1.5} right={3} opacity={0.6}>
-                <Lottie options={lottieOptions} height={24} width={24} isStopped={!isLoading} />
-              </Stack>
-            </Fragment>
-          ) : (
-            <Text fontSize='sm'>Click or drag your SVG to this area</Text>
-          )}
+          <Text fontSize='sm'>Click or drag your SVG to this area</Text>
         </Center>
-
-        <SlideFade in={foundIcon?.success} offsetY='10px'>
-          <HStack height={34}>
-            <Tooltip label={foundIcon?.data?.svg?.fileName} aria-label={`${foundIcon?.data?.svg?.name} icon file name`}>
-              <Link href={foundIcon?.data?.links?.icon} isExternal>
-                <Tag size='lg' borderRadius='full' colorScheme='blackAlpha' fontSize='sm' maxWidth={122}>
-                  <TagLabel mr={1.5}>{foundIcon?.data?.svg?.name}</TagLabel>
-                  <TagRightIcon as={() => <div dangerouslySetInnerHTML={{ __html: foundIcon?.data?.svg?.svg }} />} />
-                </Tag>
-              </Link>
-            </Tooltip>
-
-            <Tooltip label='Icon pack' aria-label={`Icon pack`}>
-              <Link href={foundIcon?.data?.links?.pack} isExternal>
-                <Tag size='lg' borderRadius='full' fontSize='sm' colorScheme='blackAlpha'>
-                  <TagLabel mr={1.5}>{foundIcon?.data?.svg?.pack}</TagLabel>
-                  <TagRightIcon maxW={4} as={ICONS_LOGOS[foundIcon?.data?.svg?.pack]} />
-                </Tag>
-              </Link>
-            </Tooltip>
-
-            <Tooltip label='Source code' aria-label={`Source code`}>
-              <Link href={foundIcon?.data?.links?.source} isExternal>
-                <Tag size='lg' borderRadius='full' fontSize='sm' colorScheme='blackAlpha'>
-                  <TagLabel mr={1.5}>{foundIcon?.data?.svg?.bytes}</TagLabel>
-                  <TagRightIcon as={() => <Icon as={FaGithubAlt} w={5} h={5} />} />
-                </Tag>
-              </Link>
-            </Tooltip>
-          </HStack>
-        </SlideFade>
       </Stack>
-    </Center>
+    </Main>
   );
 }
