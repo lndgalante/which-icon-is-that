@@ -1,3 +1,4 @@
+import 'https://deno.land/x/dotenv/load.ts';
 import { connect, Redis } from 'https://deno.land/x/redis/mod.ts';
 
 export async function connectToRedis() {
