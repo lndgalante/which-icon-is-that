@@ -5,9 +5,13 @@
 ## Features
 
 🔎 Find your icon name and icon pack only by dragging and dropping your SVG
+
 📦 All popular icon packs supported (i.e feather icons, font awesome)
+
 🆕 Icon packs always updated with the latest versions
+
 📎 Code snippets to import the icon library for your framework (i.e react-icons)
+
 ✨ Delightful experience + damn fast!
 
 ## Development
@@ -53,45 +57,47 @@ Release date: Monday 3, May
 
 - [ ] Remove svg parent tag to have more probabilities to find a icon
 
-* [ ] Refactorize to download icons instead of having them locally
+* [x] Refactorize to download icons instead of having them locally
       [x] Download icons
       [x] Save it to upstash
-      [ ] Run it in a cron each day
-      [ ] Endpoint reads from upstash redis
+      [x] Endpoint reads from upstash redis
 
-- [ ] Try Preactjs on Next.js build
+- [ ] Run preloadData fn on a cron each day
 
-* [ ] Improve and share types and helpers between client/server
+* [ ] Try Preactjs on Next.js build
 
-- [ ] Add bottom icon to open footer with Slide transition
+- [ ] Improve and share types and helpers between client/server
+
+* [ ] Add bottom icon to open footer with Slide transition
   - [ ] Display supported icons
   - [ ] Display GitHub / Twitter
   - [ ] Add FeedbackFish
   - [ ] Display code snippets for react/angular/vue-icons
 
-* [ ] Add Plausible analytics
+- [ ] Add Plausible analytics
 
-- [ ] Reach 100/100 in Audits
+* [ ] Reach 100/100 in Audits
 
-* [ ] Buy whichiconisthat.com in NameCheap
+- [ ] Buy whichiconisthat.com in NameCheap
 
-- [ ] Deploy client to Vercel
+* [ ] Deploy client to Vercel
 
-* [ ] Deploy server to Deno deploy
+- [ ] Deploy server to Deno deploy
 
-- [ ] UI/UX/Writing review
+* [ ] UI/UX/Writing review
 
-* [ ] Beta testers list + exclusive list
+- [ ] Beta testers list + exclusive list
 
-- [ ] Backend and Frontend external code review
+* [ ] Backend and Frontend external code review
 
-* [ ] Publish in ProductHunt
+- [ ] Publish in ProductHunt
 
-- [ ] Publish in developer/design/utilities list
+* [ ] Publish in developer/design/utilities list
 
 ## Services
 
 - Vercel
+- Deno deploy
 - Upstash
 - Plausible
 - Deno Deploy
