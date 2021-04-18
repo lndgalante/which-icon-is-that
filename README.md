@@ -19,13 +19,13 @@
 Client-side
 
 ```bash
-cd client/ && yarn dev
+cd client/ && yarn && yarn dev
 ```
 
 Server-side
 
 ```bash
-deno run --unstable --allow-read --allow-write --allow-net app.ts
+deno run --unstable --allow-env --allow-read --allow-write --allow-net ./server/app.ts
 ```
 
 ## Roadmap
