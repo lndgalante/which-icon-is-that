@@ -1,5 +1,5 @@
 <div align="center">
-  <h1>WhichIconIsThat</h1>
+  <h1>Which Icon Is That? 🤔</h1>
 </div>
 
 ## Features
@@ -78,11 +78,11 @@ Release date: Monday 3, May
 
 * [ ] Reach 100/100 in Audits
 
-- [ ] Buy whichiconisthat.com in NameCheap
+- [x] Buy whichiconisthat.com in NameCheap
 
-* [ ] Deploy client to Vercel
+* [x] Deploy client to Vercel
 
-- [ ] Deploy server to Deno deploy
+- [x] Deploy server to Deno deploy
 
 * [ ] UI/UX/Writing review
 
