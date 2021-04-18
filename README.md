@@ -96,10 +96,11 @@ Release date: Monday 3, May
 
 * [x] Deploy server to Deno deploy
 
-## Services
+## Built using
 
-- Vercel for client deployment
-- Heroku for server deployment
-- Upstash for serverless redis
-- Plausible for analytics
-- FeedbackFish for feedback
+- [Next.js](https://nextjs.org) and [Deno](https://deno.land)
+- [Vercel](https://vercel.com) for client deployment
+- [Heroku](https://www.heroku.com) for server deployment
+- [Upstash](https://upstash.com) for serverless redis
+- [Plausible](https://plausible.io) for analytics
+- [FeedbackFish](https://feedback.fish) for feedback
