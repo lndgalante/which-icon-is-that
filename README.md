@@ -55,15 +55,9 @@ Release date: Monday 3, May
   - [ ] Weather Icons
   - [ ] css.gg
 
-* [ ] Add bottom icon to open footer with Slide transition
-  - [ ] Display supported icons
-  - [ ] Display GitHub / Twitter
-  - [ ] Add FeedbackFish
-  - [ ] Display code snippets for react/angular/vue-icons
-
 - [ ] Remove svg parent tag to have more probabilities to find a icon
 
-* [ ] Run preloadData fn on a cron each day
+* [ ] Run preloadData fn on a cron every week
 
 - [ ] Improve and share types and helpers between client/server
 
@@ -96,6 +90,11 @@ Release date: Monday 3, May
 
 - [x] Deploy server to Deno deploy
 
+* [x] Add bottom icon to open footer with Slide transition
+  - [x] Display supported icons
+  - [x] Display GitHub / Twitter
+  - [x] Display code snippets for react/angular/vue-icons
+
 ## Built using
 
 - [Next.js](https://nextjs.org) and [Deno](https://deno.land)
@@ -103,4 +102,3 @@ Release date: Monday 3, May
 - [Heroku](https://www.heroku.com) for server deployment
 - [Upstash](https://upstash.com) for serverless redis
 - [Plausible](https://plausible.io) for analytics
-- [FeedbackFish](https://feedback.fish) for feedback
