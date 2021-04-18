@@ -5,7 +5,7 @@ import { ChakraProvider } from '@chakra-ui/react';
 
 const meta = {
   image: '/dps.png',
-  title: 'Which Icon Is That',
+  title: 'Which Icon Is That?!',
   description: 'Find your icon name and pack easily from your SVG',
 };
 
@@ -25,7 +25,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
           <meta name='twitter:title' content={meta.title} />
           <meta name='twitter:description' content={meta.description} />
           <meta name='twitter:image' content={meta.image} />
-          <title>Which Icon Is That</title>
+          <title>{meta.title}</title>
           <link rel='icon' href='/favicon.ico' />
         </Head>
         <Component {...pageProps} />
