@@ -26,7 +26,7 @@ import {
 import * as Fi from 'react-icons/fi';
 import * as Bs from 'react-icons/bs';
 import { FaGithubAlt } from 'react-icons/fa';
-import { FiCode, FiArrowLeft, FiClipboard } from 'react-icons/fi';
+import { FiCode, FiArrowLeft, FiClipboard, FiChevronDown } from 'react-icons/fi';
 
 // lib
 import { api } from 'lib/api';
@@ -67,29 +67,47 @@ const featherIcons = Object.keys(Fi);
 const bootstrapIcons = Object.keys(Bs);
 
 const reactIconsPacks = {
-  feather: featherIcons,
-  bootstrap: bootstrapIcons,
+  feather: parseReactIconsNames(featherIcons),
+  bootstrap: parseReactIconsNames(bootstrapIcons),
 };
 
 // helpers
-const findReactIcon = (iconName: string, iconPackName: string) => {
+function parseReactIconsNames(icons: string[]) {
+  return icons.map((icon) => {
+    const parsed = icon
+      .replace(/^.{2}/i, '')
+      .replace(/[A-Z]/g, (match) => `-${match}`)
+      .replace('-', '')
+      .toLowerCase();
+
+    return { original: icon, parsed };
+  });
+}
+
+function getReactIcon(iconName: string, iconPackName: string) {
   const iconPack = reactIconsPacks[iconPackName];
-  return iconPack.find((icon) => icon.toLowerCase().includes(iconName));
-};
+  return iconPack.reverse().find(({ parsed }) => parsed === iconName);
+}
+
+function generateReactIconsCodeSnippet(iconName: string, packId: string) {
+  return `import { ${iconName} } from react-icons/${packId}`;
+}
 
 export default function IconPage(props: InferGetStaticPropsType<typeof getStaticProps>) {
   // constants
   const data = props?.data;
   const success = props?.success;
 
-  const reactIconName = data ? findReactIcon(data?.svg?.iconName, data?.svg?.packName) : '';
-  const code = `import { ${reactIconName} } from react-icons/${data?.svg?.packId}`;
+  const reactIconName = data ? getReactIcon(data?.svg?.iconName, data?.svg?.packName) : '';
+  const codeSnippet = reactIconName
+    ? generateReactIconsCodeSnippet(reactIconName?.original, data?.svg?.packId)
+    : '// Import not found';
 
   // react hooks
   const [selectedIconLibrary, setSelectedIconLibrary] = useState('react-icons');
 
   // chakra hooks
-  const { onCopy } = useClipboard(code);
+  const { onCopy } = useClipboard(codeSnippet);
   const { isOpen, onToggle } = useDisclosure();
 
   // handlers
@@ -141,7 +159,7 @@ export default function IconPage(props: InferGetStaticPropsType<typeof getStatic
             </MotionLink>
           </Tooltip>
 
-          <Tooltip label='Snippets' aria-label='Snippets'>
+          <Tooltip label='Open snippets' aria-label='Open snippets'>
             <Tag
               onClick={onToggle}
               cursor='pointer'
@@ -160,24 +178,45 @@ export default function IconPage(props: InferGetStaticPropsType<typeof getStatic
       {success === false && <Text mr={1}>Sorry, we couldn't find your icon</Text>}
 
       {success === true && (
-        <Slide direction='bottom' in={isOpen}>
-          <Stack alignItems='flex-start' px={6} py={6} color='white' background='rgba( 0, 0, 0, 0.7 )' spacing={4}>
+        <Slide direction='bottom' in={isOpen} style={{ zIndex: 10 }}>
+          <Stack
+            alignItems='flex-start'
+            px={6}
+            pt={4}
+            pb={12}
+            color='white'
+            background='blackAlpha.900'
+            position='relative'
+            spacing={5}
+          >
+            <IconButton
+              onClick={onToggle}
+              size='md'
+              variant='ghost'
+              colorScheme='whiteAlpha'
+              aria-label='Close snippets'
+              position='absolute'
+              top={2}
+              right={3}
+              icon={<FiChevronDown />}
+            />
+
             <Stack>
               <Text fontWeight='medium'>Pick your icon library</Text>
-              <Select size='sm' value={selectedIconLibrary} onChange={handleIconLibraryChange}>
+              <Select size='md' value={selectedIconLibrary} onChange={handleIconLibraryChange}>
                 <option value='react-icons'>react-icons</option>
               </Select>
             </Stack>
 
             <Stack>
               <Text fontWeight='medium'>Code snippet</Text>
-              <Highlight {...defaultProps} theme={PrismTheme} code={code.trim()} language='jsx'>
+              <Highlight {...defaultProps} theme={PrismTheme} code={codeSnippet} language='jsx'>
                 {({ className, style, tokens, getLineProps, getTokenProps }) => (
                   <HStack
                     as='pre'
-                    spacing={6}
+                    spacing={4}
                     className={`${className} code`}
-                    style={{ ...style, padding: '4px 12px', borderRadius: '4px' }}
+                    style={{ ...style, padding: '4px 16px', borderRadius: '6px' }}
                   >
                     {tokens.map((line, i) => (
                       <div {...getLineProps({ line, key: i })}>
