@@ -1,8 +1,9 @@
 import Redis from 'ioredis';
 import { FiSearch } from 'react-icons/fi';
 import { FaGithubAlt } from 'react-icons/fa';
+import { motion, isValidMotionProp } from 'framer-motion';
 import { InferGetStaticPropsType, GetStaticPaths } from 'next';
-import { Tag, Link, Icon, Text, HStack, Tooltip, TagLabel, TagRightIcon } from '@chakra-ui/react';
+import { Tag, Link, Icon, Text, HStack, Tooltip, TagLabel, TagRightIcon, forwardRef } from '@chakra-ui/react';
 
 // lib
 import { api } from 'lib/api';
@@ -13,63 +14,96 @@ import { Main } from 'components/Main';
 import { ICONS_LOGOS } from 'components/icons';
 import { NextChakraLink } from 'components/NextChakraLink';
 
+// framer motion
+const MotionHStack = motion(
+  forwardRef((props, ref) => {
+    const chakraProps = Object.fromEntries(Object.entries(props).filter(([key]) => !isValidMotionProp(key)));
+    return <HStack ref={ref} {...chakraProps} />;
+  }),
+);
+
+const MotionLink = motion(
+  forwardRef((props, ref) => {
+    const chakraProps = Object.fromEntries(Object.entries(props).filter(([key]) => !isValidMotionProp(key)));
+    return <Link ref={ref} {...chakraProps} />;
+  }),
+);
+
+const MotionChakraLink = motion(
+  forwardRef((props, ref) => {
+    const chakraProps = Object.fromEntries(Object.entries(props).filter(([key]) => !isValidMotionProp(key)));
+    // @ts-expect-error
+    return <NextChakraLink ref={ref} {...chakraProps} />;
+  }),
+);
+
+const container = {
+  hidden: { opacity: 0 },
+  show: { opacity: 1, transition: { staggerChildren: 0.5 } },
+};
+
+const item = {
+  hidden: { opacity: 0 },
+  show: { opacity: 1 },
+};
+
 export default function IconPage(props: InferGetStaticPropsType<typeof getStaticProps>) {
-  // constats
+  // constants
   const data = props?.data;
   const success = props?.success;
 
   return (
     <Main>
       {success === true && (
-        <HStack minWidth={34} mb={4}>
+        <MotionHStack minWidth={34} mb={4} variants={container} initial='hidden' animate='show'>
           <Tooltip label={data?.svg?.fileName} aria-label={`${data?.svg?.name} icon file name`}>
-            <Link href={data?.links?.icon} isExternal>
-              <Tag size='lg' borderRadius='full' colorScheme='blackAlpha' fontSize='sm' maxWidth={122}>
+            <MotionLink href={data?.links?.icon} isExternal>
+              <Tag size='lg' borderRadius='full' fontSize='sm' colorScheme='blackAlpha' variants={item}>
                 <TagLabel mr={1.5}>{data?.svg?.name}</TagLabel>
                 <TagRightIcon as={() => <div dangerouslySetInnerHTML={{ __html: data?.svg?.svg }} />} />
               </Tag>
-            </Link>
+            </MotionLink>
           </Tooltip>
 
-          <Tooltip label='Icon pack' aria-label={`Icon pack`}>
-            <Link href={data?.links?.pack} isExternal>
-              <Tag size='lg' borderRadius='full' fontSize='sm' colorScheme='blackAlpha'>
+          <Tooltip label='Icon pack' aria-label='Icon pack'>
+            <MotionLink href={data?.links?.pack} isExternal>
+              <Tag size='lg' borderRadius='full' fontSize='sm' colorScheme='blackAlpha' variants={item}>
                 <TagLabel mr={1.5}>{data?.svg?.pack}</TagLabel>
                 <TagRightIcon maxW={4} as={ICONS_LOGOS[data?.svg?.pack]} />
               </Tag>
-            </Link>
+            </MotionLink>
           </Tooltip>
 
-          <Tooltip label='Source code' aria-label={`Source code`}>
-            <Link href={data?.links?.source} isExternal>
-              <Tag size='lg' borderRadius='full' fontSize='sm' colorScheme='blackAlpha'>
+          <Tooltip label='Source code' aria-label='Source code'>
+            <MotionLink href={data?.links?.source} isExternal>
+              <Tag size='lg' borderRadius='full' fontSize='sm' colorScheme='blackAlpha' variants={item}>
                 <TagLabel mr={1.5}>{data?.svg?.bytes}</TagLabel>
                 <TagRightIcon as={() => <Icon as={FaGithubAlt} w={5} h={5} />} />
               </Tag>
-            </Link>
+            </MotionLink>
           </Tooltip>
 
           <NextChakraLink href='/'>
-            <Tooltip label='Find another icon' aria-label={`Find another icon`}>
-              <Tag size='lg' borderRadius='full' fontSize='sm' colorScheme='blackAlpha'>
+            <Tooltip label='Find another icon' aria-label='Find another icon'>
+              <Tag size='lg' borderRadius='full' fontSize='sm' colorScheme='blackAlpha' variants={item}>
                 <TagRightIcon as={() => <Icon as={FiSearch} w={5} h={5} />} />
               </Tag>
             </Tooltip>
           </NextChakraLink>
-        </HStack>
+        </MotionHStack>
       )}
 
       {success === false && (
-        <HStack>
-          <Text mr={1}>We couldn't find your icon </Text>
-          <NextChakraLink href='/'>
-            <Tooltip label='Find another icon' aria-label={`Find another icon`}>
+        <MotionHStack>
+          <Text mr={1}>We couldn't find your icon</Text>
+          <MotionChakraLink href='/'>
+            <Tooltip label='Find another icon' aria-label='Find another icon'>
               <Tag size='lg' borderRadius='full' fontSize='sm' colorScheme='blackAlpha'>
                 <TagRightIcon as={() => <Icon as={FiSearch} w={5} h={5} />} />
               </Tag>
             </Tooltip>
-          </NextChakraLink>
-        </HStack>
+          </MotionChakraLink>
+        </MotionHStack>
       )}
     </Main>
   );
