@@ -2,7 +2,7 @@ import 'https://deno.land/x/dotenv/load.ts';
 import { connect, Redis } from 'https://deno.land/x/redis/mod.ts';
 
 // types
-import { SvgMap } from './icons';
+import { SvgMap } from './icons.ts';
 
 export async function connectToRedis() {
   const redis: Redis = await connect({
