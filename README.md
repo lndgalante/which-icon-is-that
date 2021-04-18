@@ -69,8 +69,6 @@ Release date: Monday 3, May
 
 * [ ] UI/UX/Writing review
 
-- [ ] Add Plausible analytics
-
 * [ ] Backend and Frontend external code review
 
 - [ ] Beta testers list + exclusive list
@@ -81,20 +79,22 @@ Release date: Monday 3, May
 
 ## DONE
 
-- [x] Try Preactjs on Next.js build
+- [x] Add Plausible analytics
 
-* [x] Refactorize to download icons instead of having them locally
+* [x] Try Preactjs on Next.js build
+
+- [x] Refactorize to download icons instead of having them locally
       [x] Download icons
       [x] Save it to upstash
       [x] Endpoint reads from upstash redis
 
-- [x] Reach 100/100 in Audits
+* [x] Reach 100/100 in Audits
 
-* [x] Buy whichiconisthat.com in NameCheap
+- [x] Buy whichiconisthat.com in NameCheap
 
-- [x] Deploy client to Vercel
+* [x] Deploy client to Vercel
 
-* [x] Deploy server to Deno deploy
+- [x] Deploy server to Deno deploy
 
 ## Built using
 
