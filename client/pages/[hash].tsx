@@ -29,14 +29,6 @@ const MotionLink = motion(
   }),
 );
 
-const MotionChakraLink = motion(
-  forwardRef((props, ref) => {
-    const chakraProps = Object.fromEntries(Object.entries(props).filter(([key]) => !isValidMotionProp(key)));
-    // @ts-expect-error
-    return <NextChakraLink ref={ref} {...chakraProps} />;
-  }),
-);
-
 const container = {
   hidden: { opacity: 0 },
   show: { opacity: 1, transition: { staggerChildren: 0.5 } },
@@ -94,16 +86,16 @@ export default function IconPage(props: InferGetStaticPropsType<typeof getStatic
       )}
 
       {success === false && (
-        <MotionHStack>
+        <HStack>
           <Text mr={1}>We couldn't find your icon</Text>
-          <MotionChakraLink href='/'>
+          <NextChakraLink href='/'>
             <Tooltip label='Find another icon' aria-label='Find another icon'>
               <Tag size='lg' borderRadius='full' fontSize='sm' colorScheme='blackAlpha'>
                 <TagRightIcon as={() => <Icon as={FiSearch} w={5} h={5} />} />
               </Tag>
             </Tooltip>
-          </MotionChakraLink>
-        </MotionHStack>
+          </NextChakraLink>
+        </HStack>
       )}
     </Main>
   );
