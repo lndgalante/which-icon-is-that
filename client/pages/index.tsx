@@ -59,7 +59,7 @@ export default function Home() {
           {/* @ts-expect-error */}
           <Input {...getInputProps()} />
 
-          <Text fontSize='sm'>Click or drag your SVG to this area</Text>
+          <Text fontSize='sm'>Click or drag your SVG icon</Text>
         </Center>
       </Stack>
     </Main>

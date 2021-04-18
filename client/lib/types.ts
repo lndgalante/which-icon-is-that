@@ -1,9 +1,10 @@
 type Svg = {
-  bytes: string;
-  fileName: string;
-  name: string;
-  pack: string;
   svg: string;
+  bytes: string;
+  packName: string;
+  packId: string;
+  iconName: string;
+  iconFileName: string;
 };
 
 type Links = {
