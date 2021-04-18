@@ -96,9 +96,8 @@ Release date: Monday 3, May
 
 ## Services
 
-- Vercel
-- Deno deploy
-- Upstash
-- Plausible
-- Deno Deploy
-- FeedbackFish
+- Vercel for client deployment
+- Heroku for server deployment
+- Upstash for serverless redis
+- Plausible for analytics
+- FeedbackFish for feedback
