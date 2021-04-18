@@ -1,3 +1,22 @@
+module.exports = {
+  future: { webpack5: true },
+  async headers() {
+    return [{ source: '/(.*)', headers: securityHeaders }];
+  },
+  webpack: (config, { dev, isServer }) => {
+    // Replace React with Preact only in client production build
+    if (!dev && !isServer) {
+      Object.assign(config.resolve.alias, {
+        react: 'preact/compat',
+        'react-dom': 'preact/compat',
+        'react-dom/test-utils': 'preact/test-utils',
+      });
+    }
+
+    return config;
+  },
+};
+
 const ContentSecurityPolicy = `
   default-src 'self';
   script-src 'self' 'unsafe-eval' 'unsafe-inline' *.youtube.com *.twitter.com cdn.usefathom.com;
@@ -36,18 +55,6 @@ const securityHeaders = [
   },
   {
     key: 'Permissions-Policy',
-    value: 'camera=(), microphone=(), geolocation=()',
+    value: 'camera=(), microphone=(), geolocation=(), interest-cohort=()',
   },
 ];
-
-module.exports = {
-  future: {
-    webpack5: true,
-  },
-  async headers() {
-    return [
-      { source: '/', headers: securityHeaders },
-      { source: '/:path*', headers: securityHeaders },
-    ];
-  },
-};
