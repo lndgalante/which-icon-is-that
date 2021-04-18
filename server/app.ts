@@ -2,9 +2,9 @@ import { parse } from 'https://deno.land/std/flags/mod.ts';
 import { Application, Router } from 'https://deno.land/x/oak/mod.ts';
 
 // helpers
-// import { preloadData } from './preload.ts';
 import { connectToRedis } from './redis.ts';
 import { getIconLink, getIconPackWebsite, getIconSource } from './icons.ts';
+// import { preloadData } from './preload.ts';
 
 // initial data
 const redis = await connectToRedis();
@@ -35,11 +35,11 @@ router.post('/icon', async ({ request, response }) => {
 
     if (isFound) {
       const svg = JSON.parse(svgJson as string);
-      const { pack: iconPackName, name: iconName, fileName: iconFileName } = svg;
+      const { packName, iconName, iconFileName } = svg;
 
-      const pack = getIconPackWebsite(iconPackName);
-      const icon = getIconLink(iconPackName, iconName);
-      const source = getIconSource(iconPackName, iconFileName);
+      const pack = getIconPackWebsite(packName);
+      const icon = getIconLink(packName, iconName);
+      const source = getIconSource(packName, iconFileName);
       const links = { pack, icon, source };
 
       response.status = 200;

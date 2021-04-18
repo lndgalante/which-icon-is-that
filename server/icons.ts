@@ -10,9 +10,10 @@ type PacksNames = keyof typeof ICONS_LINKS;
 export type Svg = {
   svg: string;
   bytes: string;
-  pack: string;
-  name: string;
-  fileName: string;
+  packName: string;
+  packId: string;
+  iconName: string;
+  iconFileName: string;
 };
 
 export type SvgMap = {
@@ -29,8 +30,8 @@ const ICONS_LINKS = {
 };
 
 const ICONS_LIST = [
-  { packName: 'bootstrap', owner: 'twbs', repo: 'icons' },
-  { packName: 'feather', owner: 'feathericons', repo: 'feather' },
+  { packId: 'bs', packName: 'bootstrap', owner: 'twbs', repo: 'icons' },
+  { packId: 'fi', packName: 'feather', owner: 'feathericons', repo: 'feather' },
 ];
 
 export function getIconSource(iconPack: PacksNames, iconFileName: string) {
@@ -63,7 +64,7 @@ export function getIconPackWebsite(svgPackName: string) {
 export async function createSvgsMap() {
   const result: SvgMap = {};
 
-  for (const { packName, owner, repo } of ICONS_LIST) {
+  for (const { packId, packName, owner, repo } of ICONS_LIST) {
     const response = await fetch(`https://api.github.com/repos/${owner}/${repo}/releases`);
     const [lastRelease] = await response.json();
     const { zipball_url } = lastRelease;
@@ -85,11 +86,11 @@ export async function createSvgsMap() {
         if (!name.endsWith('bootstrap-icons.svg') && name.endsWith('svg')) {
           const svg = await zip.file(name).async('string');
           const [iconFileName] = name.split('/').reverse();
-          const parsedName = iconFileName.replace('.svg', '');
+          const iconName = iconFileName.replace('.svg', '');
           const bytes = prettyBytes(sizeof(svg).bytesize);
 
           const key = createHash(svg);
-          const value: Svg = { svg, bytes, pack: packName, name: parsedName, fileName: iconFileName };
+          const value: Svg = { svg, bytes, packId, packName, iconName, iconFileName };
 
           result[key] = JSON.stringify(value);
         }
