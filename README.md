@@ -55,44 +55,46 @@ Release date: Monday 3, May
   - [ ] Weather Icons
   - [ ] css.gg
 
-- [ ] Remove svg parent tag to have more probabilities to find a icon
-
-* [x] Refactorize to download icons instead of having them locally
-      [x] Download icons
-      [x] Save it to upstash
-      [x] Endpoint reads from upstash redis
-
-- [ ] Run preloadData fn on a cron each day
-
-* [ ] Try Preactjs on Next.js build
-
-- [ ] Improve and share types and helpers between client/server
-
 * [ ] Add bottom icon to open footer with Slide transition
   - [ ] Display supported icons
   - [ ] Display GitHub / Twitter
   - [ ] Add FeedbackFish
   - [ ] Display code snippets for react/angular/vue-icons
 
-- [ ] Add Plausible analytics
+- [ ] Remove svg parent tag to have more probabilities to find a icon
 
-* [ ] Reach 100/100 in Audits
+* [ ] Run preloadData fn on a cron each day
 
-- [x] Buy whichiconisthat.com in NameCheap
-
-* [x] Deploy client to Vercel
-
-- [x] Deploy server to Deno deploy
+- [ ] Improve and share types and helpers between client/server
 
 * [ ] UI/UX/Writing review
 
-- [ ] Beta testers list + exclusive list
+- [ ] Add Plausible analytics
 
 * [ ] Backend and Frontend external code review
 
-- [ ] Publish in ProductHunt
+- [ ] Beta testers list + exclusive list
 
 * [ ] Publish in developer/design/utilities list
+
+- [ ] Publish in ProductHunt
+
+## DONE
+
+- [x] Try Preactjs on Next.js build
+
+* [x] Refactorize to download icons instead of having them locally
+      [x] Download icons
+      [x] Save it to upstash
+      [x] Endpoint reads from upstash redis
+
+- [x] Reach 100/100 in Audits
+
+* [x] Buy whichiconisthat.com in NameCheap
+
+- [x] Deploy client to Vercel
+
+* [x] Deploy server to Deno deploy
 
 ## Services
 
