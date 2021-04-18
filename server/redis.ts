@@ -1,6 +1,9 @@
 import 'https://deno.land/x/dotenv/load.ts';
 import { connect, Redis } from 'https://deno.land/x/redis/mod.ts';
 
+// types
+import { SvgMap } from './icons';
+
 export async function connectToRedis() {
   const redis: Redis = await connect({
     tls: true,
@@ -12,7 +15,7 @@ export async function connectToRedis() {
   return redis;
 }
 
-export async function saveObjectToRedis(redis: Redis, set: any) {
+export async function saveObjectToRedis(redis: Redis, set: SvgMap) {
   try {
     for (const key in set) {
       const value = set[key];

@@ -7,7 +7,7 @@ import { prettyBytes } from 'https://raw.githubusercontent.com/brunnerlivio/deno
 // types
 type PacksNames = keyof typeof ICONS_LINKS;
 
-type Svg = {
+export type Svg = {
   svg: string;
   bytes: string;
   pack: string;
@@ -15,7 +15,7 @@ type Svg = {
   fileName: string;
 };
 
-type SvgMap = {
+export type SvgMap = {
   [key: string]: string;
 };
 
