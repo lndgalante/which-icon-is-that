@@ -1,5 +1,5 @@
-import { Application, Router } from 'https://deno.land/x/oak/mod.ts';
 import { parse } from 'https://deno.land/std/flags/mod.ts';
+import { Application, Router } from 'https://deno.land/x/oak/mod.ts';
 
 // helpers
 // import { preloadData } from './preload.ts';
