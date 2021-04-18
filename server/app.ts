@@ -1,4 +1,5 @@
 import { Application, Router } from 'https://deno.land/x/oak/mod.ts';
+import { parse } from 'https://deno.land/std/flags/mod.ts';
 
 // helpers
 // import { preloadData } from './preload.ts';
@@ -8,6 +9,10 @@ import { getIconLink, getIconPackWebsite, getIconSource } from './icons.ts';
 // initial data
 const redis = await connectToRedis();
 // await preloadData(redis);
+
+// port
+const DEFAULT_PORT = 8000;
+const argPort = parse(Deno.args).port;
 
 // server
 const app = new Application();
@@ -54,4 +59,4 @@ app.use(router.routes());
 app.use(router.allowedMethods());
 
 // Server our app
-await app.listen({ port: 8000 });
+await app.listen({ port: argPort ? Number(argPort) : DEFAULT_PORT });
