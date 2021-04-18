@@ -1,6 +1,9 @@
 import React from 'react';
 import { Center } from '@chakra-ui/react';
 
+// components
+import { Info } from 'components/Info';
+
 export function Main({ children }: { children: React.ReactNode }) {
   return (
     <Center
@@ -10,6 +13,7 @@ export function Main({ children }: { children: React.ReactNode }) {
       bgGradient='linear-gradient(to top, #fdcbf1 0%, #fdcbf1 1%, #e6dee9 100%)'
     >
       {children}
+      <Info />
     </Center>
   );
 }
