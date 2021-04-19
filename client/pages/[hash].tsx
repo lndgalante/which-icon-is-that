@@ -1,9 +1,9 @@
 import Redis from 'ioredis';
 import { useState } from 'react';
 import { motion, isValidMotionProp } from 'framer-motion';
-import { InferGetStaticPropsType, GetStaticPaths } from 'next';
 import PrismTheme from 'prism-react-renderer/themes/dracula';
 import Highlight, { defaultProps } from 'prism-react-renderer';
+import { InferGetStaticPropsType, GetStaticPaths, GetStaticProps } from 'next';
 import {
   Tag,
   Link,
@@ -246,11 +246,11 @@ export default function IconPage(props: InferGetStaticPropsType<typeof getStatic
   );
 }
 
-export const getStaticProps = async ({ params }) => {
+export const getStaticProps: GetStaticProps = async ({ params }) => {
   const { hash } = params;
-  const data: FoundIcon = await api.getIconData(hash);
+  const data: FoundIcon = await api.getIconData(hash as string);
 
-  return { props: data };
+  return { props: data, revalidate: Number.POSITIVE_INFINITY };
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
