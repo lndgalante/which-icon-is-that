@@ -51,7 +51,6 @@ router.post('/icon', async ({ request, response }) => {
   } catch (error) {
     console.log('Error finding icon', error);
     response.status = 500;
-    response.body = { success: false };
   }
 });
 
