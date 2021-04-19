@@ -76,11 +76,15 @@ Release date: Monday 3, May
 
 - [ ] Publish in ProductHunt
 
-* [ ] Input SVG by URL or code
+## Users Feedback
 
-- [ ] Same app but as a chrome extension
+- [ ] Input SVG by URL or code
 
-* [ ] Support using bitmaps
+* [ ] Same app but as a chrome extension
+
+- [ ] Support using bitmaps
+
+* [ ] Add Why and How to the site
 
 ## DONE
 
