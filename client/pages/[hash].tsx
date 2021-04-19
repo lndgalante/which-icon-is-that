@@ -250,7 +250,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   const { hash } = params;
   const data: FoundIcon = await api.getIconData(hash as string);
 
-  return { props: data, revalidate: Number.POSITIVE_INFINITY };
+  return { props: data, revalidate: 86400 };
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
