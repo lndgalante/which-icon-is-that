@@ -250,7 +250,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   const { hash } = params;
   const data: FoundIcon = await api.getIconData(hash as string);
 
-  return { props: data, revalidate: 86400 };
+  return { props: data, revalidate: false };
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
@@ -265,10 +265,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
     const hashes: string[] = await redis.keys('*');
     const paths = hashes.map((hash) => ({ params: { hash } }));
 
-    return {
-      paths,
-      fallback: true,
-    };
+    return { paths, fallback: false };
   } catch (error) {
     console.log('Error on getStaticPaths', error);
   }
