@@ -54,6 +54,8 @@ Release date: Monday 3, May
   - [ ] VS Code Icons
   - [ ] Weather Icons
   - [ ] css.gg
+  - [ ] Heroicons
+  - [ ] Phosphoricons
 
 * [ ] Create svg component for React/Vue/Angular, i.e with @svgr/core, @vue-svgicon, @svg-to-ts
   - [ ] Add tabs to pick framework
@@ -73,6 +75,12 @@ Release date: Monday 3, May
 * [ ] Publish in developer/design/utilities list
 
 - [ ] Publish in ProductHunt
+
+* [ ] Input SVG by URL or code
+
+- [ ] Same app but as a chrome extension
+
+* [ ] Support using bitmaps
 
 ## DONE
 
