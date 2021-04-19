@@ -55,6 +55,8 @@ Release date: Monday 3, May
   - [ ] Weather Icons
   - [ ] css.gg
 
+* [ ] Create svg component for React/Vue/Angular, i.e with @svgr/core
+
 - [ ] Remove svg parent tag to have more probabilities to find a icon
 
 * [ ] Run preloadData fn on a cron every week
