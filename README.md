@@ -55,7 +55,8 @@ Release date: Monday 3, May
   - [ ] Weather Icons
   - [ ] css.gg
 
-* [ ] Create svg component for React/Vue/Angular, i.e with @svgr/core
+* [ ] Create svg component for React/Vue/Angular, i.e with @svgr/core, @vue-svgicon, @svg-to-ts
+  - [ ] Add tabs to pick framework
 
 - [ ] Remove svg parent tag to have more probabilities to find a icon
 
