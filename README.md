@@ -86,6 +86,8 @@ Release date: Monday 3, May
 
 * [ ] Add Why and How to the site
 
+- [ ] Add example icon to try it on the fly
+
 ## DONE
 
 - [x] Add Plausible analytics
