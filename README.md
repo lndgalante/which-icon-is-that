@@ -78,15 +78,31 @@ Release date: Monday 3, May
 
 ## Users Feedback
 
-- [ ] Input SVG by URL or code
+- [ ] Display snippets directly without button to open it
 
-* [ ] Same app but as a chrome extension
+* [ ] Input SVG by URL or code
 
-- [ ] Support using bitmaps
+- [ ] Same app but as a chrome extension
 
-* [ ] Add Why and How to the site
+* [ ] Support using bitmaps
 
-- [ ] Add example icon to try it on the fly
+- [ ] Add Why and How to the site
+
+* [ ] Add example icon to try it on the fly
+
+- [ ] Add links to Figma/Sketch
+
+* [ ] Display optimized SVG using SVGO
+
+- [ ] Onboarding walkthrough video
+
+* [ ] Improve error message when icon is not found
+
+- [ ] Add support for responsive
+
+* [ ] Display icons in several sizes 100px, 60px, 48px, 24px, 16px
+
+- [ ] Display icons in a playground to change the color and the background color
 
 ## DONE
 
