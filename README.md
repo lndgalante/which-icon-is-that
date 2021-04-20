@@ -36,6 +36,8 @@ Release date: Monday 3, May
 
 - [ ] Add icon packs:
 
+  - [ ] Heroicons
+  - [ ] Phosphoricons
   - [ ] Ant Design Icons
   - [ ] BoxIcons
   - [ ] Devicons
@@ -43,7 +45,6 @@ Release date: Monday 3, May
   - [ ] Game Icons
   - [ ] GiHub Octicons icons
   - [ ] Grommet-icons
-  - [ ] Heroicons
   - [ ] IcoMoon Free
   - [ ] Ionicons 4
   - [ ] Ionicons 5
@@ -54,8 +55,6 @@ Release date: Monday 3, May
   - [ ] VS Code Icons
   - [ ] Weather Icons
   - [ ] css.gg
-  - [ ] Heroicons
-  - [ ] Phosphoricons
 
 * [ ] Create svg component for React/Vue/Angular, i.e with @svgr/core, @vue-svgicon, @svg-to-ts
   - [ ] Add tabs to pick framework
@@ -75,6 +74,8 @@ Release date: Monday 3, May
 * [ ] Publish in developer/design/utilities list
 
 - [ ] Publish in ProductHunt
+
+* [ ] Add E2E tests to run all user flows
 
 ## Users Feedback
 
@@ -103,6 +104,8 @@ Release date: Monday 3, May
 * [ ] Display icons in several sizes 100px, 60px, 48px, 24px, 16px
 
 - [ ] Display icons in a playground to change the color and the background color
+
+* [ ] Improve back arrow button color since is not really visible
 
 ## DONE
 
