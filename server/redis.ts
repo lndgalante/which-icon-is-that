@@ -1,9 +1,6 @@
 import 'https://deno.land/x/dotenv/load.ts';
 import { connect, Redis } from 'https://deno.land/x/redis/mod.ts';
 
-// types
-import { SvgMap } from './icons.ts';
-
 export async function connectToRedis() {
   const redis: Redis = await connect({
     tls: true,
@@ -15,13 +12,6 @@ export async function connectToRedis() {
   return redis;
 }
 
-export async function saveObjectToRedis(redis: Redis, set: SvgMap) {
-  try {
-    for (const key in set) {
-      const value = set[key];
-      await redis.set(key, value, { mode: 'NX' });
-    }
-  } catch (error) {
-    console.log('Error saving SVGs into Redis', error);
-  }
+export function cleanRedis(redis: Redis) {
+  return redis.executor.exec('FLUSHALL');
 }
