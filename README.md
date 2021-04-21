@@ -72,11 +72,15 @@ Release date: Monday 3, May
 
 - [ ] Publish in ProductHunt
 
-* [ ] Add E2E tests to run all user flows
+* [ ] Publish in AwesomeSVGs/AwesomeIcons
 
-- [ ] Check if we are handling icon packs with solid and outline versions
+- [ ] Add E2E tests to run all user flows
+
+* [ ] Check if we are handling icon packs with solid and outline versions
 
 **Users Feedback**
+
+* [ ] Landing like https://www.remove.bg/
 
 - [ ] Add Why and How to the site
 
