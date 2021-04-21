@@ -57,9 +57,8 @@ Release date: Monday 3, May
   - [ ] css.gg
 
 * [ ] Create svg component for React/Vue/Angular, i.e with @svgr/core, @vue-svgicon, @svg-to-ts
-  - [ ] Add tabs to pick framework
 
-- [ ] Remove svg parent tag to have more probabilities to find a icon
+  - [ ] Add tabs to pick framework
 
 * [ ] Run preloadData fn on a cron every week
 
@@ -67,9 +66,7 @@ Release date: Monday 3, May
 
 * [ ] UI/UX/Writing review
 
-* [ ] Backend and Frontend external code review
-
-- [ ] Beta testers list + exclusive list
+- [ ] Backend and Frontend external code review
 
 * [ ] Publish in developer/design/utilities list
 
@@ -77,37 +74,43 @@ Release date: Monday 3, May
 
 * [ ] Add E2E tests to run all user flows
 
-## Users Feedback
+- [ ] Check if we are handling icon packs with solid and outline versions
 
-- [ ] Display snippets directly without button to open it
-
-* [ ] Input SVG by URL or code
-
-- [ ] Same app but as a chrome extension
-
-* [ ] Support using bitmaps
+**Users Feedback**
 
 - [ ] Add Why and How to the site
 
 * [ ] Add example icon to try it on the fly
 
-- [ ] Add links to Figma/Sketch
+- [ ] Display optimized SVG using SVGO
 
-* [ ] Display optimized SVG using SVGO
+* [ ] Onboarding walkthrough video
 
-- [ ] Onboarding walkthrough video
-
-* [ ] Improve error message when icon is not found
-
-- [ ] Add support for responsive
+- [ ] Add responsive support
 
 * [ ] Display icons in several sizes 100px, 60px, 48px, 24px, 16px
 
 - [ ] Display icons in a playground to change the color and the background color
 
-* [ ] Improve back arrow button color since is not really visible
+* [ ] Same app but as a chrome extension
+
+- [ ] Support using bitmaps
 
 ## DONE
+
+**Users Feedback**
+
+- [x] Improve error message when icon is not found
+
+* [x] Add links to Figma/Sketch
+
+- [x] Change back arrow for center button to find again
+
+* [x] Display snippets directly without button to open it
+
+- [x] Input SVG by URL or code
+
+---
 
 - [x] Add Plausible analytics
 
@@ -130,6 +133,10 @@ Release date: Monday 3, May
   - [x] Display supported icons
   - [x] Display GitHub / Twitter
   - [x] Display code snippets for react/angular/vue-icons
+
+- [x] Remove svg parent tag to have more probabilities to find a icon
+
+* [x] Beta testers list + exclusive list
 
 ## Built using
 
