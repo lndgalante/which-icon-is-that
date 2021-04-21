@@ -80,25 +80,27 @@ Release date: Monday 3, May
 
 **Users Feedback**
 
-* [ ] Landing like https://www.remove.bg/
+- [ ] Landing like https://www.remove.bg/
 
-- [ ] Add Why and How to the site
+* [ ] Add Why and How to the site
 
-* [ ] Add example icon to try it on the fly
+- [ ] Add example icon to try it on the fly
 
-- [ ] Display optimized SVG using SVGO
+* [ ] Display optimized SVG using SVGO
 
-* [ ] Onboarding walkthrough video
+- [ ] Onboarding walkthrough video
 
-- [ ] Add responsive support
+* [ ] Add responsive support
 
-* [ ] Display icons in several sizes 100px, 60px, 48px, 24px, 16px
+- [ ] Display icons in several sizes 100px, 60px, 48px, 24px, 16px
 
-- [ ] Display icons in a playground to change the color and the background color
+* [ ] Display icons in a playground to change the color and the background color
 
-* [ ] Same app but as a chrome extension
+- [ ] Same app but as a chrome extension
 
-- [ ] Support using bitmaps
+* [ ] Support using bitmaps
+
+- [ ] Display similar icons i.e if I drop a feather alert, show me the alert for the other packages
 
 ## DONE
 
