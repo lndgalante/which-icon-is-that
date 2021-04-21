@@ -3,12 +3,15 @@ import { Application, Router } from 'https://deno.land/x/oak/mod.ts';
 
 // helpers
 import { connectToRedis } from './redis.ts';
-import { getIconLink, getIconPackWebsite, getIconSource } from './icons.ts';
-// import { preloadData } from './preload.ts';
+import { saveIconsIntoRedis, getIconLink, getIconPackWebsite, getIconSource, getIconPackFigmaLink } from './icons.ts';
 
 // initial data
 const redis = await connectToRedis();
-// await preloadData(redis);
+
+async function development() {
+  await saveIconsIntoRedis(redis);
+  console.log('all icons saved!');
+}
 
 // port
 const DEFAULT_PORT = 8000;
@@ -38,9 +41,10 @@ router.post('/icon', async ({ request, response }) => {
       const { packName, iconName, iconFileName } = svg;
 
       const pack = getIconPackWebsite(packName);
+      const figma = getIconPackFigmaLink(packName);
       const icon = getIconLink(packName, iconName);
       const source = getIconSource(packName, iconFileName);
-      const links = { pack, icon, source };
+      const links = { pack, icon, source, figma };
 
       response.status = 200;
       response.body = { success: true, data: { svg, links } };
