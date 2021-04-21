@@ -1,5 +1,5 @@
-import { PropsWithChildren } from 'react';
 import NextLink from 'next/link';
+import { PropsWithChildren } from 'react';
 import { LinkProps as NextLinkProps } from 'next/dist/client/link';
 import { Link as ChakraLink, LinkProps as ChakraLinkProps } from '@chakra-ui/react';
 
