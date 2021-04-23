@@ -78,6 +78,8 @@ Release date: Monday 3, May
 
 * [ ] Check if we are handling icon packs with solid and outline versions
 
+- [ ] Display if icon supports solid or outline version
+
 **Users Feedback**
 
 - [ ] Landing like https://www.remove.bg/
@@ -101,6 +103,8 @@ Release date: Monday 3, May
 * [ ] Support using bitmaps
 
 - [ ] Display similar icons i.e if I drop a feather alert, show me the alert for the other packages
+
+* [ ] Display supported icons directly without being hidden
 
 ## DONE
 
