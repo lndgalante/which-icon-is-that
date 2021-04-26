@@ -80,6 +80,14 @@ Release date: Monday 3, May
 
 - [ ] Display if icon supports solid or outline version
 
+* [ ] Prefetch icon page when hash is created
+
+- [ ] Move from upstash/redis to supabase
+
+* [ ] Fix react-icons imports that doesnt work properly
+
+  https://icons.getbootstrap.com/icons/basket2/
+
 **Users Feedback**
 
 - [ ] Landing like https://www.remove.bg/
