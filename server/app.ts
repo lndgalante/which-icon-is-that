@@ -15,7 +15,9 @@ const router = new Router();
 
 // postgres
 const client = await connectToPostgres();
-// await saveIconsInDB(client); // we will run this every now and then
+
+// we will run this every now and then
+// await saveIconsInDB(client);
 
 router.get('/icon', async ({ request, response }) => {
   const hash = await request.url.searchParams.get('hash');
@@ -35,7 +37,6 @@ router.get('/icon', async ({ request, response }) => {
       return;
     }
 
-    const [result] = rows[0];
     const {
       svg,
       type,
@@ -44,7 +45,7 @@ router.get('/icon', async ({ request, response }) => {
       pack_name: packName,
       icon_name: iconName,
       icon_file_name: iconFileName,
-    } = result as Svg;
+    } = rows[0][0] as Svg;
 
     const pack = getIconPackWebsite(packName);
     const figma = getIconPackFigmaLink(packName);
