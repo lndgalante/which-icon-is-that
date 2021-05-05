@@ -36,7 +36,7 @@ Release date: Monday 3, May
 
 - [ ] Add icon packs:
 
-  - [ ] Heroicons
+  - [x] Heroicons
   - [ ] Phosphoricons
   - [ ] Ant Design Icons
   - [ ] BoxIcons
@@ -56,9 +56,9 @@ Release date: Monday 3, May
   - [ ] Weather Icons
   - [ ] css.gg
 
-* [ ] Create svg component for React/Vue/Angular, i.e with @svgr/core, @vue-svgicon, @svg-to-ts
+* [ ] Create svg component for Vue with @vue-svgicon
 
-  - [ ] Add tabs to pick framework
+* [ ] Create svg component for Angular with @svg-to-ts
 
 * [ ] Run preloadData fn on a cron every week
 
@@ -76,21 +76,15 @@ Release date: Monday 3, May
 
 - [ ] Add E2E tests to run all user flows
 
-* [ ] Check if we are handling icon packs with solid and outline versions
-
-- [ ] Display if icon supports solid or outline version
-
 * [ ] Prefetch icon page when hash is created
 
-- [ ] Move from upstash/redis to supabase
+* [ ] Fix react-icons imports that doesn't work properly
 
-* [ ] Fix react-icons imports that doesnt work properly
-
-  https://icons.getbootstrap.com/icons/basket2/
+- [ ] Detect image through computer vision
 
 **Users Feedback**
 
-- [ ] Landing like https://www.remove.bg/
+- [ ] Landing like https://www.remove.bg
 
 * [ ] Add Why and How to the site
 
@@ -114,6 +108,10 @@ Release date: Monday 3, May
 
 * [ ] Display supported icons directly without being hidden
 
+- [ ] Add code to install npm package, to use from Skypack/Unpkg
+
+* [ ] Improve URL from /:hash to /:packName/:packId
+
 ## DONE
 
 **Users Feedback**
@@ -130,31 +128,41 @@ Release date: Monday 3, May
 
 ---
 
-- [x] Add Plausible analytics
+- [x] Create svg component for HTML with @svgr/core
 
-* [x] Try Preactjs on Next.js build
+* [x] Create svg component for React with @svgr/core
 
-- [x] Refactorize to download icons instead of having them locally
+- [x] Check if we are handling icon packs with solid and outline versions
+
+* [x] Display if icon supports solid or outline version
+
+- [x] Migrate DB from Redis to PostgreSQL
+
+* [x] Add Plausible analytics
+
+- [x] Try Preactjs on Next.js build
+
+* [x] Refactorize to download icons instead of having them locally
       [x] Download icons
       [x] Save it to upstash
       [x] Endpoint reads from upstash redis
 
-* [x] Reach 100/100 in Audits
+- [x] Reach 100/100 in Audits
 
-- [x] Buy whichiconisthat.com in NameCheap
+* [x] Buy whichiconisthat.com in NameCheap
 
-* [x] Deploy client to Vercel
+- [x] Deploy client to Vercel
 
-- [x] Deploy server to Deno deploy
+* [x] Deploy server to Deno deploy
 
-* [x] Add bottom icon to open footer with Slide transition
+- [x] Add bottom icon to open footer with Slide transition
   - [x] Display supported icons
   - [x] Display GitHub / Twitter
   - [x] Display code snippets for react/angular/vue-icons
 
-- [x] Remove svg parent tag to have more probabilities to find a icon
+* [x] Remove svg parent tag to have more probabilities to find a icon
 
-* [x] Beta testers list + exclusive list
+- [x] Beta testers list + exclusive list
 
 ## Built using
 
