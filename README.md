@@ -100,7 +100,7 @@ Release date: Monday 3, May
 
 * [ ] Display icons in a playground to change the color and the background color
 
-- [ ] Same app but as a chrome extension
+- [ ] Same app but as a Chrome extension
 
 * [ ] Support using bitmaps
 
@@ -111,6 +111,8 @@ Release date: Monday 3, May
 - [ ] Add code to install npm package, to use from Skypack/Unpkg
 
 * [ ] Improve URL from /:hash to /:packName/:packId
+
+- [ ] Same app but as a VSCode extension
 
 ## DONE
 
