@@ -1,10 +1,13 @@
+import * as Hi from 'react-icons/hi';
 import * as Fi from 'react-icons/fi';
 import * as Bs from 'react-icons/bs';
 
+const heroIcons = Object.keys(Hi);
 const featherIcons = Object.keys(Fi);
 const bootstrapIcons = Object.keys(Bs);
 
 export const reactIconsPacks = {
+  heroicons: parseReactIconsNames(heroIcons),
   feather: parseReactIconsNames(featherIcons),
   bootstrap: parseReactIconsNames(bootstrapIcons),
 };
