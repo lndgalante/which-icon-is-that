@@ -89,6 +89,7 @@ export async function saveIconsInDB(client: Client) {
 
   await transaction.queryArray`DROP TABLE icons`;
   await transaction.queryArray`CREATE TABLE icons (hash TEXT, svg TEXT, type TEXT, bytes TEXT, pack_id TEXT, pack_name TEXT, icon_name TEXT, icon_file_name TEXT)`;
+  await transaction.queryArray`CREATE INDEX hash_index ON icons(hash)`;
 
   for (const { packId, packName, owner, repo } of ICONS_LIST) {
     const response = await fetch(`https://api.github.com/repos/${owner}/${repo}/releases`);
