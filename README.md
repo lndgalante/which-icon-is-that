@@ -30,16 +30,15 @@ deno run --unstable --allow-env --allow-read --allow-write --allow-net ./server/
 
 ## Roadmap
 
-Release date: Monday 3, May
+Release date: Tuesday 1, June
 
 ## TODO
 
 - [ ] Add icon packs:
 
   - [x] Heroicons
-  - [ ] Phosphoricons
-  - [ ] Ant Design Icons
-  - [ ] BoxIcons
+  - [x] Ant Design Icons
+  - [x] BoxIcons
   - [ ] Devicons
   - [ ] Flat Color Icons
   - [ ] Game Icons
@@ -55,10 +54,7 @@ Release date: Monday 3, May
   - [ ] VS Code Icons
   - [ ] Weather Icons
   - [ ] css.gg
-
-* [ ] Create svg component for Vue with @vue-svgicon
-
-* [ ] Create svg component for Angular with @svg-to-ts
+  - [ ] Phosphoricons
 
 * [ ] Run preloadData fn on a cron every week
 
@@ -81,6 +77,12 @@ Release date: Monday 3, May
 * [ ] Fix react-icons imports that doesn't work properly
 
 - [ ] Detect image through computer vision
+
+* [ ] Buy wiit.io to redirect to whichiconisthat.com
+
+- [ ] Add web component CDN to unpkg + template
+
+* [ ] Split Figma links in Community and Plugins
 
 **Users Feedback**
 
@@ -130,46 +132,47 @@ Release date: Monday 3, May
 
 ---
 
-- [x] Create svg component for HTML with @svgr/core
+- [x] Create svg component for Vue with @vue-svgicon
 
-* [x] Create svg component for React with @svgr/core
+* [x] Create svg component for HTML with @svgr/core
 
-- [x] Check if we are handling icon packs with solid and outline versions
+- [x] Create svg component for React with @svgr/core
 
-* [x] Display if icon supports solid or outline version
+* [x] Check if we are handling icon packs with solid and outline versions
 
-- [x] Migrate DB from Redis to PostgreSQL
+- [x] Display if icon supports solid or outline version
 
-* [x] Add Plausible analytics
+* [x] Migrate DB from Redis to PostgreSQL
 
-- [x] Try Preactjs on Next.js build
+- [x] Add Plausible analytics
 
-* [x] Refactorize to download icons instead of having them locally
+* [x] Try Preactjs on Next.js build
+
+- [x] Refactorize to download icons instead of having them locally
       [x] Download icons
       [x] Save it to upstash
       [x] Endpoint reads from upstash redis
 
-- [x] Reach 100/100 in Audits
+* [x] Reach 100/100 in Audits
 
-* [x] Buy whichiconisthat.com in NameCheap
+- [x] Buy whichiconisthat.com in NameCheap
 
-- [x] Deploy client to Vercel
+* [x] Deploy client to Vercel
 
-* [x] Deploy server to Deno deploy
+- [x] Deploy server to Deno deploy
 
-- [x] Add bottom icon to open footer with Slide transition
+* [x] Add bottom icon to open footer with Slide transition
   - [x] Display supported icons
   - [x] Display GitHub / Twitter
   - [x] Display code snippets for react/angular/vue-icons
 
-* [x] Remove svg parent tag to have more probabilities to find a icon
+- [x] Remove svg parent tag to have more probabilities to find a icon
 
-- [x] Beta testers list + exclusive list
+* [x] Beta testers list + exclusive list
 
 ## Built using
 
 - [Next.js](https://nextjs.org) and [Deno](https://deno.land)
 - [Vercel](https://vercel.com) for client deployment
 - [Heroku](https://www.heroku.com) for server deployment
-- [Upstash](https://upstash.com) for serverless redis
 - [Plausible](https://plausible.io) for analytics
