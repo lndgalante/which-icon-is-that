@@ -50,7 +50,7 @@ router.get('/icon', async ({ request, response }) => {
     const pack = getIconPackWebsite(packName);
     const figma = getIconPackFigmaLink(packName);
     const icon = getIconLink(packName, iconName);
-    const source = getIconSource(packName, iconFileName);
+    const source = getIconSource(packName, iconFileName, type);
 
     response.status = 200;
     response.body = {
