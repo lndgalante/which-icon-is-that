@@ -1,8 +1,10 @@
 type Svg = {
   svg: string;
+  hash: string;
+  type: string;
   bytes: string;
-  packName: string;
   packId: string;
+  packName: string;
   iconName: string;
   iconFileName: string;
 };
@@ -21,4 +23,8 @@ type IconMetadata = {
 export type FoundIcon = {
   success: boolean;
   data?: IconMetadata;
+};
+
+export type Hash = {
+  hash: string;
 };

@@ -2,16 +2,8 @@ import { parse } from 'https://deno.land/std/flags/mod.ts';
 import { Application, Router } from 'https://deno.land/x/oak/mod.ts';
 
 // helpers
-import { connectToRedis } from './redis.ts';
-import { saveIconsIntoRedis, getIconLink, getIconPackWebsite, getIconSource, getIconPackFigmaLink } from './icons.ts';
-
-// initial data
-const redis = await connectToRedis();
-
-async function development() {
-  await saveIconsIntoRedis(redis);
-  console.log('all icons saved!');
-}
+import { connectToPostgres } from './postgres.ts';
+import { saveIconsInDB, getIconLink, getIconPackWebsite, getIconSource, getIconPackFigmaLink, Svg } from './icons.ts';
 
 // port
 const DEFAULT_PORT = 8000;
@@ -21,39 +13,49 @@ const argPort = parse(Deno.args).port;
 const app = new Application();
 const router = new Router();
 
-router.post('/icon', async ({ request, response }) => {
-  const body = await request.body();
-  const values = await body.value;
-  const hash = JSON.parse(values)?.hash;
+// postgres
+const client = await connectToPostgres();
 
-  if (!request.hasBody || !hash) {
+// we will run this every now and then
+// await saveIconsInDB(client);
+
+router.get('/icon', async ({ request, response }) => {
+  const hash = await request.url.searchParams.get('hash');
+
+  if (!hash) {
     response.status = 400;
-    response.body = { success: false, message: 'No data provided' };
+    response.body = { success: false, message: 'No hash provided' };
     return;
   }
 
   try {
-    const svgJson = await redis.get(hash);
-    const isFound = typeof svgJson !== 'undefined';
+    const { rows, rowCount } = await client.queryObject(`SELECT * FROM icons WHERE hash = $1`, hash);
 
-    if (isFound) {
-      const svg = JSON.parse(svgJson as string);
-      const { packName, iconName, iconFileName } = svg;
-
-      const pack = getIconPackWebsite(packName);
-      const figma = getIconPackFigmaLink(packName);
-      const icon = getIconLink(packName, iconName);
-      const source = getIconSource(packName, iconFileName);
-      const links = { pack, icon, source, figma };
-
-      response.status = 200;
-      response.body = { success: true, data: { svg, links } };
-    } else {
+    if (rowCount === 0) {
       response.status = 404;
-      response.body = { success: false };
+      response.body = { success: false, message: 'No icon found' };
+      return;
     }
+
+    const [
+      { svg, type, bytes, pack_id: packId, pack_name: packName, icon_name: iconName, icon_file_name: iconFileName },
+    ] = rows as [Svg];
+
+    const pack = getIconPackWebsite(packName);
+    const figma = getIconPackFigmaLink(packName);
+    const icon = getIconLink(packName, iconName);
+    const source = getIconSource(packName, iconFileName, type);
+
+    response.status = 200;
+    response.body = {
+      success: true,
+      data: {
+        links: { pack, icon, source, figma },
+        svg: { hash, svg, type, bytes, packId, packName, iconName, iconFileName },
+      },
+    };
   } catch (error) {
-    console.log('Error finding icon', error);
+    console.log('Server error', error);
     response.status = 500;
   }
 });

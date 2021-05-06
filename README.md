@@ -30,16 +30,15 @@ deno run --unstable --allow-env --allow-read --allow-write --allow-net ./server/
 
 ## Roadmap
 
-Release date: Monday 3, May
+Release date: Tuesday 1, June
 
 ## TODO
 
 - [ ] Add icon packs:
 
-  - [ ] Heroicons
-  - [ ] Phosphoricons
-  - [ ] Ant Design Icons
-  - [ ] BoxIcons
+  - [x] Heroicons
+  - [x] Ant Design Icons
+  - [x] BoxIcons
   - [ ] Devicons
   - [ ] Flat Color Icons
   - [ ] Game Icons
@@ -55,10 +54,7 @@ Release date: Monday 3, May
   - [ ] VS Code Icons
   - [ ] Weather Icons
   - [ ] css.gg
-
-* [ ] Create svg component for React/Vue/Angular, i.e with @svgr/core, @vue-svgicon, @svg-to-ts
-
-  - [ ] Add tabs to pick framework
+  - [ ] Phosphoricons
 
 * [ ] Run preloadData fn on a cron every week
 
@@ -76,21 +72,21 @@ Release date: Monday 3, May
 
 - [ ] Add E2E tests to run all user flows
 
-* [ ] Check if we are handling icon packs with solid and outline versions
-
-- [ ] Display if icon supports solid or outline version
-
 * [ ] Prefetch icon page when hash is created
 
-- [ ] Move from upstash/redis to supabase
+* [ ] Fix react-icons imports that doesn't work properly
 
-* [ ] Fix react-icons imports that doesnt work properly
+- [ ] Detect image through computer vision
 
-  https://icons.getbootstrap.com/icons/basket2/
+* [ ] Buy wiit.io to redirect to whichiconisthat.com
+
+- [ ] Add web component CDN to unpkg + template
+
+* [ ] Split Figma links in Community and Plugins
 
 **Users Feedback**
 
-- [ ] Landing like https://www.remove.bg/
+- [ ] Landing like https://www.remove.bg
 
 * [ ] Add Why and How to the site
 
@@ -106,13 +102,19 @@ Release date: Monday 3, May
 
 * [ ] Display icons in a playground to change the color and the background color
 
-- [ ] Same app but as a chrome extension
+- [ ] Same app but as a Chrome extension
 
 * [ ] Support using bitmaps
 
 - [ ] Display similar icons i.e if I drop a feather alert, show me the alert for the other packages
 
 * [ ] Display supported icons directly without being hidden
+
+- [ ] Add code to install npm package, to use from Skypack/Unpkg
+
+* [ ] Improve URL from /:hash to /:packName/:packId
+
+- [ ] Same app but as a VSCode extension
 
 ## DONE
 
@@ -129,6 +131,18 @@ Release date: Monday 3, May
 - [x] Input SVG by URL or code
 
 ---
+
+- [x] Create svg component for Vue with @vue-svgicon
+
+* [x] Create svg component for HTML with @svgr/core
+
+- [x] Create svg component for React with @svgr/core
+
+* [x] Check if we are handling icon packs with solid and outline versions
+
+- [x] Display if icon supports solid or outline version
+
+* [x] Migrate DB from Redis to PostgreSQL
 
 - [x] Add Plausible analytics
 
@@ -161,5 +175,4 @@ Release date: Monday 3, May
 - [Next.js](https://nextjs.org) and [Deno](https://deno.land)
 - [Vercel](https://vercel.com) for client deployment
 - [Heroku](https://www.heroku.com) for server deployment
-- [Upstash](https://upstash.com) for serverless redis
 - [Plausible](https://plausible.io) for analytics
