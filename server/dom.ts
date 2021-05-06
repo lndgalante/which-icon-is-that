@@ -1,8 +1,6 @@
 import { DOMParser } from 'https://deno.land/x/deno_dom/deno-dom-wasm.ts';
 
-export function getInnerHTMLFromSvgText(svg: string) {
-  if (!svg) return '';
-
+export function getInnerHTMLFromSvgText(svg: string): string {
   const document = new DOMParser().parseFromString(svg, 'text/html');
-  return document ? document.body.children[0].innerHTML : '';
+  return document?.querySelector('svg')?.innerHTML ?? '';
 }
