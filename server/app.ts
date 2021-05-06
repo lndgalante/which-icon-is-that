@@ -29,7 +29,7 @@ router.get('/icon', async ({ request, response }) => {
   }
 
   try {
-    const { rows, rowCount } = await client.queryArray(`SELECT row_to_json(icons) FROM icons WHERE hash = '${hash}'`);
+    const { rows, rowCount } = await client.queryObject(`SELECT * FROM icons WHERE hash = $1`, hash);
 
     if (rowCount === 0) {
       response.status = 404;
@@ -37,15 +37,9 @@ router.get('/icon', async ({ request, response }) => {
       return;
     }
 
-    const {
-      svg,
-      type,
-      bytes,
-      pack_id: packId,
-      pack_name: packName,
-      icon_name: iconName,
-      icon_file_name: iconFileName,
-    } = rows[0][0] as Svg;
+    const [
+      { svg, type, bytes, pack_id: packId, pack_name: packName, icon_name: iconName, icon_file_name: iconFileName },
+    ] = rows as [Svg];
 
     const pack = getIconPackWebsite(packName);
     const figma = getIconPackFigmaLink(packName);
