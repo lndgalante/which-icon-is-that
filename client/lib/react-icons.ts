@@ -1,15 +1,21 @@
 import * as Hi from 'react-icons/hi';
 import * as Fi from 'react-icons/fi';
 import * as Bs from 'react-icons/bs';
+import * as Ai from 'react-icons/ai';
+import * as Bi from 'react-icons/bi';
 
 const heroIcons = Object.keys(Hi);
 const featherIcons = Object.keys(Fi);
 const bootstrapIcons = Object.keys(Bs);
+const antdesignIcons = Object.keys(Ai);
+const boxIcons = Object.keys(Bi);
 
 export const reactIconsPacks = {
   heroicons: parseReactIconsNames(heroIcons),
   feather: parseReactIconsNames(featherIcons),
   bootstrap: parseReactIconsNames(bootstrapIcons),
+  antdesign: parseReactIconsNames(antdesignIcons),
+  boxicons: parseReactIconsNames(boxIcons),
 };
 
 function parseReactIconsNames(icons: string[]) {
@@ -26,9 +32,17 @@ function parseReactIconsNames(icons: string[]) {
 
 export function getReactIcon(iconName: string, iconPackName: string) {
   const iconPack = reactIconsPacks[iconPackName];
-  return iconPack.reverse().find(({ parsed }) => parsed === iconName);
+
+  const firstParseIconName = iconName.startsWith('bx') ? iconName.slice(3) : iconName;
+  const parsedIconName = firstParseIconName.startsWith('-') ? firstParseIconName.slice(1) : iconName;
+
+  return iconPack.reverse().find(({ parsed }) => parsed === parsedIconName);
 }
 
 export function generateReactIconsCodeSnippet(iconName: string, packId: string) {
   return `import { ${iconName} } from react-icons/${packId}`;
+}
+
+export function getReactIconsImport(reactIconName, packId) {
+  return reactIconName ? generateReactIconsCodeSnippet(reactIconName, packId) : '// Import not found';
 }
