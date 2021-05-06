@@ -1,4 +1,3 @@
-import postgres from 'postgres';
 import { useState } from 'react';
 import { InferGetStaticPropsType, GetStaticPaths, GetStaticProps } from 'next';
 import {
@@ -24,8 +23,6 @@ import {
   Tab,
   TabPanel,
 } from '@chakra-ui/react';
-import svgr from '@svgr/core';
-import { capitalCase } from 'change-case';
 
 import PrismTheme from 'prism-react-renderer/themes/dracula';
 import Highlight, { defaultProps } from 'prism-react-renderer';
@@ -37,7 +34,9 @@ import { FiClipboard, FiSearch, FiFigma } from 'react-icons/fi';
 // lib
 import { api } from 'lib/api';
 import { FoundIcon, Hash } from 'lib/types';
-import { getReactIcon, generateReactIconsCodeSnippet } from 'lib/react-icons';
+import { connectToPostgres } from 'lib/postgres';
+import { getReactIcon, getReactIconsImport } from 'lib/react-icons';
+import { createHtmlMarkup, createReactComponent, createReactComponentName, createVueTemplate } from 'lib/snippets';
 
 // components
 import { Main } from 'components/Main';
@@ -57,23 +56,17 @@ const item = {
 
 export default function IconPage(props: InferGetStaticPropsType<typeof getStaticProps>) {
   // constants
-  const data = props?.data;
   const success = props?.success;
-  const components = props?.components;
-
-  const reactIconName = data ? getReactIcon(data?.svg?.iconName, data?.svg?.packName) : '';
-  const reactIconsImport = reactIconName
-    ? generateReactIconsCodeSnippet(reactIconName?.original, data?.svg?.packId)
-    : '// Import not found';
+  const { data, snippets } = props;
 
   // react hooks
   const [selectedIconLibrary, setSelectedIconLibrary] = useState('react-icons');
 
   // chakra hooks
   const toast = useToast();
-  const { onCopy: onCopyCodeSnippet } = useClipboard(reactIconsImport);
-  const { onCopy: onCopyHtmlMarkup } = useClipboard(components.html);
-  const { onCopy: onCopyReactComponent } = useClipboard(components.react);
+  const { onCopy: onCopyHtmlMarkup } = useClipboard(snippets.html);
+  const { onCopy: onCopyReactComponent } = useClipboard(snippets.react);
+  const { onCopy: onCopyReactIconsImport } = useClipboard(snippets.reactIconsImport);
 
   // handlers
   function handleIconLibraryChange({ target }) {
@@ -91,7 +84,7 @@ export default function IconPage(props: InferGetStaticPropsType<typeof getStatic
   }
 
   function handleCopyImport() {
-    onCopyCodeSnippet();
+    onCopyReactIconsImport();
     toast({ status: 'success', description: `Icon import copied to your clipboard` });
   }
 
@@ -195,7 +188,7 @@ export default function IconPage(props: InferGetStaticPropsType<typeof getStatic
 
               <Stack>
                 <Text fontWeight='medium'>Code snippet</Text>
-                <Highlight {...defaultProps} theme={PrismTheme} code={reactIconsImport} language='jsx'>
+                <Highlight {...defaultProps} theme={PrismTheme} code={snippets.reactIconsImport} language='jsx'>
                   {({ className, style, tokens, getLineProps, getTokenProps }) => (
                     <HStack
                       as='pre'
@@ -232,7 +225,6 @@ export default function IconPage(props: InferGetStaticPropsType<typeof getStatic
                   <Tab>HTML</Tab>
                   <Tab>React</Tab>
                   <Tab>Vue</Tab>
-                  <Tab>Angular</Tab>
                 </TabList>
 
                 <TabPanels>
@@ -240,7 +232,7 @@ export default function IconPage(props: InferGetStaticPropsType<typeof getStatic
                     <Text fontWeight='medium' mb={2}>
                       Optimized SVG for your HTML
                     </Text>
-                    <Highlight {...defaultProps} code={components.html} theme={PrismTheme} language='markup'>
+                    <Highlight {...defaultProps} code={snippets.html} theme={PrismTheme} language='markup'>
                       {({ className, style, tokens, getLineProps, getTokenProps }) => (
                         <pre
                           className={className}
@@ -280,7 +272,7 @@ export default function IconPage(props: InferGetStaticPropsType<typeof getStatic
                     <Text fontWeight='medium' mb={2}>
                       Optimized SVG component for React
                     </Text>
-                    <Highlight {...defaultProps} code={components.react} theme={PrismTheme} language='jsx'>
+                    <Highlight {...defaultProps} code={snippets.react} theme={PrismTheme} language='jsx'>
                       {({ className, style, tokens, getLineProps, getTokenProps }) => (
                         <pre
                           className={className}
@@ -318,13 +310,43 @@ export default function IconPage(props: InferGetStaticPropsType<typeof getStatic
                   </TabPanel>
                   <TabPanel>
                     <Text fontWeight='medium' mb={2}>
-                      Optimized SVG template for Vue (WIP)
+                      Optimized SVG template for Vue
                     </Text>
-                  </TabPanel>
-                  <TabPanel>
-                    <Text fontWeight='medium' mb={2}>
-                      Optimized SVG component for Angular (WIP)
-                    </Text>
+                    <Highlight {...defaultProps} code={snippets.vue} theme={PrismTheme} language='jsx'>
+                      {({ className, style, tokens, getLineProps, getTokenProps }) => (
+                        <pre
+                          className={className}
+                          style={{
+                            ...style,
+                            maxHeight: '240px',
+                            overflow: 'auto',
+                            padding: '4px 16px',
+                            borderRadius: '6px',
+                            position: 'relative',
+                          }}
+                        >
+                          {tokens.map((line, i) => (
+                            <div {...getLineProps({ line, key: i })}>
+                              {line.map((token, key) => (
+                                <span {...getTokenProps({ token, key })} />
+                              ))}
+                            </div>
+                          ))}
+                          <IconButton
+                            onClick={handleCopyReactCode}
+                            size='md'
+                            variant='ghost'
+                            colorScheme='whiteAlpha'
+                            aria-label='Copy to clipboard'
+                            className='prism-code--copy'
+                            position='absolute'
+                            top={4}
+                            right={4}
+                            icon={<FiClipboard />}
+                          />
+                        </pre>
+                      )}
+                    </Highlight>
                   </TabPanel>
                 </TabPanels>
               </Tabs>
@@ -337,36 +359,25 @@ export default function IconPage(props: InferGetStaticPropsType<typeof getStatic
 }
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
-  const { hash } = params;
-  const foundIcon: FoundIcon = await api.getIconData(hash as string);
+  const foundIcon: FoundIcon = await api.getIconData(params.hash as string);
+  const { data } = foundIcon;
 
-  const react = await svgr(
-    foundIcon.data.svg.svg,
-    { icon: true, plugins: ['@svgr/plugin-svgo', '@svgr/plugin-jsx', '@svgr/plugin-prettier'] },
-    { componentName: capitalCase(`${foundIcon.data.svg.packName} ${foundIcon.data.svg.iconName}`).split(' ').join('') },
-  );
+  const componentName = createReactComponentName(data.svg.packName, data.svg.iconName);
+  const html = await createHtmlMarkup(data.svg.svg);
+  const vue = await createVueTemplate(data.svg.svg);
+  const react = await createReactComponent(data.svg.svg, componentName);
 
-  const html = await svgr(
-    foundIcon.data.svg.svg,
-    { icon: true, plugins: ['@svgr/plugin-svgo', '@svgr/plugin-prettier'] },
-    { componentName: capitalCase(`${foundIcon.data.svg.packName} ${foundIcon.data.svg.iconName}`).split(' ').join('') },
-  );
+  const reactIconName = getReactIcon(data?.svg?.iconName, data?.svg?.packName);
+  const reactIconsImport = getReactIconsImport(reactIconName?.original, data?.svg?.packId);
 
-  const components = { html, react };
+  const snippets = { reactIconsImport, html, react, vue };
 
-  return { props: { ...foundIcon, components }, revalidate: 86400 };
+  return { props: { ...foundIcon, snippets }, revalidate: 86400 };
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
   try {
-    const sql = postgres({
-      port: process.env.POSTGRES_PORT,
-      user: process.env.POSTGRES_USER,
-      password: process.env.POSTGRES_PASSWORD,
-      hostname: process.env.POSTGRES_HOSTNAME,
-      database: process.env.POSTGRES_DATABASE,
-    });
-
+    const sql = await connectToPostgres();
     const hashes: Hash[] = await sql`select hash from icons`;
     const paths = hashes.map(({ hash }) => ({ params: { hash } }));
 
