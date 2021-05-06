@@ -1,10 +1,6 @@
 import getFiles from 'https://deno.land/x/getfiles/mod.ts';
 import { Client } from 'https://deno.land/x/postgres/mod.ts';
-import { delay } from 'https://deno.land/x/delay@v0.2.0/mod.ts';
 import { sizeof } from 'https://deno.land/x/sizeof@v1.0.3/mod.ts';
-import { unZipFromFile } from 'https://deno.land/x/zip@v1.1.1/mod.ts';
-import upperFirstCase from 'https://deno.land/x/case/upperFirstCase.ts';
-import { download, Destination } from 'https://deno.land/x/download/mod.ts';
 import { prettyBytes } from 'https://raw.githubusercontent.com/brunnerlivio/deno-pretty-bytes/master/mod.ts';
 
 // helpers
@@ -34,43 +30,60 @@ const ICONS_WEBSITE_LINKS = {
   heroicons: 'https://heroicons.com',
   feather: 'https://feathericons.com',
   bootstrap: 'https://icons.getbootstrap.com',
+  antdesign: 'https://ant.design',
+  boxicons: 'https://boxicons.com',
 };
 
 const ICONS_FIGMA_LINKS = {
   heroicons: 'https://www.figma.com/community/file/958423903283802665',
   bootstrap: 'https://www.figma.com/file/YjjMzXhECL1MIb6Qlm7VJO/Bootstrap-Icons-v1.4.1',
   feather: 'https://www.figma.com/file/dyJRSFTIajik4cdkcXN8yA3K/Feather-Component-Library?node-id=0%3A1',
+  antdesign: 'https://www.figma.com/community/file/831698976089873405',
+  boxicons: 'https://www.figma.com/community/file/907154826824434501',
 };
 
 const ICONS_LIST = [
-  { packId: 'bs', packName: 'bootstrap', owner: 'twbs', repo: 'icons' },
-  { packId: 'fi', packName: 'feather', owner: 'feathericons', repo: 'feather' },
-  { packId: 'hi', packName: 'heroicons', owner: 'tailwindlabs', repo: 'heroicons' },
+  { packId: 'bs', packName: 'bootstrap', owner: 'twbs', repo: 'icons', type: 'releases' },
+  { packId: 'fi', packName: 'feather', owner: 'feathericons', repo: 'feather', type: 'releases' },
+  { packId: 'hi', packName: 'heroicons', owner: 'tailwindlabs', repo: 'heroicons', type: 'releases' },
+  { packId: 'ai', packName: 'antdesign', owner: 'ant-design', repo: 'ant-design-icons', type: 'tags' },
+  { packId: 'bi', packName: 'boxicons', owner: 'atisawd', repo: 'boxicons', type: 'releases' },
 ];
 
-export function getIconSource(iconPack: PacksNames, iconFileName: string) {
-  const links = {
-    bootstrap: (iconFileName: string) => `${GITHUB}/twbs/icons/blob/main/icons/${iconFileName}`,
-    feather: (iconFileName: string) => `${GITHUB}/feathericons/feather/blob/master/icons/${iconFileName}`,
-    heroicons: (iconFileName: string) => `${GITHUB}/tailwindlabs/heroicons/blob/master/src/outline/${iconFileName}`,
-  };
+const ICONS_SOURCE_LINKS = {
+  bootstrap: (iconFileName: string) => {
+    return `${GITHUB}/twbs/icons/blob/main/icons/${iconFileName}`;
+  },
+  feather: (iconFileName: string) => {
+    return `${GITHUB}/feathericons/feather/blob/master/icons/${iconFileName}`;
+  },
+  heroicons: (iconFileName: string) => {
+    return `${GITHUB}/tailwindlabs/heroicons/blob/master/src/outline/${iconFileName}`;
+  },
+  antdesign: (iconFileName: string, iconType: string) => {
+    return `${GITHUB}/ant-design/ant-design-icons/blob/master/packages/icons-svg/svg/${iconType}/${iconFileName}`;
+  },
+  boxicons: (iconFileName: string, iconType: string) => {
+    return `${GITHUB}/atiswad/boxicons/blob/master/svg/${iconType}/${iconFileName}`;
+  },
+};
 
-  const getIconSourceLinkFn = links[iconPack];
-  const iconSourceLink = getIconSourceLinkFn(iconFileName);
+const ICON_PAGE_LINK = {
+  boxicons: () => ICONS_WEBSITE_LINKS.boxicons,
+  heroicons: () => ICONS_WEBSITE_LINKS.heroicons,
+  antdesign: () => `${ICONS_WEBSITE_LINKS.antdesign}/components/icon`,
+  feather: (iconName: string) => `${ICONS_WEBSITE_LINKS.feather}/?query=${iconName}`,
+  bootstrap: (iconName: string) => `${ICONS_WEBSITE_LINKS.bootstrap}/icons/${iconName}`,
+};
 
-  return iconSourceLink;
+export function getIconSource(iconPack: PacksNames, iconFileName: string, iconType: string) {
+  const getIconSourceLinkFn = ICONS_SOURCE_LINKS[iconPack];
+  return getIconSourceLinkFn(iconFileName, iconType);
 }
 
 export function getIconLink(iconPack: PacksNames, iconName: string) {
-  const links = {
-    heroicons: () => ICONS_WEBSITE_LINKS.heroicons,
-    feather: (iconName: string) => `${ICONS_WEBSITE_LINKS.feather}/?query=${iconName}`,
-    bootstrap: (iconName: string) => `${ICONS_WEBSITE_LINKS.bootstrap}/icons/${iconName}`,
-  };
-  const getIconPackLinkFn = links[iconPack];
-  const iconLink = getIconPackLinkFn(iconName);
-
-  return iconLink;
+  const getIconPackLinkFn = ICON_PAGE_LINK[iconPack];
+  return getIconPackLinkFn(iconName);
 }
 
 export function getIconPackWebsite(svgPackName: string) {
@@ -91,38 +104,27 @@ export async function saveIconsInDB(client: Client) {
   await transaction.queryArray`CREATE TABLE icons (hash TEXT, svg TEXT, type TEXT, bytes TEXT, pack_id TEXT, pack_name TEXT, icon_name TEXT, icon_file_name TEXT)`;
   await transaction.queryArray`CREATE INDEX hash_index ON icons(hash)`;
 
-  for (const { packId, packName, owner, repo } of ICONS_LIST) {
-    const response = await fetch(`https://api.github.com/repos/${owner}/${repo}/releases`);
-    const [lastRelease] = await response.json();
-    const { zipball_url } = lastRelease;
-
-    // download zip
+  for (const { packId, packName } of ICONS_LIST) {
     const downloadDirectory = './downloads';
     const unzippedDirectory = `${downloadDirectory}/unzipped`;
     const unzippedDirectoryPack = `${unzippedDirectory}/${packName}`;
 
-    const fileName = `${packName}.zip`;
-    const fullPath = `${downloadDirectory}/${fileName}`;
-
-    const destination: Destination = { dir: downloadDirectory, file: fileName };
-    await download(zipball_url, destination);
-
-    // unZipFromFile
-    unZipFromFile(fullPath, unzippedDirectory, { includeFileName: true });
-
-    // wait for unzipping
-    await delay(2000);
-
     const unzippedNames = await getFiles(unzippedDirectoryPack);
     const svgFiles = unzippedNames
-      .filter(({ name, ext }) => !(name === 'bootstrap-icons.svg' || name.endsWith('-preview.svg')) && ext === 'svg')
+      .filter(({ name, ext }) => !(name === 'bootstrap-icons.svg') && ext === 'svg')
       .map(({ name, path }) => {
-        const [type] = path.match(/outline|solid/g) || ['default'];
-        return { name, path, type: upperFirstCase(type) };
+        const [type] = path.match(/outline|solid|fill|twotone|logos|regular/gi) || ['regular'];
+        return { name, path, type };
       });
 
     for (const { name, path, type } of svgFiles) {
-      const svg = await Deno.readTextFile(path);
+      let svg = await Deno.readTextFile(path);
+
+      if (svg.includes('<?xml')) {
+        const svgArray = svg.split(/\n/g);
+        svgArray.shift();
+        svg = svgArray.join('');
+      }
 
       const iconName = name.replace('.svg', '');
       const bytes = prettyBytes(sizeof(svg).bytesize);
@@ -136,3 +138,33 @@ export async function saveIconsInDB(client: Client) {
 
   await transaction.commit();
 }
+
+/*
+import { delay } from 'https://deno.land/x/delay@v0.2.0/mod.ts';
+import { unZipFromFile } from 'https://deno.land/x/zip@v1.1.1/mod.ts';
+import upperFirstCase from 'https://deno.land/x/case/upperFirstCase.ts';
+import { download, Destination } from 'https://deno.land/x/download/mod.ts';
+
+// .filter(({ name, ext }) => !(name === 'bootstrap-icons.svg' || name.endsWith('-preview.svg')) && ext === 'svg')
+
+const response = await fetch(`https://api.github.com/repos/${owner}/${repo}/${type}`);
+const [lastRelease] = await response.json();
+const { zipball_url } = lastRelease;'
+
+// download zip
+const downloadDirectory = './downloads';
+const unzippedDirectory = `${downloadDirectory}/unzipped`;
+const unzippedDirectoryPack = `${unzippedDirectory}/${packName}`;
+
+const fileName = `${packName}.zip`;
+const fullPath = `${downloadDirectory}/${fileName}`;
+
+const destination: Destination = { dir: downloadDirectory, file: fileName };
+await download(zipball_url, destination);
+
+// unZipFromFile
+unZipFromFile(fullPath, unzippedDirectory, { includeFileName: true });
+
+// wait for unzipping
+await delay(15000);
+*/
