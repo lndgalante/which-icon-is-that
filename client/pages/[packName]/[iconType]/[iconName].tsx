@@ -33,8 +33,7 @@ import { FiClipboard, FiSearch, FiFigma } from 'react-icons/fi';
 
 // lib
 import { api } from 'lib/api';
-import { FoundIcon, Hash } from 'lib/types';
-import { connectToPostgres } from 'lib/postgres';
+import { FoundIcon } from 'lib/types';
 import { getReactIcon, getReactIconsImport } from 'lib/react-icons';
 import { createHtmlMarkup, createReactComponent, createReactComponentName, createVueTemplate } from 'lib/snippets';
 
@@ -114,9 +113,9 @@ export default function IconPage(props: InferGetStaticPropsType<typeof getStatic
 
           <Tooltip label='Icon type' aria-label='Icon type'>
             <Tag size='lg' borderRadius='full' fontSize='sm' colorScheme='blackAlpha' variants={item}>
-              <TagLabel mr={1.5}>{data?.svg?.type}</TagLabel>
+              <TagLabel mr={1.5}>{data?.svg?.iconType}</TagLabel>
               <TagRightIcon
-                as={() => <Icon as={data?.svg?.type === 'solid' ? RiBrush2Fill : RiBrush2Line} w={5} h={5} />}
+                as={() => <Icon as={data?.svg?.iconType === 'solid' ? RiBrush2Fill : RiBrush2Line} w={5} h={5} />}
               />
             </Tag>
           </Tooltip>
@@ -359,7 +358,11 @@ export default function IconPage(props: InferGetStaticPropsType<typeof getStatic
 }
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
-  const foundIcon: FoundIcon = await api.getIconData(params.hash as string);
+  const { packName, iconType, iconName } = params;
+  const fullPath = `${packName};${iconType};${iconName}`;
+
+  const { data: initialData } = await api.getHashFromPath(fullPath);
+  const foundIcon: FoundIcon = await api.getIconData(initialData.result);
   const { data } = foundIcon;
 
   const componentName = createReactComponentName(data.svg.packName, data.svg.iconName);
@@ -377,11 +380,8 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 
 export const getStaticPaths: GetStaticPaths = async () => {
   try {
-    const sql = await connectToPostgres();
-    const hashes: Hash[] = await sql`select hash from icons`;
-    const paths = hashes.map(({ hash }) => ({ params: { hash } }));
-
-    return { paths, fallback: false };
+    const { data } = await api.getPaths();
+    return { paths: data.paths, fallback: false };
   } catch (error) {
     console.log('Error on getStaticPaths', error);
   }
