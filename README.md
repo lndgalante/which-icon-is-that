@@ -84,6 +84,10 @@ Release date: Tuesday 1, June
 
 * [ ] Split Figma links in Community and Plugins
 
+- [ ] Pro version:
+  - [ ] Support for Pro icons
+  - [ ] Email support 24/7
+
 **Users Feedback**
 
 - [ ] Landing like https://www.remove.bg
@@ -102,8 +106,6 @@ Release date: Tuesday 1, June
 
 * [ ] Display icons in a playground to change the color and the background color
 
-- [ ] Same app but as a Chrome extension
-
 * [ ] Support using bitmaps
 
 - [ ] Display similar icons i.e if I drop a feather alert, show me the alert for the other packages
@@ -112,9 +114,9 @@ Release date: Tuesday 1, June
 
 - [ ] Add code to install npm package, to use from Skypack/Unpkg
 
-* [ ] Improve URL from /:hash to /:packName/:packId
+* [ ] Same app but as a VSCode extension
 
-- [ ] Same app but as a VSCode extension
+- [ ] Same app but as a Chrome extension
 
 ## DONE
 
@@ -132,43 +134,45 @@ Release date: Tuesday 1, June
 
 ---
 
-- [x] Create svg component for Vue with @vue-svgicon
+- [] Improve URL from /:hash to /:packName/:iconType/:packId
 
-* [x] Create svg component for HTML with @svgr/core
+* [x] Create svg component for Vue with @vue-svgicon
 
-- [x] Create svg component for React with @svgr/core
+- [x] Create svg component for HTML with @svgr/core
 
-* [x] Check if we are handling icon packs with solid and outline versions
+* [x] Create svg component for React with @svgr/core
 
-- [x] Display if icon supports solid or outline version
+- [x] Check if we are handling icon packs with solid and outline versions
 
-* [x] Migrate DB from Redis to PostgreSQL
+* [x] Display if icon supports solid or outline version
 
-- [x] Add Plausible analytics
+- [x] Migrate DB from Redis to PostgreSQL
 
-* [x] Try Preactjs on Next.js build
+* [x] Add Plausible analytics
 
-- [x] Refactorize to download icons instead of having them locally
+- [x] Try Preactjs on Next.js build
+
+* [x] Refactorize to download icons instead of having them locally
       [x] Download icons
       [x] Save it to upstash
       [x] Endpoint reads from upstash redis
 
-* [x] Reach 100/100 in Audits
+- [x] Reach 100/100 in Audits
 
-- [x] Buy whichiconisthat.com in NameCheap
+* [x] Buy whichiconisthat.com in NameCheap
 
-* [x] Deploy client to Vercel
+- [x] Deploy client to Vercel
 
-- [x] Deploy server to Deno deploy
+* [x] Deploy server to Deno deploy
 
-* [x] Add bottom icon to open footer with Slide transition
+- [x] Add bottom icon to open footer with Slide transition
   - [x] Display supported icons
   - [x] Display GitHub / Twitter
   - [x] Display code snippets for react/angular/vue-icons
 
-- [x] Remove svg parent tag to have more probabilities to find a icon
+* [x] Remove svg parent tag to have more probabilities to find a icon
 
-* [x] Beta testers list + exclusive list
+- [x] Beta testers list + exclusive list
 
 ## Built using
 
