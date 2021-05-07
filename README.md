@@ -88,6 +88,8 @@ Release date: Tuesday 1, June
   - [ ] Support for Pro icons
   - [ ] Email support 24/7
 
+* [ ] Add [Swagger](https://github.com/asad-mlbd/deno-api-starter-oak) documentation for Deno API
+
 **Users Feedback**
 
 - [ ] Landing like https://www.remove.bg
