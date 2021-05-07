@@ -20,12 +20,13 @@ import {
 } from '@chakra-ui/react';
 
 // lib
+import { api } from '@lib/api';
 import { createHash } from '@lib/hash';
 import { getInnerHTMLFromSvgText } from '@lib/dom';
 
 // components
-import { Main } from 'components/Main';
-import { RadioGroup } from 'components/RadioGroup';
+import { Main } from '@components/Main';
+import { RadioGroup } from '@components/RadioGroup';
 
 // constants
 const SVG_PLACEHOLDER = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check2" viewBox="0 0 16 16">
@@ -56,7 +57,17 @@ export default function Home() {
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop: handleDrop });
 
   // helpers
-  const moveToHashPage = (hash: string) => push(`/${hash}`, undefined, { shallow: true });
+  async function moveToHashPage(hash: string) {
+    const { data } = await api.getPathFromHash(hash);
+    const { result, success } = data;
+
+    if (!success) {
+      return toast({ title: 'Icon not found on our database', status: 'error' });
+    }
+
+    const url = `/${result.replaceAll(';', '/')}`;
+    push(url, undefined, { shallow: true });
+  }
 
   // handlers
   function handleInputTypeChange(value: string) {
