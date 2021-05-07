@@ -102,7 +102,8 @@ router.get('/reverse', async ({ request, response }) => {
 
   try {
     if (path) {
-      const { rows, rowCount } = await client.queryObject`SELECT hash FROM paths WHERE path = ${path}`;
+      const encodedPath = encodeURIComponent(path);
+      const { rows, rowCount } = await client.queryObject`SELECT hash FROM paths WHERE path = ${encodedPath}`;
 
       if (rowCount === 0) {
         response.status = 404;

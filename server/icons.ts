@@ -132,14 +132,12 @@ export async function saveIconsInDB(client: Client) {
 
       const iconName = name.replace('.svg', '');
       const bytes = prettyBytes(sizeof(svg).bytesize);
-
       const svgInnerHtml = getInnerHTMLFromSvgText(svg);
       const hash = createHash(svgInnerHtml);
-
-      const fullPath = `${packName};${iconType};${iconName}`;
-
-      await transaction.queryArray`INSERT INTO paths(path,hash) VALUES (${fullPath},${hash})`;
       await transaction.queryArray`INSERT INTO icons(hash,svg,icon_type,bytes,pack_id,pack_name,icon_name,icon_file_name) VALUES (${hash},${svg},${iconType},${bytes},${packId},${packName},${iconName},${name})`;
+
+      const encodedPath = encodeURIComponent(`${packName}/${iconType}/${iconName}`);
+      await transaction.queryArray`INSERT INTO paths(path,hash) VALUES (${encodedPath},${hash})`;
     }
   }
 

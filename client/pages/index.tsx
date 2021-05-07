@@ -58,15 +58,13 @@ export default function Home() {
 
   // helpers
   async function moveToHashPage(hash: string) {
-    const { data } = await api.getPathFromHash(hash);
-    const { result, success } = data;
+    const { data, success } = await api.getPathFromHash(hash);
 
     if (!success) {
       return toast({ title: 'Icon not found on our database', status: 'error' });
     }
 
-    const url = `/${result.replaceAll(';', '/')}`;
-    push(url, undefined, { shallow: true });
+    push(`/${decodeURIComponent(data.result)}`, undefined, { shallow: true });
   }
 
   // handlers

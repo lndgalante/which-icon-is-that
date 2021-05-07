@@ -8,9 +8,7 @@ import {
   Slide,
   Stack,
   HStack,
-  VStack,
   Select,
-  Button,
   Tooltip,
   TagLabel,
   IconButton,
@@ -54,9 +52,7 @@ const item = {
 };
 
 export default function IconPage(props: InferGetStaticPropsType<typeof getStaticProps>) {
-  // constants
-  const success = props?.success;
-  const { data, snippets } = props;
+  const { svg, links, snippets } = props;
 
   // react hooks
   const [selectedIconLibrary, setSelectedIconLibrary] = useState('react-icons');
@@ -89,281 +85,259 @@ export default function IconPage(props: InferGetStaticPropsType<typeof getStatic
 
   return (
     <Main>
-      {success === true && (
-        <HStack mb={4} variants={container} initial='hidden' animate='show'>
-          <Tooltip label={data?.svg?.iconFileName} aria-label={`${data?.svg?.iconName} icon file name`}>
-            <Link href={data?.links?.icon} isExternal>
-              <Tag size='lg' borderRadius='full' fontSize='sm' colorScheme='blackAlpha' variants={item}>
-                <TagLabel mr={1.5}>{data?.svg?.iconName}</TagLabel>
-                <TagRightIcon
-                  as={() => <div style={{ minWidth: '20px' }} dangerouslySetInnerHTML={{ __html: data?.svg?.svg }} />}
-                />
-              </Tag>
-            </Link>
-          </Tooltip>
-
-          <Tooltip label='Icon pack' aria-label='Icon pack'>
-            <Link href={data?.links?.pack} isExternal>
-              <Tag size='lg' borderRadius='full' fontSize='sm' colorScheme='blackAlpha' variants={item}>
-                <TagLabel mr={1.5}>{data?.svg?.packName}</TagLabel>
-                <TagRightIcon maxW={4} as={ICONS_LOGOS[data?.svg?.packName]} />
-              </Tag>
-            </Link>
-          </Tooltip>
-
-          <Tooltip label='Icon type' aria-label='Icon type'>
+      <HStack mb={4} variants={container} initial='hidden' animate='show'>
+        <Tooltip label={svg?.iconFileName} aria-label={`${svg?.iconName} icon file name`}>
+          <Link href={links?.icon} isExternal>
             <Tag size='lg' borderRadius='full' fontSize='sm' colorScheme='blackAlpha' variants={item}>
-              <TagLabel mr={1.5}>{data?.svg?.iconType}</TagLabel>
+              <TagLabel mr={1.5}>{svg?.iconName}</TagLabel>
               <TagRightIcon
-                as={() => <Icon as={data?.svg?.iconType === 'solid' ? RiBrush2Fill : RiBrush2Line} w={5} h={5} />}
+                as={() => <div style={{ minWidth: '20px' }} dangerouslySetInnerHTML={{ __html: svg?.svg }} />}
               />
             </Tag>
-          </Tooltip>
+          </Link>
+        </Tooltip>
 
-          <Tooltip label='Figma file' aria-label='Figma file'>
-            <Link href={data?.links?.figma} isExternal>
-              <Tag size='lg' borderRadius='full' fontSize='sm' colorScheme='blackAlpha' variants={item}>
-                <TagLabel mr={1.5}>Figma</TagLabel>
-                <TagRightIcon as={() => <Icon as={FiFigma} w={5} h={5} />} />
-              </Tag>
-            </Link>
-          </Tooltip>
-
-          <Tooltip label='Source code' aria-label='Source code'>
-            <Link href={data?.links?.source} isExternal>
-              <Tag size='lg' borderRadius='full' fontSize='sm' colorScheme='blackAlpha' variants={item}>
-                <TagLabel mr={1.5}>{data?.svg?.bytes}</TagLabel>
-                <TagRightIcon as={() => <Icon as={FaGithubAlt} w={5} h={5} />} />
-              </Tag>
-            </Link>
-          </Tooltip>
-
-          <NextChakraLink href='/'>
+        <Tooltip label='Icon pack' aria-label='Icon pack'>
+          <Link href={links?.pack} isExternal>
             <Tag size='lg' borderRadius='full' fontSize='sm' colorScheme='blackAlpha' variants={item}>
-              <TagLabel mr={1.5}>Find another icon</TagLabel>
-              <TagRightIcon as={() => <Icon as={FiSearch} w={5} h={5} />} />
+              <TagLabel mr={1.5}>{svg?.packName}</TagLabel>
+              <TagRightIcon maxW={4} as={ICONS_LOGOS[svg?.packName]} />
             </Tag>
-          </NextChakraLink>
+          </Link>
+        </Tooltip>
+
+        <Tooltip label='Icon type' aria-label='Icon type'>
+          <Tag size='lg' borderRadius='full' fontSize='sm' colorScheme='blackAlpha' variants={item}>
+            <TagLabel mr={1.5}>{svg?.iconType}</TagLabel>
+            <TagRightIcon
+              as={() => <Icon as={svg?.iconType === 'solid' ? RiBrush2Fill : RiBrush2Line} w={5} h={5} />}
+            />
+          </Tag>
+        </Tooltip>
+
+        <Tooltip label='Figma file' aria-label='Figma file'>
+          <Link href={links?.figma} isExternal>
+            <Tag size='lg' borderRadius='full' fontSize='sm' colorScheme='blackAlpha' variants={item}>
+              <TagLabel mr={1.5}>Figma</TagLabel>
+              <TagRightIcon as={() => <Icon as={FiFigma} w={5} h={5} />} />
+            </Tag>
+          </Link>
+        </Tooltip>
+
+        <Tooltip label='Source code' aria-label='Source code'>
+          <Link href={links?.source} isExternal>
+            <Tag size='lg' borderRadius='full' fontSize='sm' colorScheme='blackAlpha' variants={item}>
+              <TagLabel mr={1.5}>{svg?.bytes}</TagLabel>
+              <TagRightIcon as={() => <Icon as={FaGithubAlt} w={5} h={5} />} />
+            </Tag>
+          </Link>
+        </Tooltip>
+
+        <NextChakraLink href='/'>
+          <Tag size='lg' borderRadius='full' fontSize='sm' colorScheme='blackAlpha' variants={item}>
+            <TagLabel mr={1.5}>Find another icon</TagLabel>
+            <TagRightIcon as={() => <Icon as={FiSearch} w={5} h={5} />} />
+          </Tag>
+        </NextChakraLink>
+      </HStack>
+
+      <Slide direction='bottom' in style={{ zIndex: 10 }}>
+        <HStack
+          alignItems='flex-start'
+          flex-direction='row'
+          px={6}
+          pt={4}
+          pb={12}
+          color='white'
+          background='blackAlpha.900'
+          position='relative'
+          spacing={12}
+        >
+          <Stack>
+            <Stack>
+              <Text fontWeight='medium'>Pick your icon library</Text>
+              <Select size='md' value={selectedIconLibrary} onChange={handleIconLibraryChange}>
+                <option value='react-icons'>react-icons</option>
+              </Select>
+            </Stack>
+
+            <Stack>
+              <Text fontWeight='medium'>Code snippet</Text>
+              <Highlight {...defaultProps} theme={PrismTheme} code={snippets.reactIconsImport} language='jsx'>
+                {({ className, style, tokens, getLineProps, getTokenProps }) => (
+                  <HStack
+                    as='pre'
+                    spacing={4}
+                    className={`${className} code`}
+                    style={{ ...style, padding: '4px 16px', borderRadius: '6px' }}
+                  >
+                    {tokens.map((line, i) => (
+                      <div {...getLineProps({ line, key: i })}>
+                        {line.map((token, key) => (
+                          <span {...getTokenProps({ token, key })} />
+                        ))}
+                      </div>
+                    ))}
+
+                    <IconButton
+                      onClick={handleCopyImport}
+                      size='md'
+                      variant='ghost'
+                      colorScheme='whiteAlpha'
+                      aria-label='Copy to clipboard'
+                      className='prism-code--copy'
+                      icon={<FiClipboard />}
+                    />
+                  </HStack>
+                )}
+              </Highlight>
+            </Stack>
+          </Stack>
+
+          <Stack>
+            <Tabs>
+              <TabList>
+                <Tab>HTML</Tab>
+                <Tab>React</Tab>
+                <Tab>Vue</Tab>
+              </TabList>
+
+              <TabPanels>
+                <TabPanel>
+                  <Text fontWeight='medium' mb={2}>
+                    Optimized SVG for your HTML
+                  </Text>
+                  <Highlight {...defaultProps} code={snippets.html} theme={PrismTheme} language='markup'>
+                    {({ className, style, tokens, getLineProps, getTokenProps }) => (
+                      <pre
+                        className={className}
+                        style={{
+                          ...style,
+                          maxHeight: '240px',
+                          overflow: 'auto',
+                          padding: '4px 16px',
+                          borderRadius: '6px',
+                          position: 'relative',
+                        }}
+                      >
+                        {tokens.map((line, i) => (
+                          <div {...getLineProps({ line, key: i })}>
+                            {line.map((token, key) => (
+                              <span {...getTokenProps({ token, key })} />
+                            ))}
+                          </div>
+                        ))}
+                        <IconButton
+                          onClick={handleCopyHtmlCode}
+                          size='md'
+                          variant='ghost'
+                          colorScheme='whiteAlpha'
+                          aria-label='Copy to clipboard'
+                          className='prism-code--copy'
+                          position='absolute'
+                          top={4}
+                          right={4}
+                          icon={<FiClipboard />}
+                        />
+                      </pre>
+                    )}
+                  </Highlight>
+                </TabPanel>
+                <TabPanel>
+                  <Text fontWeight='medium' mb={2}>
+                    Optimized SVG component for React
+                  </Text>
+                  <Highlight {...defaultProps} code={snippets.react} theme={PrismTheme} language='jsx'>
+                    {({ className, style, tokens, getLineProps, getTokenProps }) => (
+                      <pre
+                        className={className}
+                        style={{
+                          ...style,
+                          maxHeight: '240px',
+                          overflow: 'auto',
+                          padding: '4px 16px',
+                          borderRadius: '6px',
+                          position: 'relative',
+                        }}
+                      >
+                        {tokens.map((line, i) => (
+                          <div {...getLineProps({ line, key: i })}>
+                            {line.map((token, key) => (
+                              <span {...getTokenProps({ token, key })} />
+                            ))}
+                          </div>
+                        ))}
+                        <IconButton
+                          onClick={handleCopyReactCode}
+                          size='md'
+                          variant='ghost'
+                          colorScheme='whiteAlpha'
+                          aria-label='Copy to clipboard'
+                          className='prism-code--copy'
+                          position='absolute'
+                          top={4}
+                          right={4}
+                          icon={<FiClipboard />}
+                        />
+                      </pre>
+                    )}
+                  </Highlight>
+                </TabPanel>
+                <TabPanel>
+                  <Text fontWeight='medium' mb={2}>
+                    Optimized SVG template for Vue
+                  </Text>
+                  <Highlight {...defaultProps} code={snippets.vue} theme={PrismTheme} language='jsx'>
+                    {({ className, style, tokens, getLineProps, getTokenProps }) => (
+                      <pre
+                        className={className}
+                        style={{
+                          ...style,
+                          maxHeight: '240px',
+                          overflow: 'auto',
+                          padding: '4px 16px',
+                          borderRadius: '6px',
+                          position: 'relative',
+                        }}
+                      >
+                        {tokens.map((line, i) => (
+                          <div {...getLineProps({ line, key: i })}>
+                            {line.map((token, key) => (
+                              <span {...getTokenProps({ token, key })} />
+                            ))}
+                          </div>
+                        ))}
+                        <IconButton
+                          onClick={handleCopyReactCode}
+                          size='md'
+                          variant='ghost'
+                          colorScheme='whiteAlpha'
+                          aria-label='Copy to clipboard'
+                          className='prism-code--copy'
+                          position='absolute'
+                          top={4}
+                          right={4}
+                          icon={<FiClipboard />}
+                        />
+                      </pre>
+                    )}
+                  </Highlight>
+                </TabPanel>
+              </TabPanels>
+            </Tabs>
+          </Stack>
         </HStack>
-      )}
-
-      {success === false && (
-        <VStack>
-          <Text mb={2} fontSize='lg'>
-            Sorry, we couldn't find your icon 😢
-          </Text>
-          <Button
-            aria-label='Find another icon'
-            variant='outline'
-            size='md'
-            colorScheme='blackAlpha'
-            rightIcon={<FiSearch />}
-          >
-            <NextChakraLink href='/'>Find another icon</NextChakraLink>
-          </Button>
-        </VStack>
-      )}
-
-      {success === true && (
-        <Slide direction='bottom' in style={{ zIndex: 10 }}>
-          <HStack
-            alignItems='flex-start'
-            flex-direction='row'
-            px={6}
-            pt={4}
-            pb={12}
-            color='white'
-            background='blackAlpha.900'
-            position='relative'
-            spacing={12}
-          >
-            <Stack>
-              <Stack>
-                <Text fontWeight='medium'>Pick your icon library</Text>
-                <Select size='md' value={selectedIconLibrary} onChange={handleIconLibraryChange}>
-                  <option value='react-icons'>react-icons</option>
-                </Select>
-              </Stack>
-
-              <Stack>
-                <Text fontWeight='medium'>Code snippet</Text>
-                <Highlight {...defaultProps} theme={PrismTheme} code={snippets.reactIconsImport} language='jsx'>
-                  {({ className, style, tokens, getLineProps, getTokenProps }) => (
-                    <HStack
-                      as='pre'
-                      spacing={4}
-                      className={`${className} code`}
-                      style={{ ...style, padding: '4px 16px', borderRadius: '6px' }}
-                    >
-                      {tokens.map((line, i) => (
-                        <div {...getLineProps({ line, key: i })}>
-                          {line.map((token, key) => (
-                            <span {...getTokenProps({ token, key })} />
-                          ))}
-                        </div>
-                      ))}
-
-                      <IconButton
-                        onClick={handleCopyImport}
-                        size='md'
-                        variant='ghost'
-                        colorScheme='whiteAlpha'
-                        aria-label='Copy to clipboard'
-                        className='prism-code--copy'
-                        icon={<FiClipboard />}
-                      />
-                    </HStack>
-                  )}
-                </Highlight>
-              </Stack>
-            </Stack>
-
-            <Stack>
-              <Tabs>
-                <TabList>
-                  <Tab>HTML</Tab>
-                  <Tab>React</Tab>
-                  <Tab>Vue</Tab>
-                </TabList>
-
-                <TabPanels>
-                  <TabPanel>
-                    <Text fontWeight='medium' mb={2}>
-                      Optimized SVG for your HTML
-                    </Text>
-                    <Highlight {...defaultProps} code={snippets.html} theme={PrismTheme} language='markup'>
-                      {({ className, style, tokens, getLineProps, getTokenProps }) => (
-                        <pre
-                          className={className}
-                          style={{
-                            ...style,
-                            maxHeight: '240px',
-                            overflow: 'auto',
-                            padding: '4px 16px',
-                            borderRadius: '6px',
-                            position: 'relative',
-                          }}
-                        >
-                          {tokens.map((line, i) => (
-                            <div {...getLineProps({ line, key: i })}>
-                              {line.map((token, key) => (
-                                <span {...getTokenProps({ token, key })} />
-                              ))}
-                            </div>
-                          ))}
-                          <IconButton
-                            onClick={handleCopyHtmlCode}
-                            size='md'
-                            variant='ghost'
-                            colorScheme='whiteAlpha'
-                            aria-label='Copy to clipboard'
-                            className='prism-code--copy'
-                            position='absolute'
-                            top={4}
-                            right={4}
-                            icon={<FiClipboard />}
-                          />
-                        </pre>
-                      )}
-                    </Highlight>
-                  </TabPanel>
-                  <TabPanel>
-                    <Text fontWeight='medium' mb={2}>
-                      Optimized SVG component for React
-                    </Text>
-                    <Highlight {...defaultProps} code={snippets.react} theme={PrismTheme} language='jsx'>
-                      {({ className, style, tokens, getLineProps, getTokenProps }) => (
-                        <pre
-                          className={className}
-                          style={{
-                            ...style,
-                            maxHeight: '240px',
-                            overflow: 'auto',
-                            padding: '4px 16px',
-                            borderRadius: '6px',
-                            position: 'relative',
-                          }}
-                        >
-                          {tokens.map((line, i) => (
-                            <div {...getLineProps({ line, key: i })}>
-                              {line.map((token, key) => (
-                                <span {...getTokenProps({ token, key })} />
-                              ))}
-                            </div>
-                          ))}
-                          <IconButton
-                            onClick={handleCopyReactCode}
-                            size='md'
-                            variant='ghost'
-                            colorScheme='whiteAlpha'
-                            aria-label='Copy to clipboard'
-                            className='prism-code--copy'
-                            position='absolute'
-                            top={4}
-                            right={4}
-                            icon={<FiClipboard />}
-                          />
-                        </pre>
-                      )}
-                    </Highlight>
-                  </TabPanel>
-                  <TabPanel>
-                    <Text fontWeight='medium' mb={2}>
-                      Optimized SVG template for Vue
-                    </Text>
-                    <Highlight {...defaultProps} code={snippets.vue} theme={PrismTheme} language='jsx'>
-                      {({ className, style, tokens, getLineProps, getTokenProps }) => (
-                        <pre
-                          className={className}
-                          style={{
-                            ...style,
-                            maxHeight: '240px',
-                            overflow: 'auto',
-                            padding: '4px 16px',
-                            borderRadius: '6px',
-                            position: 'relative',
-                          }}
-                        >
-                          {tokens.map((line, i) => (
-                            <div {...getLineProps({ line, key: i })}>
-                              {line.map((token, key) => (
-                                <span {...getTokenProps({ token, key })} />
-                              ))}
-                            </div>
-                          ))}
-                          <IconButton
-                            onClick={handleCopyReactCode}
-                            size='md'
-                            variant='ghost'
-                            colorScheme='whiteAlpha'
-                            aria-label='Copy to clipboard'
-                            className='prism-code--copy'
-                            position='absolute'
-                            top={4}
-                            right={4}
-                            icon={<FiClipboard />}
-                          />
-                        </pre>
-                      )}
-                    </Highlight>
-                  </TabPanel>
-                </TabPanels>
-              </Tabs>
-            </Stack>
-          </HStack>
-        </Slide>
-      )}
+      </Slide>
     </Main>
   );
 }
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   const { packName, iconType, iconName } = params;
-  const fullPath = `${packName};${iconType};${iconName}`;
+  const encodedPath = encodeURIComponent(`${packName}/${iconType}/${iconName}`);
 
-  const { data: initialData } = await api.getHashFromPath(fullPath);
-  const foundIcon: FoundIcon = await api.getIconData(initialData.result);
-  const { data } = foundIcon;
+  const { data: initialData } = await api.getHashFromPath(encodedPath);
+  const { data }: FoundIcon = await api.getIconData(initialData.result);
 
   const componentName = createReactComponentName(data.svg.packName, data.svg.iconName);
   const html = await createHtmlMarkup(data.svg.svg);
@@ -375,7 +349,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 
   const snippets = { reactIconsImport, html, react, vue };
 
-  return { props: { ...foundIcon, snippets }, revalidate: 86400 };
+  return { props: { ...data, snippets }, revalidate: 86400 };
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
