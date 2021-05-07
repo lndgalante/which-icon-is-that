@@ -10,16 +10,16 @@ import { getInnerHTMLFromSvgText } from './dom.ts';
 // types
 type PacksNames = keyof typeof ICONS_WEBSITE_LINKS;
 
-type Type = 'default' | 'outline' | 'solid';
+type IconType = 'outline' | 'solid' | 'fill' | 'twotone' | 'logos' | 'regular';
 
 export type Svg = {
   hash: string;
   svg: string;
   bytes: string;
   pack_id: string;
+  icon_type: IconType;
   icon_name: string;
   icon_file_name: string;
-  type: Type;
   pack_name: PacksNames;
 };
 
@@ -101,8 +101,13 @@ export async function saveIconsInDB(client: Client) {
   await transaction.begin();
 
   await transaction.queryArray`DROP TABLE icons`;
-  await transaction.queryArray`CREATE TABLE icons (hash TEXT, svg TEXT, type TEXT, bytes TEXT, pack_id TEXT, pack_name TEXT, icon_name TEXT, icon_file_name TEXT)`;
+  await transaction.queryArray`DROP TABLE paths`;
+
+  await transaction.queryArray`CREATE TABLE paths (path TEXT, hash TEXT)`;
+  await transaction.queryArray`CREATE TABLE icons (hash TEXT, svg TEXT, icon_type TEXT, bytes TEXT, pack_id TEXT, pack_name TEXT, icon_name TEXT, icon_file_name TEXT)`;
+
   await transaction.queryArray`CREATE INDEX hash_index ON icons(hash)`;
+  await transaction.queryArray`CREATE INDEX path_index ON paths(path)`;
 
   for (const { packId, packName } of ICONS_LIST) {
     const downloadDirectory = './downloads';
@@ -113,11 +118,11 @@ export async function saveIconsInDB(client: Client) {
     const svgFiles = unzippedNames
       .filter(({ name, ext }) => !(name === 'bootstrap-icons.svg') && ext === 'svg')
       .map(({ name, path }) => {
-        const [type] = path.match(/outline|solid|fill|twotone|logos|regular/gi) || ['regular'];
-        return { name, path, type };
+        const [iconType] = path.match(/outline|solid|fill|twotone|logos|regular/gi) || ['regular'];
+        return { name, path, iconType };
       });
 
-    for (const { name, path, type } of svgFiles) {
+    for (const { name, path, iconType } of svgFiles) {
       let svg = await Deno.readTextFile(path);
 
       if (svg.includes('<?xml')) {
@@ -132,7 +137,8 @@ export async function saveIconsInDB(client: Client) {
       const svgInnerHtml = getInnerHTMLFromSvgText(svg);
       const hash = createHash(svgInnerHtml);
 
-      await transaction.queryArray`INSERT INTO ICONS(hash,svg,type,bytes,pack_id,pack_name,icon_name,icon_file_name) VALUES (${hash},${svg},${type},${bytes},${packId},${packName},${iconName},${name})`;
+      await transaction.queryArray`INSERT INTO paths(path,hash) VALUES (${packName};${iconType};${iconName},${hash})`;
+      await transaction.queryArray`INSERT INTO icons(hash,svg,icon_type,bytes,pack_id,pack_name,icon_name,icon_file_name) VALUES (${hash},${svg},${iconType},${bytes},${packId},${packName},${iconName},${name})`;
     }
   }
 
