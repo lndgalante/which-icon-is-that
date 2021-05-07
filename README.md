@@ -90,6 +90,8 @@ Release date: Tuesday 1, June
 
 * [ ] Add [Swagger](https://github.com/asad-mlbd/deno-api-starter-oak) documentation for Deno API
 
+- [ ] Add Docker suppor to get up and running client and server quickly
+
 **Users Feedback**
 
 - [ ] Landing like https://www.remove.bg
