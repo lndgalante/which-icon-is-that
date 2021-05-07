@@ -17,12 +17,11 @@ export type Svg = {
   svg: string;
   bytes: string;
   pack_id: string;
-  icon_type: IconType;
-  icon_name: string;
-  icon_file_name: string;
   pack_name: PacksNames;
+  icon_name: string;
+  icon_type: IconType;
+  icon_file_name: string;
 };
-
 // constants
 const GITHUB = 'https://github.com';
 
