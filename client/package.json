@@ -16,7 +16,7 @@
     "@svgr/plugin-prettier": "^5.5.0",
     "@svgr/plugin-svgo": "^5.5.0",
     "change-case": "^4.1.2",
-    "framer-motion": "^4.1.11",
+    "framer-motion": "^4.1.13",
     "is-svg": "^4.3.1",
     "is-url": "^1.2.4",
     "next": "10.2.0",
