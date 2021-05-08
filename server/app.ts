@@ -1,9 +1,14 @@
+import { oakCors } from 'https://deno.land/x/cors/mod.ts';
 import { parse } from 'https://deno.land/std/flags/mod.ts';
 import { Application, Router } from 'https://deno.land/x/oak/mod.ts';
 
 // helpers
 import { connectToPostgres } from './postgres.ts';
 import { saveIconsInDB, getIconLink, getIconPackWebsite, getIconSource, getIconPackFigmaLink, Svg } from './icons.ts';
+
+// env
+const ENV = Deno.env.get('ENVIRONMENT') as string;
+const origin = ENV === 'development' ? 'http://localhost:3001' : 'https://www.whichiconisthat.com';
 
 // port
 const DEFAULT_PORT = 8000;
@@ -137,7 +142,8 @@ router.get('/reverse', async ({ request, response }) => {
   }
 });
 
-// Passing Router as middleware
+// Add middlewares
+app.use(oakCors({ origin }));
 app.use(router.routes());
 app.use(router.allowedMethods());
 
