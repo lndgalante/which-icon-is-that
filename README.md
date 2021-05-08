@@ -90,7 +90,11 @@ Release date: Tuesday 1, June
 
 * [ ] Add [Swagger](https://github.com/asad-mlbd/deno-api-starter-oak) documentation for Deno API
 
-- [ ] Add Docker suppor to get up and running client and server quickly
+- [ ] Add Docker support to get up and running client and server quickly
+
+* [ ] Add icon stats, found N times
+
+- [ ] Add package stats, total downloads, total stars, total icons
 
 **Users Feedback**
 
