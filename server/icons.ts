@@ -38,14 +38,17 @@ export async function saveIconsInDB(client: Client) {
   const transaction = client.createTransaction('new_transaction');
   await transaction.begin();
 
-  await transaction.queryArray`DROP TABLE icons`;
-  await transaction.queryArray`DROP TABLE paths`;
+  await transaction.queryArray(`DROP TABLE icons`);
+  await transaction.queryArray(`DROP TABLE paths`);
 
-  await transaction.queryArray`CREATE TABLE paths (path TEXT, hash TEXT)`;
-  await transaction.queryArray`CREATE TABLE icons (hash TEXT, svg TEXT, icon_type TEXT, bytes TEXT, pack_id TEXT, pack_name TEXT, icon_name TEXT, icon_file_name TEXT)`;
+  await transaction.queryArray(`CREATE TABLE paths (path TEXT, hash TEXT)`);
+  await transaction.queryArray(
+    `CREATE TABLE icons (hash TEXT, svg TEXT, icon_type TEXT, bytes TEXT, pack_id TEXT, pack_name TEXT, icon_name TEXT, icon_file_name TEXT)`,
+  );
 
-  await transaction.queryArray`CREATE INDEX hash_index ON icons(hash)`;
-  await transaction.queryArray`CREATE INDEX path_index ON paths(path)`;
+  await transaction.queryArray(`CREATE INDEX hash_index ON icons(hash)`);
+  await transaction.queryArray(`CREATE INDEX path_index ON paths(path)`);
+  await transaction.queryArray(`CREATE INDEX hash_on_paths_index ON paths(hash)`);
 
   for (const { packId, packName } of ICONS_LIST) {
     const downloadDirectory = './downloads';
@@ -74,10 +77,12 @@ export async function saveIconsInDB(client: Client) {
       const bytes = prettyBytes(size);
       const svgInnerHtml = getInnerHTMLFromSvgText(svg);
       const hash = createHash(svgInnerHtml);
-      await transaction.queryArray`INSERT INTO icons(hash,svg,icon_type,bytes,pack_id,pack_name,icon_name,icon_file_name) VALUES (${hash},${svg},${iconType},${bytes},${packId},${packName},${iconName},${name})`;
+      await transaction.queryArray(
+        `INSERT INTO icons(hash,svg,icon_type,bytes,pack_id,pack_name,icon_name,icon_file_name) VALUES (${hash},${svg},${iconType},${bytes},${packId},${packName},${iconName},${name})`,
+      );
 
       const encodedPath = encodeURIComponent(`${packName}/${iconType}/${iconName}`);
-      await transaction.queryArray`INSERT INTO paths(path,hash) VALUES (${encodedPath},${hash})`;
+      await transaction.queryArray(`INSERT INTO paths(path,hash) VALUES (${encodedPath},${hash})`);
     }
   }
 
