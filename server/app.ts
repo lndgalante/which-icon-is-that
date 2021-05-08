@@ -75,7 +75,7 @@ router.get('/icon', async ({ request, response }) => {
 
 router.get('/paths', async ({ response }) => {
   try {
-    const { rows, rowCount } = await client.queryObject`SELECT pack_name, icon_type, icon_name FROM icons`;
+    const { rows, rowCount } = await client.queryObject(`SELECT pack_name, icon_type, icon_name FROM icons`);
 
     if (rowCount === 0) {
       response.status = 404;
@@ -109,7 +109,7 @@ router.get('/reverse', async ({ request, response }) => {
   try {
     if (path) {
       const encodedPath = encodeURIComponent(path);
-      const { rows, rowCount } = await client.queryObject`SELECT hash FROM paths WHERE path = ${encodedPath}`;
+      const { rows, rowCount } = await client.queryObject(`SELECT hash FROM paths WHERE path = $1`, encodedPath);
 
       if (rowCount === 0) {
         response.status = 404;
@@ -124,7 +124,7 @@ router.get('/reverse', async ({ request, response }) => {
     }
 
     if (hash) {
-      const { rows, rowCount } = await client.queryObject`SELECT path FROM paths WHERE hash = ${hash}`;
+      const { rows, rowCount } = await client.queryObject(`SELECT path FROM paths WHERE hash = $1`, hash);
 
       if (rowCount === 0) {
         response.status = 404;
