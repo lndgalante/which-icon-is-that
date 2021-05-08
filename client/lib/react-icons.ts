@@ -3,12 +3,14 @@ import * as Fi from 'react-icons/fi';
 import * as Bs from 'react-icons/bs';
 import * as Ai from 'react-icons/ai';
 import * as Bi from 'react-icons/bi';
+import * as Di from 'react-icons/di';
 
 const heroIcons = Object.keys(Hi);
 const featherIcons = Object.keys(Fi);
 const bootstrapIcons = Object.keys(Bs);
 const antdesignIcons = Object.keys(Ai);
 const boxIcons = Object.keys(Bi);
+const devIcons = Object.keys(Di);
 
 export const reactIconsPacks = {
   heroicons: parseReactIconsNames(heroIcons),
@@ -16,6 +18,7 @@ export const reactIconsPacks = {
   bootstrap: parseReactIconsNames(bootstrapIcons),
   antdesign: parseReactIconsNames(antdesignIcons),
   boxicons: parseReactIconsNames(boxIcons),
+  devicon: parseReactIconsNames(devIcons),
 };
 
 function parseReactIconsNames(icons: string[]) {

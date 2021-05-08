@@ -2,9 +2,9 @@ import { oakCors } from 'https://deno.land/x/cors/mod.ts';
 import { parse } from 'https://deno.land/std/flags/mod.ts';
 import { Application, Router } from 'https://deno.land/x/oak/mod.ts';
 
-// helpers
+import { Svg } from './types.ts';
 import { connectToPostgres } from './postgres.ts';
-import { saveIconsInDB, getIconLink, getIconPackWebsite, getIconSource, getIconPackFigmaLink, Svg } from './icons.ts';
+import { saveIconsInDB, getIconLink, getIconPackWebsite, getIconSource, getIconPackFigmaLink } from './icons.ts';
 
 // env
 const ENV = Deno.env.get('ENVIRONMENT') as string;
@@ -97,7 +97,8 @@ router.get('/paths', async ({ response }) => {
 });
 
 router.get('/reverse', async ({ request, response }) => {
-  const [hash, path] = [await request.url.searchParams.get('hash'), await request.url.searchParams.get('path')];
+  const { searchParams } = request.url;
+  const [hash, path] = [await searchParams.get('hash'), await searchParams.get('path')];
 
   if (!hash && !path) {
     response.status = 400;
