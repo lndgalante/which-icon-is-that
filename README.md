@@ -39,7 +39,7 @@ Release date: Tuesday 1, June
   - [x] Heroicons
   - [x] Ant Design Icons
   - [x] BoxIcons
-  - [ ] Devicons
+  - [x] Devicon
   - [ ] Flat Color Icons
   - [ ] Game Icons
   - [ ] GiHub Octicons icons
@@ -94,7 +94,9 @@ Release date: Tuesday 1, June
 
 * [ ] Add icon stats, found N times
 
-- [ ] Add package stats, total downloads, total stars, total icons
+- [ ] Add package stats, current version supported, total downloads, total stars, total icons
+
+* [ ] Add font version in tabs, that displays link tag pointing to CDN + i tag with proper class
 
 **Users Feedback**
 
