@@ -35,7 +35,6 @@ export function getIconPackFigmaLink(svgPackName: string) {
 }
 
 export async function saveIconsInDB(client: Client) {
-  let icons = 0;
   const transaction = client.createTransaction('new_transaction');
   await transaction.begin();
 
@@ -62,8 +61,6 @@ export async function saveIconsInDB(client: Client) {
       });
 
     for (const { name, path, iconType } of svgFiles) {
-      icons += 1;
-
       const { size } = await Deno.stat(path);
       let svg = await Deno.readTextFile(path);
 
@@ -85,8 +82,6 @@ export async function saveIconsInDB(client: Client) {
   }
 
   await transaction.commit();
-
-  console.log(`total icons ${icons}`);
 }
 
 /*
