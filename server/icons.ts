@@ -82,7 +82,7 @@ export async function saveIconsInDB(client: Client) {
         const hash = createHash(svgInnerHtml);
         await transaction.queryArray`INSERT INTO icons (hash,svg,icon_type,bytes,pack_id,pack_name,icon_name,icon_file_name,found) VALUES (${hash},${svg},${iconType},${bytes},${packId},${packName},${iconName},${name},0)`;
 
-        const encodedPath = encodeURIComponent(`${packName}/${iconType}/${iconName}`);
+        const encodedPath = encodeURIComponent(`/${packName}/${iconType}/${iconName}`);
         await transaction.queryArray`INSERT INTO paths (path,hash) VALUES (${encodedPath},${hash})`;
       }
     }

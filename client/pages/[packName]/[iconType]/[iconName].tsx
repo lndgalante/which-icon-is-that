@@ -73,7 +73,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps<Props, Params> = async ({ params }) => {
   try {
     const { packName, iconType, iconName } = params;
-    const encodedPath = encodeURIComponent(`${packName}/${iconType}/${iconName}`);
+    const encodedPath = encodeURIComponent(`/${packName}/${iconType}/${iconName}`);
 
     const { data: initialData } = await api.getHashFromPath(encodedPath);
     const { data }: IconResponse = await api.getIconData(initialData.result);

@@ -52,7 +52,7 @@ export default function Home() {
   const toast = useToast();
 
   // next hooks
-  const router = useRouter();
+  const { push } = useRouter();
 
   // dropzone hooks
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop: handleDrop });
@@ -68,7 +68,9 @@ export default function Home() {
       }
 
       await api.putIconIncrement(hash);
-      router.push(`/${decodeURIComponent(data.result)}`, undefined, { shallow: true });
+
+      const url = decodeURIComponent(data.result);
+      push(url, undefined, { shallow: true });
     } catch (error) {
       console.log('Error on moveToHashPage', error);
     } finally {
