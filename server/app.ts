@@ -24,8 +24,8 @@ const client = await connectToPostgres();
 // we will run this every now and then
 // await saveIconsInDB(client);
 
-router.get('/icon', async ({ request, response }) => {
-  const hash = await request.url.searchParams.get('hash');
+router.get('/icon/:hash', async ({ params, response }) => {
+  const { hash } = params;
 
   if (!hash) {
     response.status = 400;
@@ -67,6 +67,51 @@ router.get('/icon', async ({ request, response }) => {
         svg: { hash, svg, iconType, bytes, packId, packName, iconName, iconFileName },
       },
     };
+  } catch (error) {
+    console.log('Server error', error);
+    response.status = 500;
+  }
+});
+
+router.put('/icon/:hash', async ({ params, response }) => {
+  try {
+    const { hash } = params;
+    const transaction = client.createTransaction('tx-increment');
+
+    await transaction.begin();
+    await transaction.queryArray(`UPDATE icons SET found = found + 1 WHERE hash = $1`, hash);
+    await transaction.commit();
+
+    response.status = 200;
+    response.body = { success: true, data: { message: 'Icon found!' } };
+  } catch (error) {
+    console.log('Error incrementing number', error);
+    response.status = 500;
+  }
+});
+
+router.get('/icon/:hash/found', async ({ params, response }) => {
+  const { hash } = params;
+
+  if (!hash) {
+    response.status = 400;
+    response.body = { success: false, message: 'No hash provided' };
+    return;
+  }
+
+  try {
+    const { rows, rowCount } = await client.queryObject(`SELECT found FROM icons WHERE hash = $1`, hash);
+
+    if (rowCount === 0) {
+      response.status = 404;
+      response.body = { success: false, message: 'No icon found' };
+      return;
+    }
+
+    const [{ found }] = rows as [Pick<Svg, 'found'>];
+
+    response.status = 200;
+    response.body = { success: true, data: { found } };
   } catch (error) {
     console.log('Server error', error);
     response.status = 500;
