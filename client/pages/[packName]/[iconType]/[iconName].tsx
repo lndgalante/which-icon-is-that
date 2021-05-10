@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { InferGetStaticPropsType, GetStaticPaths, GetStaticProps } from 'next';
+import { GetStaticPaths, GetStaticProps } from 'next';
 import {
   Tag,
   Icon,
@@ -11,15 +11,15 @@ import {
   Select,
   Tooltip,
   TagLabel,
+  useToast,
   IconButton,
   TagRightIcon,
   useClipboard,
-  useToast,
+  Tab,
   Tabs,
   TabList,
-  TabPanels,
-  Tab,
   TabPanel,
+  TabPanels,
 } from '@chakra-ui/react';
 
 import PrismTheme from 'prism-react-renderer/themes/dracula';
@@ -27,13 +27,16 @@ import Highlight, { defaultProps } from 'prism-react-renderer';
 
 import { FaGithubAlt } from 'react-icons/fa';
 import { RiBrush2Fill, RiBrush2Line } from 'react-icons/ri';
-import { FiClipboard, FiSearch, FiFigma } from 'react-icons/fi';
+import { FiClipboard, FiSearch, FiFigma, FiCheckCircle } from 'react-icons/fi';
 
 // lib
 import { api } from 'lib/api';
-import { FoundIcon } from 'lib/types';
+import { IconResponse, IconMetadata, Svg } from 'lib/types';
 import { getReactIcon, getReactIconsImport } from 'lib/react-icons';
 import { createHtmlMarkup, createReactComponent, createReactComponentName, createVueTemplate } from 'lib/snippets';
+
+// hooks
+import { useReadFoundTimes } from 'hooks/useReadFoundTimes';
 
 // components
 import { Main } from 'components/Main';
@@ -51,11 +54,52 @@ const item = {
   show: { opacity: 1 },
 };
 
-export default function IconPage(props: InferGetStaticPropsType<typeof getStaticProps>) {
-  const { svg, links, snippets } = props;
+// types
 
+type Props = IconMetadata;
+
+type Params = Pick<Svg, 'packName' | 'iconType' | 'iconName'>;
+
+// next lifecycle hooks
+export const getStaticPaths: GetStaticPaths = async () => {
+  try {
+    const { data } = await api.getPaths();
+    return { paths: data.paths, fallback: false };
+  } catch (error) {
+    console.log('Error on getStaticPaths', error);
+  }
+};
+
+export const getStaticProps: GetStaticProps<Props, Params> = async ({ params }) => {
+  try {
+    const { packName, iconType, iconName } = params;
+    const encodedPath = encodeURIComponent(`${packName}/${iconType}/${iconName}`);
+
+    const { data: initialData } = await api.getHashFromPath(encodedPath);
+    const { data }: IconResponse = await api.getIconData(initialData.result);
+
+    const componentName = createReactComponentName(data.svg.packName, data.svg.iconName);
+    const html = await createHtmlMarkup(data.svg.svg);
+    const vue = await createVueTemplate(data.svg.svg);
+    const react = await createReactComponent(data.svg.svg, componentName);
+
+    const reactIconName = getReactIcon(data.svg.iconName, data.svg.packName);
+    const reactIconsImport = getReactIconsImport(reactIconName.original, data.svg.packId);
+
+    const snippets = { reactIconsImport, html, react, vue };
+
+    return { props: { ...data, snippets }, revalidate: 86400 };
+  } catch (err) {
+    console.log('Error on getStaticProps', err);
+  }
+};
+
+export default function IconPage({ svg, links, snippets }: IconMetadata) {
   // react hooks
   const [selectedIconLibrary, setSelectedIconLibrary] = useState('react-icons');
+
+  // query hooks
+  const { data, isLoading } = useReadFoundTimes(svg.hash);
 
   // chakra hooks
   const toast = useToast();
@@ -86,37 +130,35 @@ export default function IconPage(props: InferGetStaticPropsType<typeof getStatic
   return (
     <Main>
       <HStack mb={4} variants={container} initial='hidden' animate='show'>
-        <Tooltip label={svg?.iconFileName} aria-label={`${svg?.iconName} icon file name`}>
-          <Link href={links?.icon} isExternal>
+        <Tooltip label={svg.iconFileName} aria-label={`${svg.iconName} icon file name`}>
+          <Link href={links.icon} isExternal>
             <Tag size='lg' borderRadius='full' fontSize='sm' colorScheme='blackAlpha' variants={item}>
-              <TagLabel mr={1.5}>{svg?.iconName}</TagLabel>
+              <TagLabel mr={1.5}>{svg.iconName}</TagLabel>
               <TagRightIcon
-                as={() => <div style={{ minWidth: '20px' }} dangerouslySetInnerHTML={{ __html: svg?.svg }} />}
+                as={() => <div style={{ minWidth: '20px' }} dangerouslySetInnerHTML={{ __html: svg.svg }} />}
               />
             </Tag>
           </Link>
         </Tooltip>
 
         <Tooltip label='Icon pack' aria-label='Icon pack'>
-          <Link href={links?.pack} isExternal>
+          <Link href={links.pack} isExternal>
             <Tag size='lg' borderRadius='full' fontSize='sm' colorScheme='blackAlpha' variants={item}>
-              <TagLabel mr={1.5}>{svg?.packName}</TagLabel>
-              <TagRightIcon maxW={4} as={ICONS_LOGOS[svg?.packName]} />
+              <TagLabel mr={1.5}>{svg.packName}</TagLabel>
+              <TagRightIcon maxW={4} as={ICONS_LOGOS[svg.packName]} />
             </Tag>
           </Link>
         </Tooltip>
 
         <Tooltip label='Icon type' aria-label='Icon type'>
           <Tag size='lg' borderRadius='full' fontSize='sm' colorScheme='blackAlpha' variants={item}>
-            <TagLabel mr={1.5}>{svg?.iconType}</TagLabel>
-            <TagRightIcon
-              as={() => <Icon as={svg?.iconType === 'solid' ? RiBrush2Fill : RiBrush2Line} w={5} h={5} />}
-            />
+            <TagLabel mr={1.5}>{svg.iconType}</TagLabel>
+            <TagRightIcon as={() => <Icon as={svg.iconType === 'solid' ? RiBrush2Fill : RiBrush2Line} w={5} h={5} />} />
           </Tag>
         </Tooltip>
 
         <Tooltip label='Figma file' aria-label='Figma file'>
-          <Link href={links?.figma} isExternal>
+          <Link href={links.figma} isExternal>
             <Tag size='lg' borderRadius='full' fontSize='sm' colorScheme='blackAlpha' variants={item}>
               <TagLabel mr={1.5}>Figma</TagLabel>
               <TagRightIcon as={() => <Icon as={FiFigma} w={5} h={5} />} />
@@ -125,12 +167,21 @@ export default function IconPage(props: InferGetStaticPropsType<typeof getStatic
         </Tooltip>
 
         <Tooltip label='Source code' aria-label='Source code'>
-          <Link href={links?.source} isExternal>
+          <Link href={links.source} isExternal>
             <Tag size='lg' borderRadius='full' fontSize='sm' colorScheme='blackAlpha' variants={item}>
-              <TagLabel mr={1.5}>{svg?.bytes}</TagLabel>
+              <TagLabel mr={1.5}>{svg.bytes}</TagLabel>
               <TagRightIcon as={() => <Icon as={FaGithubAlt} w={5} h={5} />} />
             </Tag>
           </Link>
+        </Tooltip>
+
+        <Tooltip label='Found times' aria-label='Found times'>
+          <Tag size='lg' borderRadius='full' fontSize='sm' colorScheme='blackAlpha' variants={item}>
+            <TagLabel mr={1.5}>
+              {isLoading ? 'Loading...' : `Found ${data.data.found} time${data.data.found > 1 ? 's' : ''}`}
+            </TagLabel>
+            <TagRightIcon as={() => <Icon as={FiCheckCircle} w={5} h={5} />} />
+          </Tag>
         </Tooltip>
 
         <NextChakraLink href='/'>
@@ -331,32 +382,3 @@ export default function IconPage(props: InferGetStaticPropsType<typeof getStatic
     </Main>
   );
 }
-
-export const getStaticProps: GetStaticProps = async ({ params }) => {
-  const { packName, iconType, iconName } = params;
-  const encodedPath = encodeURIComponent(`${packName}/${iconType}/${iconName}`);
-
-  const { data: initialData } = await api.getHashFromPath(encodedPath);
-  const { data }: FoundIcon = await api.getIconData(initialData.result);
-
-  const componentName = createReactComponentName(data.svg.packName, data.svg.iconName);
-  const html = await createHtmlMarkup(data.svg.svg);
-  const vue = await createVueTemplate(data.svg.svg);
-  const react = await createReactComponent(data.svg.svg, componentName);
-
-  const reactIconName = getReactIcon(data?.svg?.iconName, data?.svg?.packName);
-  const reactIconsImport = getReactIconsImport(reactIconName?.original, data?.svg?.packId);
-
-  const snippets = { reactIconsImport, html, react, vue };
-
-  return { props: { ...data, snippets }, revalidate: 86400 };
-};
-
-export const getStaticPaths: GetStaticPaths = async () => {
-  try {
-    const { data } = await api.getPaths();
-    return { paths: data.paths, fallback: false };
-  } catch (error) {
-    console.log('Error on getStaticPaths', error);
-  }
-};
