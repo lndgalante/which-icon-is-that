@@ -24,8 +24,15 @@ cd client/ && yarn && yarn dev
 
 Server-side
 
+Run only once:
+
+```
+brew install deno
+deno install -qAf --unstable https://deno.land/x/denon/denon.ts
+```
+
 ```bash
-deno run --unstable --allow-env --allow-read --allow-write --allow-net ./server/app.ts
+denon run --unstable --allow-env --allow-read --allow-write --allow-net ./server/app.ts
 ```
 
 ## Roadmap
@@ -34,12 +41,12 @@ Release date: Tuesday 1, June
 
 ## TODO
 
-- [ ] Add icon packs:
+- [ ] Add icon packs (4/19)
 
   - [x] Heroicons
   - [x] Ant Design Icons
   - [x] BoxIcons
-  - [ ] Devicons
+  - [x] Devicon
   - [ ] Flat Color Icons
   - [ ] Game Icons
   - [ ] GiHub Octicons icons
@@ -58,15 +65,11 @@ Release date: Tuesday 1, June
 
 * [ ] Run preloadData fn on a cron every week
 
-- [ ] Improve and share types and helpers between client/server
-
-* [ ] UI/UX/Writing review
-
 - [ ] Backend and Frontend external code review
 
 * [ ] Publish in developer/design/utilities list
 
-- [ ] Publish in ProductHunt
+- [ ] Publish in ProductHunt/HackerNews
 
 * [ ] Publish in AwesomeSVGs/AwesomeIcons
 
@@ -74,15 +77,25 @@ Release date: Tuesday 1, June
 
 * [ ] Prefetch icon page when hash is created
 
-* [ ] Fix react-icons imports that doesn't work properly
-
 - [ ] Detect image through computer vision
 
-* [ ] Buy wiit.io to redirect to whichiconisthat.com
-
-- [ ] Add web component CDN to unpkg + template
+* [ ] Fix react-icons imports that doesn't work properly
 
 * [ ] Split Figma links in Community and Plugins
+
+- [ ] Pro version:
+  - [ ] Support for Pro icons
+  - [ ] Email support 24/7
+
+* [ ] Add [Swagger](https://github.com/asad-mlbd/deno-api-starter-oak) documentation for Deno API
+
+- [ ] Add Docker support to get up and running client and server quickly
+
+- [ ] Add package stats, current version supported, total downloads, total stars, total icons
+
+* [ ] Add font version in tabs, that displays link tag pointing to CDN + i tag with proper class
+
+- [ ] Stickers on footer, to exchange feedback for stickers
 
 **Users Feedback**
 
@@ -102,19 +115,15 @@ Release date: Tuesday 1, June
 
 * [ ] Display icons in a playground to change the color and the background color
 
-- [ ] Same app but as a Chrome extension
-
-* [ ] Support using bitmaps
-
 - [ ] Display similar icons i.e if I drop a feather alert, show me the alert for the other packages
 
 * [ ] Display supported icons directly without being hidden
 
 - [ ] Add code to install npm package, to use from Skypack/Unpkg
 
-* [ ] Improve URL from /:hash to /:packName/:packId
+* [ ] Same app but as a VSCode extension
 
-- [ ] Same app but as a VSCode extension
+- [ ] Same app but as a Chrome extension
 
 ## DONE
 
@@ -131,6 +140,14 @@ Release date: Tuesday 1, June
 - [x] Input SVG by URL or code
 
 ---
+
+- [x] Add icon stats, found N times
+
+* [x] Buy wiit.io to redirect to whichiconisthat.com
+
+- [x] Improve and share types and helpers between client/server
+
+* [x] Improve URL from /:hash to /:packName/:iconType/:packId
 
 - [x] Create svg component for Vue with @vue-svgicon
 
