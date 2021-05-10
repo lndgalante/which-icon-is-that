@@ -35,58 +35,62 @@ export function getIconPackFigmaLink(svgPackName: string) {
 }
 
 export async function saveIconsInDB(client: Client) {
-  const transaction = client.createTransaction('new_transaction');
-  await transaction.begin();
+  try {
+    const transaction = client.createTransaction('tx-create-db');
+    await transaction.begin();
 
-  await transaction.queryArray(`DROP TABLE icons`);
-  await transaction.queryArray(`DROP TABLE paths`);
+    await transaction.queryArray`DROP TABLE icons`;
+    await transaction.queryArray`DROP TABLE paths`;
 
-  await transaction.queryArray(`CREATE TABLE paths (path TEXT, hash TEXT)`);
-  await transaction.queryArray(
-    `CREATE TABLE icons (hash TEXT, svg TEXT, icon_type TEXT, bytes TEXT, pack_id TEXT, pack_name TEXT, icon_name TEXT, icon_file_name TEXT)`,
-  );
+    await transaction.queryArray`CREATE TABLE paths (path TEXT, hash TEXT)`;
+    await transaction.queryArray(
+      `CREATE TABLE icons (hash TEXT, svg TEXT, icon_type TEXT, bytes TEXT, pack_id TEXT, pack_name TEXT, icon_name TEXT, icon_file_name TEXT, found SERIAL)`,
+    );
 
-  await transaction.queryArray(`CREATE INDEX hash_index ON icons(hash)`);
-  await transaction.queryArray(`CREATE INDEX path_index ON paths(path)`);
-  await transaction.queryArray(`CREATE INDEX hash_on_paths_index ON paths(hash)`);
+    await transaction.queryArray`CREATE INDEX hash_index ON icons(hash)`;
+    await transaction.queryArray`CREATE INDEX path_index ON paths(path)`;
+    await transaction.queryArray`CREATE INDEX hash_on_paths_index ON paths(hash)`;
 
-  for (const { packId, packName } of ICONS_LIST) {
-    const downloadDirectory = './downloads';
-    const unzippedDirectory = `${downloadDirectory}/unzipped`;
-    const unzippedDirectoryPack = `${unzippedDirectory}/${packName}`;
+    for (const { packId, packName } of ICONS_LIST) {
+      const downloadDirectory = './downloads';
+      const unzippedDirectory = `${downloadDirectory}/unzipped`;
+      const unzippedDirectoryPack = `${unzippedDirectory}/${packName}`;
 
-    const unzippedNames = await getFiles(unzippedDirectoryPack);
-    const svgFiles = unzippedNames
-      .filter(({ name, ext }) => !(name === 'bootstrap-icons.svg') && ext === 'svg')
-      .map(({ name, path }) => {
-        const [iconType] = path.match(/outline|solid|fill|twotone|logos|regular/gi) || ['regular'];
-        return { name, path, iconType };
-      });
+      const unzippedNames = await getFiles(unzippedDirectoryPack);
 
-    for (const { name, path, iconType } of svgFiles) {
-      const { size } = await Deno.stat(path);
-      let svg = await Deno.readTextFile(path);
+      const possibleTypesRegex = /outline|solid|fill|twotone|logos|regular|(original|plain|line)(-wordmark)?/gi;
+      const svgFiles = unzippedNames
+        .filter(({ name, ext }) => !(name === 'bootstrap-icons.svg') && ext === 'svg')
+        .map(({ name, path }) => {
+          const [iconType] = path.match(possibleTypesRegex) || ['regular'];
+          return { name, path, iconType };
+        });
 
-      if (svg.includes('<?xml')) {
-        const svgArray = svg.split(/\n/g);
-        svgArray.shift();
-        svg = svgArray.join('');
+      for (const { name, path, iconType } of svgFiles) {
+        const { size } = await Deno.stat(path);
+        let svg = await Deno.readTextFile(path);
+
+        if (svg.includes('<?xml')) {
+          const svgArray = svg.split(/\n/g);
+          svgArray.shift();
+          svg = svgArray.join('');
+        }
+
+        const iconName = name.replace('.svg', '');
+        const bytes = prettyBytes(size);
+        const svgInnerHtml = getInnerHTMLFromSvgText(svg);
+        const hash = createHash(svgInnerHtml);
+        await transaction.queryArray`INSERT INTO icons (hash,svg,icon_type,bytes,pack_id,pack_name,icon_name,icon_file_name,found) VALUES (${hash},${svg},${iconType},${bytes},${packId},${packName},${iconName},${name},0)`;
+
+        const encodedPath = encodeURIComponent(`${packName}/${iconType}/${iconName}`);
+        await transaction.queryArray`INSERT INTO paths (path,hash) VALUES (${encodedPath},${hash})`;
       }
-
-      const iconName = name.replace('.svg', '');
-      const bytes = prettyBytes(size);
-      const svgInnerHtml = getInnerHTMLFromSvgText(svg);
-      const hash = createHash(svgInnerHtml);
-      await transaction.queryArray(
-        `INSERT INTO icons(hash,svg,icon_type,bytes,pack_id,pack_name,icon_name,icon_file_name) VALUES (${hash},${svg},${iconType},${bytes},${packId},${packName},${iconName},${name})`,
-      );
-
-      const encodedPath = encodeURIComponent(`${packName}/${iconType}/${iconName}`);
-      await transaction.queryArray(`INSERT INTO paths(path,hash) VALUES (${encodedPath},${hash})`);
     }
-  }
 
-  await transaction.commit();
+    await transaction.commit();
+  } catch (error) {
+    console.log('Error on saveIconsInDB', error);
+  }
 }
 
 /*
@@ -97,7 +101,7 @@ import { download, Destination } from 'https://deno.land/x/download/mod.ts';
 
 // .filter(({ name, ext }) => !(name === 'bootstrap-icons.svg' || name.endsWith('-preview.svg')) && ext === 'svg')
 
-const response = await fetch(`https://api.github.com/repos/${owner}/${repo}/${type}`);
+const response = await fetch`https://api.github.com/repos/${owner}/${repo}/${type}`;
 const [lastRelease] = await response.json();
 const { zipball_url } = lastRelease;'
 
