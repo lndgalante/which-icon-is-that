@@ -1,7 +1,8 @@
-type Svg = {
+export type Svg = {
   svg: string;
   hash: string;
   bytes: string;
+  found: number;
   packId: string;
   packName: string;
   iconName: string;
@@ -9,18 +10,31 @@ type Svg = {
   iconFileName: string;
 };
 
-type Links = {
+export type Links = {
   icon: string;
   pack: string;
   source: string;
+  figma: string;
 };
 
-type IconMetadata = {
+export type Snippets = {
+  vue: string;
+  html: string;
+  react: string;
+  reactIconsImport: string;
+};
+
+export type IconMetadata = {
   svg: Svg;
   links: Links;
+  snippets: Snippets;
 };
 
-export type FoundIcon = {
+export type Response<T> = {
   success: boolean;
-  data?: IconMetadata;
+  data?: T;
 };
+
+export type IconResponse = Response<IconMetadata>;
+
+export type IconFoundResponse = Response<Pick<Svg, 'found'>>;
