@@ -44,6 +44,7 @@ export default function Home() {
   const [svgUrl, setSvgUrl] = useState('');
   const [svgCode, setSvgCode] = useState('');
   const [fileName, setFileName] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
   const [isDownloadingFile, setIsDownloadingFile] = useState(false);
   const [inputType, setInputType] = useState<InputTypes>(INPUT_TYPES[0]);
 
@@ -51,20 +52,28 @@ export default function Home() {
   const toast = useToast();
 
   // next hooks
-  const { push } = useRouter();
+  const router = useRouter();
 
   // dropzone hooks
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop: handleDrop });
 
   // helpers
   async function moveToHashPage(hash: string) {
-    const { data, success } = await api.getPathFromHash(hash);
+    try {
+      setIsLoading(true);
+      const { data, success } = await api.getPathFromHash(hash);
 
-    if (!success) {
-      return toast({ title: 'Icon not found on our database', status: 'error' });
+      if (!success) {
+        return toast({ title: 'Icon not found on our database', status: 'error' });
+      }
+
+      await api.putIconIncrement(hash);
+      router.push(`/${decodeURIComponent(data.result)}`, undefined, { shallow: true });
+    } catch (error) {
+      console.log('Error on moveToHashPage', error);
+    } finally {
+      setIsLoading(false);
     }
-
-    push(`/${decodeURIComponent(data.result)}`, undefined, { shallow: true });
   }
 
   // handlers
@@ -95,7 +104,8 @@ export default function Home() {
     reader.onerror = () => toast({ title: 'File reading has failed', status: 'error' });
     reader.onload = () => {
       const svgInnerHtml = getInnerHTMLFromSvgText(reader.result as string);
-      setHash(createHash(svgInnerHtml));
+      const hash = createHash(svgInnerHtml);
+      setHash(hash);
     };
 
     reader.readAsText(file);
@@ -126,7 +136,7 @@ export default function Home() {
 
       moveToHashPage(createHash(svgInnerHtml));
     } catch (error) {
-      console.log('Error downloading file', error);
+      console.log('Error on searchIconByUrlInput', error);
     } finally {
       setIsDownloadingFile(false);
     }
@@ -177,8 +187,13 @@ export default function Home() {
             <RadioGroup name='Input type' options={INPUT_TYPES} onChange={handleInputTypeChange} />
           </FormControl>
 
-          <Button colorScheme='blackAlpha' onClick={handleFindIconButton} isDisabled={!isFindIconButtonEnabled}>
-            Find Icon!
+          <Button
+            isLoading={isLoading}
+            colorScheme='blackAlpha'
+            onClick={handleFindIconButton}
+            isDisabled={!isFindIconButtonEnabled}
+          >
+            {isLoading ? 'Finding Icon...' : 'Find Icon!'}
           </Button>
         </HStack>
 
