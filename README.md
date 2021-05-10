@@ -69,7 +69,7 @@ Release date: Tuesday 1, June
 
 * [ ] Publish in developer/design/utilities list
 
-- [ ] Publish in ProductHunt
+- [ ] Publish in ProductHunt/HackerNews
 
 * [ ] Publish in AwesomeSVGs/AwesomeIcons
 
