@@ -24,8 +24,15 @@ cd client/ && yarn && yarn dev
 
 Server-side
 
+Run only once:
+
+```
+brew install deno
+deno install -qAf --unstable https://deno.land/x/denon/denon.ts
+```
+
 ```bash
-deno run --unstable --allow-env --allow-read --allow-write --allow-net ./server/app.ts
+denon run --unstable --allow-env --allow-read --allow-write --allow-net ./server/app.ts
 ```
 
 ## Roadmap
@@ -34,7 +41,7 @@ Release date: Tuesday 1, June
 
 ## TODO
 
-- [ ] Add icon packs:
+- [ ] Add icon packs (4/19)
 
   - [x] Heroicons
   - [x] Ant Design Icons
@@ -58,10 +65,6 @@ Release date: Tuesday 1, June
 
 * [ ] Run preloadData fn on a cron every week
 
-- [ ] Improve and share types and helpers between client/server
-
-* [ ] UI/UX/Writing review
-
 - [ ] Backend and Frontend external code review
 
 * [ ] Publish in developer/design/utilities list
@@ -74,13 +77,9 @@ Release date: Tuesday 1, June
 
 * [ ] Prefetch icon page when hash is created
 
-* [ ] Fix react-icons imports that doesn't work properly
-
 - [ ] Detect image through computer vision
 
-* [ ] Buy wiit.io to redirect to whichiconisthat.com
-
-- [ ] Add web component CDN to unpkg + template
+* [ ] Fix react-icons imports that doesn't work properly
 
 * [ ] Split Figma links in Community and Plugins
 
@@ -92,11 +91,11 @@ Release date: Tuesday 1, June
 
 - [ ] Add Docker support to get up and running client and server quickly
 
-* [ ] Add icon stats, found N times
-
 - [ ] Add package stats, current version supported, total downloads, total stars, total icons
 
 * [ ] Add font version in tabs, that displays link tag pointing to CDN + i tag with proper class
+
+- [ ] Stickers on footer, to exchange feedback for stickers
 
 **Users Feedback**
 
@@ -115,8 +114,6 @@ Release date: Tuesday 1, June
 - [ ] Display icons in several sizes 100px, 60px, 48px, 24px, 16px
 
 * [ ] Display icons in a playground to change the color and the background color
-
-* [ ] Support using bitmaps
 
 - [ ] Display similar icons i.e if I drop a feather alert, show me the alert for the other packages
 
@@ -144,45 +141,51 @@ Release date: Tuesday 1, June
 
 ---
 
-- [] Improve URL from /:hash to /:packName/:iconType/:packId
+- [x] Add icon stats, found N times
 
-* [x] Create svg component for Vue with @vue-svgicon
+* [x] Buy wiit.io to redirect to whichiconisthat.com
 
-- [x] Create svg component for HTML with @svgr/core
+- [x] Improve and share types and helpers between client/server
 
-* [x] Create svg component for React with @svgr/core
+* [x] Improve URL from /:hash to /:packName/:iconType/:packId
 
-- [x] Check if we are handling icon packs with solid and outline versions
+- [x] Create svg component for Vue with @vue-svgicon
 
-* [x] Display if icon supports solid or outline version
+* [x] Create svg component for HTML with @svgr/core
 
-- [x] Migrate DB from Redis to PostgreSQL
+- [x] Create svg component for React with @svgr/core
 
-* [x] Add Plausible analytics
+* [x] Check if we are handling icon packs with solid and outline versions
 
-- [x] Try Preactjs on Next.js build
+- [x] Display if icon supports solid or outline version
 
-* [x] Refactorize to download icons instead of having them locally
+* [x] Migrate DB from Redis to PostgreSQL
+
+- [x] Add Plausible analytics
+
+* [x] Try Preactjs on Next.js build
+
+- [x] Refactorize to download icons instead of having them locally
       [x] Download icons
       [x] Save it to upstash
       [x] Endpoint reads from upstash redis
 
-- [x] Reach 100/100 in Audits
+* [x] Reach 100/100 in Audits
 
-* [x] Buy whichiconisthat.com in NameCheap
+- [x] Buy whichiconisthat.com in NameCheap
 
-- [x] Deploy client to Vercel
+* [x] Deploy client to Vercel
 
-* [x] Deploy server to Deno deploy
+- [x] Deploy server to Deno deploy
 
-- [x] Add bottom icon to open footer with Slide transition
+* [x] Add bottom icon to open footer with Slide transition
   - [x] Display supported icons
   - [x] Display GitHub / Twitter
   - [x] Display code snippets for react/angular/vue-icons
 
-* [x] Remove svg parent tag to have more probabilities to find a icon
+- [x] Remove svg parent tag to have more probabilities to find a icon
 
-- [x] Beta testers list + exclusive list
+* [x] Beta testers list + exclusive list
 
 ## Built using
 
