@@ -97,6 +97,10 @@ Release date: Tuesday 1, June
 
 - [ ] Stickers on footer, to exchange feedback for stickers
 
+* [ ] Find company sponsors to maintain project
+
+- [ ] Move TODO list to Linear App
+
 **Users Feedback**
 
 - [ ] Landing like https://www.remove.bg
