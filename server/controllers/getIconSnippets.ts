@@ -27,7 +27,6 @@ export const getIconSnippets = async ({ params, response }: Context & { params: 
 
     const [{ svg, pack_id: packId, pack_name: packName, icon_name: iconName }] = rows as [Svg];
     const snippets = await generateIconSnippets(svg, iconName, packName, packId);
-    console.log('\n ~ getIconSnippets ~ snippets', snippets);
 
     response.status = 200;
     response.body = { success: true, data: { snippets } };

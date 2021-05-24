@@ -32,7 +32,7 @@ deno install -qAf --unstable https://deno.land/x/denon/denon.ts
 ```
 
 ```bash
-denon run --unstable --allow-env --allow-read --allow-write --allow-net ./server/app.ts
+cd server/ && denon run --unstable --allow-env --allow-read --allow-write --allow-net app.ts
 ```
 
 ## Built using

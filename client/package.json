@@ -8,32 +8,27 @@
     "start": "next start"
   },
   "dependencies": {
-    "@chakra-ui/react": "^1.6.1",
+    "@chakra-ui/react": "^1.6.2",
     "@emotion/react": "^11.4.0",
     "@emotion/styled": "^11.3.0",
-    "@svgr/core": "^5.5.0",
-    "@svgr/plugin-jsx": "^5.5.0",
-    "@svgr/plugin-prettier": "^5.5.0",
-    "@svgr/plugin-svgo": "^5.5.0",
     "change-case": "^4.1.2",
-    "framer-motion": "^4.1.13",
+    "framer-motion": "^4.1.17",
     "is-svg": "^4.3.1",
     "is-url": "^1.2.4",
-    "next": "10.2.0",
+    "next": "10.2.3",
     "next-plausible": "^1.6.1",
     "preact": "^10.5.13",
-    "prism-react-renderer": "^1.2.0",
+    "prism-react-renderer": "^1.2.1",
     "pure-md5": "^0.1.13",
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "react-dropzone": "^11.3.2",
-    "react-icons": "^4.2.0",
     "react-query": "^3.16.0",
-    "svg-to-vue-component": "^0.3.8"
+    "react-icons": "^4.2.0"
   },
   "devDependencies": {
-    "@types/node": "^15.0.2",
-    "@types/react": "^17.0.5",
+    "@types/node": "^15.6.0",
+    "@types/react": "^17.0.6",
     "typescript": "^4.2.4"
   }
 }

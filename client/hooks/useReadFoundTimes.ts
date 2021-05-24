@@ -7,7 +7,7 @@ import { IconFoundResponse } from '@lib/types';
 // fetcher
 const getFoundTimes = ({ queryKey }): Promise<IconFoundResponse> => {
   const { 2: hash } = queryKey;
-  return api.getIconFoundData(hash);
+  return api.getIconFoundTimes(hash);
 };
 
 // query hook

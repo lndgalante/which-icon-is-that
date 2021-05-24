@@ -4,6 +4,7 @@ import Heroicons from './Heroicons';
 import Antdesign from './Antdesign';
 import Boxicons from './Boxicons';
 import Devicon from './Devicon';
+import FlatColoricons from './FlatColoricons';
 
 export const ICONS_LOGOS = {
   feather: Feather,
@@ -12,4 +13,5 @@ export const ICONS_LOGOS = {
   antdesign: Antdesign,
   boxicons: Boxicons,
   devicon: Devicon,
+  flatcoloricons: FlatColoricons,
 };
