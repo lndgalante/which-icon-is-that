@@ -6,38 +6,47 @@
 
 🔎 Find your icon name and icon pack only by dragging and dropping your SVG
 
-📦 All popular icon packs supported (i.e feather icons, font awesome)
-
 🆕 Icon packs always updated with the latest versions
 
-📎 Code snippets to import the icon library for your framework (i.e react-icons)
+📦 All popular icon packs supported (i.e feather-icons, font-awesome)
+
+📎 Code snippets to import the icon library for your framework (i.e react-icons, vue-feather)
+
+🩳 Easy to remember short URL [wiit.io](https://wiit.io)
 
 ✨ Delightful experience + damn fast!
 
 ## Development
 
-Client-side
+- Requirements (run only once)
 
-```bash
-cd client/ && yarn && yarn dev
-```
+  ```
+  brew install node deno
+  deno install -qAf --unstable https://deno.land/x/denon/denon.ts
+  ```
 
-Server-side
+* Client-side
 
-Run only once:
+  ```bash
+  cd client/ && yarn && yarn dev
+  ```
 
-```
-brew install deno
-deno install -qAf --unstable https://deno.land/x/denon/denon.ts
-```
+- Server-side
 
-```bash
-cd server/ && denon run --unstable --allow-env --allow-read --allow-write --allow-net app.ts
-```
+  ```bash
+  cd server/ && denon run --unstable --allow-run --allow-env --allow-read --allow-write --allow-net app.ts
+  ```
 
 ## Built using
 
-- [Next.js](https://nextjs.org) and [Deno](https://deno.land)
+- [Deno](https://deno.land) server runtime
+- [Next.js](https://nextjs.org) client framework
 - [Vercel](https://vercel.com) for client deployment
 - [Heroku](https://www.heroku.com) for server deployment
-- [Plausible](https://plausible.io) for analytics
+- [Fathom](https://usefathom.com) for analytics
+
+## Links
+
+- [Twitter](https://twitter.com/whichiconisthat)
+- [Website](https://www.whichiconisthat.com)
+- [Repository](https://github.com/lndgalante/which-icon-is-that)
