@@ -1,5 +1,4 @@
 import getFiles from 'https://deno.land/x/getfiles/mod.ts';
-import { Client } from 'https://deno.land/x/postgres/mod.ts';
 import { prettyBytes } from 'https://raw.githubusercontent.com/brunnerlivio/deno-pretty-bytes/master/mod.ts';
 
 // helpers
@@ -13,6 +12,9 @@ import {
   ICONS_SOURCE_LINKS,
   ICONS_WEBSITE_LINKS,
 } from './constants.ts';
+
+// database
+import client from '../db/database.ts';
 
 export function getIconSource(iconPack: PacksNames, iconFileName: string, iconType: string) {
   const getIconSourceLinkFn = ICONS_SOURCE_LINKS[iconPack];
@@ -34,7 +36,9 @@ export function getIconPackFigmaLink(svgPackName: string) {
   return iconPackFigmaLink;
 }
 
-export async function saveIconsInDB(client: Client) {
+let i = 0;
+
+export async function saveIconsInDB() {
   try {
     const transaction = client.createTransaction('tx-create-db');
     await transaction.begin();
@@ -52,6 +56,7 @@ export async function saveIconsInDB(client: Client) {
     await transaction.queryArray`CREATE INDEX hash_on_paths_index ON paths(hash)`;
 
     for (const { packId, packName } of ICONS_LIST) {
+      console.log('\n ~ saveIconsInDB ~ packName', packName);
       const downloadDirectory = './downloads';
       const unzippedDirectory = `${downloadDirectory}/unzipped`;
       const unzippedDirectoryPack = `${unzippedDirectory}/${packName}`;
@@ -67,6 +72,7 @@ export async function saveIconsInDB(client: Client) {
         });
 
       for (const { name, path, iconType } of svgFiles) {
+        i += 1;
         const { size } = await Deno.stat(path);
         let svg = await Deno.readTextFile(path);
 
@@ -76,14 +82,25 @@ export async function saveIconsInDB(client: Client) {
           svg = svgArray.join('');
         }
 
-        const iconName = name.replace('.svg', '');
+        const iconName = name.replace('.svg', '').replace(/\_/g, '-');
         const bytes = prettyBytes(size);
         const svgInnerHtml = getInnerHTMLFromSvgText(svg);
         const hash = createHash(svgInnerHtml);
-        await transaction.queryArray`INSERT INTO icons (hash,svg,icon_type,bytes,pack_id,pack_name,icon_name,icon_file_name,found) VALUES (${hash},${svg},${iconType},${bytes},${packId},${packName},${iconName},${name},0)`;
+        await transaction.queryArray(
+          `INSERT INTO icons (hash,svg,icon_type,bytes,pack_id,pack_name,icon_name,icon_file_name,found) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)`,
+          hash,
+          svg,
+          iconType,
+          bytes,
+          packId,
+          packName,
+          iconName,
+          name,
+          0,
+        );
 
         const encodedPath = encodeURIComponent(`/${packName}/${iconType}/${iconName}`);
-        await transaction.queryArray`INSERT INTO paths (path,hash) VALUES (${encodedPath},${hash})`;
+        await transaction.queryArray(`INSERT INTO paths (path,hash) VALUES ($1, $2)`, encodedPath, hash);
       }
     }
 
@@ -91,6 +108,7 @@ export async function saveIconsInDB(client: Client) {
   } catch (error) {
     console.log('Error on saveIconsInDB', error);
   }
+  console.log('\n ~ saveIconsInDB ~ i', i);
 }
 
 /*

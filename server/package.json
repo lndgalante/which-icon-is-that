@@ -1,0 +1,17 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "@svgr/babel-plugin-transform-react-native-svg": "^5.4.0",
+    "@svgr/core": "^5.5.0",
+    "@svgr/plugin-jsx": "^5.5.0",
+    "@svgr/plugin-prettier": "^5.5.0",
+    "@svgr/plugin-svgo": "^5.5.0",
+    "react": "^17.0.2",
+    "react-feather": "^2.0.9",
+    "react-icons": "^4.2.0",
+    "svg-to-vue-component": "^0.3.8"
+  }
+}
