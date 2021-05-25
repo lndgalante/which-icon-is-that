@@ -37,7 +37,9 @@
   cd server/ && denon run --unstable --allow-run --allow-env --allow-read --allow-write --allow-net app.ts
   ```
 
-- Populate Heroku DB (Optionally)
+## Heroku
+
+- Populate Heroku DB
 
   ```bash
   PGPASSWORD=[PG_PASSWORD] pg_dump -Fc --no-acl --no-owner -h localhost -U [PG_USER] whichiconisthat > mydb.dump
@@ -45,6 +47,12 @@
 
   ```bash
   heroku pg:backups:restore [BUMP_URL] DATABASE_URL -a which-icon-is-that --confirm which-icon-is-that
+  ```
+
+- Logs
+
+  ```bash
+  heroku logs -a which-icon-is-that
   ```
 
 ## Built using
