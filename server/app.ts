@@ -3,6 +3,7 @@ import { parse } from 'https://deno.land/std/flags/mod.ts';
 import { Application } from 'https://deno.land/x/oak/mod.ts';
 
 // lib
+import { isDevelopment } from './lib/env.ts';
 // import { saveIconsInDB } from './lib/icons.ts';
 
 // routes
@@ -12,8 +13,7 @@ import { router } from './routes.ts';
 // await saveIconsInDB();
 
 // env
-const ENV = Deno.env.get('ENVIRONMENT') as string;
-const origin = ENV === 'development' ? 'http://localhost:3001' : 'https://www.whichiconisthat.com';
+const origin = isDevelopment() ? 'http://localhost:3001' : 'https://www.whichiconisthat.com';
 
 // port
 const DEFAULT_PORT = 8000;
