@@ -55,6 +55,11 @@
 - [Heroku](https://www.heroku.com) for server deployment
 - [Fathom](https://usefathom.com) for analytics
 
+## Investment
+
+- [Heroku Dyno - Standard 1X](https://www.heroku.com/pricing#containers) - 25usd/month
+- [Heroku Postgres - Standard 0](https://elements.heroku.com/addons/heroku-postgresql) - 9usd/month
+
 ## Links
 
 - [Twitter](https://twitter.com/whichiconisthat)
