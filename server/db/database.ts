@@ -1,11 +1,12 @@
 import 'https://deno.land/x/dotenv/load.ts';
 import { Client } from 'https://deno.land/x/postgres/mod.ts';
+import { urlParse } from 'https://deno.land/x/url_parse/mod.ts';
 
 // lib
 import { isDevelopment } from '../lib/env.ts';
 
-async function connectToPostgres() {
-  const developmentOptions = {
+function createClientDevelopmentOptions() {
+  const options = {
     port: Deno.env.get('POSTGRES_PORT') as string,
     user: Deno.env.get('POSTGRES_USER') as string,
     password: Deno.env.get('POSTGRES_PASSWORD') as string,
@@ -13,11 +14,24 @@ async function connectToPostgres() {
     database: Deno.env.get('POSTGRES_DATABASE') as string,
   };
 
-  const productionOptions = {
-    hostname: Deno.env.get('DATABASE_URL') as string,
+  return options;
+}
+
+function createClientProductionOptions() {
+  const dbParsedUrl = urlParse(Deno.env.get('DATABASE_URL'));
+  const options = {
+    port: dbParsedUrl.port,
+    user: dbParsedUrl.username,
+    password: dbParsedUrl.password,
+    hostname: dbParsedUrl.hostname,
+    database: dbParsedUrl.pathname.slice(1),
   };
 
-  const clientOptions = isDevelopment() ? developmentOptions : productionOptions;
+  return options;
+}
+
+async function connectToPostgres() {
+  const clientOptions = isDevelopment() ? createClientDevelopmentOptions() : createClientProductionOptions();
   const client = new Client(clientOptions);
 
   await client.connect();
