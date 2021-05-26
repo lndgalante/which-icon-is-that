@@ -1,1 +1,1 @@
-web: deno run --allow-net=:${PORT},us1-firm-griffon-32918.upstash.io:32918,:5432,ec2-3-234-22-132.compute-1.amazonaws.com:5432 --unstable --allow-run --allow-env --allow-read --allow-write ./server/app.ts --port=${PORT}
+web: deno run --allow-net --unstable --allow-run --allow-env --allow-read --allow-write ./server/app.ts --port=${PORT}
