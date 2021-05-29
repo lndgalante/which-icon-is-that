@@ -3,6 +3,7 @@ import { GetStaticPaths, GetStaticProps } from 'next';
 import {
   Tag,
   Icon,
+  Text,
   Link,
   Slide,
   Stack,
@@ -71,16 +72,39 @@ export const getStaticProps: GetStaticProps<Props, Params> = async ({ params }) 
     const { data: initialData } = await api.getHashFromPath(encodedPath);
     const iconHash = initialData.result;
 
-    const { data }: IconResponse = await api.getIcon(iconHash);
+    const { data: tags } = await api.getIconTags(iconHash);
     const { data: snippets } = await api.getIconSnippets(iconHash);
+    const { data: icon }: IconResponse = await api.getIcon(iconHash);
 
-    return { props: { ...data, ...snippets }, revalidate: 86400 };
+    const relatedIcons = []
+    try {
+
+      for await (const tag of tags.tags) {
+
+        const { data: similarIcons } = await api.getSimilarIcons(iconHash, tag.tag_id);
+        relatedIcons.push(...similarIcons.icons)
+      }
+    } catch (error) {
+      console.log('\n ~ constgetStaticProps:GetStaticProps<Props,Params>= ~ error', error)
+
+    }
+
+    const parsedRelatedIcons = relatedIcons.map(({ pack_id, pack_name, icon_name, icon_type, icon_file_name, ...otherKeys }) => ({
+      packId: pack_id,
+      packName: pack_name,
+      iconName: icon_name,
+      iconType: icon_type,
+      iconFileName: icon_file_name,
+      ...otherKeys
+    }))
+
+    return { props: { ...icon, ...snippets, ...tags, relatedIcons: parsedRelatedIcons }, revalidate: 86400 };
   } catch (err) {
     console.log('Error on getStaticProps', err);
   }
 };
 
-export default function IconPage({ svg, links, snippets }: IconMetadata) {
+export default function IconPage({ svg, links, snippets, tags, relatedIcons }: IconMetadata) {
   // react hooks
   const [selectedUse, setSelectedUse] = useState('optimizedSvg');
   const [selectedLanguage, setSelectedLanguage] = useState('html');
@@ -197,6 +221,29 @@ export default function IconPage({ svg, links, snippets }: IconMetadata) {
         </NextChakraLink>
       </HStack>
 
+      <HStack mb={4} variants={container} initial='hidden' animate='show'>
+        <Text fontWeight={600}>Tags</Text>
+        <HStack spacing={2}>
+          {tags?.map(tag => (<Tag key={tag.tag_id} size='lg' borderRadius='full' fontSize='sm' colorScheme='blackAlpha' variants={item}>
+            <TagLabel mr={1.5}>{tag.name}</TagLabel>
+
+          </Tag>))}
+        </HStack>
+      </HStack>
+
+      <HStack mb={4} variants={container} initial='hidden' animate='show'>
+        <Text fontWeight={600}>Related icons</Text>
+        <HStack spacing={2}>
+          {relatedIcons.map(relatedIcon => (<Tag key={relatedIcon.hash} size='lg' borderRadius='full' fontSize='sm' colorScheme='blackAlpha' variants={item}>
+            <TagLabel mr={1.5}>{relatedIcon.iconName}</TagLabel>
+            <TagRightIcon
+              as={() => <div style={{ minWidth: '20px' }} dangerouslySetInnerHTML={{ __html: relatedIcon.svg }} />}
+            />
+          </Tag>))}
+        </HStack>
+      </HStack>
+
+
       <Slide direction='bottom' in style={{ zIndex: 10 }}>
         <HStack
           alignItems='flex-start'
@@ -209,7 +256,7 @@ export default function IconPage({ svg, links, snippets }: IconMetadata) {
           position='relative'
           spacing={12}
         >
-          <Stack flex={1} minHeight={1124}>
+          <Stack flex={1}>
             <Tabs onChange={handleTabChange}>
               <TabList>
                 <Tab>HTML</Tab>

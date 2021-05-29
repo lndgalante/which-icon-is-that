@@ -31,7 +31,7 @@ export const getReverse = async ({ request, response }: Context) => {
     }
 
     if (hash) {
-      const { rows, rowCount } = await await hashTable.selectPathByHash(hash);
+      const { rows, rowCount } = await hashTable.selectPathByHash(hash);
 
       if (rowCount === 0) {
         response.status = 404;

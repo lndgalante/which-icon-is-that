@@ -36,24 +36,56 @@ export function getIconPackFigmaLink(svgPackName: string) {
   return iconPackFigmaLink;
 }
 
+export async function generateIconNameSynonym(iconName: string): Promise<string[]> {
+  // TODO: Temporary fix until synonym has Deno support
+  const p = Deno.run({
+    cmd: ['node', './lib/synonyms.js', iconName],
+    stdout: 'piped',
+    stderr: 'piped',
+  });
+
+  const rawOutput = await p.output();
+  const rawError = await p.stderrOutput();
+
+  const outputString = new TextDecoder().decode(rawOutput);
+  const result = JSON.parse(outputString);
+
+  const [synonyms] = result;
+
+  return synonyms;
+}
+
 let i = 0;
 
 export async function saveIconsInDB() {
   try {
     const transaction = client.createTransaction('tx-create-db');
+
     await transaction.begin();
 
+    // remove existing tables
     await transaction.queryArray`DROP TABLE icons`;
     await transaction.queryArray`DROP TABLE paths`;
+    await transaction.queryArray`DROP TABLE tags`;
+    await transaction.queryArray`DROP TABLE tags_icons`;
+
+    // create tables
+    await transaction.queryArray`CREATE TABLE tags (id TEXT, name TEXT)`;
+    await transaction.queryArray`CREATE TABLE tags_icons (hash TEXT, tag_id TEXT)`;
 
     await transaction.queryArray`CREATE TABLE paths (path TEXT, hash TEXT)`;
     await transaction.queryArray(
       `CREATE TABLE icons (hash TEXT, svg TEXT, icon_type TEXT, bytes TEXT, pack_id TEXT, pack_name TEXT, icon_name TEXT, icon_file_name TEXT, found SERIAL)`,
     );
 
+    // generate indexes
     await transaction.queryArray`CREATE INDEX hash_index ON icons(hash)`;
+
     await transaction.queryArray`CREATE INDEX path_index ON paths(path)`;
     await transaction.queryArray`CREATE INDEX hash_on_paths_index ON paths(hash)`;
+
+    await transaction.queryArray`CREATE INDEX hash_index_on_tags ON tags_icons(hash)`;
+    await transaction.queryArray`CREATE INDEX hash_on_tag_id_index ON tags_icons(tag_id)`;
 
     for (const { packId, packName } of ICONS_LIST) {
       console.log('\n ~ saveIconsInDB ~ packName', packName);
@@ -73,7 +105,9 @@ export async function saveIconsInDB() {
 
       for (const { name, path, iconType } of svgFiles) {
         i += 1;
+
         const { size } = await Deno.stat(path);
+
         let svg = await Deno.readTextFile(path);
 
         if (svg.includes('<?xml')) {
@@ -83,9 +117,29 @@ export async function saveIconsInDB() {
         }
 
         const iconName = name.replace('.svg', '').replace(/\_/g, '-');
+
         const bytes = prettyBytes(size);
         const svgInnerHtml = getInnerHTMLFromSvgText(svg);
         const hash = createHash(svgInnerHtml);
+
+        const synonyms = await generateIconNameSynonym(iconName);
+        console.log('\n ~ saveIconsInDB ~ synonyms', synonyms);
+
+        if (synonyms) {
+          if (Array.isArray(synonyms)) {
+            const parsedSynonyms = synonyms.filter((synonym) => synonym.length !== 1);
+            for (const synonym of parsedSynonyms) {
+              const synonymId = createHash(synonym);
+              await transaction.queryArray(`INSERT INTO tags (id, name) VALUES ($1, $2)`, synonymId, synonym);
+              await transaction.queryArray(`INSERT INTO tags_icons (hash, tag_id) VALUES ($1, $2)`, hash, synonymId);
+            }
+          } else {
+            const synonymId = createHash(synonyms);
+            await transaction.queryArray(`INSERT INTO tags (id, name) VALUES ($1, $2)`, synonymId, synonyms);
+            await transaction.queryArray(`INSERT INTO tags_icons (hash, tag_id) VALUES ($1, $2)`, hash, synonymId);
+          }
+        }
+
         await transaction.queryArray(
           `INSERT INTO icons (hash,svg,icon_type,bytes,pack_id,pack_name,icon_name,icon_file_name,found) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)`,
           hash,

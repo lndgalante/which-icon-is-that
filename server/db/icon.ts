@@ -13,6 +13,11 @@ class Icon {
     return client.queryObject(`SELECT * FROM icons WHERE hash = $1`, hash);
   }
 
+  selectAllByHashes(hashes: string[]) {
+    const inQueryValues = hashes.map((_hash, index) => `$${index + 1}`).join(', ');
+    return client.queryObject(`SELECT * FROM icons WHERE hash IN (${inQueryValues})`, ...hashes);
+  }
+
   selectFoundTimesByHash(hash: string) {
     return client.queryObject(`SELECT found FROM icons WHERE hash = $1`, hash);
   }

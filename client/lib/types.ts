@@ -24,10 +24,17 @@ export type Snippets = {
   reactIconsImport: string;
 };
 
+export type Tag = {
+  name: string;
+  tag_id: string;
+};
+
 export type IconMetadata = {
   svg: Svg;
   links: Links;
   snippets: Snippets;
+  tags: Tag[];
+  relatedIcons: Svg[];
 };
 
 export type Response<T> = {
