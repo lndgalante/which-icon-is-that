@@ -75,7 +75,7 @@ export async function saveIconsInDB() {
 
     await transaction.queryArray`CREATE TABLE paths (path TEXT, hash TEXT)`;
     await transaction.queryArray(
-      `CREATE TABLE icons (hash TEXT, svg TEXT, icon_type TEXT, bytes TEXT, pack_id TEXT, pack_name TEXT, icon_name TEXT, icon_file_name TEXT, found SERIAL)`,
+      `CREATE TABLE icons (hash TEXT, svg TEXT, inner_svg TEXT, view_box TEXT, icon_type TEXT, bytes TEXT, pack_id TEXT, pack_name TEXT, icon_name TEXT, icon_file_name TEXT, found SERIAL)`,
     );
 
     // generate indexes
@@ -116,14 +116,13 @@ export async function saveIconsInDB() {
           svg = svgArray.join('');
         }
 
-        const iconName = name.replace('.svg', '').replace(/\_/g, '-');
-
         const bytes = prettyBytes(size);
-        const svgInnerHtml = getInnerHTMLFromSvgText(svg);
-        const hash = createHash(svgInnerHtml);
+        const { innerSvg, viewBox } = getInnerHTMLFromSvgText(svg);
+        console.log('\n ~ saveIconsInDB ~ innerSvg', innerSvg);
+        const hash = createHash(innerSvg);
 
+        const iconName = name.replace('.svg', '').replace(/\_/g, '-');
         const synonyms = await generateIconNameSynonym(iconName);
-        console.log('\n ~ saveIconsInDB ~ synonyms', synonyms);
 
         if (synonyms) {
           if (Array.isArray(synonyms)) {
@@ -141,9 +140,11 @@ export async function saveIconsInDB() {
         }
 
         await transaction.queryArray(
-          `INSERT INTO icons (hash,svg,icon_type,bytes,pack_id,pack_name,icon_name,icon_file_name,found) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)`,
+          `INSERT INTO icons (hash,svg,inner_svg,view_box,icon_type,bytes,pack_id,pack_name,icon_name,icon_file_name,found) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)`,
           hash,
           svg,
+          innerSvg,
+          viewBox,
           iconType,
           bytes,
           packId,

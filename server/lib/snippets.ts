@@ -14,8 +14,6 @@ const Ai = require('react-icons/ai');
 const Bi = require('react-icons/bi');
 const Di = require('react-icons/di');
 const Fc = require('react-icons/fc');
-// const svgr = {} as any;
-// const toVue = {} as any;
 
 function createReactComponentName(packName: string, iconName: string) {
   return titleCase(`${packName.replace(/-/g, ' ')} ${iconName.replace(/-/g, ' ')}`)
@@ -71,8 +69,19 @@ function getReactIconsImport(reactIconName: string, packId: string) {
   return reactIconName ? generateReactIconsCodeSnippet(reactIconName, packId) : '// Import not found';
 }
 
+function createReactChakraIcon(viewBox: string, innerSvg: string) {
+  return `<Icon viewBox="${viewBox}">${innerSvg}</Icon>`;
+}
+
 // icon code (html, react, vue) per icon library
-export async function generateIconSnippets(svg: string, iconName: string, packName: PacksNames, packId: string) {
+export async function generateIconSnippets(
+  svg: string,
+  innerSvg: string,
+  viewBox: string,
+  iconName: string,
+  packName: PacksNames,
+  packId: string,
+) {
   const componentName = createReactComponentName(packName, iconName);
 
   // TODO: Temporary fix until SVGR has Deno support
@@ -86,6 +95,7 @@ export async function generateIconSnippets(svg: string, iconName: string, packNa
   const rawError = await p.stderrOutput();
 
   const outputString = new TextDecoder().decode(rawOutput);
+
   const result = JSON.parse(outputString);
 
   const [html, vueTemplate, reactComponentJs, reactComponentTs, reactNativeComponentJs, reactNativeComponentTs] =
@@ -95,6 +105,9 @@ export async function generateIconSnippets(svg: string, iconName: string, packNa
 
   const reactIconName = getReactIcon(iconName, packName);
   const reactIconsImport = getReactIconsImport(reactIconName.original, packId);
+
+  // TODO: Format through svgr when is avaiable for deno
+  const reactChakraIcon = createReactChakraIcon(viewBox, innerSvg);
 
   const iconCodes = {
     feather: {
@@ -149,6 +162,16 @@ export async function generateIconSnippets(svg: string, iconName: string, packNa
           setup: null,
           usage: `<${pascalCase(iconName)} />`,
           link: 'https://github.com/feathericons/react-feather',
+        },
+        'chakra-ui': {
+          install: {
+            npm: 'npm install @chakra-ui/react @emotion/react@^11 @emotion/styled@^11 framer-motion@^4',
+            yarn: 'yarn add @chakra-ui/react @emotion/react@^11 @emotion/styled@^11 framer-motion@^4',
+          },
+          import: `import { Icon } from "@chakra-ui/react";`,
+          setup: null,
+          usage: reactChakraIcon,
+          link: 'https://chakra-ui.com',
         },
       },
       vue: {

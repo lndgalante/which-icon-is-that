@@ -23,6 +23,8 @@ export type IconType = Antdesign | BootstrapFeather | Boxicons | Devicons | Hero
 export type Svg = {
   hash: string;
   svg: string;
+  inner_svg: string;
+  view_box: string;
   bytes: string;
   found: number;
   pack_id: string;

@@ -244,7 +244,7 @@ export default function IconPage({ svg, links, snippets, tags, relatedIcons }: I
       </HStack>
 
 
-      <Slide direction='bottom' in style={{ zIndex: 10 }}>
+      <Slide direction='bottom' in={true} style={{ zIndex: 10 }}>
         <HStack
           alignItems='flex-start'
           flex-direction='row'
@@ -290,6 +290,7 @@ export default function IconPage({ svg, links, snippets, tags, relatedIcons }: I
                       { label: 'React Component (TypeScript)', value: 'react-component-ts' },
                       { label: 'React-icons', value: 'react-icons' },
                       { label: 'React-feather', value: 'react-feather' },
+                      { label: 'Chakra UI', value: 'chakra-ui' },
                     ]}
                     selectedUse={selectedUse}
                     selectedLanguage={selectedLanguage}

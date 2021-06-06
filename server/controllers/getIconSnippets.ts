@@ -25,8 +25,17 @@ export const getIconSnippets = async ({ params, response }: Context & { params: 
       return;
     }
 
-    const [{ svg, pack_id: packId, pack_name: packName, icon_name: iconName }] = rows as [Svg];
-    const snippets = await generateIconSnippets(svg, iconName, packName, packId);
+    const [svgRow] = rows as [Svg];
+    const {
+      svg,
+      pack_id: packId,
+      view_box: viewBox,
+      inner_svg: innerSvg,
+      pack_name: packName,
+      icon_name: iconName,
+    } = svgRow;
+
+    const snippets = await generateIconSnippets(svg, innerSvg, viewBox, iconName, packName, packId);
 
     response.status = 200;
     response.body = { success: true, data: { snippets } };

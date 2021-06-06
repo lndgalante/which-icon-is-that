@@ -29,13 +29,13 @@ export const ICONS_FIGMA_LINKS = {
 };
 
 export const ICONS_LIST = [
-  { packId: 'bs', packName: 'bootstrap', owner: 'twbs', repo: 'icons', type: 'releases' },
+  // { packId: 'bs', packName: 'bootstrap', owner: 'twbs', repo: 'icons', type: 'releases' },
   { packId: 'fi', packName: 'feather', owner: 'feathericons', repo: 'feather', type: 'releases' },
-  { packId: 'hi', packName: 'heroicons', owner: 'tailwindlabs', repo: 'heroicons', type: 'releases' },
-  { packId: 'ai', packName: 'antdesign', owner: 'ant-design', repo: 'ant-design-icons', type: 'tags' },
-  { packId: 'bi', packName: 'boxicons', owner: 'atisawd', repo: 'boxicons', type: 'releases' },
-  { packId: 'di', packName: 'devicon', owner: 'devicons', repo: 'devicon', type: 'releases' },
-  { packId: 'fc', packName: 'flatcoloricons', owner: 'icons8', repo: 'flat-color-icons', type: 'releases' },
+  // { packId: 'hi', packName: 'heroicons', owner: 'tailwindlabs', repo: 'heroicons', type: 'releases' },
+  // // { packId: 'ai', packName: 'antdesign', owner: 'ant-design', repo: 'ant-design-icons', type: 'tags' },
+  // { packId: 'bi', packName: 'boxicons', owner: 'atisawd', repo: 'boxicons', type: 'releases' },
+  // { packId: 'di', packName: 'devicon', owner: 'devicons', repo: 'devicon', type: 'releases' },
+  // { packId: 'fc', packName: 'flatcoloricons', owner: 'icons8', repo: 'flat-color-icons', type: 'releases' },
 ];
 
 export const ICONS_SOURCE_LINKS = {
