@@ -7,7 +7,7 @@ class Icon {
 
   selectColumnsForSnippets(hash: string) {
     return client.queryObject(
-      `SELECT svg, inner_svg, view_box, icon_name, pack_name, pack_id FROM icons WHERE hash = $1`,
+      `SELECT svg, inner_svg, view_box, icon_parsed_name, icon_name, pack_name, pack_id FROM icons WHERE hash = $1`,
       hash,
     );
   }

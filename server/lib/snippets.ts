@@ -78,6 +78,7 @@ export async function generateIconSnippets(
   svg: string,
   innerSvg: string,
   viewBox: string,
+  iconParsedName: string,
   iconName: string,
   packName: PacksNames,
   packId: string,
@@ -126,12 +127,19 @@ export async function generateIconSnippets(
           usage: `<i class="feather icon-${iconName}"></i>`,
           link: 'https://github.com/AT-UI/feather-font',
         },
-        javascript: {
+        script: {
           install: null,
           import: '<script src="https://unpkg.com/feather-icons"></script>',
           setup: '<script>feather.replace();</script>',
           usage: `<i data-feather="${iconName}"></i>`,
           link: 'https://github.com/AT-UI/feather-font',
+        },
+        icongram: {
+          install: null,
+          import: null,
+          setup: null,
+          usage: `<img src="https://icongr.am/feather/${iconName}.svg?size=24&color=currentColor" placeholder="${iconParsedName} />"`,
+          link: `https://icongr.am/feather`,
         },
       },
       react: {

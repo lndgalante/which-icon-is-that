@@ -18,6 +18,14 @@ import {
   TabList,
   TabPanel,
   TabPanels,
+  Button,
+  Drawer,
+  DrawerBody,
+  DrawerOverlay,
+  DrawerContent,
+  DrawerCloseButton,
+  useDisclosure,
+
 } from '@chakra-ui/react';
 
 import { FaGithubAlt } from 'react-icons/fa';
@@ -114,6 +122,7 @@ export default function IconPage({ svg, links, snippets, tags, relatedIcons }: I
 
   // chakra hooks
   const toast = useToast();
+  const { isOpen, onOpen, onClose } = useDisclosure()
   const { onCopy: onCopyInstall } = useClipboard(snippets[selectedLanguage].install);
   const { onCopy: onCopySetup } = useClipboard(snippets[selectedLanguage].setup);
   const { onCopy: onCopyImport } = useClipboard(snippets[selectedLanguage].import);
@@ -244,100 +253,122 @@ export default function IconPage({ svg, links, snippets, tags, relatedIcons }: I
       </HStack>
 
 
-      <Slide direction='bottom' in={true} style={{ zIndex: 10 }}>
-        <HStack
-          alignItems='flex-start'
-          flex-direction='row'
-          px={6}
-          pt={4}
-          pb={12}
-          color='white'
-          background='blackAlpha.900'
-          position='relative'
-          spacing={12}
-        >
-          <Stack flex={1}>
-            <Tabs onChange={handleTabChange}>
-              <TabList>
-                <Tab>HTML</Tab>
-                <Tab>React</Tab>
-                <Tab>Vue</Tab>
-                <Tab>React Native</Tab>
-              </TabList>
+      <Button colorScheme="blackAlpha" onClick={onOpen} position="absolute" top={4} right={4}>
+        Dev Panel
+      </Button>
 
-              <TabPanels>
-                <TabPanel>
-                  <LanguageTab
-                    currentSnippet={currentSnippet}
-                    usesOptions={[
-                      { label: 'Optimized SVG', value: 'optimizedSvg' },
-                      { label: 'Font (CDN)', value: 'font' },
-                    ]}
-                    selectedUse={selectedUse}
-                    selectedLanguage={selectedLanguage}
-                    handleChangeSelectedUse={handleChangeSelectedUse}
-                    handleCopyInstall={handleCopyInstall}
-                    handleCopyImport={handleCopyImport}
-                    handleCopySetup={handleCopySetup}
-                    handleCopyUsage={handleCopyUsage}
-                  />
-                </TabPanel>
-                <TabPanel>
-                  <LanguageTab
-                    currentSnippet={currentSnippet}
-                    usesOptions={[
-                      { label: 'React Component (JavaScript)', value: 'react-component-js' },
-                      { label: 'React Component (TypeScript)', value: 'react-component-ts' },
-                      { label: 'React-icons', value: 'react-icons' },
-                      { label: 'React-feather', value: 'react-feather' },
-                      { label: 'Chakra UI', value: 'chakra-ui' },
-                    ]}
-                    selectedUse={selectedUse}
-                    selectedLanguage={selectedLanguage}
-                    handleChangeSelectedUse={handleChangeSelectedUse}
-                    handleCopyInstall={handleCopyInstall}
-                    handleCopyImport={handleCopyImport}
-                    handleCopySetup={handleCopySetup}
-                    handleCopyUsage={handleCopyUsage}
-                  />
-                </TabPanel>
-                <TabPanel>
-                  <LanguageTab
-                    currentSnippet={currentSnippet}
-                    usesOptions={[
-                      { label: 'Vue Template', value: 'vue-template' },
-                      { label: 'Vue-feather', value: 'vue-feather' },
-                    ]}
-                    selectedUse={selectedUse}
-                    selectedLanguage={selectedLanguage}
-                    handleChangeSelectedUse={handleChangeSelectedUse}
-                    handleCopyInstall={handleCopyInstall}
-                    handleCopyImport={handleCopyImport}
-                    handleCopySetup={handleCopySetup}
-                    handleCopyUsage={handleCopyUsage}
-                  />
-                </TabPanel>
-                <TabPanel>
-                  <LanguageTab
-                    currentSnippet={currentSnippet}
-                    usesOptions={[
-                      { label: 'React Component (JavaScript)', value: 'react-native-component-js' },
-                      { label: 'React Component (TypeScript)', value: 'react-native-component-ts' },
-                    ]}
-                    selectedUse={selectedUse}
-                    selectedLanguage={selectedLanguage}
-                    handleChangeSelectedUse={handleChangeSelectedUse}
-                    handleCopyInstall={handleCopyInstall}
-                    handleCopyImport={handleCopyImport}
-                    handleCopySetup={handleCopySetup}
-                    handleCopyUsage={handleCopyUsage}
-                  />
-                </TabPanel>
-              </TabPanels>
-            </Tabs>
-          </Stack>
-        </HStack>
-      </Slide>
+      <Drawer
+        size="lg"
+        isOpen={isOpen}
+        placement="right"
+        onClose={onClose}
+      >
+        <DrawerOverlay />
+        <DrawerContent>
+          <DrawerCloseButton />
+
+          <DrawerBody p={0}
+            background='black'>
+            <HStack
+              alignItems='flex-start'
+              flex-direction='row'
+              px={6}
+              pt={4}
+              pb={12}
+              color='white'
+              background='blackAlpha.900'
+              position='relative'
+              spacing={12}
+            >
+              <Stack flex={1} pt={6}>
+                <Tabs onChange={handleTabChange}>
+                  <TabList position="fixed" top={0} left={0} zIndex={5} bg="black" width="100%">
+                    <Tab>HTML</Tab>
+                    <Tab>React</Tab>
+                    <Tab>Vue</Tab>
+                    <Tab>React Native</Tab>
+                  </TabList>
+
+                  <TabPanels>
+                    <TabPanel>
+                      <LanguageTab
+                        currentSnippet={currentSnippet}
+                        usesOptions={[
+                          { label: 'Optimized SVG', value: 'optimizedSvg' },
+                          { label: 'Font (CDN)', value: 'font' },
+                          { label: 'Script', value: 'script' },
+                          { label: 'Icongram', value: 'icongram' },
+                        ]}
+                        selectedUse={selectedUse}
+                        selectedLanguage={selectedLanguage}
+                        handleChangeSelectedUse={handleChangeSelectedUse}
+                        handleCopyInstall={handleCopyInstall}
+                        handleCopyImport={handleCopyImport}
+                        handleCopySetup={handleCopySetup}
+                        handleCopyUsage={handleCopyUsage}
+                      />
+                    </TabPanel>
+                    <TabPanel>
+                      <LanguageTab
+                        currentSnippet={currentSnippet}
+                        usesOptions={[
+                          { label: 'React Component (JavaScript)', value: 'react-component-js' },
+                          { label: 'React Component (TypeScript)', value: 'react-component-ts' },
+                          { label: 'React-icons', value: 'react-icons' },
+                          { label: 'React-feather', value: 'react-feather' },
+                          { label: 'Chakra UI', value: 'chakra-ui' },
+                        ]}
+                        selectedUse={selectedUse}
+                        selectedLanguage={selectedLanguage}
+                        handleChangeSelectedUse={handleChangeSelectedUse}
+                        handleCopyInstall={handleCopyInstall}
+                        handleCopyImport={handleCopyImport}
+                        handleCopySetup={handleCopySetup}
+                        handleCopyUsage={handleCopyUsage}
+                      />
+                    </TabPanel>
+                    <TabPanel>
+                      <LanguageTab
+                        currentSnippet={currentSnippet}
+                        usesOptions={[
+                          { label: 'Vue Template', value: 'vue-template' },
+                          { label: 'Vue-feather', value: 'vue-feather' },
+                        ]}
+                        selectedUse={selectedUse}
+                        selectedLanguage={selectedLanguage}
+                        handleChangeSelectedUse={handleChangeSelectedUse}
+                        handleCopyInstall={handleCopyInstall}
+                        handleCopyImport={handleCopyImport}
+                        handleCopySetup={handleCopySetup}
+                        handleCopyUsage={handleCopyUsage}
+                      />
+                    </TabPanel>
+                    <TabPanel>
+                      <LanguageTab
+                        currentSnippet={currentSnippet}
+                        usesOptions={[
+                          { label: 'React Component (JavaScript)', value: 'react-native-component-js' },
+                          { label: 'React Component (TypeScript)', value: 'react-native-component-ts' },
+                        ]}
+                        selectedUse={selectedUse}
+                        selectedLanguage={selectedLanguage}
+                        handleChangeSelectedUse={handleChangeSelectedUse}
+                        handleCopyInstall={handleCopyInstall}
+                        handleCopyImport={handleCopyImport}
+                        handleCopySetup={handleCopySetup}
+                        handleCopyUsage={handleCopyUsage}
+                      />
+                    </TabPanel>
+                  </TabPanels>
+                </Tabs>
+              </Stack>
+            </HStack>
+          </DrawerBody>
+
+        </DrawerContent>
+      </Drawer>
+
+
     </Main>
   );
 }

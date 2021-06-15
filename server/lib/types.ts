@@ -30,6 +30,7 @@ export type Svg = {
   pack_id: string;
   pack_name: PacksNames;
   icon_name: string;
+  icon_parsed_name: string;
   icon_type: IconType;
   icon_file_name: string;
 };
