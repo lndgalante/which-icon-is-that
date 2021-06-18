@@ -5,7 +5,6 @@ import {
   Icon,
   Text,
   Link,
-  Slide,
   Stack,
   HStack,
   Tooltip,
@@ -243,12 +242,18 @@ export default function IconPage({ svg, links, snippets, tags, relatedIcons }: I
       <HStack mb={4} variants={container} initial='hidden' animate='show'>
         <Text fontWeight={600}>Related icons</Text>
         <HStack spacing={2}>
-          {relatedIcons.map(relatedIcon => (<Tag key={relatedIcon.hash} size='lg' borderRadius='full' fontSize='sm' colorScheme='blackAlpha' variants={item}>
-            <TagLabel mr={1.5}>{relatedIcon.iconName}</TagLabel>
-            <TagRightIcon
-              as={() => <div style={{ minWidth: '20px' }} dangerouslySetInnerHTML={{ __html: relatedIcon.svg }} />}
-            />
-          </Tag>))}
+          {relatedIcons.map(({ packName, iconType, iconName, svg, hash }) => (
+            <NextChakraLink href={{
+              pathname: '/[packName]/[iconType]/[iconName]',
+              query: { packName, iconType, iconName },
+            } as any} >
+              <Tag key={hash} size='lg' borderRadius='full' fontSize='sm' colorScheme='blackAlpha' variants={item}>
+                <TagLabel mr={1.5}>{iconName}</TagLabel>
+                <TagRightIcon
+                  as={() => <div style={{ minWidth: '20px' }} dangerouslySetInnerHTML={{ __html: svg }} />}
+                />
+              </Tag>
+            </NextChakraLink>))}
         </HStack>
       </HStack>
 

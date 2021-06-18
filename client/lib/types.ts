@@ -31,9 +31,9 @@ export type Tag = {
 
 export type IconMetadata = {
   svg: Svg;
+  tags: Tag[];
   links: Links;
   snippets: Snippets;
-  tags: Tag[];
   relatedIcons: Svg[];
 };
 
