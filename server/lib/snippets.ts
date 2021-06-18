@@ -99,8 +99,16 @@ export async function generateIconSnippets(
 
   const result = JSON.parse(outputString);
 
-  const [html, vueTemplate, reactComponentJs, reactComponentTs, reactNativeComponentJs, reactNativeComponentTs] =
-    result;
+  const [
+    html,
+    vueTemplate,
+    reactComponentJs,
+    reactComponentTs,
+    reactNativeComponentJs,
+    reactNativeComponentTs,
+    styledComponentJs,
+    styledComponentTs,
+  ] = result;
 
   const errorString = new TextDecoder().decode(rawError);
 
@@ -144,18 +152,18 @@ export async function generateIconSnippets(
       },
       react: {
         'react-component-js': {
-          install: null,
+          install: { npm: 'npm install react react-dom', yarn: 'yarn add react react-dom' },
           import: null,
           setup: null,
           usage: reactComponentJs,
-          link: null,
+          link: 'https://github.com/facebook/react',
         },
         'react-component-ts': {
-          install: null,
+          install: { npm: 'npm install react react-dom @types/react', yarn: 'yarn add react react-dom @types/react' },
           import: null,
           setup: null,
           usage: reactComponentTs,
-          link: null,
+          link: 'https://github.com/facebook/react',
         },
         'react-icons': {
           install: { npm: 'npm install react-icons', yarn: 'yarn add react-icons' },
@@ -180,6 +188,26 @@ export async function generateIconSnippets(
           setup: null,
           usage: reactChakraIcon,
           link: 'https://chakra-ui.com',
+        },
+        'styled-component-js': {
+          install: {
+            npm: 'npm install --save styled-components',
+            yarn: 'yarn add styled-components',
+          },
+          import: `import styled, { css } from 'styled-components';`,
+          setup: null,
+          usage: styledComponentJs,
+          link: 'https://styled-components.com',
+        },
+        'styled-component-ts': {
+          install: {
+            npm: 'npm install --save styled-components @types/styled-components',
+            yarn: 'yarn add styled-components @types/styled-components',
+          },
+          import: `import styled, { css } from 'styled-components';`,
+          setup: null,
+          usage: styledComponentTs,
+          link: 'https://styled-components.com',
         },
       },
       vue: {

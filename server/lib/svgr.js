@@ -32,6 +32,61 @@ function createReactNativeComponent(svg, componentName, typescript = false) {
   );
 }
 
+// styled components template
+function createStyledComponent(svg, componentName, typescript = false) {
+  return svgr(
+    svg,
+    {
+      typescript,
+      plugins: ['@svgr/plugin-svgo', '@svgr/plugin-jsx', '@svgr/plugin-prettier'],
+      template: typescript ? styledComponentTsTemplate : styledComponentJsTemplate,
+    },
+    { componentName },
+  );
+}
+
+function styledComponentJsTemplate({ template }, opts, { imports, componentName, props, jsx }) {
+  const typeScriptTpl = template.smart({ plugins: ['typescript'] });
+
+  return typeScriptTpl.ast`
+    import styled, { css } from 'styled-components';
+
+    const SvgIcon = (${props}) => (props => ${jsx})({ className: props.className });
+
+    const ${componentName} = styled(SvgIcon)([],
+      ({ theme, fill, width }) => css\`
+        width: \${width || theme.sizes.width};
+        height: \${width || theme.sizes.width};
+        fill: \${fill || theme.colors.fillColor};
+      \`
+    );
+
+
+    export default ${componentName};
+  `;
+}
+
+function styledComponentTsTemplate({ template }, opts, { imports, componentName, props, jsx }) {
+  const typeScriptTpl = template.smart({ plugins: ['typescript'] });
+
+  return typeScriptTpl.ast`
+    import styled, { css } from 'styled-components';
+
+    const SvgIcon = (${props}: React.SVGProps<SVGSVGElement>) => (props => ${jsx})({className: props.className});
+
+    const ${componentName} = styled(SvgIcon)([],
+      ({ theme, fill, width }) => css\`
+        width: \${width || theme.sizes.width};
+        height: \${width || theme.sizes.width};
+        fill: \${fill || theme.colors.fillColor};
+      \`
+    );
+
+
+    export default ${componentName};
+  `;
+}
+
 // vue template
 async function createVueTemplate(svg) {
   const { component } = await toVue(svg);
@@ -49,6 +104,9 @@ async function output() {
   const reactComponentJs = await createReactComponent(svg, componentName);
   const reactComponentTs = await createReactComponent(svg, componentName, true);
 
+  const styledComponentJs = await createStyledComponent(svg, `Styled${componentName}`);
+  const styledComponentTs = await createStyledComponent(svg, `Styled${componentName}`, true);
+
   const reactNativeComponentJs = await createReactNativeComponent(svg, componentName);
   const reactNativeComponentTs = await createReactNativeComponent(svg, componentName, true);
 
@@ -60,6 +118,8 @@ async function output() {
       reactComponentTs,
       reactNativeComponentJs,
       reactNativeComponentTs,
+      styledComponentJs,
+      styledComponentTs,
     ]),
   );
 }

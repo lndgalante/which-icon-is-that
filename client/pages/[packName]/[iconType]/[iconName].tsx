@@ -263,7 +263,7 @@ export default function IconPage({ svg, links, snippets, tags, relatedIcons }: I
       </Button>
 
       <Drawer
-        size="lg"
+        size="xl"
         isOpen={isOpen}
         placement="right"
         onClose={onClose}
@@ -322,6 +322,8 @@ export default function IconPage({ svg, links, snippets, tags, relatedIcons }: I
                           { label: 'React-icons', value: 'react-icons' },
                           { label: 'React-feather', value: 'react-feather' },
                           { label: 'Chakra UI', value: 'chakra-ui' },
+                          { label: 'Styled Component (JavaScript)', value: 'styled-component-js' },
+                          { label: 'Styled Component (TypeScript)', value: 'styled-component-ts' },
                         ]}
                         selectedUse={selectedUse}
                         selectedLanguage={selectedLanguage}
