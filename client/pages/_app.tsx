@@ -1,5 +1,6 @@
 import Head from 'next/head';
 import { AppProps } from 'next/app';
+import { motion } from "framer-motion";
 import PlausibleProvider from 'next-plausible';
 import { ChakraProvider } from '@chakra-ui/react';
 import { QueryClient, QueryClientProvider } from 'react-query';
@@ -13,7 +14,7 @@ const meta = {
   description: 'Find your icon name and pack easily from your SVG',
 };
 
-export default function MyApp({ Component, pageProps }: AppProps) {
+export default function MyApp({ Component, pageProps, router }: AppProps) {
   return (
     <PlausibleProvider domain='whichiconisthat.com'>
       <QueryClientProvider client={queryClient}>
@@ -33,7 +34,17 @@ export default function MyApp({ Component, pageProps }: AppProps) {
             <title>{meta.title}</title>
             <link rel='icon' href='/favicon.ico' />
           </Head>
-          <Component {...pageProps} />
+          <motion.div
+            key={router.route}
+            initial="initial"
+            animate="animate"
+            variants={{
+              initial: { opacity: 0, },
+              animate: { opacity: 1, },
+            }}
+          >
+            <Component {...pageProps} />
+          </motion.div>
         </ChakraProvider>
       </QueryClientProvider>
     </PlausibleProvider>
