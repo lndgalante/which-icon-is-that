@@ -131,6 +131,9 @@ export default function IconPage({ svg, links, snippets, tags, relatedIcons }: I
   const languages = Object.keys(snippets);
   const currentSnippet = snippets[selectedLanguage][selectedUse];
 
+  // TODO: Review this array of icon pack names
+  const hasIcongramSupport = ['clarity', 'devicon', 'entypo', 'feather', 'font-awesome', 'jam', 'material', 'octicons', 'simple']
+
   // handlers
   function handleTabChange(index: number) {
     const newLanguage = languages[index];
@@ -302,7 +305,7 @@ export default function IconPage({ svg, links, snippets, tags, relatedIcons }: I
                           { label: 'Optimized SVG', value: 'optimizedSvg' },
                           { label: 'Font (CDN)', value: 'font' },
                           { label: 'Script', value: 'script' },
-                          { label: 'Icongram', value: 'icongram' },
+                          hasIcongramSupport.includes(svg.packName) ? { label: 'Icongram', value: 'icongram' } : null,
                         ]}
                         selectedUse={selectedUse}
                         selectedLanguage={selectedLanguage}
@@ -324,6 +327,8 @@ export default function IconPage({ svg, links, snippets, tags, relatedIcons }: I
                           { label: 'Chakra UI', value: 'chakra-ui' },
                           { label: 'Styled Component (JavaScript)', value: 'styled-component-js' },
                           { label: 'Styled Component (TypeScript)', value: 'styled-component-ts' },
+                          { label: 'Emotion Component (JavaScript)', value: 'emotion-component-js' },
+                          { label: 'Emotion Component (JavaScript)', value: 'emotion-component-js' },
                         ]}
                         selectedUse={selectedUse}
                         selectedLanguage={selectedLanguage}
