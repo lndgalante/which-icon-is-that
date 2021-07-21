@@ -1,9 +1,9 @@
 import Head from 'next/head';
 import { AppProps } from 'next/app';
-import { motion } from "framer-motion";
+import { motion } from 'framer-motion';
 import PlausibleProvider from 'next-plausible';
-import { ChakraProvider } from '@chakra-ui/react';
 import { QueryClient, QueryClientProvider } from 'react-query';
+import { ChakraProvider, extendTheme } from '@chakra-ui/react';
 
 // constants
 const queryClient = new QueryClient();
@@ -14,11 +14,57 @@ const meta = {
   description: 'Find your icon name and pack easily from your SVG',
 };
 
+const theme = extendTheme({
+  colors: {
+    brand: {
+      black: '#000000',
+      warmBlack: '#201D1D',
+      text: '#A7A0A0',
+      darkRed: '#813131',
+      lightRed: '#C95454',
+      orange: '#E95848',
+      softOrange: '#F4D0C0',
+      lightOrange: '#FFF4EF',
+      grey: '#B5A7A7',
+      softGrey: '#E8E8E8',
+      lightGrey: '#FDFCFC',
+      white: '#FFFFFF',
+    },
+  },
+  components: {
+    Button: {
+      variants: {
+        'brand.solid': {
+          borderWidth: 1,
+          borderRadius: 8,
+          paddingX: '26px',
+          paddingY: '25px',
+          fontWeight: 'bold',
+          borderColor: 'brand.warmBlack',
+          color: 'brand.white',
+          backgroundColor: 'brand.warmBlack',
+          _hover: {
+            color: 'brand.warmBlack',
+            backgroundColor: 'transparent',
+          },
+        },
+        'brand.outline': {
+          color: 'brand.warmBlack',
+          backgroundColor: 'transparent',
+          borderWidth: 1,
+          borderColor: 'brand.warmBlack',
+        }
+      },
+
+    },
+  },
+});
+
 export default function MyApp({ Component, pageProps, router }: AppProps) {
   return (
     <PlausibleProvider domain='whichiconisthat.com'>
       <QueryClientProvider client={queryClient}>
-        <ChakraProvider>
+        <ChakraProvider theme={theme}>
           <Head>
             <meta name='robots' content='follow, index' />
             <meta name='description' content={meta.description} />
@@ -36,11 +82,11 @@ export default function MyApp({ Component, pageProps, router }: AppProps) {
           </Head>
           <motion.div
             key={router.route}
-            initial="initial"
-            animate="animate"
+            initial='initial'
+            animate='animate'
             variants={{
-              initial: { opacity: 0, },
-              animate: { opacity: 1, },
+              initial: { opacity: 0 },
+              animate: { opacity: 1 },
             }}
           >
             <Component {...pageProps} />
