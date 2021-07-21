@@ -8,26 +8,27 @@
     "start": "next start"
   },
   "dependencies": {
-    "@chakra-ui/react": "^1.6.3",
+    "@chakra-ui/icons": "^1.0.14",
+    "@chakra-ui/react": "^1.6.5",
     "@emotion/react": "^11.4.0",
     "@emotion/styled": "^11.3.0",
     "change-case": "^4.1.2",
     "framer-motion": "^4.1.17",
     "is-svg": "^4.3.1",
     "is-url": "^1.2.4",
-    "next": "11.0.0",
-    "next-plausible": "^1.6.2",
+    "next": "11.0.1",
+    "next-plausible": "^2.0.0",
     "prism-react-renderer": "^1.2.1",
     "pure-md5": "^0.1.13",
     "react": "17.0.2",
     "react-dom": "17.0.2",
-    "react-dropzone": "^11.3.2",
-    "react-query": "^3.17.2",
-    "react-icons": "^4.2.0"
+    "react-dropzone": "^11.3.4",
+    "react-icons": "^4.2.0",
+    "react-query": "^3.19.0"
   },
   "devDependencies": {
-    "@types/node": "^15.12.3",
-    "@types/react": "^17.0.11",
-    "typescript": "^4.3.4"
+    "@types/node": "^16.4.0",
+    "@types/react": "^17.0.14",
+    "typescript": "^4.3.5"
   }
 }
