@@ -5,6 +5,7 @@ import PlausibleProvider from 'next-plausible';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ChakraProvider, extendTheme } from '@chakra-ui/react';
 
+
 // constants
 const queryClient = new QueryClient();
 
