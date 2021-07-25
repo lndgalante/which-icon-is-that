@@ -1,11 +1,11 @@
 // types
-type Methods = 'GET' | 'PUT' | 'POST' | 'PATCH' | 'DELETE';
+type Methods = "GET" | "PUT" | "POST" | "PATCH" | "DELETE";
 
 // constants
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 // helpers
-const fecher = (url: string, method: Methods = 'GET') => fetch(url, { method }).then((response) => response.json());
+const fecher = (url: string, method: Methods = "GET") => fetch(url, { method }).then((response) => response.json());
 
 const endpoints = {
   paths: () => `${API_URL}/paths`,
@@ -26,6 +26,6 @@ export const api = {
   getIconSnippets: (hash: string) => fecher(endpoints.iconSnippets(hash)),
   getHashFromPath: (path: string) => fecher(endpoints.pathReverse(path)),
   getPathFromHash: (hash: string) => fecher(endpoints.hashReverse(hash)),
-  putIconIncrement: (hash: string) => fecher(endpoints.icon(hash), 'PUT'),
+  putIconIncrement: (hash: string) => fecher(endpoints.icon(hash), "PUT"),
   getSimilarIcons: (hash: string, tagId: string) => fecher(endpoints.similarIcons(hash, tagId)),
 };

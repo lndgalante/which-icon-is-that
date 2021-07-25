@@ -1,4 +1,4 @@
-import NextLink from 'next/link';
+import NextLink from "next/link";
 import {
   Icon,
   Stack,
@@ -12,76 +12,109 @@ import {
   DrawerFooter,
   DrawerBody,
   useDisclosure,
-} from '@chakra-ui/react';
-import { HiMenu, HiX } from 'react-icons/hi';
-import { AiFillGithub, AiOutlineTwitter } from 'react-icons/ai';
+} from "@chakra-ui/react";
+import { FaBars, FaTimes, FaGithub, FaTwitter } from "react-icons/fa";
 
 // components
-import { HorizontalLogo } from '@modules/common/components/HorizontalLogo';
+import { HorizontalLogo } from "@modules/common/components/HorizontalLogo";
 
 export function Navbar() {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
     <Stack
-      flexDirection='row'
-      justifyContent='space-between'
-      alignItems='center'
-      paddingY={{ base: 6, md: 4 }}
+      alignItems="center"
+      as="nav"
+      flexDirection="row"
+      justifyContent="space-between"
       paddingX={{ base: 4, md: 0 }}
+      paddingY={{ base: 6, md: 4 }}
     >
-      <HorizontalLogo maxHeight={{ base: 10, md: 12 }} marginLeft={-2} />
+      <HorizontalLogo marginLeft={-2} maxHeight={{ base: 10, md: 12 }} />
 
-      <HStack display={{ base: 'none', md: 'flex' }} alignItems='center' spacing={10} fontWeight={600} fontSize='sm'>
-        <NextLink href={'/libraries'} passHref>
+      <HStack
+        alignItems="center"
+        display={{ base: "none", md: "flex" }}
+        fontSize="sm"
+        fontWeight={600}
+        spacing={10}
+      >
+        <NextLink passHref href={"/libraries"}>
           <Link>Icon Libraries</Link>
         </NextLink>
-        <NextLink href={'/pricing'} passHref>
+        <NextLink passHref href={"/pricing"}>
           <Link>Pricing</Link>
         </NextLink>
-        <NextLink href={'/contact'} passHref>
+        <NextLink passHref href={"/contact"}>
           <Link>Contact</Link>
         </NextLink>
       </HStack>
 
-      <Icon as={HiMenu} cursor='pointer' display={{ base: 'block', md: 'none' }} w={6} h={6} onClick={onOpen} />
+      <Icon
+        as={FaBars}
+        cursor="pointer"
+        display={{ base: "block", md: "none" }}
+        h={6}
+        w={6}
+        onClick={onOpen}
+      />
 
-      <Drawer onClose={onClose} isOpen={isOpen} size='full'>
-        <DrawerContent backgroundColor='brand.lightRed' paddingY={12}>
+      <Drawer isOpen={isOpen} size="full" onClose={onClose}>
+        <DrawerContent backgroundColor="brand.lightRed" paddingY={12}>
           <DrawerHeader>
-            <Stack alignItems='flex-end'>
-              <Icon as={HiX} color='brand.white' cursor='pointer' w={6} h={6} onClick={onClose} />
+            <Stack alignItems="flex-end">
+              <Icon
+                as={FaTimes}
+                color="brand.white"
+                cursor="pointer"
+                h={6}
+                w={6}
+                onClick={onClose}
+              />
             </Stack>
           </DrawerHeader>
 
           <DrawerBody>
-            <Stack alignItems='center' color='brand.white' spacing={10} fontWeight={700} paddingY={16} fontSize='xl'>
-              <NextLink href='/libraries' passHref>
+            <Stack
+              alignItems="center"
+              color="brand.white"
+              fontSize="xl"
+              fontWeight={700}
+              paddingY={16}
+              spacing={10}
+            >
+              <NextLink passHref href="/libraries">
                 <Link>Icon Libraries</Link>
               </NextLink>
-              <NextLink href='/pricing' passHref>
+              <NextLink passHref href="/pricing">
                 <Link>Pricing</Link>
               </NextLink>
-              <NextLink href='/contact' passHref>
+              <NextLink passHref href="/contact">
                 <Link>Contact</Link>
               </NextLink>
             </Stack>
           </DrawerBody>
 
-          <DrawerFooter justifyContent='center' alignItems="center">
+          <DrawerFooter alignItems="center" justifyContent="center">
             <LinkBox>
-              <LinkOverlay href="https://twitter.com/whichiconisthat" isExternal>
-                <Icon as={AiOutlineTwitter} color='brand.white' w={6} h={6} />
+              <LinkOverlay
+                isExternal
+                href="https://twitter.com/whichiconisthat"
+              >
+                <Icon as={FaTwitter} color="brand.white" h={6} w={6} />
               </LinkOverlay>
             </LinkBox>
             <LinkBox>
-              <LinkOverlay href="https://github.com/lndgalante/which-icon-is-that" isExternal>
-                <Icon as={AiFillGithub} color='brand.white' w={6} h={6} ml={2} />
+              <LinkOverlay
+                isExternal
+                href="https://github.com/lndgalante/which-icon-is-that"
+              >
+                <Icon as={FaGithub} color="brand.white" h={6} ml={2} w={6} />
               </LinkOverlay>
             </LinkBox>
           </DrawerFooter>
         </DrawerContent>
       </Drawer>
-    </Stack >
+    </Stack>
   );
 }

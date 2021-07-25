@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {
   Modal,
   ModalOverlay,
@@ -16,8 +16,8 @@ import {
   UnorderedList,
   ListItem,
   useDisclosure,
-} from '@chakra-ui/react';
-import { FiInfo } from 'react-icons/fi';
+} from "@chakra-ui/react";
+import { FiInfo } from "react-icons/fi";
 
 export function Info() {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -25,15 +25,15 @@ export function Info() {
   return (
     <>
       <IconButton
-        position='absolute'
+        aria-label="Open project info"
         bottom={2}
-        right={2}
-        aria-label='Open project info'
-        variant='ghost'
-        size='lg'
-        colorScheme='blackAlpha'
-        onClick={onOpen}
+        colorScheme="blackAlpha"
         icon={<FiInfo />}
+        position="absolute"
+        right={2}
+        size="lg"
+        variant="ghost"
+        onClick={onOpen}
       />
 
       <Modal isOpen={isOpen} onClose={onClose}>
@@ -45,15 +45,19 @@ export function Info() {
             <Stack spacing={4}>
               <Stack>
                 <Text>Supported Icons</Text>
-                <UnorderedList stylePosition='inside'>
+                <UnorderedList stylePosition="inside">
                   <ListItem>Feather Icons</ListItem>
                   <ListItem>Bootstrap Icons</ListItem>
                 </UnorderedList>
               </Stack>
 
               <Text>
-                Made with love by{' '}
-                <Link href='https://www.leonardogalante.com' color='blue.500' isExternal>
+                Made with love by{" "}
+                <Link
+                  isExternal
+                  color="blue.500"
+                  href="https://www.leonardogalante.com"
+                >
                   Leonardo Galante
                 </Link>
               </Text>
@@ -61,17 +65,20 @@ export function Info() {
           </ModalBody>
 
           <ModalFooter>
-            <Button colorScheme='blackAlpha' mr={3} onClick={onClose}>
-              <LinkOverlay isExternal href='https://github.com/lndgalante/which-icon-is-that'>
+            <Button colorScheme="blackAlpha" mr={3} onClick={onClose}>
+              <LinkOverlay
+                isExternal
+                href="https://github.com/lndgalante/which-icon-is-that"
+              >
                 GitHub
               </LinkOverlay>
             </Button>
 
-            <Button colorScheme='twitter' mr={3} onClick={onClose}>
+            <Button colorScheme="twitter" mr={3} onClick={onClose}>
               <LinkOverlay
                 isExternal
                 href={`https://twitter.com/intent/tweet?url=${encodeURI(
-                  'Find your SVG icon easily on https://www.whichiconisthat.com. Send feedback to @lndgalante',
+                  "Find your SVG icon easily on https://www.whichiconisthat.com. Send feedback to @lndgalante"
                 )}`}
               >
                 Share on Twitter

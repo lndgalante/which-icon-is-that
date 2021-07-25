@@ -1,8 +1,8 @@
-import isUrl from 'is-url';
-import isSvg from 'is-svg';
-import { useState } from 'react';
-import { useRouter } from 'next/router';
-import { useDropzone } from 'react-dropzone';
+import isUrl from "is-url";
+import isSvg from "is-svg";
+import { useState } from "react";
+import { useRouter } from "next/router";
+import { useDropzone } from "react-dropzone";
 import {
   Text,
   Input,
@@ -17,16 +17,16 @@ import {
   FormControl,
   InputRightElement,
   useToast,
-} from '@chakra-ui/react';
+} from "@chakra-ui/react";
 
 // lib
-import { api } from '@lib/api';
-import { createHash } from '@lib/hash';
-import { getInnerHTMLFromSvgText } from '@lib/dom';
+import { api } from "@lib/api";
+import { createHash } from "@lib/hash";
+import { getInnerHTMLFromSvgText } from "@lib/dom";
 
 // components
-import { Main } from '@components/Main';
-import { RadioGroup } from '@components/RadioGroup';
+import { Main } from "@components/Main";
+import { RadioGroup } from "@components/RadioGroup";
 
 // constants
 const SVG_PLACEHOLDER = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check2" viewBox="0 0 16 16">
@@ -34,16 +34,16 @@ const SVG_PLACEHOLDER = `<svg xmlns="http://www.w3.org/2000/svg" width="16" heig
     d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/>
 </svg>`;
 
-type InputTypes = 'File' | 'URL' | 'Text';
+type InputTypes = "File" | "URL" | "Text";
 
-const INPUT_TYPES: InputTypes[] = ['File', 'URL', 'Text'];
+const INPUT_TYPES: InputTypes[] = ["File", "URL", "Text"];
 
 export default function Home() {
   // react hooks
-  const [hash, setHash] = useState('');
-  const [svgUrl, setSvgUrl] = useState('');
-  const [svgCode, setSvgCode] = useState('');
-  const [fileName, setFileName] = useState('');
+  const [hash, setHash] = useState("");
+  const [svgUrl, setSvgUrl] = useState("");
+  const [svgCode, setSvgCode] = useState("");
+  const [fileName, setFileName] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isDownloadingFile, setIsDownloadingFile] = useState(false);
   const [inputType, setInputType] = useState<InputTypes>(INPUT_TYPES[0]);
@@ -55,7 +55,9 @@ export default function Home() {
   const { push } = useRouter();
 
   // dropzone hooks
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop: handleDrop });
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+    onDrop: handleDrop,
+  });
 
   // helpers
   async function moveToHashPage(hash: string) {
@@ -64,7 +66,10 @@ export default function Home() {
       const { data, success } = await api.getPathFromHash(hash);
 
       if (!success) {
-        return toast({ title: 'Icon not found on our database', status: 'error' });
+        return toast({
+          title: "Icon not found on our database",
+          status: "error",
+        });
       }
 
       await api.putIconIncrement(hash);
@@ -72,7 +77,7 @@ export default function Home() {
       const url = decodeURIComponent(data.result);
       push(url, undefined, { shallow: true });
     } catch (error) {
-      console.log('Error on moveToHashPage', error);
+      console.log("Error on moveToHashPage", error);
     } finally {
       setIsLoading(false);
     }
@@ -94,16 +99,18 @@ export default function Home() {
   function handleDrop([file]) {
     const { name, type } = file;
 
-    if (type !== 'image/svg+xml') {
-      return toast({ title: `Only SVG files are supported`, status: 'error' });
+    if (type !== "image/svg+xml") {
+      return toast({ title: `Only SVG files are supported`, status: "error" });
     }
 
     setFileName(name);
 
     const reader = new FileReader();
 
-    reader.onabort = () => toast({ title: 'File reading was aborted', status: 'error' });
-    reader.onerror = () => toast({ title: 'File reading has failed', status: 'error' });
+    reader.onabort = () =>
+      toast({ title: "File reading was aborted", status: "error" });
+    reader.onerror = () =>
+      toast({ title: "File reading has failed", status: "error" });
     reader.onload = () => {
       const svgInnerHtml = getInnerHTMLFromSvgText(reader.result as string);
       const hash = createHash(svgInnerHtml);
@@ -116,18 +123,21 @@ export default function Home() {
   // helpers
   async function searchIconByUrlInput() {
     if (!svgUrl) {
-      return toast({ title: 'Insert a URL first', status: 'error' });
+      return toast({ title: "Insert a URL first", status: "error" });
     }
 
     const isValidUrl = isUrl(svgUrl);
-    const isSvgUrl = svgUrl.endsWith('.svg');
+    const isSvgUrl = svgUrl.endsWith(".svg");
 
     if (!isValidUrl) {
-      return toast({ title: 'Inserted URL is not valid', status: 'error' });
+      return toast({ title: "Inserted URL is not valid", status: "error" });
     }
 
     if (!isSvgUrl) {
-      return toast({ title: 'Inserted URL should contain an SVG', status: 'error' });
+      return toast({
+        title: "Inserted URL should contain an SVG",
+        status: "error",
+      });
     }
 
     try {
@@ -138,7 +148,7 @@ export default function Home() {
 
       moveToHashPage(createHash(svgInnerHtml));
     } catch (error) {
-      console.log('Error on searchIconByUrlInput', error);
+      console.log("Error on searchIconByUrlInput", error);
     } finally {
       setIsDownloadingFile(false);
     }
@@ -146,7 +156,7 @@ export default function Home() {
 
   function searchIconByCodeInput() {
     if (!isSvg(svgCode)) {
-      return toast({ title: 'HTML inserted is not an SVG', status: 'error' });
+      return toast({ title: "HTML inserted is not an SVG", status: "error" });
     }
 
     const svgInnerHtml = getInnerHTMLFromSvgText(svgCode);
@@ -155,7 +165,7 @@ export default function Home() {
 
   function searchIconByFileInput() {
     if (!hash) {
-      return toast({ title: `Insert a file first`, status: 'warning' });
+      return toast({ title: `Insert a file first`, status: "warning" });
     }
 
     moveToHashPage(hash);
@@ -163,9 +173,9 @@ export default function Home() {
 
   function getFindIconFunction() {
     const inputFunctions = {
-      ['URL']: searchIconByUrlInput,
-      ['File']: searchIconByFileInput,
-      ['Text']: searchIconByCodeInput,
+      ["URL"]: searchIconByUrlInput,
+      ["File"]: searchIconByFileInput,
+      ["Text"]: searchIconByCodeInput,
     };
     const inputFunction = inputFunctions[inputType];
 
@@ -173,78 +183,90 @@ export default function Home() {
   }
 
   // constants
-  const isUrlSelected = inputType === 'URL';
-  const isFileSelected = inputType === 'File';
-  const isTextSelected = inputType === 'Text';
+  const isUrlSelected = inputType === "URL";
+  const isFileSelected = inputType === "File";
+  const isTextSelected = inputType === "Text";
 
   const handleFindIconButton = getFindIconFunction();
   const isFindIconButtonEnabled = hash || svgUrl || svgCode;
 
   return (
     <Main>
-      <Stack width='full' maxWidth={640} height={460} spacing={3}>
-        <HStack justifyContent='space-between' alignItems='flex-end'>
+      <Stack height={460} maxWidth={640} spacing={3} width="full">
+        <HStack alignItems="flex-end" justifyContent="space-between">
           <FormControl>
-            <FormLabel color='gray.800'>Select your input type</FormLabel>
-            <RadioGroup name='Input type' options={INPUT_TYPES} onChange={handleInputTypeChange} />
+            <FormLabel color="gray.800">Select your input type</FormLabel>
+            <RadioGroup
+              name="Input type"
+              options={INPUT_TYPES}
+              onChange={handleInputTypeChange}
+            />
           </FormControl>
 
           <Button
-            isLoading={isLoading}
-            colorScheme='blackAlpha'
-            onClick={handleFindIconButton}
+            colorScheme="blackAlpha"
             isDisabled={!isFindIconButtonEnabled}
+            isLoading={isLoading}
+            onClick={handleFindIconButton}
           >
-            {isLoading ? 'Finding Icon...' : 'Find Icon!'}
+            {isLoading ? "Finding Icon..." : "Find Icon!"}
           </Button>
         </HStack>
 
         <Stack>
           {isFileSelected && (
             <FormControl>
-              <FormLabel color='gray.800'>Insert your SVG file</FormLabel>
+              <FormLabel color="gray.800">Insert your SVG file</FormLabel>
               <Center
                 {...getRootProps()}
-                p={4}
+                _focus={{
+                  boxShadow: "lg",
+                  transform: "scale(1.025)",
+                  outline: "none",
+                }}
+                _hover={{ boxShadow: "lg", transform: "scale(1.025)" }}
+                background="rgba( 255, 255, 255, 0.25 )"
+                borderRadius="2xl"
+                boxShadow="md"
+                cursor="pointer"
+                flexDirection="column"
                 mb={4}
                 minHeight={380}
-                flexDirection='column'
-                textAlign='center'
-                cursor='pointer'
-                background='rgba( 255, 255, 255, 0.25 )'
-                boxShadow='md'
-                style={{ backdropFilter: 'blur(6px)' }}
-                borderRadius='2xl'
-                willChange={'transform'}
-                transition='all ease-in-out 400ms'
-                transformOrigin='center center'
-                position='relative'
-                transform={isDragActive ? 'scale(1.025)' : 'none'}
-                _hover={{ boxShadow: 'lg', transform: 'scale(1.025)' }}
-                _focus={{ boxShadow: 'lg', transform: 'scale(1.025)', outline: 'none' }}
+                p={4}
+                position="relative"
+                style={{ backdropFilter: "blur(6px)" }}
+                textAlign="center"
+                transform={isDragActive ? "scale(1.025)" : "none"}
+                transformOrigin="center center"
+                transition="all ease-in-out 400ms"
+                willChange={"transform"}
               >
                 {/* @ts-expect-error */}
                 <Input {...getInputProps()} />
-                <Text fontSize='sm'>{fileName ? fileName : 'Click or drag your SVG file'}</Text>
+                <Text fontSize="sm">
+                  {fileName ? fileName : "Click or drag your SVG file"}
+                </Text>
               </Center>
             </FormControl>
           )}
 
           {isUrlSelected && (
             <FormControl>
-              <FormLabel color='gray.800'>Insert your SVG url</FormLabel>
-              <InputGroup size='md'>
+              <FormLabel color="gray.800">Insert your SVG url</FormLabel>
+              <InputGroup size="md">
                 <Input
-                  focusBorderColor='gray.600'
-                  bg='white'
-                  type='text'
-                  borderRadius='2xl'
-                  placeholder='https://icons.getbootstrap.com/assets/icons/archive.svg'
-                  onChange={handleUrlChange}
+                  bg="white"
+                  borderRadius="2xl"
+                  focusBorderColor="gray.600"
+                  placeholder="https://icons.getbootstrap.com/assets/icons/archive.svg"
+                  type="text"
                   value={svgUrl}
+                  onChange={handleUrlChange}
                 />
                 <InputRightElement>
-                  {isDownloadingFile && <Spinner size='xs' colorScheme='blackAlpha' />}
+                  {isDownloadingFile && (
+                    <Spinner colorScheme="blackAlpha" size="xs" />
+                  )}
                 </InputRightElement>
               </InputGroup>
             </FormControl>
@@ -252,20 +274,20 @@ export default function Home() {
 
           {isTextSelected && (
             <FormControl>
-              <FormLabel color='gray.800'>Insert your SVG code</FormLabel>
+              <FormLabel color="gray.800">Insert your SVG code</FormLabel>
               <Textarea
-                resize='none'
-                background='rgba( 255, 255, 255, 0.25 )'
-                boxShadow='md'
-                style={{ backdropFilter: 'blur(6px)' }}
-                borderRadius='2xl'
+                _placeholder={{ color: "blackAlpha.600" }}
+                background="rgba( 255, 255, 255, 0.25 )"
+                borderRadius="2xl"
+                boxShadow="md"
+                focusBorderColor="blackAlpha.600"
+                fontSize="sm"
                 minHeight={380}
-                fontSize='sm'
-                focusBorderColor='blackAlpha.600'
-                value={svgCode}
                 placeholder={SVG_PLACEHOLDER}
+                resize="none"
+                style={{ backdropFilter: "blur(6px)" }}
+                value={svgCode}
                 onChange={handleCodeChange}
-                _placeholder={{ color: 'blackAlpha.600' }}
               />
             </FormControl>
           )}

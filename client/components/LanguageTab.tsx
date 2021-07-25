@@ -1,8 +1,16 @@
-import { Text, Stack, HStack, Select, IconButton, Divider, Link } from '@chakra-ui/react';
+import {
+  Text,
+  Stack,
+  HStack,
+  Select,
+  IconButton,
+  Divider,
+  Link,
+} from "@chakra-ui/react";
 
-import { FiClipboard, FiExternalLink } from 'react-icons/fi';
-import PrismTheme from 'prism-react-renderer/themes/dracula';
-import Highlight, { defaultProps } from 'prism-react-renderer';
+import { FiClipboard, FiExternalLink } from "react-icons/fi";
+import PrismTheme from "prism-react-renderer/themes/dracula";
+import Highlight, { defaultProps } from "prism-react-renderer";
 
 type UsesOption = {
   value: string;
@@ -48,8 +56,12 @@ export function LanguageTab({
   return (
     <Stack spacing={4}>
       <Stack>
-        <Text fontWeight='medium'>1. Pick your use</Text>
-        <Select size='md' value={selectedUse} onChange={handleChangeSelectedUse}>
+        <Text fontWeight="medium">1. Pick your use</Text>
+        <Select
+          size="md"
+          value={selectedUse}
+          onChange={handleChangeSelectedUse}
+        >
           {usesOptions.map((option) => (
             <option key={option.value} value={option.value}>
               {option.label}
@@ -59,21 +71,21 @@ export function LanguageTab({
       </Stack>
 
       <Stack>
-        <Text fontWeight='medium'>2. Install</Text>
+        <Text fontWeight="medium">2. Install</Text>
         <Highlight
           {...defaultProps}
+          code={currentSnippet.install?.npm ?? "// No package install needed."}
+          language={currentSnippet.install ? "bash" : "jsx"}
           theme={PrismTheme}
-          code={currentSnippet.install?.npm ?? '// No package install needed.'}
-          language={currentSnippet.install ? 'bash' : 'jsx'}
         >
           {({ className, style, tokens, getLineProps, getTokenProps }) => (
             <HStack
-              as='pre'
-              position='relative'
-              spacing={4}
-              minHeight={12}
+              as="pre"
               className={`${className} code`}
-              style={{ ...style, padding: '4px 16px', borderRadius: '6px' }}
+              minHeight={12}
+              position="relative"
+              spacing={4}
+              style={{ ...style, padding: "4px 16px", borderRadius: "6px" }}
             >
               {tokens.map((line, i) => (
                 <div {...getLineProps({ line, key: i })}>
@@ -85,16 +97,16 @@ export function LanguageTab({
 
               {currentSnippet.install && (
                 <IconButton
-                  position='absolute'
-                  onClick={handleCopyInstall}
-                  size='md'
-                  variant='ghost'
-                  colorScheme='whiteAlpha'
-                  aria-label='Copy to clipboard'
-                  className='prism-code--copy'
+                  aria-label="Copy to clipboard"
+                  className="prism-code--copy"
+                  colorScheme="whiteAlpha"
                   icon={<FiClipboard />}
+                  position="absolute"
                   right={4}
+                  size="md"
                   top={1}
+                  variant="ghost"
+                  onClick={handleCopyInstall}
                 />
               )}
             </HStack>
@@ -103,21 +115,21 @@ export function LanguageTab({
       </Stack>
 
       <Stack>
-        <Text fontWeight='medium'>3. Setup</Text>
+        <Text fontWeight="medium">3. Setup</Text>
         <Highlight
           {...defaultProps}
+          code={currentSnippet.setup ?? "// No setup needed."}
+          language="jsx"
           theme={PrismTheme}
-          code={currentSnippet.setup ?? '// No setup needed.'}
-          language='jsx'
         >
           {({ className, style, tokens, getLineProps, getTokenProps }) => (
             <HStack
-              as='pre'
-              position='relative'
-              spacing={4}
-              minHeight={12}
+              as="pre"
               className={`${className} code`}
-              style={{ ...style, padding: '4px 16px', borderRadius: '6px' }}
+              minHeight={12}
+              position="relative"
+              spacing={4}
+              style={{ ...style, padding: "4px 16px", borderRadius: "6px" }}
             >
               {tokens.map((line, i) => (
                 <div {...getLineProps({ line, key: i })}>
@@ -129,16 +141,16 @@ export function LanguageTab({
 
               {currentSnippet.setup && (
                 <IconButton
-                  position='absolute'
-                  onClick={handleCopySetup}
-                  size='md'
-                  variant='ghost'
-                  colorScheme='whiteAlpha'
-                  aria-label='Copy to clipboard'
-                  className='prism-code--copy'
+                  aria-label="Copy to clipboard"
+                  className="prism-code--copy"
+                  colorScheme="whiteAlpha"
                   icon={<FiClipboard />}
+                  position="absolute"
                   right={4}
+                  size="md"
                   top={1}
+                  variant="ghost"
+                  onClick={handleCopySetup}
                 />
               )}
             </HStack>
@@ -147,21 +159,21 @@ export function LanguageTab({
       </Stack>
 
       <Stack>
-        <Text fontWeight='medium'>3. Import</Text>
+        <Text fontWeight="medium">3. Import</Text>
         <Highlight
           {...defaultProps}
+          code={currentSnippet.import ?? "// No import needed."}
+          language="jsx"
           theme={PrismTheme}
-          code={currentSnippet.import ?? '// No import needed.'}
-          language='jsx'
         >
           {({ className, style, tokens, getLineProps, getTokenProps }) => (
             <HStack
-              as='pre'
-              position='relative'
-              spacing={4}
-              minHeight={12}
+              as="pre"
               className={`${className} code`}
-              style={{ ...style, padding: '4px 16px', borderRadius: '6px' }}
+              minHeight={12}
+              position="relative"
+              spacing={4}
+              style={{ ...style, padding: "4px 16px", borderRadius: "6px" }}
             >
               {tokens.map((line, i) => (
                 <div {...getLineProps({ line, key: i })}>
@@ -173,16 +185,16 @@ export function LanguageTab({
 
               {currentSnippet.import && (
                 <IconButton
-                  position='absolute'
-                  onClick={handleCopyImport}
-                  size='md'
-                  variant='ghost'
-                  colorScheme='whiteAlpha'
-                  aria-label='Copy to clipboard'
-                  className='prism-code--copy'
+                  aria-label="Copy to clipboard"
+                  className="prism-code--copy"
+                  colorScheme="whiteAlpha"
                   icon={<FiClipboard />}
+                  position="absolute"
                   right={4}
+                  size="md"
                   top={1}
+                  variant="ghost"
+                  onClick={handleCopyImport}
                 />
               )}
             </HStack>
@@ -191,44 +203,53 @@ export function LanguageTab({
       </Stack>
 
       <Stack>
-        <Text fontWeight='medium'>4. Usage</Text>
+        <Text fontWeight="medium">4. Usage</Text>
         <Highlight
           {...defaultProps}
           code={currentSnippet.usage}
+          language={
+            ["html", "vue"].includes(selectedLanguage) ? "markup" : "jsx"
+          }
           theme={PrismTheme}
-          language={['html', 'vue'].includes(selectedLanguage) ? 'markup' : 'jsx'}
         >
           {({ className, style, tokens, getLineProps, getTokenProps }) => (
             <HStack
-              as='pre'
-              position='relative'
-              spacing={4}
-              minHeight={12}
-              display='block'
-              whiteSpace='pre'
-              _before={{ wordWrap: 'break-word' }}
-              _after={{ wordWrap: 'break-word' }}
+              _after={{ wordWrap: "break-word" }}
+              _before={{ wordWrap: "break-word" }}
+              as="pre"
               className={`${className} code`}
-              style={{ ...style, padding: '4px 16px', borderRadius: '6px', paddingTop: '12px' }}
+              display="block"
+              minHeight={12}
+              position="relative"
+              spacing={4}
+              style={{
+                ...style,
+                padding: "4px 16px",
+                borderRadius: "6px",
+                paddingTop: "12px",
+              }}
+              whiteSpace="pre"
             >
               {tokens.map((line, i) => (
+                /* eslint-disable-next-line */
                 <div {...getLineProps({ line, key: i })}>
                   {line.map((token, key) => (
+                    /* eslint-disable-next-line */
                     <span {...getTokenProps({ token, key })} />
                   ))}
                 </div>
               ))}
               <IconButton
-                position='absolute'
-                onClick={handleCopyUsage}
-                size='md'
-                variant='ghost'
-                colorScheme='whiteAlpha'
-                aria-label='Copy to clipboard'
-                className='prism-code--copy'
-                top={1}
-                right={4}
+                aria-label="Copy to clipboard"
+                className="prism-code--copy"
+                colorScheme="whiteAlpha"
                 icon={<FiClipboard />}
+                position="absolute"
+                right={4}
+                size="md"
+                top={1}
+                variant="ghost"
+                onClick={handleCopyUsage}
               />
             </HStack>
           )}
@@ -237,7 +258,12 @@ export function LanguageTab({
 
       <Divider />
       {currentSnippet.link && (
-        <Link href={currentSnippet.link} isExternal d='inline-flex' alignItems='center'>
+        <Link
+          isExternal
+          alignItems="center"
+          d="inline-flex"
+          href={currentSnippet.link}
+        >
           <Text mr={2}>GitHub Repository</Text>
           <FiExternalLink />
         </Link>

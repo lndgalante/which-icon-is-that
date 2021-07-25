@@ -6,4 +6,12 @@ import { TopLeft } from "./TopLeft";
 import { TopRight } from "./TopRight";
 import { TopRightSecondary } from "./TopRightSecondary";
 
-export { BottomLeft, BottomRight, BottomRightSecondary, TopLeft, TopRight, MiddleLeft, TopRightSecondary }
+export {
+  BottomLeft,
+  BottomRight,
+  BottomRightSecondary,
+  TopLeft,
+  TopRight,
+  MiddleLeft,
+  TopRightSecondary,
+};

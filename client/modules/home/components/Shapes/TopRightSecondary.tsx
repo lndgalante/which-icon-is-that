@@ -1,12 +1,12 @@
-import { Icon } from "@chakra-ui/react"
+import { Icon } from "@chakra-ui/react";
 
 export function TopRightSecondary(props) {
   return (
     <Icon
-      width={139}
+      fill="none"
       height={124}
       viewBox="0 0 139 124"
-      fill="none"
+      width={139}
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
@@ -17,11 +17,11 @@ export function TopRightSecondary(props) {
       <path
         d="M94.675 87.196c23.501 0 42.552-19.121 42.552-42.709 0-23.587-19.051-42.708-42.552-42.708-23.5 0-42.552 19.121-42.552 42.709 0 23.587 19.051 42.708 42.552 42.708z"
         stroke="#F4D0C0"
-        strokeWidth={3}
-        strokeMiterlimit={10}
         strokeLinecap="round"
         strokeLinejoin="round"
+        strokeMiterlimit={10}
+        strokeWidth={3}
       />
     </Icon>
-  )
+  );
 }

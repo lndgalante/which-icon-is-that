@@ -44,4 +44,4 @@ export type Response<T> = {
 
 export type IconResponse = Response<IconMetadata>;
 
-export type IconFoundResponse = Response<Pick<Svg, 'found'>>;
+export type IconFoundResponse = Response<Pick<Svg, "found">>;

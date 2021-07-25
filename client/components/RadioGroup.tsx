@@ -1,7 +1,7 @@
-import { HStack, useRadioGroup } from '@chakra-ui/react';
+import { HStack, useRadioGroup } from "@chakra-ui/react";
 
 // components
-import { RadioCard } from 'components/RadioCard';
+import { RadioCard } from "components/RadioCard";
 
 type Props = {
   name: string;

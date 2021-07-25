@@ -1,12 +1,12 @@
-import { Icon } from "@chakra-ui/react"
+import { Icon } from "@chakra-ui/react";
 
 export function BottomLeft(props) {
   return (
     <Icon
-      width={228}
+      fill="none"
       height={77}
       viewBox="0 0 228 77"
-      fill="none"
+      width={228}
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
@@ -23,5 +23,5 @@ export function BottomLeft(props) {
         fill="#E95848"
       />
     </Icon>
-  )
+  );
 }

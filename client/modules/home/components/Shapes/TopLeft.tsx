@@ -1,13 +1,13 @@
-import React from "react"
-import { Icon } from "@chakra-ui/react"
+import React from "react";
+import { Icon } from "@chakra-ui/react";
 
 export function TopLeft(props) {
   return (
     <Icon
-      width={87}
+      fill="none"
       height={90}
       viewBox="0 0 87 90"
-      fill="none"
+      width={87}
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
@@ -24,12 +24,12 @@ export function TopLeft(props) {
       <defs>
         <clipPath id="prefix__clip0">
           <path
+            d="M0 0h87v90H0z"
             fill="#fff"
             transform="rotate(-180 43.5 45)"
-            d="M0 0h87v90H0z"
           />
         </clipPath>
       </defs>
     </Icon>
-  )
+  );
 }

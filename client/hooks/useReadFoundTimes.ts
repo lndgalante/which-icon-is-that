@@ -1,8 +1,8 @@
-import { useQuery } from 'react-query';
+import { useQuery } from "react-query";
 
 // common
-import { api } from '@lib/api';
-import { IconFoundResponse } from '@lib/types';
+import { api } from "@lib/api";
+import { IconFoundResponse } from "@lib/types";
 
 // fetcher
 const getFoundTimes = ({ queryKey }): Promise<IconFoundResponse> => {
@@ -12,5 +12,5 @@ const getFoundTimes = ({ queryKey }): Promise<IconFoundResponse> => {
 
 // query hook
 export function useReadFoundTimes(hash: string) {
-  return useQuery<IconFoundResponse, Error>(['icon', 'found-times', hash], getFoundTimes);
+  return useQuery<IconFoundResponse, Error>(["icon", "found-times", hash], getFoundTimes);
 }

@@ -18,17 +18,28 @@
     "is-url": "^1.2.4",
     "next": "11.0.1",
     "next-plausible": "^2.0.0",
+    "next-seo": "^4.26.0",
     "prism-react-renderer": "^1.2.1",
     "pure-md5": "^0.1.13",
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "react-dropzone": "^11.3.4",
     "react-icons": "^4.2.0",
-    "react-query": "^3.19.0"
+    "react-query": "^3.19.1"
   },
   "devDependencies": {
-    "@types/node": "^16.4.0",
-    "@types/react": "^17.0.14",
+    "@types/node": "^16.4.2",
+    "@types/react": "^17.0.15",
+    "@typescript-eslint/eslint-plugin": "^4.28.4",
+    "@typescript-eslint/parser": "^4.28.4",
+    "eslint": "^7.31.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-import": "^2.23.4",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-prettier": "^3.4.0",
+    "eslint-plugin-promise": "^5.1.0",
+    "eslint-plugin-react": "^7.24.0",
+    "prettier": "^2.3.2",
     "typescript": "^4.3.5"
   }
 }
