@@ -241,7 +241,7 @@ export default function Home() {
                 transition="all ease-in-out 400ms"
                 willChange={"transform"}
               >
-                {/* @ts-expect-error */}
+                {/* @ts-expect-error Unable to fix this problem */}
                 <Input {...getInputProps()} />
                 <Text fontSize="sm">
                   {fileName ? fileName : "Click or drag your SVG file"}

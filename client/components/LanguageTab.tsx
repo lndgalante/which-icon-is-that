@@ -35,6 +35,7 @@ type Props = {
   selectedUse: string;
   selectedLanguage: string;
   currentSnippet: Snippet;
+  /* eslint-disable-next-line */
   handleChangeSelectedUse: ({ target }: { target: any }) => void;
   handleCopyInstall: () => void;
   handleCopySetup: () => void;
@@ -88,8 +89,10 @@ export function LanguageTab({
               style={{ ...style, padding: "4px 16px", borderRadius: "6px" }}
             >
               {tokens.map((line, i) => (
+                /* eslint-disable-next-line */
                 <div {...getLineProps({ line, key: i })}>
                   {line.map((token, key) => (
+                    /* eslint-disable-next-line */
                     <span {...getTokenProps({ token, key })} />
                   ))}
                 </div>
@@ -132,8 +135,10 @@ export function LanguageTab({
               style={{ ...style, padding: "4px 16px", borderRadius: "6px" }}
             >
               {tokens.map((line, i) => (
+                /* eslint-disable-next-line */
                 <div {...getLineProps({ line, key: i })}>
                   {line.map((token, key) => (
+                    /* eslint-disable-next-line */
                     <span {...getTokenProps({ token, key })} />
                   ))}
                 </div>
@@ -176,8 +181,10 @@ export function LanguageTab({
               style={{ ...style, padding: "4px 16px", borderRadius: "6px" }}
             >
               {tokens.map((line, i) => (
+                /* eslint-disable-next-line */
                 <div {...getLineProps({ line, key: i })}>
                   {line.map((token, key) => (
+                    /* eslint-disable-next-line */
                     <span {...getTokenProps({ token, key })} />
                   ))}
                 </div>

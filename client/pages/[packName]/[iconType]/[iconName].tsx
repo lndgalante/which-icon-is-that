@@ -3,7 +3,6 @@ import { GetStaticPaths, GetStaticProps } from "next";
 import {
   Tag,
   Icon,
-  Text,
   Link,
   Stack,
   HStack,
@@ -82,50 +81,50 @@ export const getStaticProps: GetStaticProps<Props, Params> = async ({
     const { data: initialData } = await api.getHashFromPath(encodedPath);
     const iconHash = initialData.result;
 
-    const { data: tags } = await api.getIconTags(iconHash);
+    // const { data: tags } = await api.getIconTags(iconHash);
     const { data: snippets } = await api.getIconSnippets(iconHash);
     const { data: icon }: IconResponse = await api.getIcon(iconHash);
 
-    const relatedIcons = [];
-    try {
-      for await (const tag of tags.tags) {
-        const { data: similarIcons } = await api.getSimilarIcons(
-          iconHash,
-          tag.tag_id
-        );
-        relatedIcons.push(...similarIcons.icons);
-      }
-    } catch (error) {
-      console.log(
-        "\n ~ constgetStaticProps:GetStaticProps<Props,Params>= ~ error",
-        error
-      );
-    }
+    // const relatedIcons = [];
+    // try {
+    //   for await (const tag of tags.tags) {
+    //     const { data: similarIcons } = await api.getSimilarIcons(
+    //       iconHash,
+    //       tag.tag_id
+    //     );
+    //     relatedIcons.push(...similarIcons.icons);
+    //   }
+    // } catch (error) {
+    //   console.log(
+    //     "\n ~ constgetStaticProps:GetStaticProps<Props,Params>= ~ error",
+    //     error
+    //   );
+    // }
 
-    const parsedRelatedIcons = relatedIcons.map(
-      ({
-        pack_id,
-        pack_name,
-        icon_name,
-        icon_type,
-        icon_file_name,
-        ...otherKeys
-      }) => ({
-        packId: pack_id,
-        packName: pack_name,
-        iconName: icon_name,
-        iconType: icon_type,
-        iconFileName: icon_file_name,
-        ...otherKeys,
-      })
-    );
+    // const parsedRelatedIcons = relatedIcons.map(
+    //   ({
+    //     pack_id,
+    //     pack_name,
+    //     icon_name,
+    //     icon_type,
+    //     icon_file_name,
+    //     ...otherKeys
+    //   }) => ({
+    //     packId: pack_id,
+    //     packName: pack_name,
+    //     iconName: icon_name,
+    //     iconType: icon_type,
+    //     iconFileName: icon_file_name,
+    //     ...otherKeys,
+    //   })
+    // );
 
     return {
       props: {
         ...icon,
         ...snippets,
-        ...tags,
-        relatedIcons: parsedRelatedIcons,
+        // ...tags,
+        // relatedIcons: parsedRelatedIcons,
       },
       revalidate: 86400,
     };
@@ -138,8 +137,8 @@ export default function IconPage({
   svg,
   links,
   snippets,
-  tags,
-  relatedIcons,
+  // tags,
+  // relatedIcons,
 }: IconMetadata) {
   // react hooks
   const [selectedUse, setSelectedUse] = useState("optimizedSvg");
@@ -352,7 +351,7 @@ export default function IconPage({
         </NextChakraLink>
       </HStack>
 
-      <HStack animate="show" initial="hidden" mb={4} variants={container}>
+      {/* <HStack animate="show" initial="hidden" mb={4} variants={container}>
         <Text fontWeight={600}>Tags</Text>
         <HStack spacing={2}>
           {tags?.map((tag) => (
@@ -368,22 +367,24 @@ export default function IconPage({
             </Tag>
           ))}
         </HStack>
-      </HStack>
+      </HStack> */}
 
-      <HStack animate="show" initial="hidden" mb={4} variants={container}>
+      {/*   <HStack animate="show" initial="hidden" mb={4} variants={container}>
         <Text fontWeight={600}>Related icons</Text>
         <HStack spacing={2}>
           {relatedIcons.map(({ packName, iconType, iconName, svg, hash }) => (
             <NextChakraLink
+
+              key={hash}
               href={
                 {
                   pathname: "/[packName]/[iconType]/[iconName]",
                   query: { packName, iconType, iconName },
+                //   eslint-disable-next-line
                 } as any
               }
             >
               <Tag
-                key={hash}
                 borderRadius="full"
                 colorScheme="blackAlpha"
                 fontSize="sm"
@@ -404,6 +405,7 @@ export default function IconPage({
           ))}
         </HStack>
       </HStack>
+    */}
 
       <Button
         colorScheme="blackAlpha"
