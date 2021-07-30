@@ -1,6 +1,13 @@
 import { extendTheme } from "@chakra-ui/react";
 
 export const theme = extendTheme({
+  styles: {
+    global: {
+      ".chakra-modal__content-container": {
+        backdropFilter: "blur(6px)",
+      },
+    },
+  },
   colors: {
     brand: {
       black: "#000000",
@@ -15,6 +22,7 @@ export const theme = extendTheme({
       softGrey: "#E8E8E8",
       lightGrey: "#FDFCFC",
       white: "#FFFFFF",
+      lightOrangeModal: "rgba(255, 244, 239, 0.8)",
     },
   },
   components: {
@@ -23,7 +31,7 @@ export const theme = extendTheme({
         "brand.solid": {
           borderWidth: 1,
           borderRadius: 8,
-          fontWeight: "bold",
+          fontSize: { base: "sm", md: "md" },
           color: "brand.white",
           borderColor: "brand.warmBlack",
           backgroundColor: "brand.warmBlack",
@@ -33,14 +41,14 @@ export const theme = extendTheme({
           },
         },
         "brand.outline": {
-          color: "brand.warmBlack",
-          backgroundColor: "transparent",
           borderWidth: 1,
+          borderRadius: 8,
+          color: "brand.warmBlack",
+          fontSize: { base: "sm", md: "md" },
+          backgroundColor: "transparent",
           borderColor: "brand.warmBlack",
           opacity: 0.8,
-          _hover: {
-            opacity: 1,
-          },
+          _hover: { opacity: 1 },
         },
       },
     },

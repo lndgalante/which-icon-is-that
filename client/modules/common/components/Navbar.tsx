@@ -30,7 +30,12 @@ export function Navbar() {
       paddingX={{ base: 4, md: 0 }}
       paddingY={{ base: 6, md: 4 }}
     >
-      <HorizontalLogo marginLeft={-2} maxHeight={{ base: 10, md: 12 }} />
+
+      <NextLink passHref href="/">
+        <Link isExternal>
+          <HorizontalLogo cursor="pointer" marginLeft={-2} maxHeight={{ base: 10, md: 12 }} />
+        </Link>
+      </NextLink>
 
       <HStack
         alignItems="center"

@@ -9,6 +9,7 @@ import {
   SimpleGrid,
 } from "@chakra-ui/react";
 
+
 export function SupportedLibraries() {
   return (
     <Stack
@@ -30,8 +31,9 @@ export function SupportedLibraries() {
         spacing={{ base: 12, md: 8 }}
       >
         <NextLink passHref href="/gallery?library=antd">
-          <Link>
+          <Link aria-label="Ant Design Icons">
             <Image
+              alt="Ant Design Icons"
               _hover={{ filter: "none" }}
               filter="grayscale(1) blur(0.1px)"
               src="/antd.png"
@@ -41,8 +43,9 @@ export function SupportedLibraries() {
         </NextLink>
 
         <NextLink passHref href="/gallery?library=boxicons">
-          <Link>
+          <Link aria-label="Boxicons">
             <Image
+              alt="Boxicons"
               _hover={{ filter: "none" }}
               filter="grayscale(1) blur(0.1px)"
               src="/boxicons.png"
@@ -52,8 +55,9 @@ export function SupportedLibraries() {
         </NextLink>
 
         <NextLink passHref href="/gallery?library=bootstrap">
-          <Link>
+          <Link aria-label="Bootstrap Icons">
             <Image
+              alt="Bootstrap Icons"
               _hover={{ filter: "none" }}
               filter="grayscale(1) blur(0.1px)"
               src="/bootstrap.png"
@@ -63,8 +67,9 @@ export function SupportedLibraries() {
         </NextLink>
 
         <NextLink passHref href="/gallery?library=heroicons">
-          <Link>
+          <Link aria-label="Heroicons">
             <Image
+              alt="Heroicons"
               _hover={{ filter: "none" }}
               filter="grayscale(1) blur(0.1px)"
               src="/heroicons.png"
@@ -74,8 +79,9 @@ export function SupportedLibraries() {
         </NextLink>
 
         <NextLink passHref href="/gallery?library=feather">
-          <Link>
+          <Link aria-label="Feather Icons">
             <Image
+              alt="Feather Icons"
               _hover={{ filter: "none" }}
               filter="contrast(0.2) blur(0.1px)"
               src="/feather.png"
@@ -85,8 +91,9 @@ export function SupportedLibraries() {
         </NextLink>
 
         <NextLink passHref href="/gallery?library=devicon">
-          <Link>
+          <Link aria-label="Devicon">
             <Image
+              alt="Devicon"
               _hover={{ filter: "none" }}
               filter="grayscale(1) blur(0.1px)"
               src="/devicon.png"
@@ -96,8 +103,9 @@ export function SupportedLibraries() {
         </NextLink>
 
         <NextLink passHref href="/gallery?library=flatcoloricons">
-          <Link>
+          <Link aria-label="Icons8">
             <Image
+              alt="Icons8"
               _hover={{ filter: "none" }}
               filter="grayscale(1) blur(0.1px)"
               src="/icons8.png"
@@ -107,8 +115,9 @@ export function SupportedLibraries() {
         </NextLink>
 
         <NextLink passHref href="/gallery?library=fontawesome">
-          <Link>
+          <Link aria-label="Font Awesome">
             <Image
+              alt="Font Awesome"
               _hover={{ filter: "none" }}
               filter="contrast(0.2) blur(0.1px)"
               src="/font-awesome.png"
@@ -118,8 +127,9 @@ export function SupportedLibraries() {
         </NextLink>
 
         <NextLink passHref href="/gallery?library=ionicons">
-          <Link>
+          <Link aria-label="Ionicons">
             <Image
+              alt="Ionicons"
               _hover={{ filter: "none" }}
               filter="grayscale(1) blur(0.1px)"
               src="/ionicons.png"
@@ -129,8 +139,9 @@ export function SupportedLibraries() {
         </NextLink>
 
         <NextLink passHref href="/gallery?library=remix">
-          <Link>
+          <Link aria-label="Remix Icons">
             <Image
+              alt="Remix Icons"
               _hover={{ filter: "none" }}
               filter="grayscale(1) blur(0.1px)"
               src="/remix.png"

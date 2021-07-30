@@ -1,34 +1,35 @@
 import NextLink from "next/link";
 import { useEffect } from "react";
-import { FaEnvelope, FaDiscord, FaTwitter, FaGithub } from "react-icons/fa";
-import {
-  Stack,
-  HStack,
-  Text,
-  Link,
-  LinkBox,
-  LinkOverlay,
-  Icon,
-  useClipboard,
-  useToast,
-  As,
-} from "@chakra-ui/react";
+import { FaEnvelope, FaDiscord, FaTwitter, FaGithub, FaInfoCircle } from "react-icons/fa";
+import { Stack, HStack, Text, Link, LinkBox, LinkOverlay, Icon, useClipboard, useToast, As } from "@chakra-ui/react";
 
 type FooterIconProps = {
   icon: As;
+  label: string;
   href: string;
   onClick?: () => void;
   isEmail?: boolean;
 };
 
-function FooterIcon({ icon, href, onClick, isEmail }: FooterIconProps) {
+function FooterIcon({ icon, href, label, isEmail, onClick }: FooterIconProps) {
+  if (isEmail) {
+    return (
+      <Icon
+        onClick={isEmail ? onClick : null}
+        as={icon}
+        cursor="pointer"
+        color="brand.white"
+        h={5}
+        sx={{ ".footer-link:hover &": { color: "brand.softOrange" } }}
+        transition="all 400ms ease-in-out"
+        w={5}
+      />
+    );
+  }
+
   return (
-    <LinkBox cursor="pointer" onClick={isEmail ? onClick : null}>
-      <LinkOverlay
-        isExternal
-        className="footer-link"
-        href={isEmail ? null : href}
-      >
+    <LinkBox cursor="pointer">
+      <LinkOverlay isExternal aria-label={label} className="footer-link" href={href}>
         <Icon
           as={icon}
           color="brand.white"
@@ -53,8 +54,36 @@ export function Footer() {
   useEffect(() => {
     if (hasCopied) {
       toast({
-        description: "Email copied to your clipboard.",
-        status: "info",
+        position: "bottom-left",
+        render: () => {
+          return (
+            <Stack
+              padding={4}
+              backgroundColor="brand.lightRed"
+              flexDirection="row"
+              spacing={0}
+              alignItems="center"
+              color="brand.white"
+              borderRadius={16}
+              boxShadow="sm"
+            >
+              <Icon
+                as={FaInfoCircle}
+                color="brand.white"
+                h={5}
+                sx={{
+                  ".footer-link:hover &": {
+                    color: "brand.softOrange",
+                  },
+                }}
+                transition="all 400ms ease-in-out"
+                w={5}
+                marginRight={2}
+              />
+              <Text>Email copied to your clipboard.</Text>
+            </Stack>
+          );
+        },
       });
     }
   }, [hasCopied]);
@@ -75,25 +104,12 @@ export function Footer() {
         order={{ base: 1, md: 0 }}
         spacing={{ base: 0, md: 8 }}
       >
-        <Text marginBottom={{ base: 4, md: 0 }}>
-          Copyright &copy; 2021 WIIT. All rights reserved.
-        </Text>
+        <Text marginBottom={{ base: 4, md: 0 }}>Copyright &copy; 2021 WIIT. All rights reserved.</Text>
         <HStack alignItems="center" spacing={4}>
-          <FooterIcon
-            isEmail
-            href="whichiconisthat@gmail.com"
-            icon={FaEnvelope}
-            onClick={onCopy}
-          />
-          <FooterIcon href="https://discord.gg/xTpegNF9bj" icon={FaDiscord} />
-          <FooterIcon
-            href="https://twitter.com/whichiconisthat"
-            icon={FaTwitter}
-          />
-          <FooterIcon
-            href="https://github.com/lndgalante/which-icon-is-that"
-            icon={FaGithub}
-          />
+          <FooterIcon href="whichiconisthat@gmail.com" label="Email" icon={FaEnvelope} onClick={onCopy} isEmail />
+          <FooterIcon href="https://discord.gg/xTpegNF9bj" label="Discord" icon={FaDiscord} />
+          <FooterIcon href="https://twitter.com/whichiconisthat" label="Twitter" icon={FaTwitter} />
+          <FooterIcon href="https://github.com/lndgalante/which-icon-is-that" label="GitHub" icon={FaGithub} />
         </HStack>
       </HStack>
 
@@ -104,10 +120,10 @@ export function Footer() {
         spacing={{ base: 0, md: 10 }}
       >
         <NextLink passHref href="/privacy">
-          <Link isExternal>Privacy Policy</Link>
+          <Link>Privacy Policy</Link>
         </NextLink>
         <NextLink passHref href="/terms">
-          <Link isExternal>Terms and Conditions</Link>
+          <Link>Terms and Conditions</Link>
         </NextLink>
       </HStack>
     </Stack>
