@@ -4,14 +4,14 @@ import { useRouter } from "next/router";
 import { useDropzone } from "react-dropzone";
 import { Fragment, useState, useEffect } from "react";
 import {
-  Stack,
   Text,
+  Stack,
   Button,
   Input,
   Modal,
+  ModalBody,
   ModalOverlay,
   ModalContent,
-  ModalBody,
   useToast,
   useDisclosure,
 } from "@chakra-ui/react";
@@ -47,8 +47,6 @@ export function DropZone() {
 
   async function getIconPageUrl(hash: string) {
     const { data, success } = await api.getPathFromHash(hash);
-    console.log('\n ~ getIconPageUrl ~ success', success)
-    console.log('\n ~ getIconPageUrl ~ data', data)
 
     if (!success) {
       throw new Error('Hash not found')
@@ -102,7 +100,6 @@ export function DropZone() {
     async function handlePasteSvgCodeOrUrl(event) {
       let iconPageUrl = ''
       const pastedText = event.clipboardData.getData("Text");
-      console.log('\n ~ handlePasteSvgCodeOrUrl ~ pastedText', pastedText)
 
       try {
         setIsLoading(true);
@@ -110,9 +107,7 @@ export function DropZone() {
         if (isSvg(pastedText)) {
           const svgInnerHtml = getInnerHTMLFromSvgText(pastedText);
           const hash = createHash(svgInnerHtml);
-          console.log('\n ~ handlePasteSvgCodeOrUrl ~ hash', hash)
           iconPageUrl = await getIconPageUrl(hash);
-          console.log('\n ~ handlePasteSvgCodeOrUrl ~ iconPageUrl', iconPageUrl)
         }
 
         if (isUrl(pastedText)) {
@@ -133,7 +128,6 @@ export function DropZone() {
       } finally {
         await delay(600);
         setIsLoading(false);
-        console.log('\n ~ handlePasteSvgCodeOrUrl ~ iconPageUrl', iconPageUrl)
         push(iconPageUrl ? iconPageUrl : "/not-found", undefined, { shallow: true });
       }
     }
