@@ -8,6 +8,7 @@ import { getPaths } from './controllers/getPaths.ts';
 import { getReverse } from './controllers/getReverse.ts';
 import { getSimilarIcons } from './controllers/getSimilarIcons.ts';
 import { getIconSnippets } from './controllers/getIconSnippets.ts';
+import { getIconLibraries } from './controllers/getIconLibraries.ts';
 import { getFoundTimesIcon } from './controllers/getFoundTimesIcon.ts';
 
 const router = new Router();
@@ -19,6 +20,7 @@ router
   .get('/icon/:hash/found', getFoundTimesIcon)
   .get('/icon/:hash/snippets', getIconSnippets)
   .get('/icon/:hash/:tagId/similar', getSimilarIcons)
+  .get('/icon/libraries/:libraryName', getIconLibraries)
   .get('/paths', getPaths)
   .get('/reverse', getReverse);
 

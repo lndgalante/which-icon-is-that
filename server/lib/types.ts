@@ -33,4 +33,14 @@ export type Svg = {
   icon_parsed_name: string;
   icon_type: IconType;
   icon_file_name: string;
+  react_icon_name: string;
+};
+
+export type IconLibrary = {
+  name: string;
+  stars: string;
+  total_icons: number;
+  license: string;
+  version: string;
+  icon_types: string[];
 };

@@ -34,6 +34,7 @@ export const getIcon = async ({ params, response }: Context & { params: { hash: 
         icon_type: iconType,
         icon_name: iconName,
         icon_file_name: iconFileName,
+        react_icon_name: reactIconName,
       },
     ] = rows as [Svg];
 
@@ -47,7 +48,7 @@ export const getIcon = async ({ params, response }: Context & { params: { hash: 
       success: true,
       data: {
         links: { pack, icon, source, figma },
-        svg: { hash, svg, iconType, bytes, packId, packName, iconName, iconFileName },
+        svg: { hash, svg, iconType, bytes, packId, packName, iconName, iconFileName, reactIconName },
       },
     };
   } catch (error) {

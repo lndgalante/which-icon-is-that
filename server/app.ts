@@ -13,7 +13,7 @@ import { router } from './routes.ts';
 // await saveIconsInDB();
 
 // env
-const origin = isDevelopment() ? 'http://localhost:3001' : 'https://www.whichiconisthat.com';
+const origin = isDevelopment() ? 'http://localhost:3002' : 'https://www.whichiconisthat.com';
 
 // port
 const DEFAULT_PORT = 8000;

@@ -1,4 +1,5 @@
 import getFiles from 'https://deno.land/x/getfiles/mod.ts';
+import { pascalCase } from 'https://deno.land/x/case/mod.ts';
 import { prettyBytes } from 'https://raw.githubusercontent.com/brunnerlivio/deno-pretty-bytes/master/mod.ts';
 
 // helpers
@@ -8,6 +9,7 @@ import {
   PacksNames,
   ICONS_LIST,
   ICON_PAGE_LINK,
+  ICON_LIBRARIES,
   ICONS_FIGMA_LINKS,
   ICONS_SOURCE_LINKS,
   ICONS_WEBSITE_LINKS,
@@ -68,6 +70,7 @@ export async function saveIconsInDB() {
     await transaction.queryArray`DROP TABLE paths`;
     await transaction.queryArray`DROP TABLE tags`;
     await transaction.queryArray`DROP TABLE tags_icons`;
+    await transaction.queryArray`DROP TABLE icon_libraries`;
 
     // create tables
     await transaction.queryArray`CREATE TABLE tags (id TEXT, name TEXT)`;
@@ -75,8 +78,9 @@ export async function saveIconsInDB() {
 
     await transaction.queryArray`CREATE TABLE paths (path TEXT, hash TEXT)`;
     await transaction.queryArray(
-      `CREATE TABLE icons (hash TEXT, svg TEXT, inner_svg TEXT, view_box TEXT, icon_type TEXT, bytes TEXT, pack_id TEXT, pack_name TEXT, icon_parsed_name TEXT, icon_name TEXT, icon_file_name TEXT, found SERIAL)`,
+      `CREATE TABLE icons (hash TEXT, svg TEXT, inner_svg TEXT, view_box TEXT, icon_type TEXT, bytes TEXT, pack_id TEXT, pack_name TEXT, icon_parsed_name TEXT, icon_name TEXT, react_icon_name TEXT, icon_file_name TEXT, found SERIAL)`,
     );
+    await transaction.queryArray`CREATE TABLE icon_libraries (name TEXT, total_icons INTEGER, license TEXT, stars TEXT, version TEXT, icon_types TEXT[][])`;
 
     // generate indexes
     await transaction.queryArray`CREATE INDEX hash_index ON icons(hash)`;
@@ -87,8 +91,19 @@ export async function saveIconsInDB() {
     await transaction.queryArray`CREATE INDEX hash_index_on_tags ON tags_icons(hash)`;
     await transaction.queryArray`CREATE INDEX hash_on_tag_id_index ON tags_icons(tag_id)`;
 
+    for (const { name, totalIcons, license, stars, version, iconTypes } of ICON_LIBRARIES) {
+      await transaction.queryArray(
+        `INSERT INTO icon_libraries (name, total_icons, license, stars, version, icon_types) VALUES ($1, $2, $3, $4, $5, $6)`,
+        name,
+        totalIcons,
+        license,
+        stars,
+        version,
+        iconTypes,
+      );
+    }
+
     for (const { packId, packName } of ICONS_LIST) {
-      console.log('\n ~ saveIconsInDB ~ packName', packName);
       const downloadDirectory = './downloads';
       const unzippedDirectory = `${downloadDirectory}/unzipped`;
       const unzippedDirectoryPack = `${unzippedDirectory}/${packName}`;
@@ -105,6 +120,12 @@ export async function saveIconsInDB() {
 
       for (const { name, path, iconType } of svgFiles) {
         i += 1;
+
+        let reactIconName = '';
+        if (packName === 'feather') {
+          reactIconName = `Fi${pascalCase(name.replace('svg', ''))}`;
+        }
+        console.log('\n ~ saveIconsInDB ~ reactIconName', reactIconName);
 
         const { size } = await Deno.stat(path);
 
@@ -140,7 +161,7 @@ export async function saveIconsInDB() {
         }
 
         await transaction.queryArray(
-          `INSERT INTO icons (hash,svg,inner_svg,view_box,icon_type,bytes,pack_id,pack_name,icon_parsed_name,icon_name,icon_file_name,found) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)`,
+          `INSERT INTO icons (hash,svg,inner_svg,view_box,icon_type,bytes,pack_id,pack_name,icon_parsed_name,icon_name,react_icon_name,icon_file_name,found) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)`,
           hash,
           svg,
           innerSvg,
@@ -151,6 +172,7 @@ export async function saveIconsInDB() {
           packName,
           iconParsedName,
           iconName,
+          reactIconName,
           name,
           0,
         );

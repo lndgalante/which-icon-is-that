@@ -28,6 +28,10 @@ export const ICONS_FIGMA_LINKS = {
   flatcoloricons: 'https://www.figma.com/community/plugin/791103617505812222/Icons8-Free-Icons',
 };
 
+export const ICON_LIBRARIES = [
+  { name: 'feather', totalIcons: 286, license: 'MIT', stars: '20.4k', version: '4.28.0', iconTypes: ['Regular'] },
+];
+
 export const ICONS_LIST = [
   // { packId: 'bs', packName: 'bootstrap', owner: 'twbs', repo: 'icons', type: 'releases' },
   { packId: 'fi', packName: 'feather', owner: 'feathericons', repo: 'feather', type: 'releases' },
