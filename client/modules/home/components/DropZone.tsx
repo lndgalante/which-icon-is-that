@@ -25,7 +25,6 @@ import { getInnerHTMLFromSvgText } from "@modules/home/utils/dom";
 // components
 import { Isotype } from "@modules/common/components/Isotype";
 
-
 export function DropZone() {
   // react hooks
   const [isLoading, setIsLoading] = useState(false);
@@ -49,7 +48,7 @@ export function DropZone() {
     const { data, success } = await api.getPathFromHash(hash);
 
     if (!success) {
-      throw new Error('Hash not found')
+      throw new Error("Hash not found");
     }
 
     await api.putIconIncrement(hash);
@@ -71,16 +70,22 @@ export function DropZone() {
     reader.onerror = () => toastError(`File reading has failed`);
 
     reader.onload = async () => {
-      setIsLoading(true);
+      try {
+        setIsLoading(true);
 
-      const svgInnerHtml = getInnerHTMLFromSvgText(reader.result as string);
-      const hash = createHash(svgInnerHtml);
-      const iconPageUrl = await getIconPageUrl(hash);
+        const svgInnerHtml = getInnerHTMLFromSvgText(reader.result as string);
+        const hash = createHash(svgInnerHtml);
+        const iconPageUrl = await getIconPageUrl(hash);
 
-      await delay(600);
-      setIsLoading(false);
-
-      push(iconPageUrl ? iconPageUrl : "/not-found", undefined, { shallow: true });
+        await delay(600);
+        push(iconPageUrl, undefined, { shallow: true });
+      } catch (error) {
+        await delay(600);
+        push("not-found", undefined, { shallow: true });
+        console.log("Error on handling svg pasted code or url", error);
+      } finally {
+        setIsLoading(false);
+      }
     };
 
     reader.readAsText(file);
@@ -98,7 +103,7 @@ export function DropZone() {
   // handle paste svg code or url
   useEffect(() => {
     async function handlePasteSvgCodeOrUrl(event) {
-      let iconPageUrl = ''
+      let iconPageUrl = "";
       const pastedText = event.clipboardData.getData("Text");
 
       try {
@@ -122,19 +127,21 @@ export function DropZone() {
 
           const hash = createHash(svgInnerHtml);
           iconPageUrl = await getIconPageUrl(hash);
+
+          await delay(600);
+          push(iconPageUrl, undefined, { shallow: true });
         }
       } catch (error) {
+        await delay(600);
+        push("/not-found", undefined, { shallow: true });
         console.log("Error on handling svg pasted code or url", error);
       } finally {
-        await delay(600);
         setIsLoading(false);
-        push(iconPageUrl ? iconPageUrl : "/not-found", undefined, { shallow: true });
       }
     }
 
-    const body = document.querySelector("body")
+    const body = document.querySelector("body");
     body.addEventListener("paste", handlePasteSvgCodeOrUrl);
-
 
     return () => body.removeEventListener("paste", handlePasteSvgCodeOrUrl);
   }, []);
@@ -142,6 +149,7 @@ export function DropZone() {
   return (
     <Fragment>
       <Stack
+        cursor="pointer"
         _hover={{ transform: "scale(1.025)", boxShadow: "xl" }}
         transform={isDragActive ? "scale(1.025)" : "none"}
         backgroundColor="white"
@@ -154,6 +162,7 @@ export function DropZone() {
         padding={{ base: 4, md: 6 }}
         transition="all 400ms ease"
         willChange="transform"
+        className="drop-zone"
         {...getRootProps()}
       >
         <Stack
@@ -169,7 +178,18 @@ export function DropZone() {
         >
           {/* @ts-expect-error Unable to fix this problem */}
           <Input {...getInputProps()} />
-          <Button paddingX={"26px"} paddingY={"25px"} variant="brand.solid" fontWeight="bold">
+          <Button
+            paddingX={"26px"}
+            paddingY={"25px"}
+            variant={isDragActive ? "brand.solidRed" : "brand.solid"}
+            sx={{
+              ".drop-zone:hover &": {
+                color: "brand.white",
+                backgroundColor: "brand.lightRed",
+              },
+            }}
+            fontWeight="bold"
+          >
             Upload Icon
           </Button>
           <Text display={{ base: "none", md: "block" }} fontSize="sm" maxWidth={204}>

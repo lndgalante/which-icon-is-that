@@ -3,7 +3,7 @@ import { Stack, Text, Icon, HStack, Link } from "@chakra-ui/react";
 import { FiHome, FiSearch, FiClock, FiStar, FiArrowRight } from "react-icons/fi";
 
 // components
-import { ExampleIcon } from "@modules/home/components/ExampleIcon";
+import { BoxIcon } from "@modules/common/components/BoxIcon";
 
 export function ExampleIcons() {
   return (
@@ -24,10 +24,10 @@ export function ExampleIcons() {
           Try one of these:
         </Text>
         <HStack alignItems="center" justifyContent="center" spacing={2}>
-          <ExampleIcon href="/feather/regular/home" icon={<FiHome />} bgColor="brand.lightOrange" label="Home" />
-          <ExampleIcon href="/feather/regular/search" icon={<FiSearch />} bgColor="brand.lightOrange" label="Search" />
-          <ExampleIcon href="/feather/regular/clock" icon={<FiClock />} bgColor="brand.lightOrange" label="Clock" />
-          <ExampleIcon href="/feather/regular/star" icon={<FiStar />} bgColor="brand.lightOrange" label="Star" />
+          <BoxIcon href="/feather/regular/home" icon={<FiHome />} bgColor="brand.lightOrange" label="Home" />
+          <BoxIcon href="/feather/regular/search" icon={<FiSearch />} bgColor="brand.lightOrange" label="Search" />
+          <BoxIcon href="/feather/regular/clock" icon={<FiClock />} bgColor="brand.lightOrange" label="Clock" />
+          <BoxIcon href="/feather/regular/star" icon={<FiStar />} bgColor="brand.lightOrange" label="Star" />
         </HStack>
       </HStack>
 

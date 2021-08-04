@@ -1,7 +1,7 @@
 import React from "react";
-import { Icon } from "@chakra-ui/react";
+import { Icon, IconProps } from "@chakra-ui/react";
 
-export function TopLeft(props) {
+export function TopLeft(props: IconProps) {
   return (
     <Icon
       fill="none"

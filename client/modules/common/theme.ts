@@ -26,22 +26,32 @@ export const theme = extendTheme({
     },
   },
   components: {
+    Link: {
+      baseStyle: { _focus: { boxShadow: "0 0 0 3px #F4D0C0" } },
+    },
     Button: {
+      baseStyle: { _focus: { boxShadow: "0 0 0 3px #F4D0C0" } },
       variants: {
         "brand.solid": {
           borderWidth: 1,
           borderRadius: 8,
           fontSize: { base: "sm", md: "md" },
           color: "brand.white",
-          borderColor: "brand.warmBlack",
           backgroundColor: "brand.warmBlack",
           _hover: {
-            color: "brand.warmBlack",
-            backgroundColor: "transparent",
+            color: "brand.white",
+            backgroundColor: "brand.lightRed",
           },
         },
-        "brand.outline": {
+        "brand.solidRed": {
           borderWidth: 1,
+          borderRadius: 8,
+          fontSize: { base: "sm", md: "md" },
+          color: "brand.white",
+          backgroundColor: "brand.lightRed",
+        },
+        "brand.outline": {
+          borderWidth: 2,
           borderRadius: 8,
           color: "brand.warmBlack",
           fontSize: { base: "sm", md: "md" },

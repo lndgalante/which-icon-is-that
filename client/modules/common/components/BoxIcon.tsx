@@ -1,15 +1,24 @@
 import NextLink from "next/link";
-import { IconButton, Link } from "@chakra-ui/react";
+import { IconButton, Link, IconButtonProps } from "@chakra-ui/react";
 
-export function ExampleIcon({ icon, label, href, bgColor }) {
+type BoxIconProps = {
+  icon: IconButtonProps["icon"];
+  label: string;
+  href: string;
+  bgColor: string;
+  withShadow?: boolean;
+}
+
+export function BoxIcon({ icon, label, href, bgColor, withShadow }: BoxIconProps) {
   return (
     <NextLink passHref href={href}>
-      <Link >
+      <Link>
         <IconButton
           _hover={{
             transform: "translateY(-1px)",
             backgroundColor: "brand.softOrange",
           }}
+          boxShadow={withShadow ? "sm" : null}
           aria-label={label}
           backgroundColor={bgColor}
           color="brand.darkRed"

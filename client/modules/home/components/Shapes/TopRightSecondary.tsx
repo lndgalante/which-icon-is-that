@@ -1,6 +1,6 @@
-import { Icon } from "@chakra-ui/react";
+import { Icon, IconProps } from "@chakra-ui/react";
 
-export function TopRightSecondary(props) {
+export function TopRightSecondary(props: IconProps) {
   return (
     <Icon
       fill="none"

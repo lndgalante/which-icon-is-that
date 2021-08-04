@@ -1,6 +1,6 @@
-import { Icon } from "@chakra-ui/react";
+import { Icon, IconProps } from "@chakra-ui/react";
 
-export function MiddleLeft(props) {
+export function MiddleLeft(props: IconProps) {
   return (
     <Icon
       fill="none"

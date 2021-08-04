@@ -10,6 +10,7 @@ const fecher = (url: string, method: Methods = "GET") => fetch(url, { method }).
 const endpoints = {
   paths: () => `${API_URL}/paths`,
   icon: (hash: string) => `${API_URL}/icon/${hash}`,
+  iconLibrary: (libraryName: string) => `${API_URL}/icon/libraries/${libraryName}`,
   iconTags: (hash: string) => `${API_URL}/icon/${hash}/tags`,
   iconFound: (hash: string) => `${API_URL}/icon/${hash}/found`,
   iconSnippets: (hash: string) => `${API_URL}/icon/${hash}/snippets`,
@@ -21,6 +22,7 @@ const endpoints = {
 export const api = {
   getPaths: () => fecher(endpoints.paths()),
   getIcon: (hash: string) => fecher(endpoints.icon(hash)),
+  getIconLibrary: (libraryName: string) => fecher(endpoints.iconLibrary(libraryName)),
   getIconTags: (hash: string) => fecher(endpoints.iconTags(hash)),
   getIconFoundTimes: (hash: string) => fecher(endpoints.iconFound(hash)),
   getIconSnippets: (hash: string) => fecher(endpoints.iconSnippets(hash)),

@@ -8,6 +8,7 @@ export type Svg = {
   iconName: string;
   iconType: string;
   iconFileName: string;
+  reactIconName: string;
 };
 
 export type Links = {
@@ -35,6 +36,12 @@ export type IconMetadata = {
   links: Links;
   snippets: Snippets;
   relatedIcons: Svg[];
+  stars: string;
+  name: string;
+  license: string;
+  version: string;
+  iconTypes: string[];
+  totalIcons: number;
 };
 
 export type Response<T> = {

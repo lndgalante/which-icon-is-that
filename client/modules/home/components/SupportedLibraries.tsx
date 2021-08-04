@@ -153,7 +153,7 @@ export function SupportedLibraries() {
 
       <HStack
         alignItems="center"
-        backgroundColor="brand.lightGrey"
+        backgroundColor="brand.lightOrange"
         borderRadius={24}
         flexDirection={{ base: "column", md: "row" }}
         justifyContent="center"
@@ -162,7 +162,7 @@ export function SupportedLibraries() {
         spacing={{ base: 0, md: 4 }}
       >
         <Text
-          color="brand.text"
+          color="brand.darkRed"
           fontSize="md"
           fontWeight={600}
           marginBottom={{ base: 5, md: 0 }}

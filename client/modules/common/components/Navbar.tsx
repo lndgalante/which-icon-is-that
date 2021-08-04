@@ -27,12 +27,12 @@ export function Navbar() {
       as="nav"
       flexDirection="row"
       justifyContent="space-between"
-      paddingX={{ base: 4, md: 0 }}
+      paddingX={{ base: 4, md: 12 }}
       paddingY={{ base: 6, md: 4 }}
     >
 
       <NextLink passHref href="/">
-        <Link isExternal>
+        <Link>
           <HorizontalLogo cursor="pointer" marginLeft={-2} maxHeight={{ base: 10, md: 12 }} />
         </Link>
       </NextLink>
@@ -44,8 +44,8 @@ export function Navbar() {
         fontWeight={600}
         spacing={10}
       >
-        <NextLink passHref href={"/libraries"}>
-          <Link>Icon Libraries</Link>
+        <NextLink passHref href={"/gallery"}>
+          <Link>Icon Gallery</Link>
         </NextLink>
         <NextLink passHref href={"/pricing"}>
           <Link>Pricing</Link>
@@ -88,8 +88,8 @@ export function Navbar() {
               paddingY={16}
               spacing={10}
             >
-              <NextLink passHref href="/libraries">
-                <Link>Icon Libraries</Link>
+              <NextLink passHref href="/gallery">
+                <Link>Icon Gallery</Link>
               </NextLink>
               <NextLink passHref href="/pricing">
                 <Link>Pricing</Link>

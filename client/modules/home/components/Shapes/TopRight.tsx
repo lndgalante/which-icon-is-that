@@ -1,6 +1,6 @@
-import { Icon } from "@chakra-ui/react"
+import { Icon, IconProps } from "@chakra-ui/react"
 
-export function TopRight(props) {
+export function TopRight(props: IconProps) {
   return (
     <Icon
       width={73}

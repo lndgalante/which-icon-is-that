@@ -95,8 +95,9 @@ export function Footer() {
       color="brand.white"
       flexDirection={{ base: "column", md: "row" }}
       justifyContent="space-between"
-      paddingX={{ base: 5, md: 20 }}
+      paddingX={{ base: 4, md: 12 }}
       paddingY={{ base: 8, md: 6 }}
+
     >
       <HStack
         alignItems={{ base: "flex-start", md: "center" }}
