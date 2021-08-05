@@ -26,8 +26,30 @@ export const theme = extendTheme({
     },
   },
   components: {
+    Text: {
+      variants: {
+        "brand.underline": {
+          fontWeight: 500,
+          textDecoration: "underline",
+          transition: "all 400ms ease-in-out",
+          _hover: {
+            opacity: 0.7,
+          },
+        },
+      },
+    },
     Link: {
       baseStyle: { _focus: { boxShadow: "0 0 0 3px #F4D0C0" } },
+      variants: {
+        "brand.underline": {
+          fontWeight: 500,
+          textDecoration: "underline",
+          transition: "all 400ms ease-in-out",
+          _hover: {
+            opacity: 0.7,
+          },
+        },
+      },
     },
     Button: {
       baseStyle: { _focus: { boxShadow: "0 0 0 3px #F4D0C0" } },

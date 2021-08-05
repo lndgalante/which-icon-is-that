@@ -24,12 +24,23 @@ export const getIconLibraries = async ({ params, response }: Context & { params:
       return;
     }
 
-    const [{ name, stars, version, license, total_icons: totalIcons, icon_types: iconTypes }] = rows as [IconLibrary];
+    const [
+      {
+        name,
+        stars,
+        version,
+        license,
+        website,
+        download_link: downloadLink,
+        total_icons: totalIcons,
+        icon_types: iconTypes,
+      },
+    ] = rows as [IconLibrary];
 
     response.status = 200;
     response.body = {
       success: true,
-      data: { name, stars, version, license, totalIcons, iconTypes },
+      data: { name, stars, version, license, website, downloadLink, totalIcons, iconTypes },
     };
   } catch (error) {
     console.log('Server error', error);

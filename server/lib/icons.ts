@@ -80,7 +80,7 @@ export async function saveIconsInDB() {
     await transaction.queryArray(
       `CREATE TABLE icons (hash TEXT, svg TEXT, inner_svg TEXT, view_box TEXT, icon_type TEXT, bytes TEXT, pack_id TEXT, pack_name TEXT, icon_parsed_name TEXT, icon_name TEXT, react_icon_name TEXT, icon_file_name TEXT, found SERIAL)`,
     );
-    await transaction.queryArray`CREATE TABLE icon_libraries (name TEXT, total_icons INTEGER, license TEXT, stars TEXT, version TEXT, icon_types TEXT[][])`;
+    await transaction.queryArray`CREATE TABLE icon_libraries (name TEXT, total_icons INTEGER, license TEXT, stars TEXT, version TEXT, website TEXT, download_link TEXT, icon_types TEXT[][])`;
 
     // generate indexes
     await transaction.queryArray`CREATE INDEX hash_index ON icons(hash)`;
@@ -91,15 +91,18 @@ export async function saveIconsInDB() {
     await transaction.queryArray`CREATE INDEX hash_index_on_tags ON tags_icons(hash)`;
     await transaction.queryArray`CREATE INDEX hash_on_tag_id_index ON tags_icons(tag_id)`;
 
-    for (const { name, totalIcons, license, stars, version, iconTypes } of ICON_LIBRARIES) {
+    for (const { name, totalIcons, license, stars, version, iconTypes, website, downloadLink } of ICON_LIBRARIES) {
+      console.log('\n ~ saveIconsInDB ~ downloadLink', downloadLink);
       await transaction.queryArray(
-        `INSERT INTO icon_libraries (name, total_icons, license, stars, version, icon_types) VALUES ($1, $2, $3, $4, $5, $6)`,
+        `INSERT INTO icon_libraries (name, total_icons, license, stars, version, icon_types, website, download_link) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)`,
         name,
         totalIcons,
         license,
         stars,
         version,
         iconTypes,
+        website,
+        downloadLink,
       );
     }
 

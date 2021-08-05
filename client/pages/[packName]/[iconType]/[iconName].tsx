@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { GetStaticPaths, GetStaticProps } from "next";
 import { useRouter } from "next/router";
 import {
-  Tag,
   Icon,
   Link,
   Grid,
@@ -10,9 +9,9 @@ import {
   Text,
   Tooltip,
   TagLabel,
-  useToast,
   TagRightIcon,
   useClipboard,
+  Tag,
   Tab,
   Tabs,
   TabList,
@@ -20,6 +19,7 @@ import {
   TabPanels,
   HStack,
   Button,
+  Image,
   Drawer,
   DrawerBody,
   DrawerOverlay,
@@ -47,6 +47,7 @@ import { LanguageTab } from "components/LanguageTab";
 import { NextChakraLink } from "components/NextChakraLink";
 
 // NEW IMPORTS
+import { useToast } from "@modules/common/hooks/useToast";
 import { CustomTab } from "@modules/icon/components/CustomTab";
 import { CustomTabPanel } from "@modules/icon/components/CustomTabPanel";
 
@@ -148,13 +149,11 @@ export default function IconPage({
   totalIcons,
   version,
   iconTypes,
+  website,
+  downloadLink
 }: // tags,
   // relatedIcons,
   IconMetadata) {
-  console.log('\n ~ stars', stars)
-  console.log('\n ~ license', license)
-  console.log('\n ~ totalIcons', totalIcons)
-  console.log('\n ~ version', version)
   // react hooks
   const [selectedUse, setSelectedUse] = useState("optimizedSvg");
   const [selectedLanguage, setSelectedLanguage] = useState("html");
@@ -166,8 +165,9 @@ export default function IconPage({
   const { data, isLoading } = useReadFoundTimes(svg.hash);
 
   // chakra hooks
-  const toast = useToast();
+  const { displayToast } = useToast();
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const { onCopy: onCopyWebsite } = useClipboard(typeof window !== 'undefined' ? window?.location?.href : '');
   const { onCopy: onCopyInstall } = useClipboard(snippets[selectedLanguage].install);
   const { onCopy: onCopySetup } = useClipboard(snippets[selectedLanguage].setup);
   const { onCopy: onCopyImport } = useClipboard(snippets[selectedLanguage].import);
@@ -212,6 +212,11 @@ export default function IconPage({
     }
   }
 
+  function shareUrl() {
+    onCopyWebsite()
+    displayToast("Icon url copied to your clipboard.");
+  }
+
   // handlers
   function handleTabChange(index: number) {
     const newLanguage = languages[index];
@@ -227,34 +232,22 @@ export default function IconPage({
 
   function handleCopyInstall() {
     onCopyInstall();
-    toast({
-      status: "success",
-      description: `Icon install copied to your clipboard`,
-    });
+    displayToast('Icon install copied to your clipboard');
   }
 
   function handleCopySetup() {
     onCopySetup();
-    toast({
-      status: "success",
-      description: `Icon setup copied to your clipboard`,
-    });
+    displayToast('Icon setup copied to your clipboard');
   }
 
   function handleCopyImport() {
     onCopyImport();
-    toast({
-      status: "success",
-      description: `Icon import copied to your clipboard`,
-    });
+    displayToast('Icon import copied to your clipboard');
   }
 
   function handleCopyUsage() {
     onCopyUsage();
-    toast({
-      status: "success",
-      description: `Icon usage copied to your clipboard`,
-    });
+    displayToast('Icon usage copied to your clipboard');
   }
 
   const reactIcon = getIconComponent(svg.packName, svg.reactIconName);
@@ -262,7 +255,7 @@ export default function IconPage({
 
 
   return (
-    <Stack>
+    <Stack paddingBottom={32}>
       <Stack
         as="header"
         justifyContent="space-between"
@@ -287,8 +280,8 @@ export default function IconPage({
         </Button>
       </Stack>
 
-      <Grid templateColumns={{ base: "auto", md: "738px 1fr" }} gap={67}>
-        <Stack>
+      <Grid templateColumns={{ base: "auto", md: "738px 1fr" }} gap={67} as="section">
+        <Stack as="article">
           <Tabs variant="unstyled" index={selectedTabIndex}>
             <TabList>
               {iconTypes.map((iconType) => (
@@ -304,7 +297,13 @@ export default function IconPage({
             <TabPanels>
               {iconTypes.map((iconType) => (
                 <CustomTabPanel key={iconType}>
-                  <HStack justifyContent="space-around" flex={1}>
+                  <HStack position="relative" justifyContent="space-around" flex={1}>
+                    <Stack paddingX={2} paddingY={0.5} position="absolute" left={3} bottom={-14} backgroundColor="brand.white">
+                      <Text color="brand.warmBlack" fontSize="sm" opacity={0.5}>Size: {svg.bytes}</Text>
+                    </Stack>
+                    <Stack paddingX={2} paddingY={0.5} position="absolute" right={3} bottom={-14} backgroundColor="brand.white">
+                      <Text color="brand.warmBlack" fontSize="sm" opacity={0.5}>{isLoading ? "Loading..." : `Found: ${data.data.found} times`}</Text>
+                    </Stack>
                     <Stack
                       position="relative"
                       _hover={{ "::before": { opacity: 1 }, "::after": { opacity: 1 } }}
@@ -634,13 +633,64 @@ export default function IconPage({
             </TabPanels>
           </Tabs>
         </Stack>
-        <Stack>
-          <Text>icon library</Text>
+
+
+        <Stack as="article" paddingTop={10} spacing={4}>
+          <Text fontWeight={800} fontSize="lg" color="brand.darkRed">Icon Library</Text>
+
+          <Link width="fit-content" href={website} aria-label="Heroicons" isExternal>
+            <Image
+              paddingLeft={1}
+              maxWidth={188}
+              alt={svg.packName}
+              src={`/${svg.packName}.png`}
+            />
+          </Link>
+
+          <HStack>
+            <Tag backgroundColor="brand.lightGrey" borderRadius={8} paddingX={4} paddingY={2}>
+              <Text color="brand.warmBlack" opacity={0.5}>V{version}</Text>
+            </Tag>
+            <Tag backgroundColor="brand.lightGrey" borderRadius={8} paddingX={4} paddingY={2}>
+              <Text color="brand.warmBlack" opacity={0.5}>{totalIcons} Icons</Text>
+            </Tag>
+            <Tag backgroundColor="brand.lightGrey" borderRadius={8} paddingX={4} paddingY={2}>
+              <Text color="brand.warmBlack" opacity={0.5}>{license} License</Text>
+            </Tag>
+          </HStack>
+
+          <HStack spacing={5} paddingTop={4}>
+            <Text variant="brand.underline" onClick={shareUrl} cursor="pointer">
+              <Icon
+                as={FeatherIcons.FiShare2}
+                mr={1.5}
+              />
+              Share
+            </Text>
+
+            <Link variant="brand.underline" href={downloadLink} download>
+              <Icon
+                as={FeatherIcons.FiDownload}
+                mr={1.5}
+              />
+              Download iconset
+            </Link>
+
+            <Link variant="brand.underline" href={links.figma} isExternal>
+              <Icon
+                as={FeatherIcons.FiFigma}
+                mr={1.5}
+              />
+              Figma
+            </Link>
+          </HStack>
         </Stack>
-        <Stack>
+
+        <Stack as="article">
           <Text>usage examples</Text>
         </Stack>
-        <Stack>
+
+        <Stack as="article">
           <Text>related icons</Text>
         </Stack>
       </Grid>

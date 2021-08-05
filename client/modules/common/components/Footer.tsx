@@ -1,7 +1,10 @@
 import NextLink from "next/link";
 import { useEffect } from "react";
-import { FaEnvelope, FaDiscord, FaTwitter, FaGithub, FaInfoCircle } from "react-icons/fa";
-import { Stack, HStack, Text, Link, LinkBox, LinkOverlay, Icon, useClipboard, useToast, As } from "@chakra-ui/react";
+import { FaEnvelope, FaDiscord, FaTwitter, FaGithub } from "react-icons/fa";
+import { Stack, HStack, Text, Link, LinkBox, LinkOverlay, Icon, useClipboard, As } from "@chakra-ui/react";
+
+// components
+import { useToast } from "@modules/common/hooks/useToast";
 
 type FooterIconProps = {
   icon: As;
@@ -48,43 +51,12 @@ function FooterIcon({ icon, href, label, isEmail, onClick }: FooterIconProps) {
 }
 
 export function Footer() {
-  const toast = useToast();
+  const { displayToast } = useToast();
   const { hasCopied, onCopy } = useClipboard("whichiconisthat@gmail.com");
 
   useEffect(() => {
     if (hasCopied) {
-      toast({
-        position: "bottom-left",
-        render: () => {
-          return (
-            <Stack
-              padding={4}
-              backgroundColor="brand.lightRed"
-              flexDirection="row"
-              spacing={0}
-              alignItems="center"
-              color="brand.white"
-              borderRadius={16}
-              boxShadow="sm"
-            >
-              <Icon
-                as={FaInfoCircle}
-                color="brand.white"
-                h={5}
-                sx={{
-                  ".footer-link:hover &": {
-                    color: "brand.softOrange",
-                  },
-                }}
-                transition="all 400ms ease-in-out"
-                w={5}
-                marginRight={2}
-              />
-              <Text>Email copied to your clipboard.</Text>
-            </Stack>
-          );
-        },
-      });
+      displayToast("Email copied to your clipboard.");
     }
   }, [hasCopied]);
 
@@ -97,7 +69,6 @@ export function Footer() {
       justifyContent="space-between"
       paddingX={{ base: 4, md: 12 }}
       paddingY={{ base: 8, md: 6 }}
-
     >
       <HStack
         alignItems={{ base: "flex-start", md: "center" }}

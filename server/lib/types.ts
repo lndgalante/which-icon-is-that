@@ -43,4 +43,6 @@ export type IconLibrary = {
   license: string;
   version: string;
   icon_types: string[];
+  website: string;
+  download_link: string;
 };

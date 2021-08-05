@@ -29,7 +29,16 @@ export const ICONS_FIGMA_LINKS = {
 };
 
 export const ICON_LIBRARIES = [
-  { name: 'feather', totalIcons: 286, license: 'MIT', stars: '20.4k', version: '4.28.0', iconTypes: ['Regular'] },
+  {
+    name: 'feather',
+    totalIcons: 286,
+    license: 'MIT',
+    stars: '20.4k',
+    version: '4.28.0',
+    iconTypes: ['Regular'],
+    website: 'https://feathericons.com',
+    downloadLink: 'https://github.com/feathericons/feather/archive/refs/tags/v4.28.0.zip',
+  },
   {
     name: 'heroicons',
     totalIcons: 230,
@@ -37,6 +46,8 @@ export const ICON_LIBRARIES = [
     stars: '13k',
     version: '1.0.0',
     iconTypes: ['Outline', 'Solid'],
+    website: 'https://heroicons.com',
+    downloadLink: 'https://github.com/tailwindlabs/heroicons/archive/refs/tags/v1.0.0.zip',
   },
 ];
 

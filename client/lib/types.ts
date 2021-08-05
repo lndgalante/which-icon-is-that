@@ -42,6 +42,8 @@ export type IconMetadata = {
   version: string;
   iconTypes: string[];
   totalIcons: number;
+  website: string;
+  downloadLink: string;
 };
 
 export type Response<T> = {
