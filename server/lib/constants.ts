@@ -30,12 +30,20 @@ export const ICONS_FIGMA_LINKS = {
 
 export const ICON_LIBRARIES = [
   { name: 'feather', totalIcons: 286, license: 'MIT', stars: '20.4k', version: '4.28.0', iconTypes: ['Regular'] },
+  {
+    name: 'heroicons',
+    totalIcons: 230,
+    license: 'MIT',
+    stars: '13k',
+    version: '1.0.0',
+    iconTypes: ['Outline', 'Solid'],
+  },
 ];
 
 export const ICONS_LIST = [
   // { packId: 'bs', packName: 'bootstrap', owner: 'twbs', repo: 'icons', type: 'releases' },
   { packId: 'fi', packName: 'feather', owner: 'feathericons', repo: 'feather', type: 'releases' },
-  // { packId: 'hi', packName: 'heroicons', owner: 'tailwindlabs', repo: 'heroicons', type: 'releases' },
+  { packId: 'hi', packName: 'heroicons', owner: 'tailwindlabs', repo: 'heroicons', type: 'releases' },
   // { packId: 'ai', packName: 'antdesign', owner: 'ant-design', repo: 'ant-design-icons', type: 'tags' },
   // { packId: 'bi', packName: 'boxicons', owner: 'atisawd', repo: 'boxicons', type: 'releases' },
   // { packId: 'di', packName: 'devicon', owner: 'devicons', repo: 'devicon', type: 'releases' },

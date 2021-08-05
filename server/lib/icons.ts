@@ -125,7 +125,10 @@ export async function saveIconsInDB() {
         if (packName === 'feather') {
           reactIconName = `Fi${pascalCase(name.replace('svg', ''))}`;
         }
-        console.log('\n ~ saveIconsInDB ~ reactIconName', reactIconName);
+        if (packName === 'heroicons') {
+          const iconTypeReactIcon = iconType === 'outline' ? 'Outline' : '';
+          reactIconName = `Hi${iconTypeReactIcon}${pascalCase(name.replace('svg', ''))}`;
+        }
 
         const { size } = await Deno.stat(path);
 

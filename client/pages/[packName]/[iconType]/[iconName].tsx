@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { GetStaticPaths, GetStaticProps } from "next";
+import { useRouter } from "next/router";
 import {
   Tag,
   Icon,
@@ -17,6 +18,7 @@ import {
   TabList,
   TabPanel,
   TabPanels,
+  HStack,
   Button,
   Drawer,
   DrawerBody,
@@ -24,14 +26,12 @@ import {
   DrawerContent,
   DrawerCloseButton,
   useDisclosure,
-  HStack,
 } from "@chakra-ui/react";
-import {
-  capitalCase,
-} from "change-case";
+import { capitalCase } from "change-case";
 import { FaGithubAlt } from "react-icons/fa";
 import { RiBrush2Fill, RiBrush2Line } from "react-icons/ri";
 import * as FeatherIcons from "react-icons/fi";
+import * as Heroicons from "react-icons/hi";
 
 // lib
 import { api } from "lib/api";
@@ -89,7 +89,6 @@ export const getStaticProps: GetStaticProps<Props, Params> = async ({ params }) 
     const { data: snippets } = await api.getIconSnippets(iconHash);
     const { data: icon }: IconResponse = await api.getIcon(iconHash);
     const { data: iconLibrary }: IconResponse = await api.getIconLibrary(packName);
-    console.log('\n ~ constgetStaticProps:GetStaticProps<Props,Params>= ~ iconLibrary', iconLibrary)
 
     // const relatedIcons = [];
     // try {
@@ -148,13 +147,20 @@ export default function IconPage({
   license,
   totalIcons,
   version,
-  iconTypes
+  iconTypes,
 }: // tags,
   // relatedIcons,
   IconMetadata) {
+  console.log('\n ~ stars', stars)
+  console.log('\n ~ license', license)
+  console.log('\n ~ totalIcons', totalIcons)
+  console.log('\n ~ version', version)
   // react hooks
   const [selectedUse, setSelectedUse] = useState("optimizedSvg");
   const [selectedLanguage, setSelectedLanguage] = useState("html");
+
+  // next hooks
+  const { query } = useRouter();
 
   // query hooks
   const { data, isLoading } = useReadFoundTimes(svg.hash);
@@ -171,6 +177,8 @@ export default function IconPage({
   const languages = Object.keys(snippets);
   const currentSnippet = snippets[selectedLanguage][selectedUse];
 
+  const { iconType: iconTypeCurrentUrl } = query;
+
   // TODO: Review this array of icon pack names
   const hasIcongramSupport = [
     "clarity",
@@ -183,6 +191,26 @@ export default function IconPage({
     "octicons",
     "simple",
   ];
+
+  // helpers
+  function generateTabUrl(iconType: string) {
+    const { packName, iconName } = query;
+
+    return {
+      pathname: "/[packName]/[iconType]/[iconName]",
+      query: { packName, iconType, iconName },
+    };
+  }
+
+  function getIconComponent(packName, reactIconName) {
+    if (packName === "feather") {
+      return FeatherIcons[reactIconName];
+    }
+
+    if (packName === "heroicons") {
+      return Heroicons[reactIconName];
+    }
+  }
 
   // handlers
   function handleTabChange(index: number) {
@@ -229,9 +257,9 @@ export default function IconPage({
     });
   }
 
-  console.log("hasd");
-  const reactIcon = FeatherIcons[svg.reactIconName];
-  console.log("\n ~ reactIcon", reactIcon);
+  const reactIcon = getIconComponent(svg.packName, svg.reactIconName);
+  const selectedTabIndex = iconTypes.findIndex(iconType => iconType.toLowerCase() === iconTypeCurrentUrl)
+
 
   return (
     <Stack>
@@ -261,344 +289,348 @@ export default function IconPage({
 
       <Grid templateColumns={{ base: "auto", md: "738px 1fr" }} gap={67}>
         <Stack>
-          <Tabs variant="unstyled">
+          <Tabs variant="unstyled" index={selectedTabIndex}>
             <TabList>
-              {iconTypes.map(iconType => (<CustomTab key={iconType}>{iconType}</CustomTab>))}
+              {iconTypes.map((iconType) => (
+                <CustomTab
+                  key={iconType}
+                  href={generateTabUrl(iconType.toLowerCase())}
+                >
+                  {iconType}
+                </CustomTab>
+              ))}
             </TabList>
 
             <TabPanels>
-              <CustomTabPanel
-              >
-                <HStack justifyContent="space-around" flex={1}>
-                  <Stack
-                    position="relative"
-                    _hover={{ "::before": { opacity: 1 }, "::after": { opacity: 1 } }}
-                    _before={{
-                      transition: "all 400ms ease-in-out",
-                      content: `""`,
-                      opacity: 0,
-                      position: "absolute",
-                      borderWidth: 1,
-                      borderColor: "brand.lightRed",
-
-                      width: "100%",
-                      height: "100%",
-                    }}
-                    _after={{
-                      transition: "all 400ms ease-in-out",
-                      content: `""`,
-                      opacity: 0,
-                      position: "absolute",
-                      top: "-25%",
-                      left: "-25%",
-                      borderWidth: 1,
-                      borderColor: "brand.lightRed",
-                      width: "150%",
-                      height: "150%",
-                    }}
-                    className="icon-container"
-                  >
-                    <Icon as={reactIcon} w={6} h={6} opacity={0.3} />
-
+              {iconTypes.map((iconType) => (
+                <CustomTabPanel key={iconType}>
+                  <HStack justifyContent="space-around" flex={1}>
                     <Stack
-                      transition="all 400ms ease-in-out"
-                      sx={{ ".icon-container:hover &": { opacity: 1 } }}
-                      opacity={0}
-                      width="fit-content"
-                      position="absolute"
-                      paddingX={2}
-                      fontSize="xs"
-                      color="brand.white"
-                      bottom={-8}
-                      left={-3.5}
-                      textAlign="center"
-                      backgroundColor="brand.lightRed"
-                      borderRadius={4}
+                      position="relative"
+                      _hover={{ "::before": { opacity: 1 }, "::after": { opacity: 1 } }}
+                      _before={{
+                        transition: "all 400ms ease-in-out",
+                        content: `""`,
+                        opacity: 0,
+                        position: "absolute",
+                        borderWidth: 1,
+                        borderColor: "brand.lightRed",
+
+                        width: "100%",
+                        height: "100%",
+                      }}
+                      _after={{
+                        transition: "all 400ms ease-in-out",
+                        content: `""`,
+                        opacity: 0,
+                        position: "absolute",
+                        top: "-25%",
+                        left: "-25%",
+                        borderWidth: 1,
+                        borderColor: "brand.lightRed",
+                        width: "150%",
+                        height: "150%",
+                      }}
+                      className="icon-container"
                     >
-                      <Text>24x24</Text>
+                      <Icon as={reactIcon} w={6} h={6} opacity={0.3} />
+
+                      <Stack
+                        transition="all 400ms ease-in-out"
+                        sx={{ ".icon-container:hover &": { opacity: 1 } }}
+                        opacity={0}
+                        width="fit-content"
+                        position="absolute"
+                        paddingX={2}
+                        fontSize="xs"
+                        color="brand.white"
+                        bottom={-8}
+                        left={-3.5}
+                        textAlign="center"
+                        backgroundColor="brand.lightRed"
+                        borderRadius={4}
+                      >
+                        <Text>24x24</Text>
+                      </Stack>
+
+                      <Stack
+                        transition="all 400ms ease-in-out"
+                        sx={{
+                          ".icon-container:hover &": {
+                            opacity: 1,
+                          },
+                        }}
+                        opacity={0}
+                        position="absolute"
+                        w="7px"
+                        h="6px"
+                        top="-13px"
+                        left="-6px"
+                        backgroundColor="brand.lightRed"
+                      ></Stack>
                     </Stack>
 
                     <Stack
-                      transition="all 400ms ease-in-out"
-                      sx={{
-                        ".icon-container:hover &": {
-                          opacity: 1,
-                        },
+                      position="relative"
+                      _hover={{ "::before": { opacity: 1 }, "::after": { opacity: 1 } }}
+                      _before={{
+                        transition: "all 400ms ease-in-out",
+                        content: `""`,
+                        opacity: 0,
+                        position: "absolute",
+                        borderWidth: 1,
+                        borderColor: "brand.lightRed",
+                        width: "100%",
+                        height: "100%",
                       }}
-                      opacity={0}
-                      position="absolute"
-                      w="7px"
-                      h="6px"
-                      top="-13px"
-                      left="-6px"
-                      backgroundColor="brand.lightRed"
-                    ></Stack>
-                  </Stack>
-
-                  <Stack
-                    position="relative"
-                    _hover={{ "::before": { opacity: 1 }, "::after": { opacity: 1 } }}
-                    _before={{
-                      transition: "all 400ms ease-in-out",
-                      content: `""`,
-                      opacity: 0,
-                      position: "absolute",
-                      borderWidth: 1,
-                      borderColor: "brand.lightRed",
-                      width: "100%",
-                      height: "100%",
-                    }}
-                    _after={{
-                      transition: "all 400ms ease-in-out",
-                      content: `""`,
-                      opacity: 0,
-                      position: "absolute",
-                      top: "-16%",
-                      left: "-16%",
-                      borderWidth: 1,
-                      borderColor: "brand.lightRed",
-                      width: "135%",
-                      height: "135%",
-                    }}
-                    className="icon-container"
-                  >
-                    <Icon as={reactIcon} w={12} h={12} opacity={0.5} />
-                    <Stack
-                      transition="all 400ms ease-in-out"
-                      sx={{ ".icon-container:hover &": { opacity: 1 } }}
-                      opacity={0}
-                      width="fit-content"
-                      position="absolute"
-                      paddingX={2}
-                      fontSize="xs"
-                      color="brand.white"
-                      bottom={-8}
-                      left={3.5}
-                      textAlign="center"
-                      backgroundColor="brand.lightRed"
-                      borderRadius={4}
+                      _after={{
+                        transition: "all 400ms ease-in-out",
+                        content: `""`,
+                        opacity: 0,
+                        position: "absolute",
+                        top: "-16%",
+                        left: "-16%",
+                        borderWidth: 1,
+                        borderColor: "brand.lightRed",
+                        width: "135%",
+                        height: "135%",
+                      }}
+                      className="icon-container"
                     >
-                      <Text>48x48</Text>
+                      <Icon as={reactIcon} w={12} h={12} opacity={0.5} />
+                      <Stack
+                        transition="all 400ms ease-in-out"
+                        sx={{ ".icon-container:hover &": { opacity: 1 } }}
+                        opacity={0}
+                        width="fit-content"
+                        position="absolute"
+                        paddingX={2}
+                        fontSize="xs"
+                        color="brand.white"
+                        bottom={-8}
+                        left={-0.5}
+                        textAlign="center"
+                        backgroundColor="brand.lightRed"
+                        borderRadius={4}
+                      >
+                        <Text>48x48</Text>
+                      </Stack>
+
+                      <Stack
+                        transition="all 400ms ease-in-out"
+                        sx={{
+                          ".icon-container:hover &": {
+                            opacity: 1,
+                          },
+                        }}
+                        opacity={0}
+                        position="absolute"
+                        w="8px"
+                        h="9px"
+                        top={-4}
+                        left="-7px"
+                        backgroundColor="brand.lightRed"
+                      ></Stack>
                     </Stack>
 
                     <Stack
-                      transition="all 400ms ease-in-out"
-                      sx={{
-                        ".icon-container:hover &": {
-                          opacity: 1,
-                        },
+                      position="relative"
+                      _hover={{ "::before": { opacity: 1 }, "::after": { opacity: 1 } }}
+                      _before={{
+                        transition: "all 400ms ease-in-out",
+                        content: `""`,
+                        opacity: 0,
+                        position: "absolute",
+                        borderWidth: 1,
+                        borderColor: "brand.lightRed",
+                        left: "2px",
+                        top: "2px",
+                        width: "76px",
+                        height: "76px",
                       }}
-                      opacity={0}
-                      position="absolute"
-                      w="8px"
-                      h="9px"
-                      top={-4}
-                      left="-7px"
-                      backgroundColor="brand.lightRed"
-                    ></Stack>
-                  </Stack>
-
-                  <Stack
-                    position="relative"
-                    _hover={{ "::before": { opacity: 1 }, "::after": { opacity: 1 } }}
-                    _before={{
-                      transition: "all 400ms ease-in-out",
-                      content: `""`,
-                      opacity: 0,
-                      position: "absolute",
-                      borderWidth: 1,
-                      borderColor: "brand.lightRed",
-                      left: "2px",
-                      top: "2px",
-                      width: "76px",
-                      height: "76px",
-                    }}
-                    _after={{
-                      transition: "all 400ms ease-in-out",
-                      content: `""`,
-                      opacity: 0,
-                      position: "absolute",
-                      top: "-10%",
-                      left: "-10%",
-                      borderWidth: 1,
-                      borderColor: "brand.lightRed",
-                      width: "120%",
-                      height: "120%",
-                    }}
-                    className="icon-container"
-                  >
-                    <Icon as={reactIcon} w={20} h={20} />
-                    <Stack
-                      transition="all 400ms ease-in-out"
-                      sx={{ ".icon-container:hover &": { opacity: 1 } }}
-                      opacity={0}
-                      width="fit-content"
-                      position="absolute"
-                      paddingX={2}
-                      fontSize="xs"
-                      color="brand.white"
-                      bottom={-8}
-                      left={3.5}
-                      textAlign="center"
-                      backgroundColor="brand.lightRed"
-                      borderRadius={4}
+                      _after={{
+                        transition: "all 400ms ease-in-out",
+                        content: `""`,
+                        opacity: 0,
+                        position: "absolute",
+                        top: "-10%",
+                        left: "-10%",
+                        borderWidth: 1,
+                        borderColor: "brand.lightRed",
+                        width: "120%",
+                        height: "120%",
+                      }}
+                      className="icon-container"
                     >
-                      <Text>80x80</Text>
+                      <Icon as={reactIcon} w={20} h={20} />
+                      <Stack
+                        transition="all 400ms ease-in-out"
+                        sx={{ ".icon-container:hover &": { opacity: 1 } }}
+                        opacity={0}
+                        width="fit-content"
+                        position="absolute"
+                        paddingX={2}
+                        fontSize="xs"
+                        color="brand.white"
+                        bottom={-8}
+                        left={3.5}
+                        textAlign="center"
+                        backgroundColor="brand.lightRed"
+                        borderRadius={4}
+                      >
+                        <Text>80x80</Text>
+                      </Stack>
+
+                      <Stack
+                        transition="all 400ms ease-in-out"
+                        sx={{
+                          ".icon-container:hover &": {
+                            opacity: 1,
+                          },
+                        }}
+                        opacity={0}
+                        position="absolute"
+                        w="11px"
+                        h="10px"
+                        top={-4}
+                        left={-2}
+                        backgroundColor="brand.lightRed"
+                      ></Stack>
                     </Stack>
 
                     <Stack
-                      transition="all 400ms ease-in-out"
-                      sx={{
-                        ".icon-container:hover &": {
-                          opacity: 1,
-                        },
+                      position="relative"
+                      _hover={{ "::before": { opacity: 1 }, "::after": { opacity: 1 } }}
+                      _before={{
+                        transition: "all 400ms ease-in-out",
+                        content: `""`,
+                        opacity: 0,
+                        position: "absolute",
+                        borderWidth: 1,
+                        borderColor: "brand.lightRed",
+                        width: "100%",
+                        height: "100%",
                       }}
-                      opacity={0}
-                      position="absolute"
-                      w="11px"
-                      h="10px"
-                      top={-4}
-                      left={-2}
-                      backgroundColor="brand.lightRed"
-                    ></Stack>
-                  </Stack>
-
-                  <Stack
-                    position="relative"
-                    _hover={{ "::before": { opacity: 1 }, "::after": { opacity: 1 } }}
-                    _before={{
-                      transition: "all 400ms ease-in-out",
-                      content: `""`,
-                      opacity: 0,
-                      position: "absolute",
-                      borderWidth: 1,
-                      borderColor: "brand.lightRed",
-                      width: "100%",
-                      height: "100%",
-                    }}
-                    _after={{
-                      transition: "all 400ms ease-in-out",
-                      content: `""`,
-                      opacity: 0,
-                      position: "absolute",
-                      top: "-16%",
-                      left: "-16%",
-                      borderWidth: 1,
-                      borderColor: "brand.lightRed",
-                      width: "135%",
-                      height: "135%",
-                    }}
-                    className="icon-container"
-                  >
-                    <Icon as={reactIcon} w={12} h={12} opacity={0.5} />
-                    <Stack
-                      transition="all 400ms ease-in-out"
-                      sx={{ ".icon-container:hover &": { opacity: 1 } }}
-                      opacity={0}
-                      width="fit-content"
-                      position="absolute"
-                      paddingX={2}
-                      fontSize="xs"
-                      color="brand.white"
-                      bottom={-8}
-                      left={3.5}
-                      textAlign="center"
-                      backgroundColor="brand.lightRed"
-                      borderRadius={4}
+                      _after={{
+                        transition: "all 400ms ease-in-out",
+                        content: `""`,
+                        opacity: 0,
+                        position: "absolute",
+                        top: "-16%",
+                        left: "-16%",
+                        borderWidth: 1,
+                        borderColor: "brand.lightRed",
+                        width: "135%",
+                        height: "135%",
+                      }}
+                      className="icon-container"
                     >
-                      <Text>48x48</Text>
+                      <Icon as={reactIcon} w={12} h={12} opacity={0.5} />
+                      <Stack
+                        transition="all 400ms ease-in-out"
+                        sx={{ ".icon-container:hover &": { opacity: 1 } }}
+                        opacity={0}
+                        width="fit-content"
+                        position="absolute"
+                        paddingX={2}
+                        fontSize="xs"
+                        color="brand.white"
+                        bottom={-8}
+                        left={-0.5}
+                        textAlign="center"
+                        backgroundColor="brand.lightRed"
+                        borderRadius={4}
+                      >
+                        <Text>48x48</Text>
+                      </Stack>
+
+                      <Stack
+                        transition="all 400ms ease-in-out"
+                        sx={{
+                          ".icon-container:hover &": {
+                            opacity: 1,
+                          },
+                        }}
+                        opacity={0}
+                        position="absolute"
+                        w="8px"
+                        h="9px"
+                        top={-4}
+                        left="-7px"
+                        backgroundColor="brand.lightRed"
+                      ></Stack>
                     </Stack>
 
                     <Stack
-                      transition="all 400ms ease-in-out"
-                      sx={{
-                        ".icon-container:hover &": {
-                          opacity: 1,
-                        },
+                      position="relative"
+                      _hover={{ "::before": { opacity: 1 }, "::after": { opacity: 1 } }}
+                      _before={{
+                        transition: "all 400ms ease-in-out",
+                        content: `""`,
+                        opacity: 0,
+                        position: "absolute",
+                        borderWidth: 1,
+                        borderColor: "brand.lightRed",
+                        width: "100%",
+                        height: "100%",
                       }}
-                      opacity={0}
-                      position="absolute"
-                      w="8px"
-                      h="9px"
-                      top={-4}
-                      left="-7px"
-                      backgroundColor="brand.lightRed"
-                    ></Stack>
-                  </Stack>
-
-                  <Stack
-                    position="relative"
-                    _hover={{ "::before": { opacity: 1 }, "::after": { opacity: 1 } }}
-                    _before={{
-                      transition: "all 400ms ease-in-out",
-                      content: `""`,
-                      opacity: 0,
-                      position: "absolute",
-                      borderWidth: 1,
-                      borderColor: "brand.lightRed",
-                      width: "100%",
-                      height: "100%",
-                    }}
-                    _after={{
-                      transition: "all 400ms ease-in-out",
-                      content: `""`,
-                      opacity: 0,
-                      position: "absolute",
-                      top: "-25%",
-                      left: "-25%",
-                      borderWidth: 1,
-                      borderColor: "brand.lightRed",
-                      width: "150%",
-                      height: "150%",
-                    }}
-                    className="icon-container"
-                  >
-                    <Icon as={reactIcon} w={6} h={6} opacity={0.3} />
-
-                    <Stack
-                      transition="all 400ms ease-in-out"
-                      sx={{
-                        ".icon-container:hover &": {
-                          opacity: 1,
-                        },
+                      _after={{
+                        transition: "all 400ms ease-in-out",
+                        content: `""`,
+                        opacity: 0,
+                        position: "absolute",
+                        top: "-25%",
+                        left: "-25%",
+                        borderWidth: 1,
+                        borderColor: "brand.lightRed",
+                        width: "150%",
+                        height: "150%",
                       }}
-                      opacity={0}
-                      width="fit-content"
-                      position="absolute"
-                      paddingX={2}
-                      fontSize="xs"
-                      color="brand.white"
-                      bottom={-8}
-                      left={-3.5}
-                      textAlign="center"
-                      backgroundColor="brand.lightRed"
-                      borderRadius={4}
+                      className="icon-container"
                     >
-                      <Text>24x24</Text>
-                    </Stack>
+                      <Icon as={reactIcon} w={6} h={6} opacity={0.3} />
 
-                    <Stack
-                      transition="all 400ms ease-in-out"
-                      sx={{
-                        ".icon-container:hover &": {
-                          opacity: 1,
-                        },
-                      }}
-                      opacity={0}
-                      position="absolute"
-                      w="7px"
-                      h="6px"
-                      top="-13px"
-                      left="-6px"
-                      backgroundColor="brand.lightRed"
-                    ></Stack>
-                  </Stack>
-                </HStack>
-              </CustomTabPanel>
-              <CustomTabPanel
-              ></CustomTabPanel>
-              <CustomTabPanel
-              ></CustomTabPanel>
+                      <Stack
+                        transition="all 400ms ease-in-out"
+                        sx={{
+                          ".icon-container:hover &": {
+                            opacity: 1,
+                          },
+                        }}
+                        opacity={0}
+                        width="fit-content"
+                        position="absolute"
+                        paddingX={2}
+                        fontSize="xs"
+                        color="brand.white"
+                        bottom={-8}
+                        left={-3}
+                        textAlign="center"
+                        backgroundColor="brand.lightRed"
+                        borderRadius={4}
+                      >
+                        <Text>24x24</Text>
+                      </Stack>
+
+                      <Stack
+                        transition="all 400ms ease-in-out"
+                        sx={{
+                          ".icon-container:hover &": {
+                            opacity: 1,
+                          },
+                        }}
+                        opacity={0}
+                        position="absolute"
+                        w="7px"
+                        h="6px"
+                        top="-13px"
+                        left="-6px"
+                        backgroundColor="brand.lightRed"
+                      ></Stack>
+                    </Stack>
+                  </HStack>
+                </CustomTabPanel>
+              ))}
             </TabPanels>
           </Tabs>
         </Stack>
