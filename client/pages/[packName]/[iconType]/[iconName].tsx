@@ -1,9 +1,8 @@
-import React from "react";
-import { GetStaticPaths, GetStaticProps } from "next";
 import { useRouter } from "next/router";
+import { GetStaticPaths, GetStaticProps } from "next";
 import { SimpleGrid, Stack, Text, useDisclosure, As } from "@chakra-ui/react";
-import * as FeatherIcons from "react-icons/fi";
 import * as Heroicons from "react-icons/hi";
+import * as FeatherIcons from "react-icons/fi";
 
 // lib
 import { api } from "lib/api";
@@ -103,7 +102,8 @@ export default function IconPage({
   iconTypes,
   website,
   downloadLink,
-}: // tags,
+}:
+  // tags,
   // relatedIcons,
   IconMetadata) {
   // next hooks
@@ -111,9 +111,6 @@ export default function IconPage({
 
   // chakra hooks
   const { isOpen, onOpen, onClose } = useDisclosure();
-
-  // constants
-  const { iconType: iconTypeCurrentUrl } = query;
 
   // helpers
   function getIconComponent(packName: string, reactIconName: string): As {
@@ -126,12 +123,17 @@ export default function IconPage({
     }
   }
 
+  // constants
+  const { iconType: iconTypeCurrentUrl } = query;
+
   const reactIcon = getIconComponent(svg.packName, svg.reactIconName);
+
   const selectedTabIndex = iconTypes.findIndex((iconType) => iconType.toLowerCase() === iconTypeCurrentUrl);
 
   return (
     <Stack paddingBottom={32} spacing={10}>
       <Header iconName={svg.iconName} onOpen={onOpen} />
+
       <DeveloperPanel packName={svg.packName} snippets={snippets} onClose={onClose} isOpen={isOpen} />
 
       <SimpleGrid columns={{ base: 1, md: 1, lg: 2 }} rowGap={{ base: 10, md: 8 }} columnGap={67} as="section">
