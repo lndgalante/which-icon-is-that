@@ -9,7 +9,7 @@ type CustomTabProps = {
 
 export function CustomTab({ children, href, ...otherProps }: CustomTabProps) {
   return (
-    <NextLink passHref href={href}>
+    <NextLink passHref href={href} scroll={false}>
       <Tab
         width={82}
         transition="border-bottom-color 400ms ease-in-out"

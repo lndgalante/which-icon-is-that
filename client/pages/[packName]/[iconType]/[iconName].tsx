@@ -1,6 +1,8 @@
 import { useRouter } from "next/router";
 import { GetStaticPaths, GetStaticProps } from "next";
-import { SimpleGrid, Stack, Text, useDisclosure, As } from "@chakra-ui/react";
+import { As, SimpleGrid, Stack, useDisclosure } from "@chakra-ui/react";
+
+// icons
 import * as Heroicons from "react-icons/hi";
 import * as FeatherIcons from "react-icons/fi";
 
@@ -11,6 +13,7 @@ import { IconResponse, IconMetadata, Svg } from "lib/types";
 // components
 import { Header } from "@modules/icon/components/Header";
 import { IconLibrary } from "@modules/icon/components/IconLibrary";
+import { IconRelated } from "@modules/icon/components/IconRelated";
 import { IconExamples } from "@modules/icon/components/IconExamples";
 import { IconPlayground } from "@modules/icon/components/IconPlayground";
 import { DeveloperPanel } from "@modules/icon/components/DeveloperPanel";
@@ -102,8 +105,7 @@ export default function IconPage({
   iconTypes,
   website,
   downloadLink,
-}:
-  // tags,
+}: // tags,
   // relatedIcons,
   IconMetadata) {
   // next hooks
@@ -125,9 +127,7 @@ export default function IconPage({
 
   // constants
   const { iconType: iconTypeCurrentUrl } = query;
-
   const reactIcon = getIconComponent(svg.packName, svg.reactIconName);
-
   const selectedTabIndex = iconTypes.findIndex((iconType) => iconType.toLowerCase() === iconTypeCurrentUrl);
 
   return (
@@ -144,7 +144,6 @@ export default function IconPage({
           iconTypes={iconTypes}
           iconSize={svg.bytes}
         />
-
         <IconLibrary
           website={website}
           version={version}
@@ -154,14 +153,8 @@ export default function IconPage({
           figmaLink={links.figma}
           downloadLink={downloadLink}
         />
-
         <IconExamples reactIcon={reactIcon} iconName={svg.iconName} />
-
-        <Stack as="article" order={{ base: 3, md: 3, lg: "inherit" }}>
-          <Text fontWeight={800} fontSize="lg" color="brand.darkRed">
-            Related Icons
-          </Text>
-        </Stack>
+        <IconRelated />
       </SimpleGrid>
     </Stack>
   );

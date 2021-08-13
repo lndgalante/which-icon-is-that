@@ -26,13 +26,13 @@ function NotFound() {
         <Text color="brand.text" fontSize={{ base: "sm", md: "lg" }}>We are analyzing your icon to support it in our system</Text>
       </Stack>
 
-      <Stack paddingBottom={4} spacing={2}>
+      <Stack paddingBottom={4} spacing={6} alignItems="center">
         <Text color="brand.orange" fontWeight={700}>Maybe any of these would be useful?</Text>
         <HStack alignItems="center" justifyContent="center" spacing={2}>
-          <BoxIcon withShadow href="/feather/regular/home" icon={<FiHome />} bgColor="brand.white" label="Home" />
-          <BoxIcon withShadow href="/feather/regular/search" icon={<FiSearch />} bgColor="brand.white" label="Search" />
-          <BoxIcon withShadow href="/feather/regular/clock" icon={<FiClock />} bgColor="brand.white" label="Clock" />
-          <BoxIcon withShadow href="/feather/regular/star" icon={<FiStar />} bgColor="brand.white" label="Star" />
+          <BoxIcon withShadow href="/feather/regular/home" icon={<FiHome />} displayLabel label="Home" />
+          <BoxIcon withShadow href="/feather/regular/search" icon={<FiSearch />} displayLabel label="Search" />
+          <BoxIcon withShadow href="/feather/regular/clock" icon={<FiClock />} displayLabel label="Clock" />
+          <BoxIcon withShadow href="/feather/regular/star" icon={<FiStar />} displayLabel label="Star" />
         </HStack>
       </Stack>
 

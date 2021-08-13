@@ -1,17 +1,7 @@
-import {
-  As,
-  Wrap,
-  Icon,
-  Link,
-  Text,
-  Input,
-  Stack,
-  Button,
-  WrapItem,
-  IconButton,
-  InputGroup,
-  InputLeftElement,
-} from "@chakra-ui/react";
+import { As, Wrap, Icon, Link, Text, Stack, Button, WrapItem, IconButton } from "@chakra-ui/react";
+
+// components
+import { InputExample } from "@modules/icon/components/InputExample";
 
 type IconExamplesProps = {
   reactIcon: As;
@@ -99,53 +89,14 @@ export function IconExamples({ reactIcon, iconName }: IconExamplesProps) {
         </Text>
 
         <Wrap spacing={7}>
-          <WrapItem >
-            <InputGroup size="sm">
-              <InputLeftElement
-                pointerEvents="none"
-                children={<Icon as={reactIcon} w={4} h={4} color="brand.grey" />}
-              />
-              <Input
-                borderRadius={6}
-                type="text"
-                placeholder="Input text"
-                borderColor="brand.grey"
-                _placeholder={{ color: "brand.grey" }}
-                _focus={{ borderColor: "brand.orange" }}
-              />
-            </InputGroup>
+          <WrapItem>
+            <InputExample size="sm" reactIcon={reactIcon} />
           </WrapItem>
-          <WrapItem >
-            <InputGroup size="md">
-              <InputLeftElement
-                pointerEvents="none"
-                children={<Icon as={reactIcon} w={6} h={6} color="brand.grey" />}
-              />
-              <Input
-                borderRadius={6}
-                type="text"
-                placeholder="Input text"
-                borderColor="brand.grey"
-                _placeholder={{ color: "brand.grey" }}
-                _focus={{ borderColor: "brand.orange" }}
-              />
-            </InputGroup>
+          <WrapItem>
+            <InputExample size="md" reactIcon={reactIcon} />
           </WrapItem>
-          <WrapItem >
-            <InputGroup size="lg">
-              <InputLeftElement
-                pointerEvents="none"
-                children={<Icon as={reactIcon} w={8} h={8} color="brand.grey" />}
-              />
-              <Input
-                borderRadius={6}
-                type="text"
-                placeholder="Input text"
-                borderColor="brand.grey"
-                _placeholder={{ color: "brand.grey" }}
-                _focus={{ borderColor: "brand.orange" }}
-              />
-            </InputGroup>
+          <WrapItem>
+            <InputExample size="lg" reactIcon={reactIcon} />
           </WrapItem>
         </Wrap>
       </Stack>

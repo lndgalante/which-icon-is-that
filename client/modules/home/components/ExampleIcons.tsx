@@ -24,10 +24,10 @@ export function ExampleIcons() {
           Try one of these:
         </Text>
         <HStack alignItems="center" justifyContent="center" spacing={2}>
-          <BoxIcon href="/feather/regular/home" icon={<FiHome />} bgColor="brand.lightOrange" label="Home" />
-          <BoxIcon href="/feather/regular/search" icon={<FiSearch />} bgColor="brand.lightOrange" label="Search" />
-          <BoxIcon href="/feather/regular/clock" icon={<FiClock />} bgColor="brand.lightOrange" label="Clock" />
-          <BoxIcon href="/feather/regular/star" icon={<FiStar />} bgColor="brand.lightOrange" label="Star" />
+          <BoxIcon href="/feather/regular/home" icon={<FiHome />} primary label="Home" />
+          <BoxIcon href="/feather/regular/search" icon={<FiSearch />} primary label="Search" />
+          <BoxIcon href="/feather/regular/clock" icon={<FiClock />} primary label="Clock" />
+          <BoxIcon href="/feather/regular/star" icon={<FiStar />} primary label="Star" />
         </HStack>
       </HStack>
 
