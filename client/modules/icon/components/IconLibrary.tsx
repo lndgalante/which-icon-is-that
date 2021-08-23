@@ -42,7 +42,7 @@ export function IconLibrary({
       </Text>
 
       <Link width="fit-content" href={website} aria-label="Heroicons" isExternal>
-        <Image paddingLeft={1} maxWidth={188} alt={packName} src={`/${packName}.png`} />
+        <Image paddingLeft={1} maxWidth={188} alt={packName} src={`/images/${packName}.png`} />
       </Link>
 
       <HStack>

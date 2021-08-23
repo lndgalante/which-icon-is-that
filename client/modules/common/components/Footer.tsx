@@ -76,8 +76,9 @@ export function Footer() {
         order={{ base: 1, md: 0 }}
         spacing={{ base: 0, md: 8 }}
       >
-        <Text marginBottom={{ base: 4, md: 0 }}
-          fontWeight={700}>Copyright &copy; 2021 WIIT. All rights reserved.</Text>
+        <Text marginBottom={{ base: 4, md: 0 }} fontWeight={500}>
+          Copyright &copy; 2021 WIIT. All rights reserved.
+        </Text>
         <HStack alignItems="center" spacing={4}>
           <FooterIcon href="whichiconisthat@gmail.com" label="Email" icon={FaEnvelope} onClick={onCopy} isEmail />
           <FooterIcon href="https://discord.gg/xTpegNF9bj" label="Discord" icon={FaDiscord} />
@@ -91,7 +92,7 @@ export function Footer() {
         flexDirection={{ base: "column", md: "row" }}
         paddingBottom={{ base: 10, md: 0 }}
         spacing={{ base: 0, md: 10 }}
-        fontWeight={700}
+        fontWeight={500}
       >
         <NextLink passHref href="/privacy">
           <Link>Privacy Policy</Link>

@@ -1,4 +1,4 @@
-import { extendTheme } from "@chakra-ui/react";
+import { theme as chakraTheme, extendTheme } from "@chakra-ui/react";
 
 export const theme = extendTheme({
   styles: {
@@ -7,6 +7,21 @@ export const theme = extendTheme({
         backdropFilter: "blur(6px)",
       },
     },
+  },
+  shadows: {
+    1: "0px 2px 4px -2px rgba(32, 29, 29, 0.12), 0px 4px 4px -2px rgba(32, 29, 29, 0.08)",
+    2: "0px 4px 6px -4px rgba(32, 29, 29, 0.12), 0px 8px 8px -4px rgba(32, 29, 29, 0.08)",
+    3: "0px 6px 8px -6px rgba(32, 29, 29, 0.12), 0px 8px 16px -6px rgba(32, 29, 29, 0.08)",
+    4: "0px 6px 12px -6px rgba(32, 29, 29, 0.12), 0px 8px 24px -4px rgba(32, 29, 29, 0.08)",
+    5: "0px 6px 14px -6px rgba(32, 29, 29, 0.12), 0px 10px 32px -4px rgba(32, 29, 29, 0.1)",
+    6: "0px 8px 18px -6px rgba(181, 167, 167, 0.12), 0px 12px 42px -4px rgba(181, 167, 167, 0.12)",
+    7: "0px 8px 22px -6px rgba(32, 29, 29, 0.12), 0px 14px 64px -4px rgba(32, 29, 29, 0.12)",
+    8: "0px 8px 28px -6px rgba(129, 49, 49, 0.12), 0px 18px 88px -4px rgba(129, 49, 49, 0.12)",
+  },
+  fonts: {
+    ...chakraTheme.fonts,
+    body: `"Ansage", sans-serif`,
+    heading: `"Ansage", sans-serif`,
   },
   colors: {
     brand: {
@@ -52,7 +67,7 @@ export const theme = extendTheme({
       },
     },
     Button: {
-      baseStyle: { _focus: { boxShadow: "0 0 0 3px #F4D0C0" } },
+      baseStyle: { _focus: { boxShadow: "0 0 0 3px #F4D0C0" }, fontWeight: 600 },
       variants: {
         "brand.solid": {
           borderWidth: 1,
@@ -97,6 +112,7 @@ export const theme = extendTheme({
           borderWidth: 2,
           borderRadius: 8,
           color: "brand.warmBlack",
+          fontWeight: 500,
           fontSize: { base: "sm", md: "md" },
           backgroundColor: "transparent",
           borderColor: "brand.warmBlack",

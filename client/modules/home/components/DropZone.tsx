@@ -24,6 +24,7 @@ import { getInnerHTMLFromSvgText } from "@modules/home/utils/dom";
 
 // components
 import { Isotype } from "@modules/common/components/Isotype";
+import { DropInnerRadius } from "@modules/home/components/Shapes";
 
 export function DropZone() {
   // react hooks
@@ -150,16 +151,15 @@ export function DropZone() {
     <Fragment>
       <Stack
         cursor="pointer"
-        _hover={{ transform: "scale(1.025)", boxShadow: "xl" }}
+        _hover={{ transform: "scale(1.025)", boxShadow: "7" }}
         transform={isDragActive ? "scale(1.025)" : "none"}
         backgroundColor="white"
         borderRadius={24}
-        bottom={-122}
-        boxShadow="lg"
-        minHeight={{ base: 208, md: 262 }}
+        bottom={{ base: "-3.3rem", md: "-8.4rem" }}
+        boxShadow="6"
+        height={{ base: 180, md: 262 }}
         position="absolute"
-        minWidth={{ base: 335, md: 454 }}
-        padding={{ base: 4, md: 6 }}
+        width={{ base: 335, md: 454 }}
         transition="all 400ms ease"
         willChange="transform"
         className="drop-zone"
@@ -167,19 +167,17 @@ export function DropZone() {
       >
         <Stack
           alignItems="center"
-          borderColor="brand.grey"
-          borderRadius={18}
-          borderStyle="dashed"
-          borderWidth={2}
           flex={1}
-          justifyContent="center"
-          paddingTop={{ base: 0, md: 12 }}
-          spacing={4}
+          paddingTop={{ base: 0, md: "2.9rem" }}
+          spacing={{ base: 0, md: 6 }}
+          position="relative"
+          justifyContent={{ base: "center", md: "flex-start" }}
         >
+          <DropInnerRadius height={{ base: 154, md: 214 }} position="absolute" top={{ base: 3, md: 6 }} />
           {/* @ts-expect-error Unable to fix this problem */}
           <Input {...getInputProps()} />
           <Button
-            paddingX={"26px"}
+            paddingX={"23px"}
             paddingY={"25px"}
             variant={isDragActive ? "brand.solidRed" : "brand.solid"}
             sx={{
@@ -188,11 +186,12 @@ export function DropZone() {
                 backgroundColor: "brand.lightRed",
               },
             }}
-            fontWeight="bold"
+            fontWeight={700}
+            fontSize="md"
           >
             Upload Icon
           </Button>
-          <Text display={{ base: "none", md: "block" }} fontSize="sm" maxWidth={204}>
+          <Text display={{ base: "none", md: "block" }} fontSize="sm" maxWidth={288} mt={4}>
             Drag &amp; Drop the SVG file, paste the SVG code or the icon URL
           </Text>
         </Stack>

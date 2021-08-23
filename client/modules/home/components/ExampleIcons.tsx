@@ -10,20 +10,20 @@ export function ExampleIcons() {
     <Stack
       alignItems="center"
       as="section"
-      paddingBottom={{ base: 12, md: 98 }}
-      paddingTop={{ base: 146, md: 154 }}
-      spacing={{ base: 8, md: 10 }}
+      paddingBottom={{ base: 12, md: 107 }}
+      paddingTop={{ base: 90, md: 166 }}
+      spacing={{ base: 8, md: 8 }}
     >
       <HStack
         alignItems="center"
         flexDirection={{ base: "column", md: "row" }}
         justifyContent="center"
-        spacing={{ base: 0, md: 5 }}
+        spacing={{ base: 0, md: 6 }}
       >
-        <Text color="brand.darkRed" fontSize="sm" fontWeight={700} mb={{ base: 3, md: 0 }}>
+        <Text color="brand.darkRed" fontSize="sm" fontWeight={600} mb={{ base: "1.3rem", md: 0 }}>
           Try one of these:
         </Text>
-        <HStack alignItems="center" justifyContent="center" spacing={2}>
+        <HStack alignItems="center" justifyContent="center" spacing={4}>
           <BoxIcon href="/feather/regular/home" icon={<FiHome />} primary label="Home" />
           <BoxIcon href="/feather/regular/search" icon={<FiSearch />} primary label="Search" />
           <BoxIcon href="/feather/regular/clock" icon={<FiClock />} primary label="Clock" />
@@ -32,12 +32,12 @@ export function ExampleIcons() {
       </HStack>
 
       <NextLink passHref href="/gallery">
-        <Link className="gallery-link" textDecoration="underline">
+        <Link className="gallery-link" textDecoration="underline" fontSize="md">
           or find your icon in the gallery
           <Icon
             as={FiArrowRight}
-            ml={1}
-            sx={{ ".gallery-link:hover &": { transform: "translateX(1px) scaleX(1.2)" } }}
+            ml={1.5}
+            sx={{ ".gallery-link:hover &": { transform: "translateX(1px) scaleX(1.25)" } }}
             transition="all ease-in-out 400ms"
             willChange="transform"
           />

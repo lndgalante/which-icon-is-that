@@ -42,11 +42,7 @@ export const reactIconsPacks = {
 
 function parseReactIconsNames(icons: string[]) {
   return icons.map((icon) => {
-    const parsed = icon
-      .replace(/^.{2}/i, '')
-      .replace(/[A-Z]/g, (match) => `-${match}`)
-      .replace('-', '')
-      .toLowerCase();
+    const parsed = icon.replace(/^.{2}/i, '').toLowerCase();
 
     return { original: icon, parsed };
   });
@@ -57,8 +53,9 @@ function getReactIcon(iconName: string, iconPackName: PacksNames) {
 
   const firstParseIconName = iconName.startsWith('bx') ? iconName.slice(3) : iconName;
   const parsedIconName = firstParseIconName.startsWith('-') ? firstParseIconName.slice(1) : iconName;
+  const finalParseIconName = parsedIconName.replace(/-/g, '');
 
-  return iconPack.reverse().find(({ parsed }) => parsed === parsedIconName)!;
+  return iconPack.reverse().find(({ parsed }) => parsed === finalParseIconName)!;
 }
 
 function generateReactIconsCodeSnippet(reactIconName: string, packId: string) {
@@ -243,9 +240,132 @@ export async function generateIconSnippets(
         },
       },
     },
+    heroicons: {
+      html: {
+        optimizedSvg: {
+          install: null,
+          import: null,
+          setup: null,
+          usage: html,
+          link: null,
+        },
+        font: {
+          install: null,
+          import: '<link rel="stylesheet" href="//at.alicdn.com/t/font_o5hd5vvqpoqiwwmi.css">',
+          setup: null,
+          usage: `<i class="feather icon-${iconName}"></i>`,
+          link: 'https://github.com/AT-UI/feather-font',
+        },
+        script: {
+          install: null,
+          import: '<script src="https://unpkg.com/feather-icons"></script>',
+          setup: '<script>feather.replace();</script>',
+          usage: `<i data-feather="${iconName}"></i>`,
+          link: 'https://github.com/AT-UI/feather-font',
+        },
+        icongram: {
+          install: null,
+          import: null,
+          setup: null,
+          usage: `<img src="https://icongr.am/feather/${iconName}.svg?size=24&color=currentColor" placeholder="${iconParsedName} />"`,
+          link: `https://icongr.am/feather`,
+        },
+      },
+      react: {
+        'react-component-js': {
+          install: { npm: 'npm install react react-dom', yarn: 'yarn add react react-dom' },
+          import: null,
+          setup: null,
+          usage: reactComponentJs,
+          link: 'https://github.com/facebook/react',
+        },
+        'react-component-ts': {
+          install: { npm: 'npm install react react-dom @types/react', yarn: 'yarn add react react-dom @types/react' },
+          import: null,
+          setup: null,
+          usage: reactComponentTs,
+          link: 'https://github.com/facebook/react',
+        },
+        'react-icons': {
+          install: { npm: 'npm install react-icons', yarn: 'yarn add react-icons' },
+          import: reactIconsImport,
+          setup: null,
+          usage: `<${pascalCase(iconName)} />`,
+          link: 'https://github.com/react-icons/react-icons',
+        },
+        'react-feather': {
+          install: { npm: 'npm install react-feather', yarn: 'yarn add react-feather' },
+          import: `import { ${pascalCase(iconName)} } from 'react-feather';`,
+          setup: null,
+          usage: `<${pascalCase(iconName)} />`,
+          link: 'https://github.com/feathericons/react-feather',
+        },
+        'chakra-ui': {
+          install: {
+            npm: 'npm install @chakra-ui/react @emotion/react@^11 @emotion/styled@^11 framer-motion@^4',
+            yarn: 'yarn add @chakra-ui/react @emotion/react@^11 @emotion/styled@^11 framer-motion@^4',
+          },
+          import: `import { Icon } from "@chakra-ui/react";`,
+          setup: null,
+          usage: reactChakraIcon,
+          link: 'https://chakra-ui.com',
+        },
+        'styled-component-js': {
+          install: {
+            npm: 'npm install --save styled-components',
+            yarn: 'yarn add styled-components',
+          },
+          import: `import styled, { css } from 'styled-components';`,
+          setup: null,
+          usage: styledComponentJs,
+          link: 'https://styled-components.com',
+        },
+        'styled-component-ts': {
+          install: {
+            npm: 'npm install --save styled-components @types/styled-components',
+            yarn: 'yarn add styled-components @types/styled-components',
+          },
+          import: `import styled, { css } from 'styled-components';`,
+          setup: null,
+          usage: styledComponentTs,
+          link: 'https://styled-components.com',
+        },
+      },
+      vue: {
+        'vue-template': {
+          install: null,
+          import: null,
+          setup: null,
+          usage: vueTemplate,
+          link: null,
+        },
+        'vue-feather': {
+          install: { npm: 'npm install vue-feather', yarn: 'yarn add vue-feather' },
+          import: `import VueFeather from 'vue-feather';`,
+          setup: 'Vue.use(VueFeather);',
+          usage: `<vue-feather type="${iconName}"></vue-feather>`,
+          link: 'https://github.com/fengyuanchen/vue-feather',
+        },
+      },
+      'react-native': {
+        'react-native-component-js': {
+          install: { npm: 'npm install react-native-svg', yarn: 'yarn add react-native-svg' },
+          import: null,
+          setup: null,
+          usage: reactNativeComponentJs,
+          link: null,
+        },
+        'react-native-component-ts': {
+          install: { npm: 'npm install react-native-svg', yarn: 'yarn add react-native-svg' },
+          import: null,
+          setup: null,
+          usage: reactNativeComponentTs,
+          link: null,
+        },
+      },
+    },
     devicon: {},
     boxicons: {},
-    heroicons: {},
     antdesign: {},
     bootstrap: {},
     flatcoloricons: {},
