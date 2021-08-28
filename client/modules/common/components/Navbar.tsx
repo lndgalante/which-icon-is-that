@@ -22,7 +22,6 @@ import { HorizontalLogo } from "@modules/common/components/HorizontalLogo";
 export function Navbar() {
   // next hooks
   const { pathname } = useRouter();
-  console.log("\n ~ Navbar ~ pathname", pathname);
 
   // chakra hooks
   const { isOpen, onOpen, onClose } = useDisclosure();
