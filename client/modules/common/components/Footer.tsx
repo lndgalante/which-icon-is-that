@@ -1,6 +1,7 @@
 import NextLink from "next/link";
 import { useEffect } from "react";
-import { FaEnvelope, FaDiscord, FaTwitter, FaGithub } from "react-icons/fa";
+// import { FaDiscord } from "react-icons/fa";
+import { FiMail, FiTwitter, FiGithub } from "react-icons/fi";
 import { Stack, HStack, Text, Link, LinkBox, LinkOverlay, Icon, useClipboard, As } from "@chakra-ui/react";
 
 // components
@@ -68,34 +69,34 @@ export function Footer() {
       flexDirection={{ base: "column", md: "row" }}
       justifyContent="space-between"
       paddingX={{ base: 4, md: 12 }}
-      paddingY={{ base: 8, md: 6 }}
+      paddingY={{ base: "2.62rem", md: 6 }}
+      spacing={{ base: 20, md: 0 }}
     >
       <HStack
-        alignItems={{ base: "flex-start", md: "center" }}
+        alignItems={{ base: "center", md: "center" }}
         flexDirection={{ base: "column", md: "row" }}
-        order={{ base: 1, md: 0 }}
         spacing={{ base: 0, md: 8 }}
       >
         <Text marginBottom={{ base: 4, md: 0 }} fontWeight={500}>
           Copyright &copy; 2021 WIIT. All rights reserved.
         </Text>
         <HStack alignItems="center" spacing={4}>
-          <FooterIcon href="whichiconisthat@gmail.com" label="Email" icon={FaEnvelope} onClick={onCopy} isEmail />
-          <FooterIcon href="https://discord.gg/xTpegNF9bj" label="Discord" icon={FaDiscord} />
-          <FooterIcon href="https://twitter.com/whichiconisthat" label="Twitter" icon={FaTwitter} />
-          <FooterIcon href="https://github.com/lndgalante/which-icon-is-that" label="GitHub" icon={FaGithub} />
+          <FooterIcon href="whichiconisthat@gmail.com" label="Email" icon={FiMail} onClick={onCopy} isEmail />
+          {/* <FooterIcon href="https://discord.gg/xTpegNF9bj" label="Discord" icon={FaDiscord} /> */}
+          <FooterIcon href="https://twitter.com/whichiconisthat" label="Twitter" icon={FiTwitter} />
+          <FooterIcon href="https://github.com/lndgalante/which-icon-is-that" label="GitHub" icon={FiGithub} />
         </HStack>
       </HStack>
 
       <HStack
-        alignItems="flex-start"
+        alignItems={{ base: "center", md: "flex-start" }}
         flexDirection={{ base: "column", md: "row" }}
         paddingBottom={{ base: 10, md: 0 }}
         spacing={{ base: 0, md: 10 }}
         fontWeight={500}
       >
         <NextLink passHref href="/privacy">
-          <Link>Privacy Policy</Link>
+          <Link mb={{ base: "0.95rem", md: 0 }}>Privacy Policy</Link>
         </NextLink>
         <NextLink passHref href="/terms">
           <Link>Terms and Conditions</Link>

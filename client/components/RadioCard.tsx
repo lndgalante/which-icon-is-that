@@ -19,7 +19,7 @@ export function RadioCard(props) {
         _focus={{ boxShadow: "lg" }}
         background="white"
         borderRadius="2xl"
-        borderWidth="1px"
+        borderWidth="0.0625rem"
         boxShadow="md"
         cursor="pointer"
         px={4}

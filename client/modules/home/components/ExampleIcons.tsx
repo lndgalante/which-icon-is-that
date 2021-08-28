@@ -10,8 +10,8 @@ export function ExampleIcons() {
     <Stack
       alignItems="center"
       as="section"
-      paddingBottom={{ base: 12, md: 107 }}
-      paddingTop={{ base: 90, md: 166 }}
+      paddingBottom={{ base: 8, md: 107 }}
+      paddingTop={{ base: 114, md: 166 }}
       spacing={{ base: 8, md: 8 }}
     >
       <HStack

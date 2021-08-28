@@ -16,31 +16,30 @@ export function Header() {
       position="relative"
       textAlign="center"
       spacing={0}
-
     >
       <Stack left={{ base: 6, md: 2 }} position="absolute" top={{ base: -10, md: 16 }}>
-        <Shapes.TopLeft width={{ base: "40px", md: "87px" }} />
+        <Shapes.TopLeft width={{ base: "2.5rem", md: "5.4375rem" }} />
       </Stack>
       <Stack bottom={{ base: 56, md: 10 }} left={{ base: -6, md: -6 }} position="absolute">
-        <Shapes.BottomLeft width={{ base: "70px", md: "228px" }} />
+        <Shapes.BottomLeft width={{ base: "4.375rem", md: "14.25rem" }} />
       </Stack>
       <Stack left={{ base: 16, md: 32 }} position="absolute" top={{ base: -4, md: 44 }}>
-        <Shapes.MiddleLeft width={{ base: "51px", md: "120px" }} />
+        <Shapes.MiddleLeft width={{ base: "3.19rem", md: "7.5rem" }} />
       </Stack>
       <Stack position="absolute" right={{ base: 20, md: 16 }} top={{ base: -10, md: 20 }} zIndex={2}>
-        <Shapes.TopRight width={{ base: "32px", md: "120px" }} />
+        <Shapes.TopRight width={{ base: "2rem", md: "7.5rem" }} />
       </Stack>
       <Stack position="absolute" right={{ base: 5, md: -7 }} top={{ base: -12, md: 16 }}>
-        <Shapes.TopRightSecondary width={{ base: "61px", md: "120px" }} />
+        <Shapes.TopRightSecondary width={{ base: "3.8125rem", md: "7.5rem" }} />
       </Stack>
-      <Stack bottom={{ base: -24, md: -28 }} position="absolute" right={{ base: 20, md: 48 }}>
-        <Shapes.BottomRight width={{ base: "61px", md: "95px" }} />
+      <Stack bottom={{ base: "-3.9rem", md: -28 }} position="absolute" right={{ base: 20, md: 48 }}>
+        <Shapes.BottomRight width={{ base: "3.8125rem", md: "5.9375rem" }} />
       </Stack>
-      <Stack bottom={{ base: 10, md: 8 }} position="absolute" right={{ base: 2, md: 16 }}>
-        <Shapes.BottomRightSecondary width={{ base: "61px", md: "104px" }} />
+      <Stack bottom={{ base: "4.9rem", md: 8 }} position="absolute" right={{ base: 2, md: 16 }}>
+        <Shapes.BottomRightSecondary width={{ base: "3.8125rem", md: "6.5rem" }} />
       </Stack>
 
-      <Stack alignItems="center" paddingTop={{ base: 66, md: 62 }} spacing={7} zIndex={5}>
+      <Stack alignItems="center" paddingTop={{ base: 94, md: 62 }} spacing={{ base: 5, md: 7 }} zIndex={5}>
         <Text
           color="brand.darkRed"
           fontSize={{ base: 24, md: 40 }}

@@ -13,8 +13,8 @@ import {
   DrawerBody,
   useDisclosure,
 } from "@chakra-ui/react";
-import { FaBars, FaTimes, FaGithub, FaTwitter } from "react-icons/fa";
 import { useRouter } from "next/router";
+import { FiMenu, FiX, FiGithub, FiTwitter } from "react-icons/fi";
 
 // components
 import { HorizontalLogo } from "@modules/common/components/HorizontalLogo";
@@ -41,8 +41,8 @@ export function Navbar() {
       flexDirection="row"
       justifyContent="space-between"
       paddingX={{ base: 4, md: 12 }}
-      paddingY={{ base: 6, md: 3 }}
-      paddingBottom={{ base: 12, md: 16 }}
+      paddingY={{ base: 6, md: 4 }}
+      paddingBottom={{ base: "2.8rem", md: "4.38rem" }}
       spacing={0}
     >
       <NextLink passHref href="/">
@@ -67,18 +67,18 @@ export function Navbar() {
         })}
       </HStack>
 
-      <Icon as={FaBars} cursor="pointer" display={{ base: "block", md: "none" }} h={6} w={6} onClick={onOpen} />
+      <Icon as={FiMenu} cursor="pointer" display={{ base: "block", md: "none" }} h={6} w={6} onClick={onOpen} />
 
       <Drawer isOpen={isOpen} size="full" onClose={onClose}>
         <DrawerContent backgroundColor="brand.lightRed" paddingY={12}>
           <DrawerHeader>
             <Stack alignItems="flex-end">
-              <Icon as={FaTimes} color="brand.white" cursor="pointer" h={6} w={6} onClick={onClose} />
+              <Icon as={FiX} color="brand.white" cursor="pointer" h={6} w={6} onClick={onClose} />
             </Stack>
           </DrawerHeader>
 
           <DrawerBody>
-            <Stack alignItems="center" fontSize="xl" fontWeight={700} paddingY={16} spacing={10}>
+            <Stack alignItems="center" fontSize="xl" fontWeight={600} paddingY={16} spacing={10}>
               {navbarLinks.map(({ route, label }) => {
                 return (
                   <NextLink passHref href={route} key={route}>
@@ -89,15 +89,15 @@ export function Navbar() {
             </Stack>
           </DrawerBody>
 
-          <DrawerFooter alignItems="center" justifyContent="center">
+          <DrawerFooter alignItems="center" justifyContent="center" >
             <LinkBox>
               <LinkOverlay isExternal href="https://twitter.com/whichiconisthat">
-                <Icon as={FaTwitter} color="brand.white" h={6} w={6} />
+                <Icon as={FiTwitter} color="brand.white" h={6} w={6} />
               </LinkOverlay>
             </LinkBox>
             <LinkBox>
               <LinkOverlay isExternal href="https://github.com/lndgalante/which-icon-is-that">
-                <Icon as={FaGithub} color="brand.white" h={6} ml={2} w={6} />
+                <Icon as={FiGithub} color="brand.white" h={6} ml={4} w={6} />
               </LinkOverlay>
             </LinkBox>
           </DrawerFooter>

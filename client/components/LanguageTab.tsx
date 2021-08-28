@@ -86,7 +86,7 @@ export function LanguageTab({
               minHeight={12}
               position="relative"
               spacing={4}
-              style={{ ...style, padding: "4px 16px", borderRadius: "6px" }}
+              style={{ ...style, padding: "0.25rem 1rem", borderRadius: "0.375rem" }}
             >
               {tokens.map((line, i) => (
                 /* eslint-disable-next-line */
@@ -132,7 +132,7 @@ export function LanguageTab({
               minHeight={12}
               position="relative"
               spacing={4}
-              style={{ ...style, padding: "4px 16px", borderRadius: "6px" }}
+              style={{ ...style, padding: "0.25rem 1rem", borderRadius: "0.375rem" }}
             >
               {tokens.map((line, i) => (
                 /* eslint-disable-next-line */
@@ -178,7 +178,7 @@ export function LanguageTab({
               minHeight={12}
               position="relative"
               spacing={4}
-              style={{ ...style, padding: "4px 16px", borderRadius: "6px" }}
+              style={{ ...style, padding: "0.25rem 1rem", borderRadius: "0.375rem" }}
             >
               {tokens.map((line, i) => (
                 /* eslint-disable-next-line */
@@ -231,9 +231,9 @@ export function LanguageTab({
               spacing={4}
               style={{
                 ...style,
-                padding: "4px 16px",
-                borderRadius: "6px",
-                paddingTop: "12px",
+                padding: "0.25rem 1rem",
+                borderRadius: "0.375rem",
+                paddingTop: "0.75rem",
               }}
               whiteSpace="pre"
             >

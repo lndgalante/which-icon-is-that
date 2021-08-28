@@ -4,8 +4,8 @@ import React from "react";
 
 export function SupportedLibraries() {
   return (
-    <Stack alignItems="center" as="section" paddingBottom={{ base: 6, md: 150 }} spacing={0}>
-      <Text color="brand.darkRed" fontSize="2xl" as="h2" fontWeight={600}>
+    <Stack alignItems="center" as="section" paddingBottom={{ base: "1.7rem", md: 150 }} spacing={0}>
+      <Text color="brand.darkRed" fontSize={{ base: 16, md: 24 }} as="h2" fontWeight={600}>
         Supported Icon Libraries
       </Text>
 
@@ -13,8 +13,8 @@ export function SupportedLibraries() {
         alignItems="center"
         justifyContent="center"
         columns={{ base: 2, md: 5 }}
-        paddingBottom={{ base: 9, md: 14 }}
-        paddingTop={{ base: 5, md: 14 }}
+        paddingBottom={{ base: 9, md: 12 }}
+        paddingTop={{ base: 5, md: 12 }}
         paddingX={{ base: 10, md: 4 }}
         spacing={{ base: 12, md: 8 }}
         maxWidth={1064}
@@ -23,7 +23,7 @@ export function SupportedLibraries() {
           <Link aria-label="Ant Design Icons">
             <Image
               alt="Ant Design Icons"
-              _hover={{ opacity: 0.8 }}
+              _hover={{ opacity: 0.6 }}
               src="/images/antd.png"
               transition="all ease-in-out 400ms"
             />
@@ -34,7 +34,7 @@ export function SupportedLibraries() {
           <Link aria-label="Bootstrap Icons">
             <Image
               alt="Bootstrap Icons"
-              _hover={{ opacity: 0.8 }}
+              _hover={{ opacity: 0.6 }}
               src="/images/bootstrap.png"
               transition="all ease-in-out 400ms"
             />
@@ -45,7 +45,7 @@ export function SupportedLibraries() {
           <Link aria-label="Heroicons">
             <Image
               alt="Heroicons"
-              _hover={{ opacity: 0.8 }}
+              _hover={{ opacity: 0.6 }}
               src="/images/heroicons.png"
               transition="all ease-in-out 400ms"
             />
@@ -56,7 +56,7 @@ export function SupportedLibraries() {
           <Link aria-label="Feather Icons">
             <Image
               alt="Feather Icons"
-              _hover={{ opacity: 0.8 }}
+              _hover={{ opacity: 0.6 }}
               src="/images/feather.png"
               transition="all ease-in-out 400ms"
             />
@@ -64,10 +64,10 @@ export function SupportedLibraries() {
         </NextLink>
 
         <NextLink passHref href="/gallery?library=fontawesome">
-          <Link aria-label="Font Awesome">
+          <Link aria-label="Font Awesome" display={{ base: 'none', md: 'inherit' }}>
             <Image
               alt="Font Awesome"
-              _hover={{ opacity: 0.8 }}
+              _hover={{ opacity: 0.6 }}
               src="/images/font-awesome.png"
               transition="all ease-in-out 400ms"
             />

@@ -20,7 +20,7 @@ export function CustomTab({ children, href, ...otherProps }: CustomTabProps) {
         _selected={{
           borderTopLeftRadius: 8,
           borderTopRightRadius: 8,
-          borderBottomWidth: "4px",
+          borderBottomWidth: "0.25rem",
           borderBottomColor: "brand.orange",
           bg: "brand.lightOrange",
           color: "brand.orange",

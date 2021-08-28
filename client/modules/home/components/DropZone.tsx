@@ -155,7 +155,7 @@ export function DropZone() {
         transform={isDragActive ? "scale(1.025)" : "none"}
         backgroundColor="white"
         borderRadius={24}
-        bottom={{ base: "-3.3rem", md: "-8.4rem" }}
+        bottom={{ base: "-4.7rem", md: "-8.4rem" }}
         boxShadow="6"
         height={{ base: 180, md: 262 }}
         position="absolute"
@@ -177,8 +177,8 @@ export function DropZone() {
           {/* @ts-expect-error Unable to fix this problem */}
           <Input {...getInputProps()} />
           <Button
-            paddingX={"23px"}
-            paddingY={"25px"}
+            paddingX={"1.4375rem"}
+            paddingY={"1.5625rem"}
             variant={isDragActive ? "brand.solidRed" : "brand.solid"}
             sx={{
               ".drop-zone:hover &": {
@@ -186,7 +186,7 @@ export function DropZone() {
                 backgroundColor: "brand.lightRed",
               },
             }}
-            fontWeight={700}
+            fontWeight={600}
             fontSize="md"
           >
             Upload Icon
