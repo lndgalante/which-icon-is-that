@@ -16,7 +16,7 @@ import {
 } from "@chakra-ui/react";
 
 // types
-import { IconMetadata } from "lib/types";
+import { IconMetadata } from "@modules/common/utils/types";
 
 // hooks
 import { useToast } from "@modules/common/hooks/useToast";

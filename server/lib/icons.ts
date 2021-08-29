@@ -66,6 +66,7 @@ export async function saveIconsInDB() {
     await transaction.begin();
 
     // remove existing tables
+    await transaction.queryArray`DROP TABLE emails`;
     await transaction.queryArray`DROP TABLE icons`;
     await transaction.queryArray`DROP TABLE paths`;
     await transaction.queryArray`DROP TABLE tags`;
@@ -73,6 +74,8 @@ export async function saveIconsInDB() {
     await transaction.queryArray`DROP TABLE icon_libraries`;
 
     // create tables
+    await transaction.queryArray`CREATE TABLE contacts (email TEXT, name TEXT, message TEXT)`;
+
     await transaction.queryArray`CREATE TABLE tags (id TEXT, name TEXT)`;
     await transaction.queryArray`CREATE TABLE tags_icons (hash TEXT, tag_id TEXT)`;
 
@@ -92,7 +95,6 @@ export async function saveIconsInDB() {
     await transaction.queryArray`CREATE INDEX hash_on_tag_id_index ON tags_icons(tag_id)`;
 
     for (const { name, totalIcons, license, stars, version, iconTypes, website, downloadLink } of ICON_LIBRARIES) {
-      console.log('\n ~ saveIconsInDB ~ downloadLink', downloadLink);
       await transaction.queryArray(
         `INSERT INTO icon_libraries (name, total_icons, license, stars, version, icon_types, website, download_link) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)`,
         name,

@@ -20,7 +20,7 @@ import {
 } from "@chakra-ui/react";
 
 // lib
-import { api } from "@lib/api";
+import { api } from "@modules/common/utils/api";
 import { createHash } from "@lib/hash";
 import { getInnerHTMLFromSvgText } from "@lib/dom";
 

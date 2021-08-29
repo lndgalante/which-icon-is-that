@@ -17,7 +17,7 @@ import {
 } from "@chakra-ui/react";
 
 // utils
-import { api } from "@modules/home/utils/api";
+import { api } from "@modules/common/utils/api";
 import { delay } from "@modules/home/utils/delay";
 import { createHash } from "@modules/home/utils/hash";
 import { getInnerHTMLFromSvgText } from "@modules/home/utils/dom";

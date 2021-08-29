@@ -1,8 +1,8 @@
 import { useQuery } from "react-query";
 
 // common
-import { api } from "@lib/api";
-import { IconFoundResponse } from "@lib/types";
+import { api } from "@modules/common/utils/api";
+import { IconFoundResponse } from "@modules/common/utils/types";
 
 // fetcher
 const getFoundTimes = ({ queryKey }): Promise<IconFoundResponse> => {

@@ -6,9 +6,9 @@ import { As, SimpleGrid, Stack, useDisclosure } from "@chakra-ui/react";
 import * as Heroicons from "react-icons/hi";
 import * as FeatherIcons from "react-icons/fi";
 
-// lib
-import { api } from "lib/api";
-import { IconResponse, IconMetadata, Svg } from "lib/types";
+// utils
+import { api } from "@modules/common/utils/api";
+import { IconMetadata, Svg } from "@modules/common/utils/types";
 
 // components
 import { Header } from "@modules/icon/components/Header";
@@ -42,8 +42,8 @@ export const getStaticProps: GetStaticProps<Props, Params> = async ({ params }) 
 
     // const { data: tags } = await api.getIconTags(iconHash);
     const { data: snippets } = await api.getIconSnippets(iconHash);
-    const { data: icon }: IconResponse = await api.getIcon(iconHash);
-    const { data: iconLibrary }: IconResponse = await api.getIconLibrary(packName);
+    const { data: icon } = await api.getIcon(iconHash);
+    const { data: iconLibrary } = await api.getIconLibrary(packName);
 
     // const relatedIcons = [];
     // try {
