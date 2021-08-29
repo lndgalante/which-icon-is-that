@@ -16,11 +16,11 @@ export function Header({ iconName, onOpen }: HeaderProps) {
       spacing={5}
     >
       <HStack flexDirection={{ base: "column", md: "row" }} spacing={{ base: 0, md: 8 }} alignItems="baseline">
-        <Text as="h1" color="brand.darkRed" fontSize={{ base: 24, md: 36 }} fontWeight={800}>
+        <Text as="h1" color="brand.darkRed" fontSize={{ base: 24, md: 36 }} fontWeight={700}>
           {capitalCase(iconName)}
         </Text>
         <HStack>
-          <Text as="h2" fontWeight={800}>
+          <Text as="h2" fontWeight={700}>
             Tags:
           </Text>
           <Text>circle, clock, measure, time</Text>

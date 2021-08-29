@@ -54,7 +54,7 @@ export default function MyApp({ Component, pageProps, router }: AppProps) {
             animate="animate"
             initial="initial"
             key={router.route}
-            paddingX={{ base: 4, md: Component.name === "NotFound" ? 0 : 12 }}
+            paddingX={{ base: 4, md: 12 }}
             variants={{ initial: { opacity: 0 }, animate: { opacity: 1 } }}
           >
             <Component {...pageProps} />

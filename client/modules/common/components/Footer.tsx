@@ -69,7 +69,7 @@ export function Footer() {
       flexDirection={{ base: "column", md: "row" }}
       justifyContent="space-between"
       paddingX={{ base: 4, md: 12 }}
-      paddingY={{ base: "2.62rem", md: 6 }}
+      paddingY={{ base: "2.07rem", md: 6 }}
       spacing={{ base: 20, md: 0 }}
     >
       <HStack
@@ -91,7 +91,6 @@ export function Footer() {
       <HStack
         alignItems={{ base: "center", md: "flex-start" }}
         flexDirection={{ base: "column", md: "row" }}
-        paddingBottom={{ base: 10, md: 0 }}
         spacing={{ base: 0, md: 10 }}
         fontWeight={500}
       >

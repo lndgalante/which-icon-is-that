@@ -33,6 +33,18 @@ export function Navbar() {
     { route: "/contact", label: "Contact" },
   ];
 
+  const isNotFoundPage = pathname === '/not-found';
+
+  const paddingBasePerPage = {
+    ['/']: 10,
+    ['/not-found']: 4,
+    ['/gallery']: 4,
+    ['/contact']: 4,
+    ['/[packName]/[iconType]/[iconName]']: 10,
+  }
+
+  const paddingBase = paddingBasePerPage[pathname] as string
+
   return (
     <Stack
       alignItems="center"
@@ -41,7 +53,7 @@ export function Navbar() {
       justifyContent="space-between"
       paddingX={{ base: 4, md: 12 }}
       paddingY={{ base: 6, md: 4 }}
-      paddingBottom={{ base: "2.8rem", md: "4.38rem" }}
+      paddingBottom={{ base: paddingBase, md: isNotFoundPage ? 4 : "4.38rem" }}
       spacing={0}
     >
       <NextLink passHref href="/">

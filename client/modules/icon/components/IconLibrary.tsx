@@ -37,7 +37,7 @@ export function IconLibrary({
 
   return (
     <Stack as="article" paddingTop={{ base: 0, md: 0, lg: 10 }} spacing={4} order={{ base: 2, md: 2, lg: 'inherit' }}>
-      <Text fontWeight={800} fontSize="lg" color="brand.darkRed">
+      <Text fontWeight={700} fontSize="lg" color="brand.darkRed">
         Icon Library
       </Text>
 

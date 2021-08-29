@@ -11,7 +11,7 @@ export function Features() {
         as="h2"
         mb={{ base: "0.7rem", md: "3.1rem" }}
         fontSize={{ base: 24, md: 40 }}
-        fontWeight={800}
+        fontWeight={700}
         color="brand.orange"
       >
         Know our features
@@ -51,7 +51,7 @@ export function Features() {
             order={{ base: -1, md: 0 }}
             spacing={{ base: "0.63rem", md: 6 }}
           >
-            <Text as="h3" fontSize={{ base: 24, md: 40 }} fontWeight={800} color="brand.darkRed">
+            <Text as="h3" fontSize={{ base: 24, md: 40 }} fontWeight={700} color="brand.darkRed">
               Easy To Find
             </Text>
             <Text maxWidth={452} fontSize={{ base: 14, md: 18 }}>
@@ -70,7 +70,7 @@ export function Features() {
           as="article"
           spacing={{ base: "0.63rem", md: 6 }}
         >
-          <Text as="h3" fontSize={{ base: 24, md: 40 }} fontWeight={800} color="brand.darkRed">
+          <Text as="h3" fontSize={{ base: 24, md: 40 }} fontWeight={700} color="brand.darkRed">
             Rich Icon Data
           </Text>
 
@@ -123,7 +123,7 @@ export function Features() {
             order={{ base: -1, md: 0 }}
             spacing={{ base: "0.63rem", md: 6 }}
           >
-            <Text as="h3" fontSize={{ base: 24, md: 40 }} fontWeight={800} color="brand.darkRed">
+            <Text as="h3" fontSize={{ base: 24, md: 40 }} fontWeight={700} color="brand.darkRed">
               Developer Panel
             </Text>
             <Text maxWidth={452} fontSize={{ base: 14, md: 18 }}>

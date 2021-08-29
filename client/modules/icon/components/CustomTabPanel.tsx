@@ -21,6 +21,7 @@ export function CustomTabPanel({ children, ...otherProps }: CustomTabPanelProps)
       borderColor="brand.softGrey"
       borderBottomLeftRadius={8}
       borderBottomRightRadius={8}
+      borderTopRightRadius={8}
       {...otherProps}
     >
       {children}

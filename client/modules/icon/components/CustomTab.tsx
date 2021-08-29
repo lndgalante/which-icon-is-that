@@ -24,7 +24,7 @@ export function CustomTab({ children, href, ...otherProps }: CustomTabProps) {
           borderBottomColor: "brand.orange",
           bg: "brand.lightOrange",
           color: "brand.orange",
-          fontWeight: 800,
+          fontWeight: 700,
         }}
         {...otherProps}
       >

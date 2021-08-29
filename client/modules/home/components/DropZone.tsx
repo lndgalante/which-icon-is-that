@@ -200,28 +200,31 @@ export function DropZone() {
       <Modal onClose={onClose} size="full" isOpen={isLoading}>
         <ModalOverlay />
         <ModalContent margin={0} backgroundColor="brand.lightOrangeModal">
-          <ModalBody
-            display="flex"
-            justifyContent="center"
-            alignItems="center"
-            flexDirection="column"
-            textAlign="center"
-            lineHeight={1}
-          >
-            <Text
-              maxWidth={140}
-              marginBottom={4}
-              color="brand.lightRed"
-              fontWeight={900}
-              fontSize="2xl"
-              textTransform="uppercase"
+          <ModalBody display="flex">
+            <Stack
+              flex="1"
+              display="flex"
+              justifyContent="center"
+              alignItems="center"
+              flexDirection="column"
+              textAlign="center"
+              lineHeight={1}
             >
-              That's a nice one!
-            </Text>
-            <Isotype />
-            <Text fontWeight={700} marginTop={3} color="brand.text">
-              We're searching for it...
-            </Text>
+              <Text
+                maxWidth={140}
+                color="brand.lightRed"
+                fontWeight={900}
+                fontSize="2xl"
+                textTransform="uppercase"
+                mb="0.125rem"
+              >
+                That's a nice one!
+              </Text>
+              <Isotype />
+              <Text fontWeight={600} paddingTop={3} color="brand.text">
+                We're searching for it...
+              </Text>
+            </Stack>
           </ModalBody>
         </ModalContent>
       </Modal>

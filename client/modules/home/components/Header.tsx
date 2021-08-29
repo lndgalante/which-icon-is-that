@@ -48,11 +48,11 @@ export function Header() {
           maxWidth={{ base: 240, md: 846 }}
         >
           The missing tool to work with icons for{" "}
-          <Text as="span" fontWeight={800}>
+          <Text as="span" fontWeight={700}>
             Developers
           </Text>{" "}
           and{" "}
-          <Text as="span" fontWeight={800}>
+          <Text as="span" fontWeight={700}>
             Designers
           </Text>
         </Text>
