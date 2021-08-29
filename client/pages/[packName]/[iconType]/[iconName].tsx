@@ -114,7 +114,7 @@ export default function IconPage({
   // chakra hooks
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  // helpers
+  // utils
   function getIconComponent(packName: string, reactIconName: string): As {
     if (packName === "feather") {
       return FeatherIcons[reactIconName] as As;

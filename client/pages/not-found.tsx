@@ -4,16 +4,7 @@ import { FiHome, FiSearch, FiClock, FiStar } from "react-icons/fi";
 
 // components
 import { BoxIcon } from "@modules/common/components/BoxIcon";
-import {
-  LeftMiddle,
-  LeftBottom,
-  LeftMiddleTop,
-  LeftMiddleBottom,
-  RightTop,
-  RightMiddle,
-  RightBottom,
-  RightTopSecondary,
-} from "@modules/not-found/components/Shapes";
+import * as Shapes from "@modules/not-found/components/Shapes";
 
 function NotFound() {
   return (
@@ -53,35 +44,35 @@ function NotFound() {
       </NextLink>
 
       <Stack top={{ base: 4, md: 95 }} left={{ base: 0, md: 90 }} position="absolute">
-        <LeftMiddleTop width={{ base: "92px", md: "216px" }} />
+        <Shapes.LeftMiddleTop width={{ base: "92px", md: "216px" }} />
       </Stack>
 
       <Stack top={{ base: 56, md: 320 }} left={{ base: -6, md: -1 }} display={{ base: "none", md: "flex" }} position="absolute">
-        <LeftMiddle width={{ base: "70px", md: "130px" }} />
+        <Shapes.LeftMiddle width={{ base: "70px", md: "130px" }} />
       </Stack>
 
       <Stack bottom={{ base: "1.4rem", md: 148 }} left={{ base: -1, md: 180 }} position="absolute">
-        <LeftMiddleBottom width={{ base: "24px", md: "50px" }} />
+        <Shapes.LeftMiddleBottom width={{ base: "24px", md: "50px" }} />
       </Stack>
 
       <Stack bottom={{ base: "-1.45rem", md: -2 }} left={{ base: "6.45rem", md: 340 }} position="absolute">
-        <LeftBottom width={{ base: "64px", md: "124px" }} />
+        <Shapes.LeftBottom width={{ base: "64px", md: "124px" }} />
       </Stack>
 
       <Stack top={{ base: "-1.45rem", md: 4 }} right={{ base: "7.7rem", md: 280 }} position="absolute">
-        <RightTop width={{ base: "70px", md: "124px" }} />
+        <Shapes.RightTop width={{ base: "70px", md: "124px" }} />
       </Stack>
 
       <Stack top={{ base: "-0.6rem", md: 81 }} right={{ base: -4, md: 20 }} position="absolute">
-        <RightTopSecondary width={{ base: "70px", md: "114px" }} />
+        <Shapes.RightTopSecondary width={{ base: "70px", md: "114px" }} />
       </Stack>
 
       <Stack bottom={{ base: 56, md: 390 }} right={{ base: -6, md: 20 }} display={{ base: "none", md: "flex" }} position="absolute">
-        <RightMiddle width={{ base: "70px", md: "66px" }} />
+        <Shapes.RightMiddle width={{ base: "70px", md: "66px" }} />
       </Stack>
 
       <Stack bottom={{ base: "0.1rem", md: 10 }} right={{ base: '-1.14rem', md: 0 }} position="absolute">
-        <RightBottom width={{ base: "70px", md: "90px" }} />
+        <Shapes.RightBottom width={{ base: "70px", md: "90px" }} />
       </Stack>
     </Stack>
   );

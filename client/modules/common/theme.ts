@@ -43,6 +43,16 @@ export const theme = extendTheme({
     },
   },
   components: {
+    Input: {
+      baseStyle: {
+        borderRadius: 8,
+      },
+    },
+    TextArea: {
+      baseStyle: {
+        borderRadius: 8,
+      },
+    },
     Text: {
       variants: {
         "brand.underline": {

@@ -34,7 +34,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FiMenu, FiX, FiGithub, FiTwitter } from "react-icons/fi";
 
-// helpers
+// utils
 import { api } from "@modules/common/utils/api";
 
 // hooks
@@ -55,6 +55,14 @@ const BASE_PADDINGS_PER_PAGE = {
   ["/gallery"]: 4,
   ["/contact"]: 4,
   ["/[packName]/[iconType]/[iconName]"]: 10,
+};
+
+const MD_PADDINGS_PER_PAGE = {
+  ["/contact"]: 4,
+  ["/not-found"]: 4,
+  ["/"]: "4.38rem",
+  ["/gallery"]: "4.38rem",
+  ["/[packName]/[iconType]/[iconName]"]: "4.38rem",
 };
 
 const VALIDATION_SCHEMA = z.object({ email: z.string().email() });
@@ -78,14 +86,14 @@ export function Navbar() {
   const { displayToast } = useToast();
 
   // constants
-  const isNotFoundPage = pathname === "/not-found";
-  const paddingBase = BASE_PADDINGS_PER_PAGE[pathname] as string;
+  const mdPadding = MD_PADDINGS_PER_PAGE[pathname] as string;
+  const basePadding = BASE_PADDINGS_PER_PAGE[pathname] as string;
 
   // handlers
   async function onSubmit(values) {
     try {
       await api.postContact(values.email);
-      displayToast(`Email sent to ${values.email}`);
+      displayToast(`Thanks to get in touch!`);
     } catch (error) {
       console.log(`Error saving contact`, error)
     } finally {
@@ -101,7 +109,7 @@ export function Navbar() {
       justifyContent="space-between"
       paddingX={{ base: 4, md: 12 }}
       paddingY={{ base: 6, md: 4 }}
-      paddingBottom={{ base: paddingBase, md: isNotFoundPage ? 4 : "4.38rem" }}
+      paddingBottom={{ base: basePadding, md: mdPadding }}
       spacing={0}
     >
       <NextLink passHref href="/">
@@ -153,6 +161,18 @@ export function Navbar() {
           <DrawerBody>
             <Stack alignItems="center" fontSize="xl" fontWeight={600} paddingY={16} spacing={10}>
               {NAVBAR_LINKS.map(({ route, label }) => {
+                if (route === "/pricing") {
+                  return (
+                    <Link
+                      color={isModalOpen ? "brand.softOrange" : "brand.white"}
+                      onClick={onModalOpen}
+                      key={route}
+                    >
+                      {label}
+                    </Link>
+                  );
+                }
+
                 return (
                   <NextLink passHref href={route} key={route}>
                     <Link color={route === pathname ? "brand.softOrange" : "brand.white"}>{label}</Link>
@@ -179,7 +199,7 @@ export function Navbar() {
 
       <Modal isOpen={isModalOpen} isCentered onClose={onModalClose}>
         <ModalOverlay backgroundColor="brand.lightOrangeModal" />
-        <ModalContent minWidth={468} paddingX={6} paddingBottom={4}>
+        <ModalContent minWidth={{ base: 'auto', md: 468 }} paddingX={{ base: 2, md: 6 }} paddingBottom={4}>
           <ModalCloseButton />
           <ModalHeader color="brand.lightRed">Pricing</ModalHeader>
           <ModalBody>
@@ -205,8 +225,8 @@ export function Navbar() {
                   <VisuallyHidden>
                     <FormLabel htmlFor="email">Email</FormLabel>
                   </VisuallyHidden>
-                  <Input id="email" placeholder="yourmail@here.com" {...register("email")} />
-                  <FormErrorMessage>{errors.email && errors.email.message}</FormErrorMessage>
+                  <Input focusBorderColor="brand.softOrange" id="email" placeholder="yourmail@here.com" {...register("email")} />
+                  <FormErrorMessage color="brand.lightRed">{errors.email && errors.email.message}</FormErrorMessage>
                 </FormControl>
                 <Button variant="brand.solid" fontSize={14} fontWeight={500} isLoading={isSubmitting} type="submit">
                   Send

@@ -59,7 +59,7 @@ export default function Home() {
     onDrop: handleDrop,
   });
 
-  // helpers
+  // utils
   async function moveToHashPage(hash: string) {
     try {
       setIsLoading(true);
@@ -120,7 +120,7 @@ export default function Home() {
     reader.readAsText(file);
   }
 
-  // helpers
+  // utils
   async function searchIconByUrlInput() {
     if (!svgUrl) {
       return toast({ title: "Insert a URL first", status: "error" });

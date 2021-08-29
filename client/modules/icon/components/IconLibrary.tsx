@@ -29,7 +29,7 @@ export function IconLibrary({
   // chakra hooks
   const { onCopy: onCopyWebsite } = useClipboard(typeof window !== "undefined" ? window?.location?.href : "");
 
-  // helpers
+  // utils
   function shareUrl() {
     onCopyWebsite();
     displayToast("Icon url copied to your clipboard.");

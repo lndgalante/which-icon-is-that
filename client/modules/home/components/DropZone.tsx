@@ -40,7 +40,7 @@ export function DropZone() {
   // dropzone hooks
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop: handleDrop });
 
-  // helpers
+  // utils
   function toastError(title: string) {
     toast({ title, status: "error" });
   }

@@ -2,7 +2,7 @@ import getFiles from 'https://deno.land/x/getfiles/mod.ts';
 import { pascalCase } from 'https://deno.land/x/case/mod.ts';
 import { prettyBytes } from 'https://raw.githubusercontent.com/brunnerlivio/deno-pretty-bytes/master/mod.ts';
 
-// helpers
+// utils
 import { createHash } from './hash.ts';
 import { getInnerHTMLFromSvgText } from './dom.ts';
 import {
