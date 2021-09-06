@@ -211,6 +211,7 @@ export function Navbar() {
                 <ListItem>Email support 24/7</ListItem>
                 <ListItem>Custom icon library</ListItem>
                 <ListItem>Icon comparison tool</ListItem>
+                <ListItem>Add icon to favourites</ListItem>
                 <ListItem>Instant icon libraries updates</ListItem>
                 <ListItem>Scene playground to drag and drop icons</ListItem>
                 <ListItem>Team project folders for a selection of icons</ListItem>
