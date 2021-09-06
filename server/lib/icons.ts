@@ -66,7 +66,7 @@ export async function saveIconsInDB() {
     await transaction.begin();
 
     // remove existing tables
-    await transaction.queryArray`DROP TABLE emails`;
+    await transaction.queryArray`DROP TABLE contacts`;
     await transaction.queryArray`DROP TABLE icons`;
     await transaction.queryArray`DROP TABLE paths`;
     await transaction.queryArray`DROP TABLE tags`;
