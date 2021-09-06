@@ -4,9 +4,9 @@ export function HorizontalLogo(props) {
   return (
     <Icon
       fill="none"
-      height={48}
       viewBox="0 0 170 48"
-      width={170}
+      height={12}
+      width={150}
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >

@@ -114,7 +114,7 @@ export function Navbar() {
     >
       <NextLink passHref href="/">
         <Link>
-          <HorizontalLogo cursor="pointer" marginLeft={{ base: -6, md: -4 }} maxHeight={{ base: 9, md: 10 }} />
+          <HorizontalLogo _hover={{ backgroundColor: 'brand.lightOrange' }} transition="all 400ms ease-in-out" cursor="pointer" padding={1} borderRadius={4} />
         </Link>
       </NextLink>
 
@@ -198,7 +198,7 @@ export function Navbar() {
       </Drawer>
 
       <Modal isOpen={isModalOpen} isCentered onClose={onModalClose}>
-        <ModalOverlay backgroundColor="brand.lightOrangeModal" />
+        <ModalOverlay />
         <ModalContent minWidth={{ base: 'auto', md: 468 }} paddingX={{ base: 2, md: 6 }} paddingBottom={4}>
           <ModalCloseButton />
           <ModalHeader color="brand.lightRed">Pricing</ModalHeader>

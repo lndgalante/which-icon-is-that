@@ -1,10 +1,8 @@
 import { NextSeo } from "next-seo";
 import { AppProps } from "next/app";
-import { Stack, forwardRef, ChakraProvider } from "@chakra-ui/react";
 import { motion, isValidMotionProp } from "framer-motion";
 import { QueryClient, QueryClientProvider } from "react-query";
-
-import './styles.css'
+import { Stack, forwardRef, ChakraProvider } from "@chakra-ui/react";
 
 // components
 import { Fonts } from '@modules/common/components/Fonts';

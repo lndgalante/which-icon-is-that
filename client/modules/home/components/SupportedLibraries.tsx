@@ -1,11 +1,13 @@
 import NextLink from "next/link";
 import { Stack, Text, Link, Image, Button, SimpleGrid } from "@chakra-ui/react";
-import React from "react";
+
+// components
+import { LinkButton } from "@modules/common/components/LinkButton";
 
 export function SupportedLibraries() {
   return (
     <Stack alignItems="center" as="section" paddingBottom={{ base: "1.7rem", md: 150 }} spacing={0}>
-      <Text color="brand.darkRed" fontSize={{ base: 16, md: 24 }} as="h2" fontWeight={600}>
+      <Text color="brand.darkRed" fontSize={{ base: 16, md: 40 }} as="h2" fontWeight={600}>
         Supported Icon Libraries
       </Text>
 
@@ -75,11 +77,7 @@ export function SupportedLibraries() {
         </NextLink>
       </SimpleGrid>
 
-      <NextLink passHref href="/supported-libraries">
-        <Button variant="brand.outline">
-          See all the libraries
-        </Button>
-      </NextLink>
+      <LinkButton href="/supported-libraries" variant="brand.outline" text="See all the libraries" />
     </Stack>
   );
 }

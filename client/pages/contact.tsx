@@ -12,11 +12,13 @@ import {
   Button,
   Textarea,
 } from "@chakra-ui/react";
-import { FiMail } from "react-icons/fi";
-import { FaDiscord } from "react-icons/fa";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+
+// icons
+import { FiMail } from "react-icons/fi";
+import { FaDiscord } from "react-icons/fa";
 
 // utils
 import { api } from "@modules/common/utils/api";

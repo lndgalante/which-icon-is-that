@@ -26,7 +26,7 @@ export function IconRelated() {
             _hover={{ backgroundColor: "brand.lightOrange" }}
           >
             <Text fontWeight={700} mr={1} fontSize="lg" color="brand.darkRed">
-              Similar Icons
+              Related Icons
             </Text>
             <AccordionIcon color="brand.darkRed" />
           </AccordionButton>
