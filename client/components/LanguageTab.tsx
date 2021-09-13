@@ -1,9 +1,10 @@
-import { Text, Link, Stack, Button, Select, HStack, useClipboard } from "@chakra-ui/react";
+import { useState } from "react";
+import { Text, Link, Stack, Button, Select, HStack, Radio, RadioGroup, useClipboard } from "@chakra-ui/react";
 
 import PrismTheme from "prism-react-renderer/themes/dracula";
 import Highlight, { defaultProps, Language } from "prism-react-renderer";
+
 import { FiClipboard, FiExternalLink, FiCopy } from "react-icons/fi";
-import React from "react";
 
 type UsesOption = {
   value: string;
@@ -18,7 +19,7 @@ type Install = {
 type Step = {
   label: string;
   language: Language;
-  content: string | Install;
+  content: string & Install;
 };
 
 type Metadata = {
@@ -29,6 +30,8 @@ type Snippet = {
   steps: Step[];
   metadata: Metadata;
 };
+
+type PackageManager = "npm" | "yarn";
 
 type Props = {
   usesOptions: UsesOption[];
@@ -46,6 +49,9 @@ export function LanguageTab({
   handleChangeSelectedUse,
   currentSnippet,
 }: Props) {
+  // react hooks
+  const [packageManager, setPackageManager] = useState<PackageManager>("npm");
+
   // constants
   const installSnippet = currentSnippet?.steps?.find((snippet) => snippet.label === "Install")?.content;
   const setupSnippet = currentSnippet?.steps?.find((snippet) => snippet.label === "Setup")?.content;
@@ -73,6 +79,11 @@ export function LanguageTab({
     Usage: hasCopiedUsageSnippet,
   };
 
+  // handlers
+  function handleChangePackageManager(packageManager: PackageManager) {
+    setPackageManager(packageManager);
+  }
+
   return (
     <Stack flex={1} spacing={4}>
       {/* Display "Pick your use" */}
@@ -80,7 +91,7 @@ export function LanguageTab({
         <Text fontSize={14} fontWeight="medium">
           1. Pick your use
         </Text>
-        <Select size="sm" value={selectedUse} onChange={handleChangeSelectedUse}>
+        <Select borderRadius={4} size="sm" value={selectedUse} onChange={handleChangeSelectedUse}>
           {usesOptions.map((option) => (
             <option key={option.value} value={option.value}>
               {option.label}
@@ -91,29 +102,35 @@ export function LanguageTab({
 
       {/* Display all the steps */}
       {currentSnippet?.steps.map((step, index) => {
+        const { label, language, content } = step;
+
+        const handleCopyMethod = LABELS_METHODS[label];
+        const hasCopiedToClipboard = LABELS_HAS_COPIED[label];
+        const isContentPackageManager = Boolean(content?.npm);
+
         return (
-          <Stack width={460} key={`${selectedLanguage}-${selectedUse}-${step.label}}`}>
+          <Stack width={460} key={`${selectedLanguage}-${selectedUse}-${label}}`}>
             <HStack justifyContent="space-between">
               <Text fontSize={14}>
-                {index + 2}. {step.label}
+                {index + 2}. {label}
               </Text>
               <Button
                 aria-label="Copy to clipboard"
                 className="prism-code--copy"
                 colorScheme="whiteAlpha"
                 color="brand.grey"
-                leftIcon={LABELS_HAS_COPIED[step.label] ? <FiCopy /> : <FiClipboard />}
+                leftIcon={hasCopiedToClipboard ? <FiCopy /> : <FiClipboard />}
                 size="sm"
                 variant="ghost"
-                onClick={LABELS_METHODS[step.label]}
+                onClick={handleCopyMethod}
               >
-                <Text fontSize={12}>{LABELS_HAS_COPIED[step.label] ? "Copied" : "Copy"}</Text>
+                <Text fontSize={12}>{hasCopiedToClipboard ? "Copied" : "Copy"}</Text>
               </Button>
             </HStack>
             <Highlight
               {...defaultProps}
-              code={step.content?.npm ?? step.content}
-              language={step.language}
+              code={isContentPackageManager ? content[packageManager] : content}
+              language={language}
               theme={PrismTheme}
             >
               {({ className, style, tokens, getLineProps, getTokenProps }) => (
@@ -122,14 +139,27 @@ export function LanguageTab({
                   style={{
                     ...style,
                     fontSize: "14px",
-
                     minHeight: "40px",
                     overflow: "scroll",
                     position: "relative",
                     padding: "0.65rem 1rem",
                     borderRadius: "0.375rem",
+                    backgroundColor: "#333333",
                   }}
                 >
+                  {isContentPackageManager && (
+                    <RadioGroup
+                      colorScheme="whiteAlpha"
+                      mb={2}
+                      onChange={handleChangePackageManager}
+                      value={packageManager}
+                    >
+                      <Stack direction="row" spacing={6}>
+                        <Radio value="npm">NPM</Radio>
+                        <Radio value="yarn">Yarn</Radio>
+                      </Stack>
+                    </RadioGroup>
+                  )}
                   {tokens.map((line, i) => (
                     /* eslint-disable-next-line */
                     <div {...getLineProps({ line, key: i })}>

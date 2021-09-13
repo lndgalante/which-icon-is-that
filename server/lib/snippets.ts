@@ -151,7 +151,7 @@ export async function generateIconSnippets(
           {
             label: 'Usage',
             language: 'html',
-            content: `<img src="https://icongr.am/feather/${iconName}.svg?size=24&color=currentColor" placeholder="${iconParsedName} />"`,
+            content: `<img src="https://icongr.am/feather/${iconName}.svg?size=24&color=currentColor" placeholder="${iconParsedName}" />`,
           },
         ],
         metadata: {
