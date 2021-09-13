@@ -1,16 +1,9 @@
-import {
-  Text,
-  Stack,
-  HStack,
-  Select,
-  IconButton,
-  Divider,
-  Link,
-} from "@chakra-ui/react";
+import { Text, Link, Stack, Button, Select, HStack, useClipboard } from "@chakra-ui/react";
 
-import { FiClipboard, FiExternalLink } from "react-icons/fi";
 import PrismTheme from "prism-react-renderer/themes/dracula";
-import Highlight, { defaultProps } from "prism-react-renderer";
+import Highlight, { defaultProps, Language } from "prism-react-renderer";
+import { FiClipboard, FiExternalLink, FiCopy } from "react-icons/fi";
+import React from "react";
 
 type UsesOption = {
   value: string;
@@ -22,12 +15,19 @@ type Install = {
   yarn: string;
 };
 
-type Snippet = {
-  install: Install;
-  import: string;
-  setup: string;
-  usage: string;
+type Step = {
+  label: string;
+  language: Language;
+  content: string | Install;
+};
+
+type Metadata = {
   link: string;
+};
+
+type Snippet = {
+  steps: Step[];
+  metadata: Metadata;
 };
 
 type Props = {
@@ -37,10 +37,6 @@ type Props = {
   currentSnippet: Snippet;
   /* eslint-disable-next-line */
   handleChangeSelectedUse: ({ target }: { target: any }) => void;
-  handleCopyInstall: () => void;
-  handleCopySetup: () => void;
-  handleCopyUsage: () => void;
-  handleCopyImport: () => void;
 };
 
 export function LanguageTab({
@@ -49,20 +45,42 @@ export function LanguageTab({
   selectedLanguage,
   handleChangeSelectedUse,
   currentSnippet,
-  handleCopyInstall,
-  handleCopySetup,
-  handleCopyUsage,
-  handleCopyImport,
 }: Props) {
+  // constants
+  const installSnippet = currentSnippet?.steps?.find((snippet) => snippet.label === "Install")?.content;
+  const setupSnippet = currentSnippet?.steps?.find((snippet) => snippet.label === "Setup")?.content;
+  const importSnippet = currentSnippet?.steps?.find((snippet) => snippet.label === "Import")?.content;
+  const usageSnippet = currentSnippet?.steps?.find((snippet) => snippet.label === "Usage")?.content;
+
+  // chakra hooks
+  const { onCopy: onCopyInstall, hasCopied: hasCopiedInstallSnippet } = useClipboard(installSnippet);
+  const { onCopy: onCopySetup, hasCopied: hasCopiedSetupSnippet } = useClipboard(setupSnippet);
+  const { onCopy: onCopyImport, hasCopied: hasCopiedImportSnippet } = useClipboard(importSnippet);
+  const { onCopy: onCopyUsage, hasCopied: hasCopiedUsageSnippet } = useClipboard(usageSnippet);
+
+  // constants
+  const LABELS_METHODS = {
+    Install: onCopyInstall,
+    Setup: onCopySetup,
+    Import: onCopyImport,
+    Usage: onCopyUsage,
+  };
+
+  const LABELS_HAS_COPIED = {
+    Install: hasCopiedInstallSnippet,
+    Setup: hasCopiedSetupSnippet,
+    Import: hasCopiedImportSnippet,
+    Usage: hasCopiedUsageSnippet,
+  };
+
   return (
-    <Stack spacing={4}>
+    <Stack flex={1} spacing={4}>
+      {/* Display "Pick your use" */}
       <Stack>
-        <Text fontWeight="medium">1. Pick your use</Text>
-        <Select
-          size="md"
-          value={selectedUse}
-          onChange={handleChangeSelectedUse}
-        >
+        <Text fontSize={14} fontWeight="medium">
+          1. Pick your use
+        </Text>
+        <Select size="sm" value={selectedUse} onChange={handleChangeSelectedUse}>
           {usesOptions.map((option) => (
             <option key={option.value} value={option.value}>
               {option.label}
@@ -71,207 +89,66 @@ export function LanguageTab({
         </Select>
       </Stack>
 
-      <Stack>
-        <Text fontWeight="medium">2. Install</Text>
-        <Highlight
-          {...defaultProps}
-          code={currentSnippet.install?.npm ?? "// No package install needed."}
-          language={currentSnippet.install ? "bash" : "jsx"}
-          theme={PrismTheme}
-        >
-          {({ className, style, tokens, getLineProps, getTokenProps }) => (
-            <HStack
-              as="pre"
-              className={`${className} code`}
-              minHeight={12}
-              position="relative"
-              spacing={4}
-              style={{ ...style, padding: "0.25rem 1rem", borderRadius: "0.375rem" }}
-            >
-              {tokens.map((line, i) => (
-                /* eslint-disable-next-line */
-                <div {...getLineProps({ line, key: i })}>
-                  {line.map((token, key) => (
-                    /* eslint-disable-next-line */
-                    <span {...getTokenProps({ token, key })} />
-                  ))}
-                </div>
-              ))}
-
-              {currentSnippet.install && (
-                <IconButton
-                  aria-label="Copy to clipboard"
-                  className="prism-code--copy"
-                  colorScheme="whiteAlpha"
-                  icon={<FiClipboard />}
-                  position="absolute"
-                  right={4}
-                  size="md"
-                  top={1}
-                  variant="ghost"
-                  onClick={handleCopyInstall}
-                />
-              )}
-            </HStack>
-          )}
-        </Highlight>
-      </Stack>
-
-      <Stack>
-        <Text fontWeight="medium">3. Setup</Text>
-        <Highlight
-          {...defaultProps}
-          code={currentSnippet.setup ?? "// No setup needed."}
-          language="jsx"
-          theme={PrismTheme}
-        >
-          {({ className, style, tokens, getLineProps, getTokenProps }) => (
-            <HStack
-              as="pre"
-              className={`${className} code`}
-              minHeight={12}
-              position="relative"
-              spacing={4}
-              style={{ ...style, padding: "0.25rem 1rem", borderRadius: "0.375rem" }}
-            >
-              {tokens.map((line, i) => (
-                /* eslint-disable-next-line */
-                <div {...getLineProps({ line, key: i })}>
-                  {line.map((token, key) => (
-                    /* eslint-disable-next-line */
-                    <span {...getTokenProps({ token, key })} />
-                  ))}
-                </div>
-              ))}
-
-              {currentSnippet.setup && (
-                <IconButton
-                  aria-label="Copy to clipboard"
-                  className="prism-code--copy"
-                  colorScheme="whiteAlpha"
-                  icon={<FiClipboard />}
-                  position="absolute"
-                  right={4}
-                  size="md"
-                  top={1}
-                  variant="ghost"
-                  onClick={handleCopySetup}
-                />
-              )}
-            </HStack>
-          )}
-        </Highlight>
-      </Stack>
-
-      <Stack>
-        <Text fontWeight="medium">3. Import</Text>
-        <Highlight
-          {...defaultProps}
-          code={currentSnippet.import ?? "// No import needed."}
-          language="jsx"
-          theme={PrismTheme}
-        >
-          {({ className, style, tokens, getLineProps, getTokenProps }) => (
-            <HStack
-              as="pre"
-              className={`${className} code`}
-              minHeight={12}
-              position="relative"
-              spacing={4}
-              style={{ ...style, padding: "0.25rem 1rem", borderRadius: "0.375rem" }}
-            >
-              {tokens.map((line, i) => (
-                /* eslint-disable-next-line */
-                <div {...getLineProps({ line, key: i })}>
-                  {line.map((token, key) => (
-                    /* eslint-disable-next-line */
-                    <span {...getTokenProps({ token, key })} />
-                  ))}
-                </div>
-              ))}
-
-              {currentSnippet.import && (
-                <IconButton
-                  aria-label="Copy to clipboard"
-                  className="prism-code--copy"
-                  colorScheme="whiteAlpha"
-                  icon={<FiClipboard />}
-                  position="absolute"
-                  right={4}
-                  size="md"
-                  top={1}
-                  variant="ghost"
-                  onClick={handleCopyImport}
-                />
-              )}
-            </HStack>
-          )}
-        </Highlight>
-      </Stack>
-
-      <Stack>
-        <Text fontWeight="medium">4. Usage</Text>
-        <Highlight
-          {...defaultProps}
-          code={currentSnippet.usage}
-          language={
-            ["html", "vue"].includes(selectedLanguage) ? "markup" : "jsx"
-          }
-          theme={PrismTheme}
-        >
-          {({ className, style, tokens, getLineProps, getTokenProps }) => (
-            <HStack
-              _after={{ wordWrap: "break-word" }}
-              _before={{ wordWrap: "break-word" }}
-              as="pre"
-              className={`${className} code`}
-              display="block"
-              minHeight={12}
-              position="relative"
-              spacing={4}
-              style={{
-                ...style,
-                padding: "0.25rem 1rem",
-                borderRadius: "0.375rem",
-                paddingTop: "0.75rem",
-              }}
-              whiteSpace="pre"
-            >
-              {tokens.map((line, i) => (
-                /* eslint-disable-next-line */
-                <div {...getLineProps({ line, key: i })}>
-                  {line.map((token, key) => (
-                    /* eslint-disable-next-line */
-                    <span {...getTokenProps({ token, key })} />
-                  ))}
-                </div>
-              ))}
-              <IconButton
+      {/* Display all the steps */}
+      {currentSnippet?.steps.map((step, index) => {
+        return (
+          <Stack width={460} key={`${selectedLanguage}-${selectedUse}-${step.label}}`}>
+            <HStack justifyContent="space-between">
+              <Text fontSize={14}>
+                {index + 2}. {step.label}
+              </Text>
+              <Button
                 aria-label="Copy to clipboard"
                 className="prism-code--copy"
                 colorScheme="whiteAlpha"
-                icon={<FiClipboard />}
-                position="absolute"
-                right={4}
-                size="md"
-                top={1}
+                color="brand.grey"
+                leftIcon={LABELS_HAS_COPIED[step.label] ? <FiCopy /> : <FiClipboard />}
+                size="sm"
                 variant="ghost"
-                onClick={handleCopyUsage}
-              />
+                onClick={LABELS_METHODS[step.label]}
+              >
+                <Text fontSize={12}>{LABELS_HAS_COPIED[step.label] ? "Copied" : "Copy"}</Text>
+              </Button>
             </HStack>
-          )}
-        </Highlight>
-      </Stack>
+            <Highlight
+              {...defaultProps}
+              code={step.content?.npm ?? step.content}
+              language={step.language}
+              theme={PrismTheme}
+            >
+              {({ className, style, tokens, getLineProps, getTokenProps }) => (
+                <pre
+                  className={`${className} code`}
+                  style={{
+                    ...style,
+                    fontSize: "14px",
 
-      <Divider />
-      {currentSnippet.link && (
-        <Link
-          isExternal
-          alignItems="center"
-          d="inline-flex"
-          href={currentSnippet.link}
-        >
-          <Text mr={2}>GitHub Repository</Text>
+                    minHeight: "40px",
+                    overflow: "scroll",
+                    position: "relative",
+                    padding: "0.65rem 1rem",
+                    borderRadius: "0.375rem",
+                  }}
+                >
+                  {tokens.map((line, i) => (
+                    /* eslint-disable-next-line */
+                    <div {...getLineProps({ line, key: i })}>
+                      {line.map((token, key) => (
+                        /* eslint-disable-next-line */
+                        <span {...getTokenProps({ token, key })} />
+                      ))}
+                    </div>
+                  ))}
+                </pre>
+              )}
+            </Highlight>
+          </Stack>
+        );
+      })}
+
+      {currentSnippet.metadata.link && (
+        <Link isExternal alignItems="center" d="inline-flex" fontSize={14} href={currentSnippet.metadata.link}>
+          <Text mr={2}>Official page</Text>
           <FiExternalLink />
         </Link>
       )}

@@ -115,255 +115,271 @@ export async function generateIconSnippets(
   // TODO: Format through svgr when is avaiable for deno
   const reactChakraIcon = createReactChakraIcon(viewBox, innerSvg);
 
+  const FEATHER_CODES = {
+    html: {
+      optimizedSvg: {
+        steps: [{ label: 'Usage', language: 'html', content: html }],
+        metadata: {
+          link: null,
+        },
+      },
+      font: {
+        steps: [
+          {
+            label: 'Import',
+            language: 'html',
+            content: '<link rel="stylesheet" href="//at.alicdn.com/t/font_o5hd5vvqpoqiwwmi.css">',
+          },
+          { label: 'Usage', language: 'html', content: `<i class="feather icon-${iconName}"></i>` },
+        ],
+        metadata: {
+          link: 'https://github.com/AT-UI/feather-font',
+        },
+      },
+      script: {
+        steps: [
+          { label: 'Import', language: 'html', content: '<script src="https://unpkg.com/feather-icons"></script>' },
+          { label: 'Setup', language: 'html', content: '<script>feather.replace();</script>' },
+          { label: 'Usage', language: 'html', content: `<i data-feather="${iconName}"></i>` },
+        ],
+        metadata: {
+          link: 'https://github.com/feathericons/feather',
+        },
+      },
+      icongram: {
+        steps: [
+          {
+            label: 'Usage',
+            language: 'html',
+            content: `<img src="https://icongr.am/feather/${iconName}.svg?size=24&color=currentColor" placeholder="${iconParsedName} />"`,
+          },
+        ],
+        metadata: {
+          link: `https://icongr.am/feather`,
+        },
+      },
+    },
+    react: {
+      'react-component-js': {
+        steps: [
+          {
+            label: 'Install',
+            language: 'bash',
+            content: { npm: 'npm install react react-dom', yarn: 'yarn add react react-dom' },
+          },
+          {
+            label: 'Usage',
+            language: 'jsx',
+            content: reactComponentJs,
+          },
+        ],
+        metadata: {
+          link: 'https://github.com/facebook/react',
+        },
+      },
+      'react-component-ts': {
+        steps: [
+          {
+            label: 'Install',
+            language: 'bash',
+            content: {
+              npm: 'npm install react react-dom @types/react',
+              yarn: 'yarn add react react-dom @types/react',
+            },
+          },
+          {
+            label: 'Usage',
+            language: 'tsx',
+            content: reactComponentTs,
+          },
+        ],
+        metadata: {
+          link: 'https://github.com/facebook/react',
+        },
+      },
+      'react-icons': {
+        steps: [
+          {
+            label: 'Install',
+            language: 'bash',
+            content: { npm: 'npm install react-icons', yarn: 'yarn add react-icons' },
+          },
+          {
+            label: 'Import',
+            language: 'jsx',
+            content: reactIconsImport,
+          },
+          {
+            label: 'Usage',
+            language: 'jsx',
+            content: `<${pascalCase(iconName)} />`,
+          },
+        ],
+        metadata: {
+          link: 'https://github.com/react-icons/react-icons',
+          downloadLink: null,
+        },
+      },
+      'react-feather': {
+        steps: [
+          {
+            label: 'Install',
+            language: 'bash',
+            content: { npm: 'npm install react-feather', yarn: 'yarn add react-feather' },
+          },
+          {
+            label: 'Import',
+            language: 'jsx',
+            content: `import { ${pascalCase(iconName)} } from 'react-feather';`,
+          },
+          {
+            label: 'Usage',
+            language: 'jsx',
+            content: `<${pascalCase(iconName)} />`,
+          },
+        ],
+        metadata: {
+          link: 'https://github.com/feathericons/react-feather',
+        },
+      },
+      'chakra-ui': {
+        steps: [
+          {
+            label: 'Install',
+            language: 'bash',
+            content: {
+              npm: 'npm install @chakra-ui/react @emotion/react@^11 @emotion/styled@^11 framer-motion@^4',
+              yarn: 'yarn add @chakra-ui/react @emotion/react@^11 @emotion/styled@^11 framer-motion@^4',
+            },
+          },
+          {
+            label: 'Import',
+            language: 'jsx',
+            content: `import { Icon } from "@chakra-ui/react";`,
+          },
+          {
+            label: 'Usage',
+            language: 'jsx',
+            content: reactChakraIcon,
+          },
+        ],
+        metadata: {
+          link: 'https://chakra-ui.com',
+        },
+      },
+      'styled-component-js': {
+        steps: [
+          {
+            label: 'Install',
+            language: 'bash',
+            content: {
+              npm: 'npm install --save styled-components',
+              yarn: 'yarn add styled-components',
+            },
+          },
+          {
+            label: 'Import',
+            language: 'jsx',
+            content: `import styled, { css } from 'styled-components';`,
+          },
+          {
+            label: 'Usage',
+            language: 'jsx',
+            content: styledComponentJs,
+          },
+        ],
+        metadata: {
+          link: 'https://styled-components.com',
+        },
+      },
+      'styled-component-ts': {
+        steps: [
+          {
+            label: 'Install',
+            language: 'bash',
+            content: {
+              npm: 'npm install --save styled-components @types/styled-components',
+              yarn: 'yarn add styled-components @types/styled-components',
+            },
+          },
+          {
+            label: 'Import',
+            language: 'jsx',
+            content: `import styled, { css } from 'styled-components';`,
+          },
+          {
+            label: 'Usage',
+            language: 'tsx',
+            content: styledComponentTs,
+          },
+        ],
+        metadata: {
+          link: 'https://styled-components.com',
+        },
+      },
+    },
+    vue: {
+      'vue-template': {
+        steps: [
+          {
+            label: 'Usage',
+            language: 'html',
+            content: vueTemplate,
+          },
+        ],
+        metadata: {
+          link: null,
+        },
+      },
+      'vue-feather': {
+        steps: [
+          {
+            label: 'Install',
+            language: 'bash',
+            content: { npm: 'npm install vue-feather', yarn: 'yarn add vue-feather' },
+          },
+          { label: 'Import', language: 'jsx', content: `import VueFeather from 'vue-feather;` },
+          { label: 'Setup', language: 'javascript', content: 'Vue.use(VueFeather);' },
+          { label: 'Usage', language: 'html', content: `<vue-feather type="${iconName}"></vue-feather>` },
+        ],
+        metadata: {
+          link: 'https://github.com/fengyuanchen/vue-feather',
+        },
+      },
+    },
+    'react-native': {
+      'react-native-component-js': {
+        steps: [
+          {
+            label: 'Install',
+            language: 'bash',
+            content: { npm: 'npm install react-native-svg', yarn: 'yarn add react-native-svg' },
+          },
+          { label: 'Usage', language: 'jsx', content: reactNativeComponentJs },
+        ],
+        metadata: {
+          link: null,
+        },
+      },
+      'react-native-component-ts': {
+        steps: [
+          {
+            label: 'Install',
+            language: 'bash',
+            content: { npm: 'npm install react-native-svg', yarn: 'yarn add react-native-svg' },
+          },
+          { label: 'Usage', language: 'tsx', content: reactNativeComponentTs },
+        ],
+        metadata: {
+          link: null,
+        },
+      },
+    },
+  };
+
   const iconCodes = {
-    feather: {
-      html: {
-        optimizedSvg: {
-          install: null,
-          import: null,
-          setup: null,
-          usage: html,
-          link: null,
-        },
-        font: {
-          install: null,
-          import: '<link rel="stylesheet" href="//at.alicdn.com/t/font_o5hd5vvqpoqiwwmi.css">',
-          setup: null,
-          usage: `<i class="feather icon-${iconName}"></i>`,
-          link: 'https://github.com/AT-UI/feather-font',
-        },
-        script: {
-          install: null,
-          import: '<script src="https://unpkg.com/feather-icons"></script>',
-          setup: '<script>feather.replace();</script>',
-          usage: `<i data-feather="${iconName}"></i>`,
-          link: 'https://github.com/AT-UI/feather-font',
-        },
-        icongram: {
-          install: null,
-          import: null,
-          setup: null,
-          usage: `<img src="https://icongr.am/feather/${iconName}.svg?size=24&color=currentColor" placeholder="${iconParsedName} />"`,
-          link: `https://icongr.am/feather`,
-        },
-      },
-      react: {
-        'react-component-js': {
-          install: { npm: 'npm install react react-dom', yarn: 'yarn add react react-dom' },
-          import: null,
-          setup: null,
-          usage: reactComponentJs,
-          link: 'https://github.com/facebook/react',
-        },
-        'react-component-ts': {
-          install: { npm: 'npm install react react-dom @types/react', yarn: 'yarn add react react-dom @types/react' },
-          import: null,
-          setup: null,
-          usage: reactComponentTs,
-          link: 'https://github.com/facebook/react',
-        },
-        'react-icons': {
-          install: { npm: 'npm install react-icons', yarn: 'yarn add react-icons' },
-          import: reactIconsImport,
-          setup: null,
-          usage: `<${pascalCase(iconName)} />`,
-          link: 'https://github.com/react-icons/react-icons',
-        },
-        'react-feather': {
-          install: { npm: 'npm install react-feather', yarn: 'yarn add react-feather' },
-          import: `import { ${pascalCase(iconName)} } from 'react-feather';`,
-          setup: null,
-          usage: `<${pascalCase(iconName)} />`,
-          link: 'https://github.com/feathericons/react-feather',
-        },
-        'chakra-ui': {
-          install: {
-            npm: 'npm install @chakra-ui/react @emotion/react@^11 @emotion/styled@^11 framer-motion@^4',
-            yarn: 'yarn add @chakra-ui/react @emotion/react@^11 @emotion/styled@^11 framer-motion@^4',
-          },
-          import: `import { Icon } from "@chakra-ui/react";`,
-          setup: null,
-          usage: reactChakraIcon,
-          link: 'https://chakra-ui.com',
-        },
-        'styled-component-js': {
-          install: {
-            npm: 'npm install --save styled-components',
-            yarn: 'yarn add styled-components',
-          },
-          import: `import styled, { css } from 'styled-components';`,
-          setup: null,
-          usage: styledComponentJs,
-          link: 'https://styled-components.com',
-        },
-        'styled-component-ts': {
-          install: {
-            npm: 'npm install --save styled-components @types/styled-components',
-            yarn: 'yarn add styled-components @types/styled-components',
-          },
-          import: `import styled, { css } from 'styled-components';`,
-          setup: null,
-          usage: styledComponentTs,
-          link: 'https://styled-components.com',
-        },
-      },
-      vue: {
-        'vue-template': {
-          install: null,
-          import: null,
-          setup: null,
-          usage: vueTemplate,
-          link: null,
-        },
-        'vue-feather': {
-          install: { npm: 'npm install vue-feather', yarn: 'yarn add vue-feather' },
-          import: `import VueFeather from 'vue-feather';`,
-          setup: 'Vue.use(VueFeather);',
-          usage: `<vue-feather type="${iconName}"></vue-feather>`,
-          link: 'https://github.com/fengyuanchen/vue-feather',
-        },
-      },
-      'react-native': {
-        'react-native-component-js': {
-          install: { npm: 'npm install react-native-svg', yarn: 'yarn add react-native-svg' },
-          import: null,
-          setup: null,
-          usage: reactNativeComponentJs,
-          link: null,
-        },
-        'react-native-component-ts': {
-          install: { npm: 'npm install react-native-svg', yarn: 'yarn add react-native-svg' },
-          import: null,
-          setup: null,
-          usage: reactNativeComponentTs,
-          link: null,
-        },
-      },
-    },
-    heroicons: {
-      html: {
-        optimizedSvg: {
-          install: null,
-          import: null,
-          setup: null,
-          usage: html,
-          link: null,
-        },
-        font: {
-          install: null,
-          import: '<link rel="stylesheet" href="//at.alicdn.com/t/font_o5hd5vvqpoqiwwmi.css">',
-          setup: null,
-          usage: `<i class="feather icon-${iconName}"></i>`,
-          link: 'https://github.com/AT-UI/feather-font',
-        },
-        script: {
-          install: null,
-          import: '<script src="https://unpkg.com/feather-icons"></script>',
-          setup: '<script>feather.replace();</script>',
-          usage: `<i data-feather="${iconName}"></i>`,
-          link: 'https://github.com/AT-UI/feather-font',
-        },
-        icongram: {
-          install: null,
-          import: null,
-          setup: null,
-          usage: `<img src="https://icongr.am/feather/${iconName}.svg?size=24&color=currentColor" placeholder="${iconParsedName} />"`,
-          link: `https://icongr.am/feather`,
-        },
-      },
-      react: {
-        'react-component-js': {
-          install: { npm: 'npm install react react-dom', yarn: 'yarn add react react-dom' },
-          import: null,
-          setup: null,
-          usage: reactComponentJs,
-          link: 'https://github.com/facebook/react',
-        },
-        'react-component-ts': {
-          install: { npm: 'npm install react react-dom @types/react', yarn: 'yarn add react react-dom @types/react' },
-          import: null,
-          setup: null,
-          usage: reactComponentTs,
-          link: 'https://github.com/facebook/react',
-        },
-        'react-icons': {
-          install: { npm: 'npm install react-icons', yarn: 'yarn add react-icons' },
-          import: reactIconsImport,
-          setup: null,
-          usage: `<${pascalCase(iconName)} />`,
-          link: 'https://github.com/react-icons/react-icons',
-        },
-        'react-feather': {
-          install: { npm: 'npm install react-feather', yarn: 'yarn add react-feather' },
-          import: `import { ${pascalCase(iconName)} } from 'react-feather';`,
-          setup: null,
-          usage: `<${pascalCase(iconName)} />`,
-          link: 'https://github.com/feathericons/react-feather',
-        },
-        'chakra-ui': {
-          install: {
-            npm: 'npm install @chakra-ui/react @emotion/react@^11 @emotion/styled@^11 framer-motion@^4',
-            yarn: 'yarn add @chakra-ui/react @emotion/react@^11 @emotion/styled@^11 framer-motion@^4',
-          },
-          import: `import { Icon } from "@chakra-ui/react";`,
-          setup: null,
-          usage: reactChakraIcon,
-          link: 'https://chakra-ui.com',
-        },
-        'styled-component-js': {
-          install: {
-            npm: 'npm install --save styled-components',
-            yarn: 'yarn add styled-components',
-          },
-          import: `import styled, { css } from 'styled-components';`,
-          setup: null,
-          usage: styledComponentJs,
-          link: 'https://styled-components.com',
-        },
-        'styled-component-ts': {
-          install: {
-            npm: 'npm install --save styled-components @types/styled-components',
-            yarn: 'yarn add styled-components @types/styled-components',
-          },
-          import: `import styled, { css } from 'styled-components';`,
-          setup: null,
-          usage: styledComponentTs,
-          link: 'https://styled-components.com',
-        },
-      },
-      vue: {
-        'vue-template': {
-          install: null,
-          import: null,
-          setup: null,
-          usage: vueTemplate,
-          link: null,
-        },
-        'vue-feather': {
-          install: { npm: 'npm install vue-feather', yarn: 'yarn add vue-feather' },
-          import: `import VueFeather from 'vue-feather';`,
-          setup: 'Vue.use(VueFeather);',
-          usage: `<vue-feather type="${iconName}"></vue-feather>`,
-          link: 'https://github.com/fengyuanchen/vue-feather',
-        },
-      },
-      'react-native': {
-        'react-native-component-js': {
-          install: { npm: 'npm install react-native-svg', yarn: 'yarn add react-native-svg' },
-          import: null,
-          setup: null,
-          usage: reactNativeComponentJs,
-          link: null,
-        },
-        'react-native-component-ts': {
-          install: { npm: 'npm install react-native-svg', yarn: 'yarn add react-native-svg' },
-          import: null,
-          setup: null,
-          usage: reactNativeComponentTs,
-          link: null,
-        },
-      },
-    },
+    feather: FEATHER_CODES,
+    heroicons: FEATHER_CODES,
     devicon: {},
     boxicons: {},
     antdesign: {},

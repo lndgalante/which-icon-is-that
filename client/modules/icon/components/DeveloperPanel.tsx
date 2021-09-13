@@ -9,10 +9,10 @@ import {
   HStack,
   Drawer,
   DrawerBody,
+  DrawerHeader,
   DrawerOverlay,
   DrawerContent,
   DrawerCloseButton,
-  useClipboard,
 } from "@chakra-ui/react";
 
 // types
@@ -36,18 +36,9 @@ export function DeveloperPanel({ packName, snippets, isOpen, onClose }: Develope
   const [selectedUse, setSelectedUse] = useState("optimizedSvg");
   const [selectedLanguage, setSelectedLanguage] = useState("html");
 
-  // custom hooks
-  const { displayToast } = useToast();
-
-  // chakra hooks
-  const { onCopy: onCopyInstall } = useClipboard(snippets[selectedLanguage].install);
-  const { onCopy: onCopySetup } = useClipboard(snippets[selectedLanguage].setup);
-  const { onCopy: onCopyImport } = useClipboard(snippets[selectedLanguage].import);
-  const { onCopy: onCopyUsage } = useClipboard(snippets[selectedLanguage].usage);
-
   // constants
   const languages = Object.keys(snippets);
-  const currentSnippet = snippets[selectedLanguage][selectedUse];
+  const currentSnippet = snippets[selectedLanguage]?.[selectedUse];
 
   // TODO: Review this array of icon pack names
   const hasIcongramSupport = [
@@ -75,62 +66,110 @@ export function DeveloperPanel({ packName, snippets, isOpen, onClose }: Develope
     setSelectedUse(target.value);
   }
 
-  function handleCopyInstall() {
-    onCopyInstall();
-    displayToast("Icon install copied to your clipboard");
-  }
-
-  function handleCopySetup() {
-    onCopySetup();
-    displayToast("Icon setup copied to your clipboard");
-  }
-
-  function handleCopyImport() {
-    onCopyImport();
-    displayToast("Icon import copied to your clipboard");
-  }
-
-  function handleCopyUsage() {
-    onCopyUsage();
-    displayToast("Icon usage copied to your clipboard");
-  }
-
   return (
-    <Drawer isOpen={isOpen} placement="right" size="lg" onClose={onClose}>
+    <Drawer isOpen={isOpen} placement="right" size="md" onClose={onClose}>
       <DrawerOverlay />
-      <DrawerContent>
-        <DrawerCloseButton />
+      <DrawerContent background="brand.warmBlack">
+        <DrawerCloseButton color="brand.white" />
+        <DrawerHeader color="brand.white" fontSize={24}>
+          Developer Panel
+        </DrawerHeader>
 
-        <DrawerBody background="black" p={0}>
-          <HStack
-            alignItems="flex-start"
-            background="blackAlpha.900"
-            color="white"
-            flex-direction="row"
-            pb={12}
-            position="relative"
-            pt={4}
-            px={6}
-            spacing={12}
-          >
-            <Stack flex={1} pt={6}>
+        <DrawerBody p={0}>
+          <HStack alignItems="flex-start" color="white" flex-direction="row" pb={12} pt={2} px={6} spacing={12}>
+            <Stack>
               <Tabs onChange={handleTabChange}>
-                <TabList bg="black" left={0} position="fixed" top={0} width="100%" zIndex={5}>
-                  <Tab>HTML</Tab>
-                  <Tab>React</Tab>
-                  <Tab>Vue</Tab>
-                  <Tab>React Native</Tab>
+                <TabList borderBottomColor="brand.grey">
+                  <Tab
+
+                    transition="border-bottom-color 400ms ease-in-out"
+                    borderBottomWidth={2}
+                    _focus={{ boxShadow: "none" }}
+                    _selected={{
+                      fontWeight: 700,
+                      borderBottomColor: "brand.white",
+                    }}
+                    borderBottomColor="brand.grey"
+                    borderTopLeftRadius={4}
+                    borderTopRightRadius={4}
+                    fontSize={14}
+                    backgroundColor="brand.text"
+                    px={4}
+                    py={1}
+                    pt={1.5}
+                  >
+                    HTML
+                  </Tab>
+                  <Tab
+
+                    transition="border-bottom-color 400ms ease-in-out"
+                    borderBottomWidth={2}
+                    _focus={{ boxShadow: "none" }}
+                    _selected={{
+                      fontWeight: 700,
+                      borderBottomColor: "brand.white",
+                    }}
+                    borderBottomColor="brand.grey"
+                    borderTopLeftRadius={4}
+                    borderTopRightRadius={4}
+                    fontSize={14}
+                    backgroundColor="brand.text"
+                    px={4}
+                    py={1}
+                    pt={1.5}
+                    ml={4}
+                  >
+                    React
+                  </Tab>
+                  <Tab
+
+                    transition="border-bottom-color 400ms ease-in-out"
+                    borderBottomWidth={2}
+                    _focus={{ boxShadow: "none" }}
+                    _selected={{
+                      fontWeight: 700,
+                      borderBottomColor: "brand.white",
+                    }}
+                    borderBottomColor="brand.grey"
+                    borderTopLeftRadius={4}
+                    borderTopRightRadius={4}
+                    fontSize={14}
+                    backgroundColor="brand.text"
+                    px={4}
+                    py={1}
+                    pt={1.5}
+                    ml={4}
+                  >
+                    React Native
+                  </Tab>
+                  <Tab
+
+                    transition="border-bottom-color 400ms ease-in-out"
+                    borderBottomWidth={2}
+                    _focus={{ boxShadow: "none" }}
+                    _selected={{
+                      fontWeight: 700,
+                      borderBottomColor: "brand.white",
+                    }}
+                    borderBottomColor="brand.grey"
+                    borderTopLeftRadius={4}
+                    borderTopRightRadius={4}
+                    fontSize={14}
+                    backgroundColor="brand.text"
+                    px={4}
+                    py={1}
+                    pt={1.5}
+                    ml={4}
+                  >
+                    Vue
+                  </Tab>
                 </TabList>
 
                 <TabPanels>
-                  <TabPanel>
+                  <TabPanel px={0} py={6}>
                     <LanguageTab
                       currentSnippet={currentSnippet}
                       handleChangeSelectedUse={handleChangeSelectedUse}
-                      handleCopyImport={handleCopyImport}
-                      handleCopyInstall={handleCopyInstall}
-                      handleCopySetup={handleCopySetup}
-                      handleCopyUsage={handleCopyUsage}
                       selectedLanguage={selectedLanguage}
                       selectedUse={selectedUse}
                       usesOptions={[
@@ -141,14 +180,10 @@ export function DeveloperPanel({ packName, snippets, isOpen, onClose }: Develope
                       ].filter(Boolean)}
                     />
                   </TabPanel>
-                  <TabPanel>
+                  <TabPanel px={0} py={6}>
                     <LanguageTab
                       currentSnippet={currentSnippet}
                       handleChangeSelectedUse={handleChangeSelectedUse}
-                      handleCopyImport={handleCopyImport}
-                      handleCopyInstall={handleCopyInstall}
-                      handleCopySetup={handleCopySetup}
-                      handleCopyUsage={handleCopyUsage}
                       selectedLanguage={selectedLanguage}
                       selectedUse={selectedUse}
                       usesOptions={[
@@ -182,30 +217,10 @@ export function DeveloperPanel({ packName, snippets, isOpen, onClose }: Develope
                       ]}
                     />
                   </TabPanel>
-                  <TabPanel>
+                  <TabPanel px={0} py={6}>
                     <LanguageTab
                       currentSnippet={currentSnippet}
                       handleChangeSelectedUse={handleChangeSelectedUse}
-                      handleCopyImport={handleCopyImport}
-                      handleCopyInstall={handleCopyInstall}
-                      handleCopySetup={handleCopySetup}
-                      handleCopyUsage={handleCopyUsage}
-                      selectedLanguage={selectedLanguage}
-                      selectedUse={selectedUse}
-                      usesOptions={[
-                        { label: "Vue Template", value: "vue-template" },
-                        { label: "Vue-feather", value: "vue-feather" },
-                      ]}
-                    />
-                  </TabPanel>
-                  <TabPanel>
-                    <LanguageTab
-                      currentSnippet={currentSnippet}
-                      handleChangeSelectedUse={handleChangeSelectedUse}
-                      handleCopyImport={handleCopyImport}
-                      handleCopyInstall={handleCopyInstall}
-                      handleCopySetup={handleCopySetup}
-                      handleCopyUsage={handleCopyUsage}
                       selectedLanguage={selectedLanguage}
                       selectedUse={selectedUse}
                       usesOptions={[
@@ -217,6 +232,18 @@ export function DeveloperPanel({ packName, snippets, isOpen, onClose }: Develope
                           label: "React Component (TypeScript)",
                           value: "react-native-component-ts",
                         },
+                      ]}
+                    />
+                  </TabPanel>
+                  <TabPanel px={0} py={6}>
+                    <LanguageTab
+                      currentSnippet={currentSnippet}
+                      handleChangeSelectedUse={handleChangeSelectedUse}
+                      selectedLanguage={selectedLanguage}
+                      selectedUse={selectedUse}
+                      usesOptions={[
+                        { label: "Vue Template", value: "vue-template" },
+                        { label: "Vue-feather", value: "vue-feather" },
                       ]}
                     />
                   </TabPanel>
