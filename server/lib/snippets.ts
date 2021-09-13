@@ -197,6 +197,32 @@ export async function generateIconSnippets(
           link: 'https://github.com/facebook/react',
         },
       },
+      'react-native-component-js': {
+        steps: [
+          {
+            label: 'Install',
+            language: 'bash',
+            content: { npm: 'npm install react-native-svg', yarn: 'yarn add react-native-svg' },
+          },
+          { label: 'Usage', language: 'jsx', content: reactNativeComponentJs },
+        ],
+        metadata: {
+          link: null,
+        },
+      },
+      'react-native-component-ts': {
+        steps: [
+          {
+            label: 'Install',
+            language: 'bash',
+            content: { npm: 'npm install react-native-svg', yarn: 'yarn add react-native-svg' },
+          },
+          { label: 'Usage', language: 'tsx', content: reactNativeComponentTs },
+        ],
+        metadata: {
+          link: null,
+        },
+      },
       'react-icons': {
         steps: [
           {
@@ -217,7 +243,6 @@ export async function generateIconSnippets(
         ],
         metadata: {
           link: 'https://github.com/react-icons/react-icons',
-          downloadLink: null,
         },
       },
       'react-feather': {
@@ -344,34 +369,6 @@ export async function generateIconSnippets(
         ],
         metadata: {
           link: 'https://github.com/fengyuanchen/vue-feather',
-        },
-      },
-    },
-    'react-native': {
-      'react-native-component-js': {
-        steps: [
-          {
-            label: 'Install',
-            language: 'bash',
-            content: { npm: 'npm install react-native-svg', yarn: 'yarn add react-native-svg' },
-          },
-          { label: 'Usage', language: 'jsx', content: reactNativeComponentJs },
-        ],
-        metadata: {
-          link: null,
-        },
-      },
-      'react-native-component-ts': {
-        steps: [
-          {
-            label: 'Install',
-            language: 'bash',
-            content: { npm: 'npm install react-native-svg', yarn: 'yarn add react-native-svg' },
-          },
-          { label: 'Usage', language: 'tsx', content: reactNativeComponentTs },
-        ],
-        metadata: {
-          link: null,
         },
       },
     },

@@ -140,27 +140,6 @@ export function DeveloperPanel({ packName, snippets, isOpen, onClose }: Develope
                     pt={1.5}
                     ml={4}
                   >
-                    React Native
-                  </Tab>
-                  <Tab
-
-                    transition="border-bottom-color 400ms ease-in-out"
-                    borderBottomWidth={2}
-                    _focus={{ boxShadow: "none" }}
-                    _selected={{
-                      fontWeight: 700,
-                      borderBottomColor: "brand.white",
-                    }}
-                    borderBottomColor="brand.grey"
-                    borderTopLeftRadius={4}
-                    borderTopRightRadius={4}
-                    fontSize={14}
-                    backgroundColor="brand.text"
-                    px={4}
-                    py={1}
-                    pt={1.5}
-                    ml={4}
-                  >
                     Vue
                   </Tab>
                 </TabList>
@@ -195,6 +174,14 @@ export function DeveloperPanel({ packName, snippets, isOpen, onClose }: Develope
                           label: "React Component (TypeScript)",
                           value: "react-component-ts",
                         },
+                        {
+                          label: "React Native Component (JavaScript)",
+                          value: "react-native-component-js",
+                        },
+                        {
+                          label: "React Native Component (TypeScript)",
+                          value: "react-native-component-ts",
+                        },
                         { label: "React-icons", value: "react-icons" },
                         { label: "React-feather", value: "react-feather" },
                         { label: "Chakra UI", value: "chakra-ui" },
@@ -213,24 +200,6 @@ export function DeveloperPanel({ packName, snippets, isOpen, onClose }: Develope
                         {
                           label: "Emotion Component (TypeScript)",
                           value: "emotion-component-ts",
-                        },
-                      ]}
-                    />
-                  </TabPanel>
-                  <TabPanel px={0} py={6}>
-                    <LanguageTab
-                      currentSnippet={currentSnippet}
-                      handleChangeSelectedUse={handleChangeSelectedUse}
-                      selectedLanguage={selectedLanguage}
-                      selectedUse={selectedUse}
-                      usesOptions={[
-                        {
-                          label: "React Component (JavaScript)",
-                          value: "react-native-component-js",
-                        },
-                        {
-                          label: "React Component (TypeScript)",
-                          value: "react-native-component-ts",
                         },
                       ]}
                     />
