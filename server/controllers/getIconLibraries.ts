@@ -6,17 +6,17 @@ import { IconLibrary } from '../lib/types.ts';
 // db
 import { iconLibrariesTable } from '../db/iconLibraries.ts';
 
-export const getIconLibraries = async ({ params, response }: Context & { params: { libraryName: string } }) => {
-  const { libraryName } = params;
+export const getIconLibraries = async ({ params, response }: Context & { params: { iconLibrary: string } }) => {
+  const { iconLibrary } = params;
 
-  if (!libraryName) {
+  if (!iconLibrary) {
     response.status = 400;
     response.body = { success: false, message: 'No icon library name provided' };
     return;
   }
 
   try {
-    const { rows, rowCount } = await iconLibrariesTable.selectIconLibraryByName(libraryName);
+    const { rows, rowCount } = await iconLibrariesTable.selectIconLibraryByName(iconLibrary);
 
     if (rowCount === 0) {
       response.status = 404;

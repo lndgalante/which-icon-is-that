@@ -5,8 +5,8 @@ import { CustomTab } from "@modules/icon/components/CustomTab";
 import { CustomTabPanel } from "@modules/icon/components/CustomTabPanel";
 
 // hooks
-import { useGenerateTabUrl } from "@modules/icon/hooks/useGenerateTabUrl";
 import { useReadFoundTimes } from "@modules/icon/hooks/useReadFoundTimes";
+import { useGenerateTabUrl } from "@modules/common/hooks/useGenerateTabUrl";
 
 type IconPlaygroundProps = {
   hash: string;

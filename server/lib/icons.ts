@@ -127,12 +127,23 @@ export async function saveIconsInDB() {
         i += 1;
 
         let reactIconName = '';
+
+        const iconNameWithoutExtension = name.replace('.svg', '');
+        const iconNameWithoutDash = iconNameWithoutExtension.replace(/-/g, '');
+        const iconNameWithSpace = iconNameWithoutExtension.replace(/-/g, ' ');
+        const iconNameWithSpaceWithFormattedNumber = iconNameWithoutExtension
+          .replace(/-/g, ' ')
+          .replace(/[0-9]/g, (match) => `(${match})`);
+        const iconNameWithSpaceWithoutNumber = iconNameWithSpace.replace(/[0-9]/g, '');
+        const [iconNameNumber] = iconNameWithSpace.match(/[0-9]/gi) ?? [''];
+
         if (packName === 'feather') {
-          reactIconName = `Fi${pascalCase(name.replace('svg', ''))}`;
+          reactIconName = `Fi${pascalCase(iconNameWithSpaceWithoutNumber)}${iconNameNumber}`;
         }
+
         if (packName === 'heroicons') {
           const iconTypeReactIcon = iconType === 'outline' ? 'Outline' : '';
-          reactIconName = `Hi${iconTypeReactIcon}${pascalCase(name.replace('svg', ''))}`;
+          reactIconName = `Hi${iconTypeReactIcon}${pascalCase(iconNameWithSpaceWithoutNumber)}${iconNameNumber}`;
         }
 
         const { size } = await Deno.stat(path);
@@ -149,8 +160,8 @@ export async function saveIconsInDB() {
         const { innerSvg, viewBox } = getInnerHTMLFromSvgText(svg);
         const hash = createHash(innerSvg);
 
-        const iconName = name.replace('.svg', '').replace(/\_/g, '-');
-        const iconParsedName = iconName.replace(/-/g, ' ');
+        const iconName = iconNameWithoutDash;
+        const iconParsedName = iconNameWithSpaceWithFormattedNumber;
         const synonyms = await generateIconNameSynonym(iconName);
 
         if (synonyms) {

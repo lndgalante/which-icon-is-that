@@ -1,14 +1,12 @@
 import { useRouter } from "next/router";
 import { GetStaticPaths, GetStaticProps } from "next";
-import { As, SimpleGrid, Stack, useDisclosure } from "@chakra-ui/react";
+import { SimpleGrid, Stack, useDisclosure } from "@chakra-ui/react";
 
-// icons
-import * as Heroicons from "react-icons/hi";
-import * as FeatherIcons from "react-icons/fi";
 
 // utils
 import { api } from "@modules/common/utils/api";
 import { IconMetadata, Svg } from "@modules/common/utils/types";
+import { getIconComponent } from "@modules/common/utils/getIconComponent";
 
 // components
 import { Header } from "@modules/icon/components/Header";
@@ -113,17 +111,6 @@ export default function IconPage({
 
   // chakra hooks
   const { isOpen, onOpen, onClose } = useDisclosure();
-
-  // utils
-  function getIconComponent(packName: string, reactIconName: string): As {
-    if (packName === "feather") {
-      return FeatherIcons[reactIconName] as As;
-    }
-
-    if (packName === "heroicons") {
-      return Heroicons[reactIconName] as As;
-    }
-  }
 
   // constants
   const { iconType: iconTypeCurrentUrl } = query;

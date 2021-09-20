@@ -7,7 +7,7 @@ import { getIconLink, getIconPackWebsite, getIconSource, getIconPackFigmaLink } 
 // db
 import { iconTable } from '../db/icon.ts';
 
-export const getIcon = async ({ params, response }: Context & { params: { hash: string } }) => {
+export const getIconByHash = async ({ params, response }: Context & { params: { hash: string } }) => {
   const { hash } = params;
 
   if (!hash) {

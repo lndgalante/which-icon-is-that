@@ -14,8 +14,8 @@ export const getPaths = async ({ response }: Context) => {
     }
 
     const paths = rows.map((icon) => {
-      const { pack_name: packName, icon_type: iconType, icon_name: iconName } = icon;
-      return { params: { packName, iconType, iconName } };
+      const { pack_name: packName, icon_type: iconType, icon_name: iconName, react_icon_name: reactIconName } = icon;
+      return { params: { packName, iconType, iconName, reactIconName } };
     });
 
     response.status = 200;

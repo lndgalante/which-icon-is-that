@@ -1,26 +1,19 @@
 import { NextSeo } from "next-seo";
 import { AppProps } from "next/app";
-import { motion, isValidMotionProp } from "framer-motion";
+import { Stack, ChakraProvider } from "@chakra-ui/react";
 import { QueryClient, QueryClientProvider } from "react-query";
-import { Stack, forwardRef, ChakraProvider } from "@chakra-ui/react";
 
 // components
-import { Fonts } from '@modules/common/components/Fonts';
+import { Fonts } from "@modules/common/components/Fonts";
 import { Navbar } from "@modules/common/components/Navbar";
 import { Footer } from "@modules/common/components/Footer";
+import { MotionStack } from "@modules/common/components/MotionStack";
 
 // theme
 import { theme } from "@modules/common/theme";
 
 // constants
 const queryClient = new QueryClient();
-
-const MotionStack = motion(
-  forwardRef((props, ref) => {
-    const chakraProps = Object.fromEntries(Object.entries(props).filter(([key]) => !isValidMotionProp(key)));
-    return <Stack ref={ref} {...chakraProps} />;
-  }),
-);
 
 type LayoutProps = {
   children: React.ReactNode;

@@ -41,6 +41,7 @@ export function Header() {
 
       <Stack alignItems="center" paddingTop={{ base: 94, md: 62 }} spacing={{ base: 5, md: 7 }} zIndex={5}>
         <Text
+          as="h1"
           color="brand.darkRed"
           fontSize={{ base: 24, md: 40 }}
           fontWeight={500}
@@ -58,6 +59,7 @@ export function Header() {
         </Text>
 
         <Text
+          as="h2"
           color="brand.warmBlack"
           fontSize={{ base: 14, md: 18 }}
           fontWeight="medium"

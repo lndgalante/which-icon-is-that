@@ -9,7 +9,9 @@ import {
   AccordionPanel,
   AccordionIcon,
 } from "@chakra-ui/react";
-import * as FeatherIcons from "react-icons/fi";
+
+// icons
+import { FiHome, FiSearch, FiClock, FiStar } from "react-icons/fi";
 
 // components
 import { BoxIcon } from "@modules/common/components/BoxIcon";
@@ -33,16 +35,16 @@ export function IconRelated() {
           <AccordionPanel pt={1} pb={6}>
             <Wrap spacing={5}>
               <WrapItem>
-                <BoxIcon href="/feather/regular/home" icon={<FeatherIcons.FiHome />} label="Home" displayLabel />
+                <BoxIcon href="/feather/regular/home" icon={<FiHome />} label="Home" displayLabel />
               </WrapItem>
               <WrapItem>
-                <BoxIcon href="/feather/regular/search" icon={<FeatherIcons.FiSearch />} label="Search" displayLabel />
+                <BoxIcon href="/feather/regular/search" icon={<FiSearch />} label="Search" displayLabel />
               </WrapItem>
               <WrapItem>
-                <BoxIcon href="/feather/regular/clock" icon={<FeatherIcons.FiClock />} label="Clock" displayLabel />
+                <BoxIcon href="/feather/regular/clock" icon={<FiClock />} label="Clock" displayLabel />
               </WrapItem>
               <WrapItem>
-                <BoxIcon href="/feather/regular/star" icon={<FeatherIcons.FiStar />} label="Star" displayLabel />
+                <BoxIcon href="/feather/regular/star" icon={<FiStar />} label="Star" displayLabel />
               </WrapItem>
             </Wrap>
           </AccordionPanel>

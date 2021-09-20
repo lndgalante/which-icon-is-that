@@ -18,11 +18,8 @@ import {
 // types
 import { IconMetadata } from "@modules/common/utils/types";
 
-// hooks
-import { useToast } from "@modules/common/hooks/useToast";
-
 // components
-import { LanguageTab } from "components/LanguageTab";
+import { LanguageTab } from "@modules/icon/components/LanguageTab";
 
 type DeveloperPanelProps = {
   isOpen: boolean;
