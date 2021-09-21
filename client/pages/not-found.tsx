@@ -32,10 +32,10 @@ function NotFound() {
 
       <Stack paddingBottom={4} spacing={6} alignItems="center">
         <HStack alignItems="center" justifyContent="center" spacing={4}>
-          <BoxIcon withShadow href="/feather/regular/home" icon={<FiHome />} displayLabel label="Home" />
-          <BoxIcon withShadow href="/feather/regular/search" icon={<FiSearch />} displayLabel label="Search" />
-          <BoxIcon withShadow href="/feather/regular/clock" icon={<FiClock />} displayLabel label="Clock" />
-          <BoxIcon withShadow href="/feather/regular/star" icon={<FiStar />} displayLabel label="Star" />
+          <BoxIcon withShadow href="/feather/regular/home" icon={FiHome} displayLabel label="Home" />
+          <BoxIcon withShadow href="/feather/regular/search" icon={FiSearch} displayLabel label="Search" />
+          <BoxIcon withShadow href="/feather/regular/clock" icon={FiClock} displayLabel label="Clock" />
+          <BoxIcon withShadow href="/feather/regular/star" icon={FiStar} displayLabel label="Star" />
         </HStack>
       </Stack>
 

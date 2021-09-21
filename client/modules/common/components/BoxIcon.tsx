@@ -1,8 +1,8 @@
 import NextLink from "next/link";
-import { IconButton, Link, Text, IconButtonProps } from "@chakra-ui/react";
+import { Icon, Link, Text, As } from "@chakra-ui/react";
 
 type BoxIconProps = {
-  icon: IconButtonProps["icon"];
+  icon: As;
   label: string;
   href: string;
   primary?: boolean;
@@ -24,6 +24,7 @@ export function BoxIcon({ icon, label, href, primary, displayLabel, withShadow }
         boxShadow={withShadow ? "sm" : null}
         transition="all 400ms ease-in-out"
         borderRadius={4}
+        p={2}
         textAlign="center"
         _hover={{
           color: "brand.darkRed",
@@ -32,16 +33,18 @@ export function BoxIcon({ icon, label, href, primary, displayLabel, withShadow }
         }}
         className="boxicon-container"
       >
-        <IconButton
+        <Icon
+          w={displayLabel ? 6 : 5}
+          h={displayLabel ? 6 : 5}
           aria-label={label}
           color={primary ? "brand.darkRed" : "brand.warmBlack"}
-          icon={icon}
+          as={icon}
           _hover={{ backgroundColor: "transparent" }}
           backgroundColor="transparent"
           sx={{ ".boxicon-container:hover &": { color: "brand.darkRed" } }}
         />
         {displayLabel && (
-          <Text fontSize={12} mt={-1}>
+          <Text fontSize={12} mt={2}>
             {label.toLowerCase()}
           </Text>
         )}

@@ -55,4 +55,6 @@ export type IconResponse = Response<IconMetadata>;
 
 export type IconFoundResponse = Response<Pick<Svg, "found">>;
 
-export type IconsFindResponse = Response<{ svgs: { hash: string; label: string; value: string }[] }>;
+export type IconFound = Pick<Svg, "packName" | "iconName" | "iconType" | "reactIconName">;
+
+export type IconsFoundResponse = Response<{ svgs: IconFound[] }>;

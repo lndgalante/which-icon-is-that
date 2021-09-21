@@ -4,20 +4,9 @@ import { ld } from 'https://deno.land/x/deno_lodash/mod.ts';
 // db
 import { iconTable } from '../db/icon.ts';
 
-export const getIconsByIconNameAndIconLibrary = async ({
-  params,
-  response,
-}: Context & { params: { iconName: string; iconLibrary: string } }) => {
-  const { iconName = '', iconLibrary = '' } = params;
-
+export const getIconsGallery = async ({ response }: Context) => {
   try {
-    const { rows, rowCount } = await iconTable.selectIconsByIconNameAndIconLibrary(iconName, iconLibrary);
-
-    if (rowCount === 0) {
-      response.status = 404;
-      response.body = { success: false, message: 'No icons found' };
-      return;
-    }
+    const { rows } = await iconTable.selectColumnsForGallery();
 
     const svgs = Object.entries(
       rows
@@ -29,11 +18,8 @@ export const getIconsByIconNameAndIconLibrary = async ({
         }))
         // @ts-ignore
         .reduce((accumulator, row) => {
-          return {
-            ...accumulator,
-            // @ts-ignore
-            [row.packName]: [...(accumulator[row.packName] || []), ld.omit(row, 'packName')],
-          };
+          // @ts-ignore
+          return { ...accumulator, [row.packName]: [...(accumulator[row.packName] || []), ld.omit(row, 'packName')] };
         }, {}),
     );
 

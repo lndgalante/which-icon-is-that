@@ -1,7 +1,5 @@
-import { AnimatePresence } from "framer-motion";
-import { useOnClickOutside } from "usehooks-ts";
-import { useRef, useState, Dispatch, SetStateAction } from "react";
-import { Stack, Text, Input, InputGroup, InputLeftElement, Icon, Spinner } from "@chakra-ui/react";
+import { Dispatch, SetStateAction } from "react";
+import { Input, InputGroup, InputLeftElement, InputRightElement, Icon, Spinner } from "@chakra-ui/react";
 
 // icons
 import { FiSearch } from "react-icons/fi";
@@ -17,38 +15,15 @@ type Option = {
 
 type Props = {
   value: string;
-  options: Option[];
   isFetching: boolean;
-  onChange: Dispatch<SetStateAction<{ input: string; value: string }>>;
+  onChange: Dispatch<SetStateAction<string>>;
 };
 
-export function IconNameInput({ value, options, isFetching, onChange }: Props) {
-  // react hooks
-  const inputRef = useRef();
-  const [isActive, setIsActive] = useState(false);
-
+export function IconNameInput({ value, isFetching, onChange }: Props) {
   // handlers
   function handleInputChange({ target }) {
-    onChange({ input: target.value, value: target.value });
+    onChange(target.value);
   }
-
-  function handleSelectSuggestion(suggestion) {
-    onChange({ input: suggestion.label, value: suggestion.value });
-  }
-
-  const handleClickOutside = () => {
-    setIsActive(false);
-  };
-
-  const handleClickInside = () => {
-    setIsActive(true);
-  };
-
-  useOnClickOutside(inputRef, handleClickOutside);
-
-  // constants
-  const isServerSide = typeof window === "undefined";
-  const isVisible = Boolean(!isServerSide && isActive && value && options?.length);
 
   return (
     <InputGroup className="input-container" size="sm" position="relative">
@@ -56,17 +31,30 @@ export function IconNameInput({ value, options, isFetching, onChange }: Props) {
         pointerEvents="none"
         children={
           <Icon
-            as={isFetching ? Spinner : FiSearch}
+            as={FiSearch}
             transition="all 400ms ease-in-out"
             sx={{ ".input-container:focus-within &": { color: "brand.text" } }}
             color="brand.grey"
           />
         }
       />
+      <InputRightElement
+        pointerEvents="none"
+        children={
+          isFetching ? (
+            <MotionStack
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.4 }}
+            >
+              <Icon as={Spinner} color="brand.softOrange" />
+            </MotionStack>
+          ) : null
+        }
+      />
       <Input
-        ref={inputRef}
         value={value}
-        onClick={handleClickInside}
         onChange={handleInputChange}
         pt={0.5}
         flex={1}
@@ -77,62 +65,6 @@ export function IconNameInput({ value, options, isFetching, onChange }: Props) {
         focusBorderColor="brand.softOrange"
         placeholder="Search by icon name"
       />
-
-      <AnimatePresence>
-        {isVisible && (
-          <MotionStack
-            zIndex={10}
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.4 }}
-            overflow="hidden"
-            position="absolute"
-            padding={4}
-            borderRadius={8}
-            top={`3rem`}
-            left={0}
-            right={0}
-            backgroundColor="brand.white"
-            shadow="6"
-            spacing={1}
-            maxHeight={168}
-            overflowY="scroll"
-          >
-            {options?.map((option, index) => (
-              <Stack
-                key={option.id}
-                transition="background-color 400ms ease-in-out"
-                cursor="pointer"
-                _hover={{ backgroundColor: "brand.lightOrange" }}
-                tabIndex={index}
-                isfocusable="true"
-                flexDirection="row"
-                spacing={0}
-                p={1}
-                pl={2}
-                borderRadius={8}
-                className="suggestion-container"
-                onClick={() => handleSelectSuggestion(option)}
-                focusBorderColor="brand.softOrange"
-              >
-                <Text
-                  transition="all 100ms ease-in-out"
-                  color={"brand.text"}
-                  sx={{
-                    ".suggestion-container:hover &": {
-                      transition: "all 400ms ease-in-out",
-                      color: "brand.text",
-                    },
-                  }}
-                >
-                  {option.label}
-                </Text>
-              </Stack>
-            ))}
-          </MotionStack>
-        )}
-      </AnimatePresence>
     </InputGroup>
   );
 }

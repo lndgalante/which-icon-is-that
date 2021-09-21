@@ -1,6 +1,6 @@
 import wretch from "wretch";
 
-import { IconResponse, IconsFindResponse } from "@modules/common/utils/types";
+import { IconResponse, IconsFoundResponse } from "@modules/common/utils/types";
 
 // constants
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
@@ -10,11 +10,11 @@ const fetch = wretch().url(API_URL);
 const endpoints = {
   paths: () => `/paths`,
   contact: () => `/contact`,
-  iconFindIconNames: (iconName: string) => `/icon/names/find/${iconName}`,
-  iconFindIconsByIconNameAndIconLibrary: (iconName: string, iconLibrary: string) =>
-    `/icons/find/${iconName}/${iconLibrary}`,
+  gallery: () => `/icons/gallery`,
+  iconFindIconsByIconNameAndIconLibrary: (iconLibrary: string, iconName: string) =>
+    `/icons/find/${iconLibrary}/${iconName}`,
   icon: (hash: string) => `/icon/${hash}`,
-  iconLibrary: (libraryName: string) => `/icon/libraries/${libraryName}`,
+  iconLibrary: (libraryName: string) => `/icon/library/${libraryName}`,
   iconTags: (hash: string) => `/icon/${hash}/tags`,
   iconFound: (hash: string) => `/icon/${hash}/found`,
   iconSnippets: (hash: string) => `/icon/${hash}/snippets`,
@@ -25,11 +25,10 @@ const endpoints = {
 
 // TODO: Split api by module
 export const api = {
+  getGalleryIcons: () => fetch.url(endpoints.gallery()).get().json(),
   getPaths: () => fetch.url(endpoints.paths()).get().json(),
-  getIconNamesFindByName: (iconName: string) =>
-    fetch.url(endpoints.iconFindIconNames(iconName)).get().json<IconsFindResponse>(),
   getIconsFindByIconNameAndIconLibrary: (iconName: string, iconLibrary: string) =>
-    fetch.url(endpoints.iconFindIconsByIconNameAndIconLibrary(iconName, iconLibrary)).get().json<IconsFindResponse>(),
+    fetch.url(endpoints.iconFindIconsByIconNameAndIconLibrary(iconName, iconLibrary)).get().json<IconsFoundResponse>(),
   getIcon: (hash: string) => fetch.url(endpoints.icon(hash)).get().json<IconResponse>(),
   getIconLibrary: (libraryName: string) => fetch.url(endpoints.iconLibrary(libraryName)).get().json<IconResponse>(),
   getIconTags: (hash: string) => fetch.url(endpoints.iconTags(hash)).get().json(),

@@ -29,11 +29,11 @@ export function IconLibrarySelect({ value, options, isFetching, onChange }: Prop
 
   // handlers
   function handleInputChange({ target }) {
-    onChange({ input: target.value, value: target.value );
+    onChange({ input: target.value, value: target.value });
   }
 
   function handleSelectSuggestion(suggestion) {
-    onChange({ input: suggestion.label, value: suggestion.value }));
+    onChange({ input: suggestion.label, value: suggestion.value });
   }
 
   const handleClickOutside = () => {

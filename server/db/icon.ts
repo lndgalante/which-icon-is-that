@@ -2,7 +2,7 @@ import client from './database.ts';
 
 class Icon {
   selectColumnsForPaths() {
-    return client.queryObject(`SELECT pack_name, icon_type, icon_name, react_icon_name FROM icons`);
+    return client.queryObject(`SELECT pack_name, icon_type, icon_name FROM icons`);
   }
 
   selectColumnsForSnippets(hash: string) {
@@ -16,15 +16,14 @@ class Icon {
     return client.queryObject(`SELECT * FROM icons WHERE hash = $1`, hash);
   }
 
-  selectIconNamesByIconName(iconName: string) {
-    return client.queryObject(
-      `SELECT icon_parsed_name, icon_name, hash FROM icons WHERE icon_parsed_name ~ $1`,
-      iconName,
-    );
+  selectColumnsForGallery() {
+    // TODO: Merge with icon_libraries in order to get the metadata
+    // TODO: Get 20 of each unique pack_name
+    return client.queryObject(`SELECT pack_name, icon_type, icon_name, react_icon_name FROM icons LIMIT 100`);
   }
 
   selectIconsByIconNameAndIconLibrary(iconName: string, iconLibrary: string) {
-    if (iconName === 'empty' && iconLibrary !== 'all') {
+    if (iconName === '' && iconLibrary !== 'all') {
       return client.queryObject(
         `SELECT pack_name, icon_type, icon_name, react_icon_name FROM icons WHERE pack_name = $1`,
         iconLibrary,

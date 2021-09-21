@@ -1,7 +1,17 @@
 import { useState } from "react";
 import { GetServerSideProps } from "next";
 import { useDebounce } from "use-debounce";
-import { Stack, Text, Wrap, WrapItem } from "@chakra-ui/react";
+import {
+  Stack,
+  Text,
+  Accordion,
+  AccordionItem,
+  AccordionButton,
+  AccordionPanel,
+  AccordionIcon,
+  SimpleGrid,
+  Image,
+} from "@chakra-ui/react";
 
 // utils
 import { api } from "@modules/common/utils/api";
@@ -14,12 +24,11 @@ import { IconNameInput } from "@modules/gallery/components/IconNameInput";
 import { IconLibrarySelect } from "@modules/gallery/components/IconLibrarySelect";
 
 // hooks
-import { useReadIconNamesByNameSearch } from "@modules/gallery/hooks/useReadIconNamesByNameSearch";
 import { useReadIconsByNameAndIconLibrary } from "@modules/gallery/hooks/useReadIconsByNameAndIconLibrary";
 
 export const getServerSideProps: GetServerSideProps = async () => {
   try {
-    const { data } = await api.getPaths();
+    const { data } = await api.getGalleryIcons();
     console.log("\n ~ constgetServerSideProps:GetServerSideProps= ~ data", data);
     return { props: { ...data } };
   } catch (error) {
@@ -28,28 +37,28 @@ export const getServerSideProps: GetServerSideProps = async () => {
 };
 
 /*
-TODO: 1. Get a new data structure { [iconLibrary]: { metadata: { version }, icons } }, with only 20 or so icons
-TODO: 2. Render library icon header
 TODO: 3. When clicking view all trigger programmatically function from useReadIconsByNameAndIconLibrary hook and update "iconLibraryQuery" state / UI
 
 */
 
-function Gallery({ paths }) {
+function Gallery({ svgs }) {
+  console.log("\n ~ Gallery ~ svgs", svgs);
   // react hooks
-  const [iconNameQuery, setIconNameQuery] = useState({ input: "", value: "empty" });
+  const [iconNameQuery, setIconNameQuery] = useState("");
   const [iconLibraryQuery, setIconLibraryQuery] = useState({ input: "All icon libraries", value: "all" });
 
   // debounce hooks
   const [iconNameQueryDebounced] = useDebounce(iconNameQuery, 1000);
 
   // query hooks
-  const { data: foundIconNames, isFetching } = useReadIconNamesByNameSearch(iconNameQueryDebounced.input);
-  const { data: foundIcons } = useReadIconsByNameAndIconLibrary(iconNameQueryDebounced.value, iconLibraryQuery.value);
+  const { data: foundIcons, isFetching } = useReadIconsByNameAndIconLibrary(
+    iconNameQueryDebounced,
+    iconLibraryQuery.value,
+  );
 
   // constants
-  const iconsToRender = foundIcons?.data?.svgs ?? paths;
+  const iconsToRender = foundIcons?.data?.svgs ?? svgs;
 
-  const iconNameInputOptions = foundIconNames?.data?.svgs.map((option) => ({ ...option, id: option.hash }));
   const iconLibrariesOptions = [
     { value: "all", label: "All icon libraries" },
     { value: "feather", label: "Feather Icons" },
@@ -57,7 +66,7 @@ function Gallery({ paths }) {
   ].map((option) => ({ ...option, id: option.value }));
 
   return (
-    <Stack pb={210}>
+    <Stack pb={240}>
       <Stack
         alignItems="center"
         as="header"
@@ -69,6 +78,7 @@ function Gallery({ paths }) {
         textAlign="center"
         spacing={{ base: 4, md: 3 }}
         justifyContent="center"
+        mb={20}
       >
         <Stack left={{ base: -3, md: "1.38rem" }} bottom={{ base: 12, md: "3.25rem" }} position="absolute">
           <Shapes.BottomLeft width={{ base: "4.06rem", md: "7.94rem" }} height={{ base: "3.5rem", md: "6.88rem" }} />
@@ -112,30 +122,43 @@ function Gallery({ paths }) {
               options={iconLibrariesOptions}
               isFetching={false}
             />
-            <IconNameInput
-              value={iconNameQuery.input}
-              onChange={setIconNameQuery}
-              options={iconNameInputOptions}
-              isFetching={isFetching}
-            />
+            <IconNameInput value={iconNameQuery} onChange={setIconNameQuery} isFetching={isFetching} />
           </Stack>
         </Stack>
       </Stack>
 
-      <Stack as="section" px={2} py={6}>
-        <Wrap spacing={3} maxWidth={1064} width="90%" m="0 auto">
-          {iconsToRender?.map((prop) => {
-            const { packName, iconType, iconName, reactIconName } = prop?.params ?? prop;
-            const icon = getIconComponent(packName, reactIconName);
-
-            if (!icon) return null;
+      <Stack as="section" px={2}>
+        <Accordion maxWidth={1064} width="90%" m="0 auto" defaultIndex={[0, 1, 2, 3, 4, 5]} allowToggle allowMultiple>
+          {iconsToRender.map(([iconLibrary, icons], index) => {
             return (
-              <WrapItem key={reactIconName}>
-                <BoxIcon href={`/${packName}/${iconType}/${iconName}`} icon={icon()} label={iconName} displayLabel />
-              </WrapItem>
+              <AccordionItem key={iconLibrary} mt={index === 0 ? 0 : 12}>
+                <AccordionButton justifyContent="space-between">
+                  <Image paddingLeft={1} maxWidth={120} alt={iconLibrary} src={`/images/${iconLibrary}.png`} />
+                  <AccordionIcon />
+                </AccordionButton>
+                <AccordionPanel py={6}>
+                  <SimpleGrid minChildWidth="80px" spacing="28px">
+                    {icons.map((icon) => {
+                      const { iconType, iconName, reactIconName } = icon;
+                      const reactIcon = getIconComponent(iconLibrary, reactIconName);
+
+                      if (!reactIcon) return null;
+                      return (
+                        <BoxIcon
+                          key={reactIconName}
+                          href={`/${iconLibrary}/${iconType}/${iconName}`}
+                          icon={reactIcon}
+                          label={iconName}
+                          displayLabel
+                        />
+                      );
+                    })}
+                  </SimpleGrid>
+                </AccordionPanel>
+              </AccordionItem>
             );
           })}
-        </Wrap>
+        </Accordion>
       </Stack>
     </Stack>
   );

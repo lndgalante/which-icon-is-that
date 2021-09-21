@@ -2,7 +2,6 @@ import { useRouter } from "next/router";
 import { GetStaticPaths, GetStaticProps } from "next";
 import { SimpleGrid, Stack, useDisclosure } from "@chakra-ui/react";
 
-
 // utils
 import { api } from "@modules/common/utils/api";
 import { IconMetadata, Svg } from "@modules/common/utils/types";

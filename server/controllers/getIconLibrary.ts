@@ -6,7 +6,7 @@ import { IconLibrary } from '../lib/types.ts';
 // db
 import { iconLibrariesTable } from '../db/iconLibraries.ts';
 
-export const getIconLibraries = async ({ params, response }: Context & { params: { iconLibrary: string } }) => {
+export const getIconLibrary = async ({ params, response }: Context & { params: { iconLibrary: string } }) => {
   const { iconLibrary } = params;
 
   if (!iconLibrary) {
