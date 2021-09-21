@@ -209,12 +209,11 @@ export function Navbar() {
               </Text>
               <UnorderedList stylePosition="inside" spacing={1}>
                 <ListItem>Email support 24/7</ListItem>
-                <ListItem>Custom icon library</ListItem>
-                <ListItem>Icon comparison tool</ListItem>
-                <ListItem>Add icon to favourites</ListItem>
                 <ListItem>Instant icon libraries updates</ListItem>
+                <ListItem>Custom icon library with 200+ icons</ListItem>
+                <ListItem>Icon and icon library comparison tool</ListItem>
                 <ListItem>Scene playground to drag and drop icons</ListItem>
-                <ListItem>Team project folders for a selection of icons</ListItem>
+                <ListItem>Team project folders for your favorite icons</ListItem>
               </UnorderedList>
             </Stack>
             <Stack>
