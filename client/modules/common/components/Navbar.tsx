@@ -213,6 +213,7 @@ export function Navbar() {
                 <ListItem>Custom icon library with 200+ icons</ListItem>
                 <ListItem>Icon and icon library comparison tool</ListItem>
                 <ListItem>Scene playground to drag and drop icons</ListItem>
+                <ListItem>Comment and rate icons and their libraries</ListItem>
                 <ListItem>Team project folders for your favorite icons</ListItem>
               </UnorderedList>
             </Stack>
