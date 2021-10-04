@@ -1,6 +1,6 @@
 import wretch from "wretch";
 
-import { IconResponse, IconsFoundResponse } from "@modules/common/utils/types";
+import { IconResponse, IconsFoundResponse, IconFoundResponse } from "@modules/common/utils/types";
 
 // constants
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
@@ -32,7 +32,7 @@ export const api = {
   getIcon: (hash: string) => fetch.url(endpoints.icon(hash)).get().json<IconResponse>(),
   getIconLibrary: (libraryName: string) => fetch.url(endpoints.iconLibrary(libraryName)).get().json<IconResponse>(),
   getIconTags: (hash: string) => fetch.url(endpoints.iconTags(hash)).get().json(),
-  getIconFoundTimes: (hash: string) => fetch.url(endpoints.iconFound(hash)).get().json(),
+  getIconFoundTimes: (hash: string) => fetch.url(endpoints.iconFound(hash)).get().json<IconFoundResponse>(),
   getIconSnippets: (hash: string) => fetch.url(endpoints.iconSnippets(hash)).get().json(),
   getHashFromPath: (path: string) => fetch.url(endpoints.pathReverse(path)).get().json(),
   getPathFromHash: (hash: string) => fetch.url(endpoints.hashReverse(hash)).get().json(),

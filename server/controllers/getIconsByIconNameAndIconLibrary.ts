@@ -30,6 +30,7 @@ export const getIconsByIconNameAndIconLibrary = async ({
         // @ts-ignore
         .reduce((accumulator, row) => {
           return {
+            // @ts-ignore
             ...accumulator,
             // @ts-ignore
             [row.packName]: [...(accumulator[row.packName] || []), ld.omit(row, 'packName')],

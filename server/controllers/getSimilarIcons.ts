@@ -31,6 +31,7 @@ export const getSimilarIcons = async ({ params, response }: Context & { params: 
       return;
     }
 
+    // @ts-ignore
     const icons = rowsIcons.filter((icon) => icon.hash !== hash);
 
     response.status = 200;

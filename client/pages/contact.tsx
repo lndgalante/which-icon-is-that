@@ -122,14 +122,14 @@ function Contact() {
         <Stack as="form" spacing={{ base: 6, md: 6 }} onSubmit={handleSubmit(onSubmit)}>
           <Stack spacing={0}>
             <HStack flexDirection={{ base: "column", md: "row" }} spacing={{ base: 0, md: 6 }}>
-              <FormControl minHeight={101} isInvalid={errors.name}>
+              <FormControl minHeight={101} isInvalid={Boolean(errors.name)}>
                 <FormLabel color="brand.darkRed" fontWeight={600} htmlFor="name">
                   Name
                 </FormLabel>
                 <Input focusBorderColor="brand.softOrange" id="name" placeholder="John Doe" {...register("name")} />
                 <FormErrorMessage color="brand.lightRed">{errors.name && errors.name.message}</FormErrorMessage>
               </FormControl>
-              <FormControl minHeight={101} isInvalid={errors.email}>
+              <FormControl minHeight={101} isInvalid={Boolean(errors.email)}>
                 <FormLabel color="brand.darkRed" fontWeight={600} htmlFor="email">
                   Email
                 </FormLabel>
@@ -142,7 +142,7 @@ function Contact() {
                 <FormErrorMessage color="brand.lightRed">{errors.email && errors.email.message}</FormErrorMessage>
               </FormControl>
             </HStack>
-            <FormControl minHeight={101} isInvalid={errors.message}>
+            <FormControl minHeight={101} isInvalid={Boolean(errors.message)}>
               <FormLabel color="brand.darkRed" fontWeight={600} htmlFor="message">
                 Message
               </FormLabel>

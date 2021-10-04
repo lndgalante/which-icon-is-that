@@ -14,6 +14,7 @@ export const getPaths = async ({ response }: Context) => {
     }
 
     const paths = rows.map((icon) => {
+      // @ts-ignore
       const { pack_name: packName, icon_type: iconType, icon_name: iconName, react_icon_name: reactIconName } = icon;
       return { params: { packName, iconType, iconName, reactIconName } };
     });

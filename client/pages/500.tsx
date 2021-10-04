@@ -17,7 +17,7 @@ function ServerErrorPage() {
       <ServerError maxWidth={{ base: 335, md: 548 }} maxHeight={{ base: 140, md: 260 }} />
       <Stack spacing={5} alignItems="center">
         <Text maxWidth={{ base: 360, md: 441 }} fontSize={{ base: 16, md: 20 }} textAlign="center">
-          We're sorry, an unexpected error happened. We're fixing it, please come back later, or
+          We&apos;re sorry, an unexpected error happened. We&apos;re fixing it, please come back later, or
         </Text>
         <LinkButton href="/" variant="brand.outline" text="Go back to the homepage" />
       </Stack>

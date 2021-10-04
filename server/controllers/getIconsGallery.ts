@@ -10,6 +10,7 @@ export const getIconsGallery = async ({ response }: Context) => {
 
     const svgs = Object.entries(
       rows
+        // @ts-ignore
         .map(({ icon_name, icon_type, react_icon_name, pack_name }) => ({
           packName: pack_name,
           iconName: icon_name,

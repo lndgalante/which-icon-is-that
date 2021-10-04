@@ -1,4 +1,4 @@
-import { nanoid } from "nanoid";
+// import { nanoid } from "nanoid";
 import { useRouter } from "next/router";
 import { GetServerSideProps } from "next";
 import { useEffect, useState } from "react";
@@ -39,9 +39,9 @@ TODO:
   - [FE] Improve mobile support
 */
 
-const iconsSkeletons = [
+/* const iconsSkeletons = [
   ["feather", Array.from({ length: 20 }, () => ({ key: nanoid() }))],
-];
+]; */
 
 const iconLibrariesOptions = [
   { value: "all", label: "All icon libraries" },
@@ -85,7 +85,7 @@ function Gallery({ svgs }) {
         { shallow: true },
       );
     },
-    [iconLibraryQuery, iconNameQuery],
+    [push, iconLibraryQuery, iconNameQuery],
   );
 
   // handlers
@@ -196,7 +196,7 @@ function Gallery({ svgs }) {
 
           {iconsToRender.map(([iconLibrary, icons]) => {
             return (
-              <Stack>
+              <Stack key={iconLibrary}>
                 <HStack justifyContent="space-between" alignItems="center">
                   <HStack spacing={8}>
                     <Image paddingLeft={1} maxWidth={120} alt={iconLibrary} src={`/images/${iconLibrary}.png`} />
@@ -216,21 +216,20 @@ function Gallery({ svgs }) {
                   </Button>
                 </HStack>
                 <Stack py={6}>
-                  <SimpleGrid gridTemplateColumns="repeat(auto-fit, 80px)"  spacing="28px">
+                  <SimpleGrid gridTemplateColumns="repeat(auto-fit, 80px)" spacing="28px">
                     {icons.slice(0, 20).map((icon) => {
                       const { iconType, iconName, reactIconName } = icon;
                       const reactIcon = getIconComponent(iconLibrary, reactIconName);
 
                       if (!reactIcon) return null;
                       return (
-                        <Stack width="80px">
-                        <BoxIcon
-                          key={reactIconName}
-                          href={`/${iconLibrary}/${iconType}/${iconName}`}
-                          icon={reactIcon}
-                          label={iconName}
-                          displayLabel
-                        />
+                        <Stack width="80px" key={reactIconName}>
+                          <BoxIcon
+                            href={`/${iconLibrary}/${iconType}/${iconName}`}
+                            icon={reactIcon}
+                            label={iconName}
+                            displayLabel
+                          />
                         </Stack>
                       );
                     })}

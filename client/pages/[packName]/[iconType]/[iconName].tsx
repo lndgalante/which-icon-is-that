@@ -95,7 +95,6 @@ export default function IconPage({
   svg,
   links,
   snippets,
-  stars,
   license,
   totalIcons,
   version,

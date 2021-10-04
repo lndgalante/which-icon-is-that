@@ -223,7 +223,7 @@ export function Navbar() {
                 Get notified
               </Text>
               <HStack as="form" alignItems="flex-start" height={70} spacing={4} onSubmit={handleSubmit(onSubmit)}>
-                <FormControl isInvalid={errors.email}>
+                <FormControl isInvalid={Boolean(errors.email)}>
                   <VisuallyHidden>
                     <FormLabel htmlFor="email">Email</FormLabel>
                   </VisuallyHidden>

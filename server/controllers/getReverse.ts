@@ -24,6 +24,7 @@ export const getReverse = async ({ request, response }: Context) => {
         return;
       }
 
+      // @ts-ignore
       const [{ hash }] = rows;
 
       response.status = 200;
@@ -39,6 +40,7 @@ export const getReverse = async ({ request, response }: Context) => {
         return;
       }
 
+      // @ts-ignore
       const [{ path }] = rows;
 
       response.status = 200;
