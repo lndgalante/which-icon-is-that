@@ -1,5 +1,5 @@
-import { createRequire } from 'https://deno.land/std@0.100.0/node/module.ts';
 import { pascalCase, titleCase } from 'https://deno.land/x/case/mod.ts';
+import { createRequire } from 'https://deno.land/std@0.109.0/node/module.ts';
 
 // lib
 import { PacksNames } from '../lib/constants.ts';
