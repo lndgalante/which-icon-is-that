@@ -39,6 +39,16 @@
 
 ## Heroku
 
+- Disable SSL mode
+
+> heroku config:set PGSSLMODE=no-verify --app=which-icon-is-that
+
+- Buildpacks
+
+  - [heroku/deno](https://github.com/chibat/heroku-buildpack-deno.git)
+  - [heroku/nodejs](https://elements.heroku.com/buildpacks/heroku/heroku-buildpack-nodejs)
+
+
 - Populate Heroku DB
 
   ```bash
@@ -66,7 +76,7 @@
 ## Investment
 
 - [Heroku Dyno - Hobby](https://www.heroku.com/pricing#containers) - 7usd/month
-- [Heroku Postgres - Hobby Basic](https://elements.heroku.com/addons/heroku-postgresql) - 9usd/month
+- [Heroku Postgres - Standard 0](https://elements.heroku.com/addons/heroku-postgresql) - 50usd/month
 
 ## Links
 

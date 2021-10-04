@@ -37,3 +37,6 @@ yarn-error.log*
 # zip
 *.zip
 downloads
+
+# postgres
+*.dump

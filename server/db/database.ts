@@ -18,7 +18,7 @@ function createClientDevelopmentOptions() {
 }
 
 function createClientProductionOptions() {
-  const dbParsedUrl = urlParse(Deno.env.get('DATABASE_URL'));
+  const dbParsedUrl = urlParse(Deno.env.get('HEROKU_POSTGRESQL_CRIMSON_URL'));
   const options = {
     port: dbParsedUrl.port,
     user: dbParsedUrl.username,
