@@ -20,7 +20,7 @@ export function ExampleIcons() {
         justifyContent="center"
         spacing={{ base: 0, md: 6 }}
       >
-        <Text color="brand.darkRed" fontSize="sm" fontWeight={600} mb={{ base: "1.3rem", md: 0 }}>
+        <Text color="brand.darkRed" fontSize="sm" fontWeight={700} mb={{ base: "1.3rem", md: 0 }}>
           Try one of these:
         </Text>
         <HStack alignItems="center" justifyContent="center" spacing={4}>

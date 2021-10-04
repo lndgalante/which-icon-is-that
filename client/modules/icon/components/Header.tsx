@@ -16,7 +16,7 @@ export function Header({ iconName, onOpen }: HeaderProps) {
       spacing={5}
     >
       <HStack flexDirection={{ base: "column", md: "row" }} spacing={{ base: 0, md: 8 }} alignItems="baseline">
-        <Text as="h1" color="brand.darkRed" fontSize={{ base: 24, md: 36 }} fontWeight={700}>
+        <Text as="h1" color="brand.darkRed" fontSize={{ base: 24, md: 36 }} fontWeight={800}>
           {capitalCase(iconName)}
         </Text>
         <HStack>

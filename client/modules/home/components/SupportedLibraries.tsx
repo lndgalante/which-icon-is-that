@@ -7,8 +7,8 @@ import { LinkButton } from "@modules/common/components/LinkButton";
 export function SupportedLibraries() {
   return (
     <Stack alignItems="center" as="section" paddingBottom={{ base: "1.7rem", md: 150 }} spacing={0}>
-      <Text color="brand.darkRed" fontSize={{ base: 16, md: 40 }} as="h2" fontWeight={600}>
-        Supported Icon Libraries
+      <Text color="brand.darkRed" fontSize={{ base: 16, md: 40 }} as="h2" fontWeight={700}>
+        +6 Supported Icon Libraries
       </Text>
 
       <SimpleGrid

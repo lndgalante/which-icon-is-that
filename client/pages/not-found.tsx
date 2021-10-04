@@ -19,7 +19,7 @@ function NotFound() {
       overflow="hidden"
     >
       <Stack spacing={{ base: 6, md: 6 }} textAlign="center" alignItems="center">
-        <Text color="brand.darkRed" fontWeight={700} fontSize={{ base: 24, md: 40 }}>
+        <Text color="brand.darkRed" fontWeight={800} fontSize={{ base: 24, md: 40 }}>
           The icon was not found!
         </Text>
         <Text color="brand.text" fontSize={{ base: "sm", md: "lg" }} maxWidth={{ base: 235, md: 'inherit' }}>
@@ -32,7 +32,7 @@ function NotFound() {
 
       <Stack paddingBottom={4} spacing={6} alignItems="center">
         <HStack alignItems="center" justifyContent="center" spacing={4}>
-          <BoxIcon withShadow href="/feather/regular/home" icon={FiHome} displayLabel label="Home" />
+          <BoxIcon withShadow href="/feather/regular/home" icon={FiHome}  displayLabel label="Home" />
           <BoxIcon withShadow href="/feather/regular/search" icon={FiSearch} displayLabel label="Search" />
           <BoxIcon withShadow href="/feather/regular/clock" icon={FiClock} displayLabel label="Clock" />
           <BoxIcon withShadow href="/feather/regular/star" icon={FiStar} displayLabel label="Star" />

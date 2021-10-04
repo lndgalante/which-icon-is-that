@@ -186,7 +186,7 @@ export function DropZone() {
                 backgroundColor: "brand.lightRed",
               },
             }}
-            fontWeight={600}
+            fontWeight={700}
             fontSize="md"
           >
             Upload Icon
@@ -213,7 +213,7 @@ export function DropZone() {
               <Text
                 maxWidth={140}
                 color="brand.lightRed"
-                fontWeight={900}
+                fontWeight={800}
                 fontSize="2xl"
                 textTransform="uppercase"
                 mb="0.125rem"

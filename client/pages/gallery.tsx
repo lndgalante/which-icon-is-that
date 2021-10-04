@@ -31,10 +31,12 @@ export const getServerSideProps: GetServerSideProps = async () => {
 
 /*
 TODO:
-  - Get 20 icons from each icon_pack to render from icons table
-  - Get also each icon_pack metadata (version, total_icons, icon_types, and website) from icon_libraries table
+  - [BE] Get 20 icons from each icon_pack to render from icons table
+  - [BE] Get also each icon_pack metadata (version, total_icons, icon_types, and website) from icon_libraries table
+  - [BE] Get icon_libraries options from API (value: name, label: parsed_name)
 
-  - Get icon_libraries options from API (value: name, label: parsed_name)
+  - [FE] Add empty state when no icon is found
+  - [FE] Improve mobile support
 */
 
 const iconsSkeletons = [

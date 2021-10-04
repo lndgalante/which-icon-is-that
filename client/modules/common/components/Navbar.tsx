@@ -201,10 +201,10 @@ export function Navbar() {
         <ModalOverlay />
         <ModalContent minWidth={{ base: 'auto', md: 468 }} paddingX={{ base: 2, md: 6 }} paddingBottom={4}>
           <ModalCloseButton />
-          <ModalHeader color="brand.lightRed">Pricing</ModalHeader>
+          <ModalHeader color="brand.lightRed" fontWeight={800}>Pricing</ModalHeader>
           <ModalBody>
             <Stack spacing={4} mb={6}>
-              <Text fontWeight={600} fontSize={18} color="brand.darkRed">
+              <Text fontWeight={700} fontSize={18} color="brand.darkRed">
                 These are some of the new features that we are developing for the pro version.
               </Text>
               <UnorderedList stylePosition="inside" spacing={1}>

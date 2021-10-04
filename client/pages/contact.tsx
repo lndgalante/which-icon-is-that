@@ -73,7 +73,7 @@ function Contact() {
       overflow="hidden"
     >
       <Stack spacing={{ base: 6, md: 6 }} textAlign="center" alignItems="center">
-        <Text color="brand.darkRed" fontWeight={700} fontSize={{ base: 24, md: 40 }}>
+        <Text color="brand.darkRed" fontWeight={800} fontSize={{ base: 24, md: 40 }}>
           Get in Touch!
         </Text>
         <Text color="brand.text" fontSize={{ base: "sm", md: "lg" }} maxWidth={{ base: 235, md: "inherit" }}>

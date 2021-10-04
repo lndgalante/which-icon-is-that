@@ -49,7 +49,7 @@ export function Header() {
           maxWidth={{ base: 240, md: 846 }}
         >
           The missing tool to work with icons for{" "}
-          <Text as="b" fontWeight={700}>
+          <Text as="b" fontWeight={800}>
             Developers and Designers
           </Text>
         </Text>
@@ -58,7 +58,7 @@ export function Header() {
           as="h2"
           color="brand.warmBlack"
           fontSize={{ base: 14, md: 18 }}
-          fontWeight="medium"
+          fontWeight={500}
           maxWidth={{ base: 270, md: 518 }}
           lineHeight={{ base: "1.5rem", md: "2rem" }}
         >

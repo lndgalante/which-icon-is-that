@@ -68,7 +68,7 @@ export function DeveloperPanel({ packName, snippets, isOpen, onClose }: Develope
       <DrawerOverlay />
       <DrawerContent background="brand.warmBlack">
         <DrawerCloseButton color="brand.white" />
-        <DrawerHeader color="brand.white" fontSize={24}>
+        <DrawerHeader color="brand.white" fontSize={24} fontWeight={800}>
           Developer Panel
         </DrawerHeader>
 
