@@ -22,6 +22,7 @@ export const getSimilarIcons = async ({ params, response }: Context & { params: 
       return;
     }
 
+    // @ts-ignore
     const hashes = rows.map(({ hash }) => hash) as string[];
     const { rows: rowsIcons, rowCount: rowCountIcons } = await iconTable.selectAllByHashes(hashes);
 

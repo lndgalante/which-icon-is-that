@@ -20,7 +20,9 @@ export const getIconsByIconNameAndIconLibrary = async ({
     }
 
     const svgs = Object.entries(
+      // @ts-ignore
       rows
+        // @ts-ignore
         .map(({ icon_name, icon_type, react_icon_name, pack_name }) => ({
           packName: pack_name,
           iconName: icon_name,

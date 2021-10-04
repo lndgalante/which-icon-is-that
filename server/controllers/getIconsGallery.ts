@@ -9,6 +9,7 @@ export const getIconsGallery = async ({ response }: Context) => {
     const { rows } = await iconTable.selectColumnsForGallery();
 
     const svgs = Object.entries(
+      // @ts-ignore
       rows
         // @ts-ignore
         .map(({ icon_name, icon_type, react_icon_name, pack_name }) => ({
