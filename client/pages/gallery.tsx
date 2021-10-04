@@ -1,25 +1,19 @@
-import { useState } from "react";
+import { nanoid } from "nanoid";
+import { useRouter } from "next/router";
 import { GetServerSideProps } from "next";
+import { useEffect, useState } from "react";
 import { useDebounce } from "use-debounce";
-import {
-  Stack,
-  Text,
-  Accordion,
-  AccordionItem,
-  AccordionButton,
-  AccordionPanel,
-  AccordionIcon,
-  SimpleGrid,
-  Image,
-} from "@chakra-ui/react";
+import { HStack, Stack, Text, SimpleGrid, Image, Button } from "@chakra-ui/react";
 
 // utils
 import { api } from "@modules/common/utils/api";
 import { getIconComponent } from "@modules/common/utils/getIconComponent";
 
 // components
-import { BoxIcon } from "@modules/common/components/BoxIcon";
 import * as Shapes from "@modules/gallery/components/Shapes";
+import { Tag } from "@modules/common/components/Tag";
+import { BoxIcon } from "@modules/common/components/BoxIcon";
+// import { BoxIconSkeleton } from "@modules/common/components/BoxIconSkeleton";
 import { IconNameInput } from "@modules/gallery/components/IconNameInput";
 import { IconLibrarySelect } from "@modules/gallery/components/IconLibrarySelect";
 
@@ -29,7 +23,6 @@ import { useReadIconsByNameAndIconLibrary } from "@modules/gallery/hooks/useRead
 export const getServerSideProps: GetServerSideProps = async () => {
   try {
     const { data } = await api.getGalleryIcons();
-    console.log("\n ~ constgetServerSideProps:GetServerSideProps= ~ data", data);
     return { props: { ...data } };
   } catch (error) {
     console.log("Error on getServerSideProps", error);
@@ -37,15 +30,35 @@ export const getServerSideProps: GetServerSideProps = async () => {
 };
 
 /*
-TODO: 3. When clicking view all trigger programmatically function from useReadIconsByNameAndIconLibrary hook and update "iconLibraryQuery" state / UI
+TODO:
+  - Get 20 icons from each icon_pack to render from icons table
+  - Get also each icon_pack metadata (version, total_icons, icon_types, and website) from icon_libraries table
 
+  - Get icon_libraries options from API (value: name, label: parsed_name)
 */
 
+const iconsSkeletons = [
+  ["feather", Array.from({ length: 20 }, () => ({ key: nanoid() }))],
+];
+
+const iconLibrariesOptions = [
+  { value: "all", label: "All icon libraries" },
+  { value: "feather", label: "Feather Icons" },
+  { value: "heroicons", label: "Heroicons" },
+].map((option) => ({ ...option, id: option.value }));
+
 function Gallery({ svgs }) {
-  console.log("\n ~ Gallery ~ svgs", svgs);
+  // next hooks
+  const { push, query } = useRouter();
+
+  // constants
+  const decodedIconNameQuery = decodeURI((query.iconName ?? "") as string);
+  const decodedIconLibraryQuery = decodeURI((query.iconLibrary ?? "all") as string);
+  const defaultIconLibrary = iconLibrariesOptions.find(({ value }) => value === decodedIconLibraryQuery);
+
   // react hooks
-  const [iconNameQuery, setIconNameQuery] = useState("");
-  const [iconLibraryQuery, setIconLibraryQuery] = useState({ input: "All icon libraries", value: "all" });
+  const [iconNameQuery, setIconNameQuery] = useState(decodedIconNameQuery);
+  const [iconLibraryQuery, setIconLibraryQuery] = useState(defaultIconLibrary);
 
   // debounce hooks
   const [iconNameQueryDebounced] = useDebounce(iconNameQuery, 1000);
@@ -56,14 +69,31 @@ function Gallery({ svgs }) {
     iconLibraryQuery.value,
   );
 
+  // effects
+  useEffect(
+    function updateQueryParams() {
+      push(
+        {
+          query: {
+            iconLibrary: encodeURI(iconLibraryQuery.value),
+            ...(iconNameQuery && { iconName: encodeURI(iconNameQuery) }),
+          },
+        },
+        undefined,
+        { shallow: true },
+      );
+    },
+    [iconLibraryQuery, iconNameQuery],
+  );
+
+  // handlers
+  function handleLibraryViewAll(iconLibrary: string) {
+    const selectedIconlibrary = iconLibrariesOptions.find(({ value }) => value === iconLibrary);
+    setIconLibraryQuery(selectedIconlibrary);
+  }
+
   // constants
   const iconsToRender = foundIcons?.data?.svgs ?? svgs;
-
-  const iconLibrariesOptions = [
-    { value: "all", label: "All icon libraries" },
-    { value: "feather", label: "Feather Icons" },
-    { value: "heroicons", label: "Heroicons" },
-  ].map((option) => ({ ...option, id: option.value }));
 
   return (
     <Stack pb={240}>
@@ -95,7 +125,10 @@ function Gallery({ svgs }) {
           mixBlendMode="multiply"
           color="brand.darkRed"
         >
-          All library icons in one place
+          All library icons{" "}
+          <Text as="b" fontWeight={700}>
+            in one place
+          </Text>
         </Text>
         <Text as="h2" fontSize={{ base: 14, md: 18 }} color="brand.warmBlack">
           One finder to rule them all
@@ -117,10 +150,10 @@ function Gallery({ svgs }) {
             p={2}
           >
             <IconLibrarySelect
-              value={iconLibraryQuery.input}
+              label={iconLibraryQuery.label}
+              value={iconLibraryQuery.value}
               onChange={setIconLibraryQuery}
               options={iconLibrariesOptions}
-              isFetching={false}
             />
             <IconNameInput value={iconNameQuery} onChange={setIconNameQuery} isFetching={isFetching} />
           </Stack>
@@ -128,22 +161,67 @@ function Gallery({ svgs }) {
       </Stack>
 
       <Stack as="section" px={2}>
-        <Accordion maxWidth={1064} width="90%" m="0 auto" defaultIndex={[0, 1, 2, 3, 4, 5]} allowToggle allowMultiple>
-          {iconsToRender.map(([iconLibrary, icons], index) => {
+        <Stack maxWidth={1064} width="90%" m="0 auto" defaultIndex={[0, 1, 2, 3, 4, 5]} allowToggle allowMultiple>
+          {/*  {isFetching &&
+            iconsSkeletons.map(([iconLibrary, icons]) => {
+              console.log("\n ~ iconsSkeletons.map ~ icons", icons);
+              console.log("\n ~ iconsSkeletons.map ~ iconLibrary", iconLibrary);
+              return (
+                <Stack>
+                  <HStack justifyContent="space-between" alignItems="center">
+                    <HStack spacing={8}>
+                      <Image paddingLeft={1} maxWidth={120} alt={iconLibrary} src={`/images/${iconLibrary}.png`} />
+                      <HStack>
+                        <Tag>V1.1.1</Tag>
+                        <Tag>124 icons</Tag>
+                        <Tag>Outline</Tag>
+                      </HStack>
+                    </HStack>
+                    <Button variant="brand.ghost" fontSize={14} fontWeight={500}>
+                      View all
+                    </Button>
+                  </HStack>
+                  <Stack py={6}>
+                    <SimpleGrid minChildWidth="80px" spacing="28px">
+                      {icons.map((icon) => {
+                        return <BoxIconSkeleton key={icon.key} displayLabel primary withShadow />;
+                      })}
+                    </SimpleGrid>
+                  </Stack>
+                </Stack>
+              );
+            })} */}
+
+          {iconsToRender.map(([iconLibrary, icons]) => {
             return (
-              <AccordionItem key={iconLibrary} mt={index === 0 ? 0 : 12}>
-                <AccordionButton justifyContent="space-between">
-                  <Image paddingLeft={1} maxWidth={120} alt={iconLibrary} src={`/images/${iconLibrary}.png`} />
-                  <AccordionIcon />
-                </AccordionButton>
-                <AccordionPanel py={6}>
-                  <SimpleGrid minChildWidth="80px" spacing="28px">
-                    {icons.map((icon) => {
+              <Stack>
+                <HStack justifyContent="space-between" alignItems="center">
+                  <HStack spacing={8}>
+                    <Image paddingLeft={1} maxWidth={120} alt={iconLibrary} src={`/images/${iconLibrary}.png`} />
+                    <HStack>
+                      <Tag>V1.1.1</Tag>
+                      <Tag>124 icons</Tag>
+                      <Tag>Outline</Tag>
+                    </HStack>
+                  </HStack>
+                  <Button
+                    variant="brand.ghost"
+                    fontSize={14}
+                    fontWeight={500}
+                    onClick={() => handleLibraryViewAll(iconLibrary)}
+                  >
+                    View all
+                  </Button>
+                </HStack>
+                <Stack py={6}>
+                  <SimpleGrid gridTemplateColumns="repeat(auto-fit, 80px)"  spacing="28px">
+                    {icons.slice(0, 20).map((icon) => {
                       const { iconType, iconName, reactIconName } = icon;
                       const reactIcon = getIconComponent(iconLibrary, reactIconName);
 
                       if (!reactIcon) return null;
                       return (
+                        <Stack width="80px">
                         <BoxIcon
                           key={reactIconName}
                           href={`/${iconLibrary}/${iconType}/${iconName}`}
@@ -151,14 +229,15 @@ function Gallery({ svgs }) {
                           label={iconName}
                           displayLabel
                         />
+                        </Stack>
                       );
                     })}
                   </SimpleGrid>
-                </AccordionPanel>
-              </AccordionItem>
+                </Stack>
+              </Stack>
             );
           })}
-        </Accordion>
+        </Stack>
       </Stack>
     </Stack>
   );

@@ -1,13 +1,11 @@
-import { AnimatePresence } from "framer-motion";
-import { useOnClickOutside } from "usehooks-ts";
-import { useRef, useState, Dispatch, SetStateAction } from "react";
-import { Stack, Text, Input, InputGroup, InputRightElement, Icon, Spinner } from "@chakra-ui/react";
+import { Dispatch, SetStateAction } from "react";
+import { Icon, Button, Menu, MenuButton, MenuList, MenuItem } from "@chakra-ui/react";
 
 // icons
-import { FiChevronDown } from "react-icons/fi";
+import { FiChevronDown, FiFilter } from "react-icons/fi";
 
 // components
-import { MotionStack } from "@modules/common/components/MotionStack";
+import { Feather, Heroicons } from "@modules/gallery/components/Isologous";
 
 type Option = {
   id: string;
@@ -16,124 +14,74 @@ type Option = {
 };
 
 type Props = {
+  label: string;
   value: string;
   options: Option[];
-  isFetching: boolean;
-  onChange: Dispatch<SetStateAction<{ input: string; value: string; }>>
+  onChange: Dispatch<SetStateAction<{ label: string; value: string }>>;
 };
 
-export function IconLibrarySelect({ value, options, isFetching, onChange }: Props) {
-  // react hooks
-  const inputRef = useRef();
-  const [isActive, setIsActive] = useState(false);
+// constants
+const ISOLOGOUS = {
+  all: FiFilter,
+  feather: Feather,
+  heroicons: Heroicons,
+};
 
+const ISOLOGOUS_HOVER_ELEMENT = {
+  all: { stroke: "brand.darkRed" },
+  feather: { stroke: "brand.darkRed" },
+  heroicons: { fill: "brand.darkRed" },
+};
+
+export function IconLibrarySelect({ value, label, options, onChange }: Props) {
   // handlers
-  function handleInputChange({ target }) {
-    onChange({ input: target.value, value: target.value });
+  function handleSelectOption(option) {
+    onChange({ value: option.value, label: option.label });
   }
-
-  function handleSelectSuggestion(suggestion) {
-    onChange({ input: suggestion.label, value: suggestion.value });
-  }
-
-  const handleClickOutside = () => {
-    setIsActive(false);
-  };
-
-  const handleClickInside = () => {
-    setIsActive(true);
-  };
-
-  useOnClickOutside(inputRef, handleClickOutside);
-
-  // constants
-  const isServerSide = typeof window === "undefined";
-  const isVisible = Boolean(!isServerSide && isActive && options?.length);
 
   return (
-    <InputGroup className="input-container" size="sm" position="relative" maxWidth={189}>
-      <InputRightElement
-        pr={4}
-        pointerEvents="none"
-        children={
-          <Icon
-            as={isFetching ? Spinner : FiChevronDown}
-            transition="all 400ms ease-in-out"
-            sx={{ ".input-container:focus-within &": { color: "brand.text" } }}
-            color="brand.grey"
-          />
-        }
-      />
-      <Input
-        ref={inputRef}
-        value={value}
-        onClick={handleClickInside}
-        onChange={handleInputChange}
-        pt={0.5}
-        borderWidth={0}
-        borderRadius={8}
-        color="brand.text"
-        focusBorderColor="brand.softOrange"
-        placeholder="Icon libraries"
-        backgroundColor="brand.lightGrey"
+    <Menu autoSelect={false}>
+      <MenuButton
+        as={Button}
+        textAlign="left"
+        rightIcon={<FiChevronDown />}
+        width={182}
+        zIndex={4}
         mr={2}
-      />
-
-      <AnimatePresence>
-        {isVisible && (
-          <MotionStack
-            zIndex={10}
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.4 }}
-            overflow="hidden"
-            position="absolute"
-            padding={4}
-            borderRadius={8}
-            top={`3rem`}
-            left={0}
-            right={0}
-            backgroundColor="brand.white"
-            shadow="6"
-            spacing={1}
-            maxHeight={168}
-            overflowY="scroll"
+        backgroundColor="brand.lightGrey"
+        size="sm"
+        fontWeight={500}
+        _active={{ color: "brand.darkRed", backgroundColor: "brand.lightOrange" }}
+        _hover={{ color: "brand.darkRed", backgroundColor: "brand.lightOrange" }}
+      >
+        {label ?? "Icon libraries"}
+      </MenuButton>
+      <MenuList shadow="6" border={0} mt={2}>
+        {options?.map((option) => (
+          <MenuItem
+            className="menu-container"
+            icon={
+              <Icon
+                as={ISOLOGOUS[option.value]}
+                transition="all 400ms ease-in-out"
+                sx={{
+                  ".menu-container:hover & path": ISOLOGOUS_HOVER_ELEMENT[option.value],
+                }}
+              />
+            }
+            key={option.id}
+            transition="all 400ms ease-in-out"
+            color={"brand.text"}
+            _hover={{ backgroundColor: "brand.lightOrange", color: "brand.darkRed" }}
+            fontSize={14}
+            onClick={() => handleSelectOption(option)}
+            focusBorderColor="brand.softOrange"
+            _focus={{ backgroundColor: "brand.lightOrange", color: "brand.orange" }}
           >
-            {options?.map((option, index) => (
-              <Stack
-                key={option.id}
-                transition="background-color 400ms ease-in-out"
-                cursor="pointer"
-                _hover={{ backgroundColor: "brand.lightOrange" }}
-                tabIndex={index}
-                isfocusable="true"
-                flexDirection="row"
-                spacing={0}
-                p={1}
-                pl={2}
-                borderRadius={8}
-                className="suggestion-container"
-                onClick={() => handleSelectSuggestion(option)}
-                focusBorderColor="brand.softOrange"
-              >
-                <Text
-                  transition="all 100ms ease-in-out"
-                  color={"brand.text"}
-                  sx={{
-                    ".suggestion-container:hover &": {
-                      transition: "all 400ms ease-in-out",
-                      color: "brand.text",
-                    },
-                  }}
-                >
-                  {option.label}
-                </Text>
-              </Stack>
-            ))}
-          </MotionStack>
-        )}
-      </AnimatePresence>
-    </InputGroup>
+            {option.label}
+          </MenuItem>
+        ))}
+      </MenuList>
+    </Menu>
   );
 }

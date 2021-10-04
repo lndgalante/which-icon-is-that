@@ -44,7 +44,7 @@ export function BoxIcon({ icon, label, href, primary, displayLabel, withShadow }
           sx={{ ".boxicon-container:hover &": { color: "brand.darkRed" } }}
         />
         {displayLabel && (
-          <Text fontSize={12} mt={2}>
+          <Text fontSize={12} mt={2} maxWidth={20} px={1} isTruncated>
             {label.toLowerCase()}
           </Text>
         )}

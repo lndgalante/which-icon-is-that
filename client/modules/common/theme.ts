@@ -1,4 +1,4 @@
-import { theme as chakraTheme, extendTheme } from "@chakra-ui/react";
+import { extendTheme } from "@chakra-ui/react";
 
 export const theme = extendTheme({
   styles: {
@@ -20,7 +20,6 @@ export const theme = extendTheme({
     outline: "0 0 0 3px #F4D0C0",
   },
   fonts: {
-    ...chakraTheme.fonts,
     body: `"Ansage", sans-serif`,
     heading: `"Ansage", sans-serif`,
   },
@@ -41,6 +40,7 @@ export const theme = extendTheme({
       lightOrangeModal: "rgba(255, 244, 239, 0.8)",
       blue: "#1C77FF",
     },
+
   },
   components: {
     Input: {
@@ -95,6 +95,7 @@ export const theme = extendTheme({
           borderWidth: 1,
           borderRadius: 8,
           color: "brand.white",
+          borderColor: "transparent",
           fontSize: { base: "sm", md: "md" },
           backgroundColor: "brand.lightRed",
           opacity: 1,
@@ -104,6 +105,7 @@ export const theme = extendTheme({
           borderWidth: 1,
           borderRadius: 8,
           color: "brand.white",
+          borderColor: "transparent",
           fontSize: { base: "sm", md: "md" },
           backgroundColor: "brand.grey",
           opacity: 1,
@@ -117,7 +119,7 @@ export const theme = extendTheme({
           fontSize: { base: "sm", md: "md" },
           backgroundColor: "brand.lightGrey",
           opacity: 1,
-          _hover: { opacity: 0.8 },
+          _hover: { backgroundColor: "brand.lightOrange", color: 'brand.darkRed' },
         },
         "brand.outline": {
           borderWidth: 2,

@@ -1,5 +1,8 @@
 import { FiShare2, FiDownload, FiFigma } from "react-icons/fi";
-import { Icon, Link, Stack, Text, Tag, HStack, Image, useClipboard } from "@chakra-ui/react";
+import { Icon, Link, Stack, Text, HStack, Image, useClipboard } from "@chakra-ui/react";
+
+// components
+import { Tag } from "@modules/common/components/Tag";
 
 // hooks
 import { useToast } from "@modules/common/hooks/useToast";
@@ -36,7 +39,7 @@ export function IconLibrary({
   }
 
   return (
-    <Stack as="article" paddingTop={{ base: 0, md: 0, lg: 10 }} spacing={4} order={{ base: 2, md: 2, lg: 'inherit' }}>
+    <Stack as="article" paddingTop={{ base: 0, md: 0, lg: 10 }} spacing={4} order={{ base: 2, md: 2, lg: "inherit" }}>
       <Text fontWeight={700} fontSize="lg" color="brand.darkRed">
         Icon Library
       </Text>
@@ -46,21 +49,9 @@ export function IconLibrary({
       </Link>
 
       <HStack>
-        <Tag backgroundColor="brand.lightGrey" borderRadius={8} paddingX={4} paddingY={2}>
-          <Text color="brand.warmBlack" opacity={0.5}>
-            V{version}
-          </Text>
-        </Tag>
-        <Tag backgroundColor="brand.lightGrey" borderRadius={8} paddingX={4} paddingY={2}>
-          <Text color="brand.warmBlack" opacity={0.5}>
-            {totalIcons} Icons
-          </Text>
-        </Tag>
-        <Tag backgroundColor="brand.lightGrey" borderRadius={8} paddingX={4} paddingY={2}>
-          <Text color="brand.warmBlack" opacity={0.5}>
-            {license} License
-          </Text>
-        </Tag>
+        <Tag>{version}</Tag>
+        <Tag>{totalIcons} Icons</Tag>
+        <Tag>{license} License</Tag>
       </HStack>
 
       <HStack spacing={5} paddingTop={4}>

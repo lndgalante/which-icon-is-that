@@ -1,5 +1,5 @@
 import NextLink from "next/link";
-import { Stack, Text, Link, Image, Button, SimpleGrid } from "@chakra-ui/react";
+import { Stack, Text, Link, Image, SimpleGrid } from "@chakra-ui/react";
 
 // components
 import { LinkButton } from "@modules/common/components/LinkButton";
@@ -21,7 +21,7 @@ export function SupportedLibraries() {
         spacing={{ base: 12, md: 8 }}
         maxWidth={1064}
       >
-        <NextLink passHref href="/gallery?library=antd">
+        <NextLink passHref href="/gallery?iconLibrary=antd">
           <Link aria-label="Ant Design Icons">
             <Image
               alt="Ant Design Icons"
@@ -32,7 +32,7 @@ export function SupportedLibraries() {
           </Link>
         </NextLink>
 
-        <NextLink passHref href="/gallery?library=bootstrap">
+        <NextLink passHref href="/gallery?iconLibrary=bootstrap">
           <Link aria-label="Bootstrap Icons">
             <Image
               alt="Bootstrap Icons"
@@ -43,7 +43,7 @@ export function SupportedLibraries() {
           </Link>
         </NextLink>
 
-        <NextLink passHref href="/gallery?library=heroicons">
+        <NextLink passHref href="/gallery?iconLibrary=heroicons">
           <Link aria-label="Heroicons">
             <Image
               alt="Heroicons"
@@ -54,7 +54,7 @@ export function SupportedLibraries() {
           </Link>
         </NextLink>
 
-        <NextLink passHref href="/gallery?library=feather">
+        <NextLink passHref href="/gallery?iconLibrary=feather">
           <Link aria-label="Feather Icons">
             <Image
               alt="Feather Icons"
@@ -65,8 +65,8 @@ export function SupportedLibraries() {
           </Link>
         </NextLink>
 
-        <NextLink passHref href="/gallery?library=fontawesome">
-          <Link aria-label="Font Awesome" display={{ base: 'none', md: 'inherit' }}>
+        <NextLink passHref href="/gallery?iconLibrary=fontawesome">
+          <Link aria-label="Font Awesome" display={{ base: "none", md: "inherit" }}>
             <Image
               alt="Font Awesome"
               _hover={{ opacity: 0.6 }}
