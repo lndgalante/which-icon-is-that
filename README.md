@@ -56,7 +56,7 @@
   ```
 
   ```bash
-  heroku pg:backups:restore [BUMP_URL] DATABASE_URL -a which-icon-is-that --confirm which-icon-is-that
+  heroku pg:backups:restore [BUMP_URL] HEROKU_POSTGRESQL_CRIMSON_URL -a which-icon-is-that --confirm which-icon-is-that
   ```
 
 - Logs

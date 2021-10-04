@@ -19,6 +19,7 @@ function createClientDevelopmentOptions() {
 
 function createClientProductionOptions() {
   const dbParsedUrl = urlParse(Deno.env.get('HEROKU_POSTGRESQL_CRIMSON_URL'));
+  console.log('\n ~ createClientProductionOptions ~ dbParsedUrl', dbParsedUrl)
   const options = {
     port: dbParsedUrl.port,
     user: dbParsedUrl.username,
@@ -32,6 +33,7 @@ function createClientProductionOptions() {
 
 async function connectToPostgres() {
   const clientOptions = isDevelopment() ? createClientDevelopmentOptions() : createClientProductionOptions();
+  console.log('\n ~ connectToPostgres ~ clientOptions', clientOptions)
   const client = new Client(clientOptions);
 
   await client.connect();
