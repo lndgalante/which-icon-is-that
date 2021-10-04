@@ -1,5 +1,6 @@
 import { NextSeo } from "next-seo";
 import { AppProps } from "next/app";
+import PlausibleProvider from "next-plausible";
 import { Stack, ChakraProvider } from "@chakra-ui/react";
 import { QueryClient, QueryClientProvider } from "react-query";
 
@@ -31,27 +32,29 @@ function Layout({ children }: LayoutProps) {
 
 export default function MyApp({ Component, pageProps, router }: AppProps) {
   return (
-    <QueryClientProvider client={queryClient}>
-      <ChakraProvider theme={theme}>
-        <NextSeo
-          title="Which Icon Is That?"
-          description="Find your icon name and pack easily from your SVG"
-          twitter={{ handle: "@whichiconisthat", site: "@whichiconisthat", cardType: "/images/dps.png" }}
-        />
-        <Fonts />
-        <Layout>
-          <MotionStack
-            as="main"
-            animate="animate"
-            initial="initial"
-            key={router.route}
-            paddingX={{ base: 4, md: 12 }}
-            variants={{ initial: { opacity: 0 }, animate: { opacity: 1 } }}
-          >
-            <Component {...pageProps} />
-          </MotionStack>
-        </Layout>
-      </ChakraProvider>
-    </QueryClientProvider>
+    <PlausibleProvider domain="whichiconisthat.com">
+      <QueryClientProvider client={queryClient}>
+        <ChakraProvider theme={theme}>
+          <NextSeo
+            title="Which Icon Is That?"
+            description="Find your icon name and pack easily from your SVG"
+            twitter={{ handle: "@whichiconisthat", site: "@whichiconisthat", cardType: "/images/dps.png" }}
+          />
+          <Fonts />
+          <Layout>
+            <MotionStack
+              as="main"
+              animate="animate"
+              initial="initial"
+              key={router.route}
+              paddingX={{ base: 4, md: 12 }}
+              variants={{ initial: { opacity: 0 }, animate: { opacity: 1 } }}
+            >
+              <Component {...pageProps} />
+            </MotionStack>
+          </Layout>
+        </ChakraProvider>
+      </QueryClientProvider>
+    </PlausibleProvider>
   );
 }
