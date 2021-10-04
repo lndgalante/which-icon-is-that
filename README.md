@@ -65,8 +65,8 @@
 
 ## Investment
 
-- [Heroku Dyno - Standard 1X](https://www.heroku.com/pricing#containers) - 25usd/month
-- [Heroku Postgres - Standard 0](https://elements.heroku.com/addons/heroku-postgresql) - 9usd/month
+- [Heroku Dyno - Hobby](https://www.heroku.com/pricing#containers) - 7usd/month
+- [Heroku Postgres - Hobby Basic](https://elements.heroku.com/addons/heroku-postgresql) - 9usd/month
 
 ## Links
 
