@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import { GetServerSideProps } from "next";
 import { useEffect, useState } from "react";
 import { useDebounce } from "use-debounce";
-import { HStack, Stack, Text, SimpleGrid, Image, Button } from "@chakra-ui/react";
+import { HStack, Stack, Text, SimpleGrid, Image, Button, Link, LinkBox, LinkOverlay } from "@chakra-ui/react";
 
 // utils
 import { api } from "@modules/common/utils/api";
@@ -23,7 +23,14 @@ import { useReadIconsByNameAndIconLibrary } from "@modules/gallery/hooks/useRead
 export const getServerSideProps: GetServerSideProps = async () => {
   try {
     const { data } = await api.getGalleryIcons();
-    return { props: { ...data } };
+
+    const packNames = data.svgs.map(([packName]) => packName);
+    const packs = await Promise.all(packNames.map((packName) => api.getIconLibrary(packName)));
+    const parsedPacks = packs.reduce(
+      (accumulator, pack) => ({ ...accumulator, [pack.data.name]: { ...pack.data } }),
+      {},
+    );
+    return { props: { ...data, packs: parsedPacks } };
   } catch (error) {
     console.log("Error on getServerSideProps", error);
   }
@@ -31,10 +38,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
 
 /*
 TODO:
-  - [BE] Get 20 icons from each icon_pack to render from icons table
-  - [BE] Get also each icon_pack metadata (version, total_icons, icon_types, and website) from icon_libraries table
   - [BE] Get icon_libraries options from API (value: name, label: parsed_name)
-
   - [FE] Add empty state when no icon is found
   - [FE] Improve mobile support
 */
@@ -49,7 +53,7 @@ const iconLibrariesOptions = [
   { value: "heroicons", label: "Heroicons" },
 ].map((option) => ({ ...option, id: option.value }));
 
-function Gallery({ svgs }) {
+function Gallery({ svgs, packs }) {
   // next hooks
   const { push, query } = useRouter();
 
@@ -78,14 +82,14 @@ function Gallery({ svgs }) {
         {
           query: {
             iconLibrary: encodeURI(iconLibraryQuery.value),
-            ...(iconNameQuery && { iconName: encodeURI(iconNameQuery) }),
+            ...(iconNameQueryDebounced && { iconName: encodeURI(iconNameQueryDebounced) }),
           },
         },
         undefined,
         { shallow: true },
       );
     },
-    [push, iconLibraryQuery, iconNameQuery],
+    [iconLibraryQuery, iconNameQueryDebounced],
   );
 
   // handlers
@@ -195,15 +199,34 @@ function Gallery({ svgs }) {
             })} */}
 
           {iconsToRender.map(([iconLibrary, icons]) => {
+            const packMetadata = packs[iconLibrary];
+
             return (
               <Stack key={iconLibrary}>
-                <HStack justifyContent="space-between" alignItems="center">
+                <HStack
+                  transform="all 400ms ease-in-out"
+                  position="sticky"
+                  zIndex={5}
+                  top={2}
+                  justifyContent="space-between"
+                  alignItems="center"
+                  backgroundColor="brand.white"
+                  py={2}
+                >
                   <HStack spacing={8}>
-                    <Image paddingLeft={1} maxWidth={120} alt={iconLibrary} src={`/images/${iconLibrary}.png`} />
+                    <Stack width={130}>
+                      <LinkBox>
+                        <LinkOverlay isExternal href={packMetadata.website}>
+                          <Image paddingLeft={1} maxWidth={120} alt={iconLibrary} src={`/images/${iconLibrary}.png`} />
+                        </LinkOverlay>
+                      </LinkBox>
+                    </Stack>
                     <HStack>
-                      <Tag>V1.1.1</Tag>
-                      <Tag>124 icons</Tag>
-                      <Tag>Outline</Tag>
+                      <Tag>V{packMetadata.version}</Tag>
+                      <Tag>{packMetadata.totalIcons} icons</Tag>
+                      {packMetadata.iconTypes.map((iconType) => (
+                        <Tag>{iconType}</Tag>
+                      ))}
                     </HStack>
                   </HStack>
                   <Button
@@ -217,7 +240,7 @@ function Gallery({ svgs }) {
                 </HStack>
                 <Stack py={6}>
                   <SimpleGrid gridTemplateColumns="repeat(auto-fit, 80px)" spacing="28px">
-                    {icons.slice(0, 20).map((icon) => {
+                    {icons.map((icon) => {
                       const { iconType, iconName, reactIconName } = icon;
                       const reactIcon = getIconComponent(iconLibrary, reactIconName);
 

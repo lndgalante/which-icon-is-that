@@ -56,7 +56,7 @@ export function IconLibrarySelect({ value, label, options, onChange }: Props) {
       >
         {label ?? "Icon libraries"}
       </MenuButton>
-      <MenuList shadow="6" border={0} mt={2}>
+      <MenuList shadow="6" border={0} mt={2} zIndex={10}>
         {options?.map((option) => (
           <MenuItem
             className="menu-container"

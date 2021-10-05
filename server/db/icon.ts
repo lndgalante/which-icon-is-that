@@ -17,9 +17,18 @@ class Icon {
   }
 
   selectColumnsForGallery() {
-    // TODO: Merge with icon_libraries in order to get the metadata
-    // TODO: Get 20 of each unique pack_name
-    return client.queryObject(`SELECT pack_name, icon_type, icon_name, react_icon_name FROM icons LIMIT 100`);
+    return client.queryObject(`
+      SELECT
+            *
+          FROM (
+            SELECT
+              ROW_NUMBER() OVER (PARTITION BY pack_id ORDER BY icon_name) AS r,
+              t.*
+            FROM
+              icons t) icons
+          WHERE
+            icons.r <= 20
+    `);
   }
 
   selectIconsByIconNameAndIconLibrary(iconName: string, iconLibrary: string) {
