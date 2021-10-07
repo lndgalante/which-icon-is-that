@@ -5,10 +5,9 @@ import { Icon, Button, Menu, MenuButton, MenuList, MenuItem } from "@chakra-ui/r
 import { FiChevronDown, FiFilter } from "react-icons/fi";
 
 // components
-import { Feather, Heroicons } from "@modules/gallery/components/Isologous";
+import { Feather, Heroicons, Bootstrap } from "@modules/gallery/components/Isologous";
 
 type Option = {
-  id: string;
   label: string;
   value: string;
 };
@@ -25,6 +24,7 @@ const ISOLOGOUS = {
   all: FiFilter,
   feather: Feather,
   heroicons: Heroicons,
+  bootstrap: Bootstrap,
 };
 
 const ISOLOGOUS_HOVER_ELEMENT = {
@@ -33,7 +33,7 @@ const ISOLOGOUS_HOVER_ELEMENT = {
   heroicons: { fill: "brand.darkRed" },
 };
 
-export function IconLibrarySelect({ value, label, options, onChange }: Props) {
+export function IconLibrarySelect({ label, options, onChange }: Props) {
   // handlers
   function handleSelectOption(option) {
     onChange({ value: option.value, label: option.label });
@@ -69,7 +69,7 @@ export function IconLibrarySelect({ value, label, options, onChange }: Props) {
                 }}
               />
             }
-            key={option.id}
+            key={option.value}
             transition="all 400ms ease-in-out"
             color={"brand.text"}
             _hover={{ backgroundColor: "brand.lightOrange", color: "brand.darkRed" }}

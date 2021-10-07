@@ -33,10 +33,11 @@ export const getIconSnippets = async ({ params, response }: Context & { params: 
       inner_svg: innerSvg,
       pack_name: packName,
       icon_name: iconName,
+      react_icon_name: reactIconName,
       icon_parsed_name: iconParsedName,
     } = svgRow;
 
-    const snippets = await generateIconSnippets(svg, innerSvg, viewBox, iconParsedName, iconName, packName, packId);
+    const snippets = await generateIconSnippets(svg, innerSvg, viewBox, iconParsedName, iconName, packName, packId,reactIconName);
 
     response.status = 200;
     response.body = { success: true, data: { snippets } };

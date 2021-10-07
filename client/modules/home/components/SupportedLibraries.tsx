@@ -26,7 +26,7 @@ export function SupportedLibraries() {
             <Image
               alt="Ant Design Icons"
               _hover={{ opacity: 0.6 }}
-              src="/images/antd.png"
+              src="/images/antdesign.png"
               transition="all ease-in-out 400ms"
             />
           </Link>

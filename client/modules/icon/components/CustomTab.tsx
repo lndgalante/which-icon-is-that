@@ -11,7 +11,7 @@ export function CustomTab({ children, href, ...otherProps }: CustomTabProps) {
   return (
     <NextLink passHref href={href} scroll={false}>
       <Tab
-        width={82}
+        width={100}
         transition="border-bottom-color 400ms ease-in-out"
         borderBottomWidth={4}
         fontSize="sm"

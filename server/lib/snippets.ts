@@ -1,61 +1,12 @@
 import { pascalCase, titleCase } from 'https://deno.land/x/case/mod.ts';
-import { createRequire } from 'https://deno.land/std@0.109.0/node/module.ts';
 
 // lib
-import { PacksNames } from '../lib/constants.ts';
-
-// commonjs require
-const require = createRequire(import.meta.url);
-
-const Hi = require('react-icons/hi');
-const Fi = require('react-icons/fi');
-const Bs = require('react-icons/bs');
-const Ai = require('react-icons/ai');
-const Bi = require('react-icons/bi');
-const Di = require('react-icons/di');
-const Fc = require('react-icons/fc');
+import { PacksNames } from './constants.ts';
 
 function createReactComponentName(packName: string, iconName: string) {
   return titleCase(`${packName.replace(/-/g, ' ')} ${iconName.replace(/-/g, ' ')}`)
     .split(' ')
     .join('');
-}
-
-// react-icons
-const heroIcons = Object.keys(Hi);
-const featherIcons = Object.keys(Fi);
-const bootstrapIcons = Object.keys(Bs);
-const antdesignIcons = Object.keys(Ai);
-const boxIcons = Object.keys(Bi);
-const devIcons = Object.keys(Di);
-const flatColorIcons = Object.keys(Fc);
-
-export const reactIconsPacks = {
-  heroicons: parseReactIconsNames(heroIcons),
-  feather: parseReactIconsNames(featherIcons),
-  bootstrap: parseReactIconsNames(bootstrapIcons),
-  antdesign: parseReactIconsNames(antdesignIcons),
-  boxicons: parseReactIconsNames(boxIcons),
-  devicon: parseReactIconsNames(devIcons),
-  flatcoloricons: parseReactIconsNames(flatColorIcons),
-};
-
-function parseReactIconsNames(icons: string[]) {
-  return icons.map((icon) => {
-    const parsed = icon.replace(/^.{2}/i, '').toLowerCase();
-
-    return { original: icon, parsed };
-  });
-}
-
-function getReactIcon(iconName: string, iconPackName: PacksNames) {
-  const iconPack = reactIconsPacks[iconPackName];
-
-  const firstParseIconName = iconName.startsWith('bx') ? iconName.slice(3) : iconName;
-  const parsedIconName = firstParseIconName.startsWith('-') ? firstParseIconName.slice(1) : iconName;
-  const finalParseIconName = parsedIconName.replace(/-/g, '');
-
-  return iconPack.reverse().find(({ parsed }) => parsed === finalParseIconName)!;
 }
 
 function generateReactIconsCodeSnippet(reactIconName: string, packId: string) {
@@ -79,6 +30,7 @@ export async function generateIconSnippets(
   iconName: string,
   packName: PacksNames,
   packId: string,
+  reactIconName: string
 ) {
   const componentName = createReactComponentName(packName, iconName);
 
@@ -109,8 +61,7 @@ export async function generateIconSnippets(
 
   const errorString = new TextDecoder().decode(rawError);
 
-  const reactIconName = getReactIcon(iconName, packName);
-  const reactIconsImport = getReactIconsImport(reactIconName.original, packId);
+  const reactIconsImport = getReactIconsImport(reactIconName, packId);
 
   // TODO: Format through svgr when is avaiable for deno
   const reactChakraIcon = createReactChakraIcon(viewBox, innerSvg);
@@ -377,11 +328,11 @@ export async function generateIconSnippets(
   const iconCodes = {
     feather: FEATHER_CODES,
     heroicons: FEATHER_CODES,
-    devicon: {},
-    boxicons: {},
-    antdesign: {},
-    bootstrap: {},
-    flatcoloricons: {},
+    devicon: FEATHER_CODES,
+    boxicons: FEATHER_CODES,
+    antdesign: FEATHER_CODES,
+    bootstrap: FEATHER_CODES,
+    flatcoloricons: FEATHER_CODES,
   };
 
   return iconCodes[packName];

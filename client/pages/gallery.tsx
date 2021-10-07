@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import { GetServerSideProps } from "next";
 import { useEffect, useState } from "react";
 import { useDebounce } from "use-debounce";
-import { HStack, Stack, Text, SimpleGrid, Image, Button, Link, LinkBox, LinkOverlay } from "@chakra-ui/react";
+import { HStack, Stack, Text, SimpleGrid, Image, Button, LinkBox, LinkOverlay } from "@chakra-ui/react";
 
 // utils
 import { api } from "@modules/common/utils/api";
@@ -39,6 +39,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
 /*
 TODO:
   - [BE] Get icon_libraries options from API (value: name, label: parsed_name)
+  - [FE] On icon page display only iconTypes for that particular icon
   - [FE] Add empty state when no icon is found
   - [FE] Improve mobile support
 */
@@ -47,13 +48,17 @@ TODO:
   ["feather", Array.from({ length: 20 }, () => ({ key: nanoid() }))],
 ]; */
 
+const ALL_LIBRARIES = { value: "all", label: "All icon libraries" };
+
 const iconLibrariesOptions = [
-  { value: "all", label: "All icon libraries" },
+  ALL_LIBRARIES,
   { value: "feather", label: "Feather Icons" },
   { value: "heroicons", label: "Heroicons" },
-].map((option) => ({ ...option, id: option.value }));
+  { value: "bootstrap", label: "Bootstrap" },
+];
 
 function Gallery({ svgs, packs }) {
+  console.log('\n ~ Gallery ~ svgs', svgs)
   // next hooks
   const { push, query } = useRouter();
 
@@ -70,10 +75,11 @@ function Gallery({ svgs, packs }) {
   const [iconNameQueryDebounced] = useDebounce(iconNameQuery, 1000);
 
   // query hooks
-  const { data: foundIcons, isFetching } = useReadIconsByNameAndIconLibrary(
-    iconNameQueryDebounced,
-    iconLibraryQuery.value,
-  );
+  const {
+    error,
+    isFetching,
+    data: foundIcons,
+  } = useReadIconsByNameAndIconLibrary(iconNameQueryDebounced, iconLibraryQuery.value);
 
   // effects
   useEffect(
@@ -98,8 +104,13 @@ function Gallery({ svgs, packs }) {
     setIconLibraryQuery(selectedIconlibrary);
   }
 
+  function handleClearLibrarySelection() {
+    setIconLibraryQuery(ALL_LIBRARIES);
+  }
+
   // constants
   const iconsToRender = foundIcons?.data?.svgs ?? svgs;
+  console.log('\n ~ Gallery ~ iconsToRender', iconsToRender)
 
   return (
     <Stack pb={240}>
@@ -197,70 +208,82 @@ function Gallery({ svgs, packs }) {
                 </Stack>
               );
             })} */}
+          {error && <Text>error found !</Text>}
 
-          {iconsToRender.map(([iconLibrary, icons]) => {
-            const packMetadata = packs[iconLibrary];
+          {!error &&
+            iconsToRender.map(([iconLibrary, icons]) => {
+              const packMetadata = packs[iconLibrary];
 
-            return (
-              <Stack key={iconLibrary}>
-                <HStack
-                  transform="all 400ms ease-in-out"
-                  position="sticky"
-                  zIndex={5}
-                  top={2}
-                  justifyContent="space-between"
-                  alignItems="center"
-                  backgroundColor="brand.white"
-                  py={2}
-                >
-                  <HStack spacing={8}>
-                    <Stack width={130}>
-                      <LinkBox>
-                        <LinkOverlay isExternal href={packMetadata.website}>
-                          <Image paddingLeft={1} maxWidth={120} alt={iconLibrary} src={`/images/${iconLibrary}.png`} />
-                        </LinkOverlay>
-                      </LinkBox>
-                    </Stack>
-                    <HStack>
-                      <Tag>V{packMetadata.version}</Tag>
-                      <Tag>{packMetadata.totalIcons} icons</Tag>
-                      {packMetadata.iconTypes.map((iconType) => (
-                        <Tag>{iconType}</Tag>
-                      ))}
-                    </HStack>
-                  </HStack>
-                  <Button
-                    variant="brand.ghost"
-                    fontSize={14}
-                    fontWeight={500}
-                    onClick={() => handleLibraryViewAll(iconLibrary)}
+              return (
+                <Stack key={iconLibrary}>
+                  <HStack
+                    transform="all 400ms ease-in-out"
+                    position="sticky"
+                    zIndex={5}
+                    top={2}
+                    justifyContent="space-between"
+                    alignItems="center"
+                    backgroundColor="brand.white"
+                    py={2}
                   >
-                    View all
-                  </Button>
-                </HStack>
-                <Stack py={6}>
-                  <SimpleGrid gridTemplateColumns="repeat(auto-fit, 80px)" spacing="28px">
-                    {icons.map((icon) => {
-                      const { iconType, iconName, reactIconName } = icon;
-                      const reactIcon = getIconComponent(iconLibrary, reactIconName);
+                    <HStack spacing={8}>
+                      <Stack width={130}>
+                        <LinkBox>
+                          <LinkOverlay isExternal href={packMetadata.website}>
+                            <Image
+                              paddingLeft={1}
+                              maxWidth={120}
+                              alt={iconLibrary}
+                              src={`/images/${iconLibrary}.png`}
+                            />
+                          </LinkOverlay>
+                        </LinkBox>
+                      </Stack>
+                      <HStack>
+                        <Tag>V{packMetadata.version}</Tag>
+                        <Tag>{packMetadata.totalIcons} icons</Tag>
+                        {packMetadata.iconTypes.map((iconType) => (
+                          <Tag>{iconType}</Tag>
+                        ))}
+                      </HStack>
+                    </HStack>
+                    <Button
+                      variant="brand.ghost"
+                      fontSize={14}
+                      fontWeight={500}
+                      onClick={() =>
+                        iconLibraryQuery.value !== "all"
+                          ? handleClearLibrarySelection()
+                          : handleLibraryViewAll(iconLibrary)
+                      }
+                    >
+                      {iconLibraryQuery.value === "all" ? "View all" : "Clear"}
+                    </Button>
+                  </HStack>
+                  <Stack py={6}>
+                    <SimpleGrid gridTemplateColumns="repeat(auto-fit, 80px)" spacing="28px">
+                      {icons.map((icon) => {
+                        const { iconType, iconName, reactIconName } = icon;
+                        const reactIcon = getIconComponent(iconLibrary, reactIconName);
 
-                      if (!reactIcon) return null;
-                      return (
-                        <Stack width="80px" key={reactIconName}>
-                          <BoxIcon
-                            href={`/${iconLibrary}/${iconType}/${iconName}`}
-                            icon={reactIcon}
-                            label={iconName}
-                            displayLabel
-                          />
-                        </Stack>
-                      );
-                    })}
-                  </SimpleGrid>
+                        if (!reactIcon) return null;
+
+                        return (
+                          <Stack width="80px" key={reactIconName}>
+                            <BoxIcon
+                              href={`/${iconLibrary}/${iconType}/${iconName}`}
+                              icon={reactIcon}
+                              label={iconName}
+                              displayLabel
+                            />
+                          </Stack>
+                        );
+                      })}
+                    </SimpleGrid>
+                  </Stack>
                 </Stack>
-              </Stack>
-            );
-          })}
+              );
+            })}
         </Stack>
       </Stack>
     </Stack>

@@ -1,8 +1,9 @@
 import NextLink from "next/link";
 import { useEffect } from "react";
-// import { FaDiscord } from "react-icons/fa";
-import { FiMail, FiTwitter, FiGithub } from "react-icons/fi";
 import { Stack, HStack, Text, Link, LinkBox, LinkOverlay, Icon, useClipboard, As } from "@chakra-ui/react";
+
+// icons
+import { FaDiscord, FaEnvelope, FaTwitter } from "react-icons/fa";
 
 // components
 import { useToast } from "@modules/common/hooks/useToast";
@@ -81,10 +82,9 @@ export function Footer() {
           Copyright &copy; 2021 WIIT. All rights reserved.
         </Text>
         <HStack alignItems="center" spacing={4}>
-          <FooterIcon href="whichiconisthat@gmail.com" label="Email" icon={FiMail} onClick={onCopy} isEmail />
-          {/* <FooterIcon href="https://discord.gg/xTpegNF9bj" label="Discord" icon={FaDiscord} /> */}
-          <FooterIcon href="https://twitter.com/whichiconisthat" label="Twitter" icon={FiTwitter} />
-          <FooterIcon href="https://github.com/lndgalante/which-icon-is-that" label="GitHub" icon={FiGithub} />
+          <FooterIcon href="whichiconisthat@gmail.com" label="Email" icon={FaEnvelope} onClick={onCopy} isEmail />
+          <FooterIcon href="https://twitter.com/whichiconisthat" label="Twitter" icon={FaTwitter} />
+          <FooterIcon href="https://discord.gg/xTpegNF9bj" label="Discord" icon={FaDiscord} />
         </HStack>
       </HStack>
 

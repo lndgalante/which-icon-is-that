@@ -9,6 +9,7 @@ export type Svg = {
   iconType: string;
   iconFileName: string;
   reactIconName: string;
+  parsedIconName: string;
 };
 
 export type Links = {

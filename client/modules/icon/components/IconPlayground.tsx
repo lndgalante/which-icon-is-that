@@ -32,7 +32,7 @@ export function IconPlayground({
       <Tabs variant="unstyled" index={selectedTabIndex}>
         <TabList>
           {iconTypes.map((iconType) => (
-            <CustomTab key={iconType} href={generateTabUrl(iconType.toLowerCase())}>
+            <CustomTab key={iconType} href={generateTabUrl(iconType.toLowerCase().split(' ').join(''))}>
               {iconType}
             </CustomTab>
           ))}

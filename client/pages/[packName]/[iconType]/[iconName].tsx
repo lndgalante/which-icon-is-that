@@ -102,8 +102,8 @@ export default function IconPage({
   website,
   downloadLink,
 }: // tags,
-  // relatedIcons,
-  IconMetadata) {
+// relatedIcons,
+IconMetadata) {
   // next hooks
   const { query } = useRouter();
 
@@ -112,12 +112,17 @@ export default function IconPage({
 
   // constants
   const { iconType: iconTypeCurrentUrl } = query;
+  console.log("\n ~ iconTypeCurrentUrl", iconTypeCurrentUrl);
   const reactIcon = getIconComponent(svg.packName, svg.reactIconName);
-  const selectedTabIndex = iconTypes.findIndex((iconType) => iconType.toLowerCase() === iconTypeCurrentUrl);
+
+  const selectedTabIndex =
+    iconTypes
+      .map((iconType) => iconType.toLowerCase().split(" ").join(""))
+      .findIndex((iconType) => iconType === iconTypeCurrentUrl) ?? 0;
 
   return (
     <Stack paddingBottom={32} spacing={10}>
-      <Header iconName={svg.iconName} onOpen={onOpen} />
+      <Header iconName={svg.parsedIconName} onOpen={onOpen} />
 
       <DeveloperPanel packName={svg.packName} snippets={snippets} onClose={onClose} isOpen={isOpen} />
 

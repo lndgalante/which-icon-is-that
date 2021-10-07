@@ -4,8 +4,10 @@ export const ICONS_FONT_CDN = {
   feather: '',
   devicon: '',
   heroicons: '',
+  antdesign: '',
   boxicons: 'https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css',
   bootstrap: 'https://unpkg.com/bootstrap-icons@1.5.0/font/bootstrap-icons.css',
+  flatcoloricons: '',
 };
 
 export const ICONS_WEBSITE_LINKS = {
@@ -28,31 +30,69 @@ export const ICONS_FIGMA_LINKS = {
   flatcoloricons: 'https://www.figma.com/community/plugin/791103617505812222/Icons8-Free-Icons',
 };
 
-export const ICON_LIBRARIES = [
-  {
-    name: 'feather',
-    totalIcons: 286,
+
+export const ICON_LIBRARIES = {
+  bootstrap: {
+    license: 'MIT',
+    stars: '4.4k',
+    version: '1.5.0',
+    iconTypes: ['Outlined', 'Solid'],
+    website: 'https://icons.getbootstrap.com',
+    downloadLink: 'https://github.com/twbs/icons/releases/download/v1.5.0/bootstrap-icons-1.5.0.zip',
+  },
+  feather: {
     license: 'MIT',
     stars: '20.4k',
     version: '4.28.0',
-    iconTypes: ['Regular'],
+    iconTypes: ['Outlined'],
     website: 'https://feathericons.com',
     downloadLink: 'https://github.com/feathericons/feather/archive/refs/tags/v4.28.0.zip',
   },
-  {
-    name: 'heroicons',
-    totalIcons: 230,
+  heroicons: {
     license: 'MIT',
     stars: '13k',
     version: '1.0.0',
-    iconTypes: ['Outline', 'Solid'],
+    iconTypes: ['Outlined', 'Solid'],
     website: 'https://heroicons.com',
     downloadLink: 'https://github.com/tailwindlabs/heroicons/archive/refs/tags/v1.0.0.zip',
   },
-];
+  antdesign: {
+    totalIcons: 729,
+    license: 'MIT',
+    stars: '597',
+    version: '4.0.0',
+    iconTypes: ['Outlined', 'Filled', 'Two Tone'],
+    website: 'https://ant.design/components/icon',
+    downloadLink: 'https://github.com/ant-design/ant-design-icons/releases/tag/%40ant-design%2Ficons-svg%404.0.0',
+  },
+  boxicons: {
+    license: 'MIT',
+    stars: '597',
+    version: '4.0.0',
+    iconTypes: ['Regular'],
+    website: 'https://ant.design/components/icon',
+    downloadLink: 'https://github.com/ant-design/ant-design-icons/releases/tag/%40ant-design%2Ficons-svg%404.0.0',
+  },
+  devicon: {
+    license: 'MIT',
+    stars: '597',
+    version: '4.0.0',
+    iconTypes: ['Logos'],
+    website: 'https://ant.design/components/icon',
+    downloadLink: 'https://github.com/ant-design/ant-design-icons/releases/tag/%40ant-design%2Ficons-svg%404.0.0',
+  },
+  flatcoloricons: {
+    license: 'MIT',
+    stars: '597',
+    version: '4.0.0',
+    iconTypes: ['Logos'],
+    website: 'https://ant.design/components/icon',
+    downloadLink: 'https://github.com/ant-design/ant-design-icons/releases/tag/%40ant-design%2Ficons-svg%404.0.0',
+  },
+}
 
 export const ICONS_LIST = [
-  // { packId: 'bs', packName: 'bootstrap', owner: 'twbs', repo: 'icons', type: 'releases' },
+  { packId: 'bs', packName: 'bootstrap', owner: 'twbs', repo: 'icons', type: 'releases' },
   { packId: 'fi', packName: 'feather', owner: 'feathericons', repo: 'feather', type: 'releases' },
   { packId: 'hi', packName: 'heroicons', owner: 'tailwindlabs', repo: 'heroicons', type: 'releases' },
   // { packId: 'ai', packName: 'antdesign', owner: 'ant-design', repo: 'ant-design-icons', type: 'tags' },
