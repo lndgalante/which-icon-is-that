@@ -30,7 +30,6 @@ export const ICONS_FIGMA_LINKS = {
   flatcoloricons: 'https://www.figma.com/community/plugin/791103617505812222/Icons8-Free-Icons',
 };
 
-
 export const ICON_LIBRARIES = {
   bootstrap: {
     license: 'MIT',
@@ -89,7 +88,7 @@ export const ICON_LIBRARIES = {
     website: 'https://ant.design/components/icon',
     downloadLink: 'https://github.com/ant-design/ant-design-icons/releases/tag/%40ant-design%2Ficons-svg%404.0.0',
   },
-}
+};
 
 export const ICONS_LIST = [
   { packId: 'bs', packName: 'bootstrap', owner: 'twbs', repo: 'icons', type: 'releases' },

@@ -16,6 +16,7 @@ export function CustomTab({ children, href, ...otherProps }: CustomTabProps) {
         borderBottomWidth={4}
         fontSize="sm"
         borderBottomColor="transparent"
+        textTransform="capitalize"
         _focus={{ boxShadow: "none" }}
         _selected={{
           borderTopLeftRadius: 8,

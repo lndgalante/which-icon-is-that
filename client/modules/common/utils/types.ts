@@ -31,20 +31,21 @@ export type Tag = {
   tag_id: string;
 };
 
-export type IconMetadata = {
-  svg: Svg;
-  tags: Tag[];
-  links: Links;
-  snippets: Snippets;
-  relatedIcons: Svg[];
-  stars: string;
-  name: string;
+type IconLibrary = {
   license: string;
-  version: string;
-  iconTypes: string[];
   totalIcons: number;
+  version: string;
   website: string;
   downloadLink: string;
+};
+
+export type IconMetadata = {
+  iconLibrary: IconLibrary;
+  icon: { svg: Svg; links: Links };
+  tags: Tag[];
+  snippets: Snippets;
+  relatedIcons: Svg[];
+  iconTypes: string[];
 };
 
 export type Response<T> = {

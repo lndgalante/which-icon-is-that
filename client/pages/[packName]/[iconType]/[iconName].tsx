@@ -39,50 +39,19 @@ export const getStaticProps: GetStaticProps<Props, Params> = async ({ params }) 
 
     // const { data: tags } = await api.getIconTags(iconHash);
     const { data: snippets } = await api.getIconSnippets(iconHash);
+    console.log("\n ~ constgetStaticProps:GetStaticProps<Props,Params>= ~ snippets", snippets);
     const { data: icon } = await api.getIcon(iconHash);
+    console.log("\n ~ constgetStaticProps:GetStaticProps<Props,Params>= ~ icon", icon);
     const { data: iconLibrary } = await api.getIconLibrary(packName);
-
-    // const relatedIcons = [];
-    // try {
-    //   for await (const tag of tags.tags) {
-    //     const { data: similarIcons } = await api.getSimilarIcons(
-    //       iconHash,
-    //       tag.tag_id
-    //     );
-    //     relatedIcons.push(...similarIcons.icons);
-    //   }
-    // } catch (error) {
-    //   console.log(
-    //     "\n ~ constgetStaticProps:GetStaticProps<Props,Params>= ~ error",
-    //     error
-    //   );
-    // }
-
-    // const parsedRelatedIcons = relatedIcons.map(
-    //   ({
-    //     pack_id,
-    //     pack_name,
-    //     icon_name,
-    //     icon_type,
-    //     icon_file_name,
-    //     ...otherKeys
-    //   }) => ({
-    //     packId: pack_id,
-    //     packName: pack_name,
-    //     iconName: icon_name,
-    //     iconType: icon_type,
-    //     iconFileName: icon_file_name,
-    //     ...otherKeys,
-    //   })
-    // );
+    console.log("\n ~ constgetStaticProps:GetStaticProps<Props,Params>= ~ iconLibrary", iconLibrary);
+    const { data: iconTypesData } = await api.getIconTypes(iconName, packName);
 
     return {
       props: {
-        ...icon,
-        ...snippets,
-        ...iconLibrary,
-        // ...tags,
-        // relatedIcons: parsedRelatedIcons,
+        icon,
+        snippets,
+        iconLibrary,
+        iconTypes: iconTypesData.iconTypes,
       },
       revalidate: 86400,
     };
@@ -91,19 +60,16 @@ export const getStaticProps: GetStaticProps<Props, Params> = async ({ params }) 
   }
 };
 
-export default function IconPage({
-  svg,
-  links,
-  snippets,
-  license,
-  totalIcons,
-  version,
-  iconTypes,
-  website,
-  downloadLink,
-}: // tags,
-// relatedIcons,
-IconMetadata) {
+export default function IconPage({ icon, snippets, iconLibrary, iconTypes }: IconMetadata) {
+  console.log("\n ~ IconPage ~ icon", icon);
+  console.log("\n ~ iconLibrary", iconLibrary);
+
+  // constants
+  const { svg, links } = icon;
+  const { figma } = links
+  const { iconName, packName, reactIconName, parsedIconName, hash, bytes } = svg
+  const { license, totalIcons, version, website, downloadLink } = iconLibrary;
+
   // next hooks
   const { query } = useRouter();
 
@@ -112,38 +78,37 @@ IconMetadata) {
 
   // constants
   const { iconType: iconTypeCurrentUrl } = query;
-  console.log("\n ~ iconTypeCurrentUrl", iconTypeCurrentUrl);
-  const reactIcon = getIconComponent(svg.packName, svg.reactIconName);
+  const reactIcon = getIconComponent(packName, reactIconName);
 
   const selectedTabIndex =
     iconTypes
-      .map((iconType) => iconType.toLowerCase().split(" ").join(""))
+      .map((iconType) => iconType.split(" ").join(""))
       .findIndex((iconType) => iconType === iconTypeCurrentUrl) ?? 0;
 
   return (
     <Stack paddingBottom={32} spacing={10}>
-      <Header iconName={svg.parsedIconName} onOpen={onOpen} />
+      <Header iconName={parsedIconName} onOpen={onOpen} />
 
-      <DeveloperPanel packName={svg.packName} snippets={snippets} onClose={onClose} isOpen={isOpen} />
+      <DeveloperPanel packName={packName} snippets={snippets} onClose={onClose} isOpen={isOpen} />
 
       <SimpleGrid columns={{ base: 1, md: 1, lg: 2 }} rowGap={{ base: 10, md: 8 }} columnGap={67} as="section">
         <IconPlayground
-          hash={svg.hash}
+          hash={hash}
           selectedTabIndex={selectedTabIndex}
           reactIcon={reactIcon}
           iconTypes={iconTypes}
-          iconSize={svg.bytes}
+          iconSize={bytes}
         />
         <IconLibrary
           website={website}
           version={version}
           license={license}
-          packName={svg.packName}
+          packName={packName}
           totalIcons={totalIcons}
-          figmaLink={links.figma}
+          figmaLink={figma}
           downloadLink={downloadLink}
         />
-        <IconExamples reactIcon={reactIcon} iconName={svg.iconName} />
+        <IconExamples reactIcon={reactIcon} iconName={iconName} />
         <IconRelated />
       </SimpleGrid>
     </Stack>

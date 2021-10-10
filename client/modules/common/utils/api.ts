@@ -14,6 +14,7 @@ const endpoints = {
   iconFindIconsByIconNameAndIconLibrary: (iconLibrary: string, iconName: string) =>
     `/icons/find/${iconLibrary}/${iconName}`,
   icon: (hash: string) => `/icon/${hash}`,
+  iconTypes: (iconName: string, packName: string) => `/icon/${iconName}/${packName}/types`,
   iconLibrary: (libraryName: string) => `/icon/library/${libraryName}`,
   iconTags: (hash: string) => `/icon/${hash}/tags`,
   iconFound: (hash: string) => `/icon/${hash}/found`,
@@ -27,6 +28,8 @@ const endpoints = {
 export const api = {
   getGalleryIcons: () => fetch.url(endpoints.gallery()).get().json(),
   getPaths: () => fetch.url(endpoints.paths()).get().json(),
+  getIconTypes: (iconName: string, packName: string) =>
+    fetch.url(endpoints.iconTypes(iconName, packName)).get().json<IconResponse>(),
   getIconsFindByIconNameAndIconLibrary: (iconName: string, iconLibrary: string) =>
     fetch.url(endpoints.iconFindIconsByIconNameAndIconLibrary(iconName, iconLibrary)).get().json<IconsFoundResponse>(),
   getIcon: (hash: string) => fetch.url(endpoints.icon(hash)).get().json<IconResponse>(),

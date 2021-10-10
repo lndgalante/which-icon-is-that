@@ -2,6 +2,7 @@ import { Router } from 'https://deno.land/x/oak/mod.ts';
 
 // controllers
 import { getTags } from './controllers/getTags.ts';
+import { getIconTypes } from './controllers/getIconTypes.ts';
 import { getPaths } from './controllers/getPaths.ts';
 import { getReverse } from './controllers/getReverse.ts';
 import { getIconByHash } from './controllers/getIconByHash.ts';
@@ -33,6 +34,9 @@ router
   .get('/icon/:hash/tags', getTags)
   /* Used on icon page to get similar icons based on a certain tag */
   .get('/icon/:hash/:tagId/similar', getSimilarIcons)
+
+  /* Used on icon page to get icon types */
+  .get('/icon/:iconName/:packName/types', getIconTypes)
 
   /* Used on icon page to get total found times */
   .get('/icon/:hash/found', getFoundTimesIcon)

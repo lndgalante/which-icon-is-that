@@ -1,25 +1,15 @@
 import { Dispatch, SetStateAction } from "react";
-import { Input, InputGroup, InputLeftElement, InputRightElement, Icon, Spinner } from "@chakra-ui/react";
+import { Input, InputGroup, InputLeftElement, Icon } from "@chakra-ui/react";
 
 // icons
 import { FiSearch } from "react-icons/fi";
 
-// components
-import { MotionStack } from "@modules/common/components/MotionStack";
-
-type Option = {
-  id: string;
-  label: string;
-  value: string;
-};
-
 type Props = {
   value: string;
-  isFetching: boolean;
   onChange: Dispatch<SetStateAction<string>>;
 };
 
-export function IconNameInput({ value, isFetching, onChange }: Props) {
+export function IconNameInput({ value, onChange }: Props) {
   // handlers
   function handleInputChange({ target }) {
     onChange(target.value);
@@ -36,21 +26,6 @@ export function IconNameInput({ value, isFetching, onChange }: Props) {
             sx={{ ".input-container:focus-within &": { color: "brand.text" } }}
             color="brand.grey"
           />
-        }
-      />
-      <InputRightElement
-        pointerEvents="none"
-        children={
-          isFetching ? (
-            <MotionStack
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.4 }}
-            >
-              <Icon as={Spinner} color="brand.softOrange" />
-            </MotionStack>
-          ) : null
         }
       />
       <Input

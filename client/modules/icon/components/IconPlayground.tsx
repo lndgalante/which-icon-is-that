@@ -16,13 +16,7 @@ type IconPlaygroundProps = {
   selectedTabIndex: number;
 };
 
-export function IconPlayground({
-  hash,
-  iconSize,
-  iconTypes,
-  reactIcon,
-  selectedTabIndex,
-}: IconPlaygroundProps) {
+export function IconPlayground({ hash, iconSize, iconTypes, reactIcon, selectedTabIndex }: IconPlaygroundProps) {
   // custom hooks
   const { generateTabUrl } = useGenerateTabUrl();
   const { data, isLoading } = useReadFoundTimes(hash);
@@ -32,7 +26,7 @@ export function IconPlayground({
       <Tabs variant="unstyled" index={selectedTabIndex}>
         <TabList>
           {iconTypes.map((iconType) => (
-            <CustomTab key={iconType} href={generateTabUrl(iconType.toLowerCase().split(' ').join(''))}>
+            <CustomTab key={iconType} href={generateTabUrl(iconType.split(" ").join(""))}>
               {iconType}
             </CustomTab>
           ))}
@@ -260,8 +254,7 @@ export function IconPlayground({
                 </Stack>
 
                 <Stack
-
-                  display={{ base: 'none', md: 'flex' }}
+                  display={{ base: "none", md: "flex" }}
                   position="relative"
                   _hover={{ "::before": { opacity: 1 }, "::after": { opacity: 1 } }}
                   _before={{
@@ -325,8 +318,7 @@ export function IconPlayground({
                 </Stack>
 
                 <Stack
-
-                  display={{ base: 'none', md: 'flex' }}
+                  display={{ base: "none", md: "flex" }}
                   position="relative"
                   _hover={{ "::before": { opacity: 1 }, "::after": { opacity: 1 } }}
                   _before={{

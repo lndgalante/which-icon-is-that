@@ -100,6 +100,7 @@ const DEFAULT_ICON_TYPES = {
 type IconTypes = 'base' | 'outline' | 'solid' | 'fill' | 'twotone' | 'regular';
 
 async function saveIconLibraryInDB({ packId, packName }: { packId: string; packName: string }) {
+  console.log('Began uploading packName', packName);
   const transaction2 = client.createTransaction(`tx-create-${packName}`);
 
   await transaction2.begin();
@@ -124,17 +125,17 @@ async function saveIconLibraryInDB({ packId, packName }: { packId: string; packN
 
     const reactIconPack = reactIconsPacks[packName as PacksNames] as string[];
     const parsedIconType =
-    // @ts-ignore
-    PACKS_ICON_TYPES[packName as PacksNames][iconType as IconTypes] || DEFAULT_ICON_TYPES[packName as PacksNames];
+      // @ts-ignore
+      PACKS_ICON_TYPES[packName as PacksNames][iconType as IconTypes] || DEFAULT_ICON_TYPES[packName as PacksNames];
 
     const iconNameWithoutExtension = name.replace('.svg', '');
     const iconNameWithoutDash = iconNameWithoutExtension.replace(/-/g, '');
     const iconNameWithSpaceWithFormattedNumber = iconNameWithoutExtension
-    .replace(/-/g, ' ')
-    .replace(/[0-9]/g, (match) => `(${match})`);
+      .replace(/-/g, ' ')
+      .replace(/[0-9]/g, (match) => `(${match})`);
 
-    let parsedIconName = iconNameWithoutDash
-    let parsedIconNameForReactIcon = iconNameWithoutDash
+    let parsedIconName = iconNameWithoutDash;
+    let parsedIconNameForReactIcon = iconNameWithoutDash;
 
     if (packName === 'boxicons') {
       const [_, ...otherParts] = iconNameWithoutExtension.split('-');
@@ -147,29 +148,27 @@ async function saveIconLibraryInDB({ packId, packName }: { packId: string; packN
     }
 
     if (packName === 'bootstrap') {
-      parsedIconName = iconNameWithoutDash.replace('fill','')
+      parsedIconName = iconNameWithoutDash.replace('fill', '');
       parsedIconNameForReactIcon = `${parsedIconNameForReactIcon}`;
     }
 
     const parsedIconNameForReactIconInLowerCase = parsedIconNameForReactIcon.toLowerCase();
     const value = reactIconPack.find((reactIconName) => {
-      let parsedReactIconName = reactIconName.toLowerCase()
+      let parsedReactIconName = reactIconName.toLowerCase();
 
       if (packName === 'bootstrap') {
-        return `bs${parsedIconNameForReactIconInLowerCase}` === parsedReactIconName
+        return `bs${parsedIconNameForReactIconInLowerCase}` === parsedReactIconName;
       }
 
       if (packName === 'antdesign') {
-        if (parsedReactIconName.includes(parsedIconNameForReactIconInLowerCase)) {
-          console.log('\n ~ value ~ parsedReactIconName', parsedReactIconName)
-          console.log('\n ~ value ~ parsedIconNameForReactIconInLowerCase', parsedIconNameForReactIconInLowerCase)
-        }
-
-        return `ai${iconType}${parsedIconNameForReactIconInLowerCase}` === parsedReactIconName
+        return `ai${iconType}${parsedIconNameForReactIconInLowerCase}` === parsedReactIconName;
       }
 
+      if (packName === 'feather') {
+        return parsedReactIconName.slice(2) === parsedIconNameForReactIconInLowerCase;
+      }
 
-      return parsedReactIconName.includes(parsedIconNameForReactIconInLowerCase)
+      return parsedReactIconName.includes(parsedIconNameForReactIconInLowerCase);
     });
 
     if (!value) {
@@ -257,12 +256,12 @@ export async function saveIconsInDB() {
     await transaction.begin();
 
     // remove existing tables
-   /*   await transaction.queryArray`DROP TABLE contacts`;
     await transaction.queryArray`DROP TABLE icons`;
     await transaction.queryArray`DROP TABLE paths`;
     await transaction.queryArray`DROP TABLE tags`;
     await transaction.queryArray`DROP TABLE tags_icons`;
     await transaction.queryArray`DROP TABLE icon_libraries`;
+    await transaction.queryArray`DROP TABLE contacts`;
 
     // create tables
     await transaction.queryArray`CREATE TABLE contacts (email TEXT, name TEXT, message TEXT)`;
@@ -284,7 +283,7 @@ export async function saveIconsInDB() {
 
     await transaction.queryArray`CREATE INDEX hash_index_on_tags ON tags_icons(hash)`;
     await transaction.queryArray`CREATE INDEX hash_on_tag_id_index ON tags_icons(tag_id)`;
-*/
+
     await transaction.commit();
 
     for await (const { packId, packName } of ICONS_LIST) {
@@ -292,7 +291,6 @@ export async function saveIconsInDB() {
     }
 
     console.log(`finished ALL`);
-
   } catch (error) {
     console.log('Error on saveIconsInDB', error);
   }

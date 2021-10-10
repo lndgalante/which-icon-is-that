@@ -5,6 +5,14 @@ class Icon {
     return client.queryObject(`SELECT pack_name, icon_type, icon_name FROM icons`);
   }
 
+  selectColumnsForTypes(iconName: string, packName: string) {
+    return client.queryObject(
+      `SELECT icon_type FROM icons WHERE icon_name = $1 AND pack_name = $2`,
+      iconName,
+      packName,
+    );
+  }
+
   selectColumnsForSnippets(hash: string) {
     return client.queryObject(
       `SELECT svg, inner_svg, view_box, icon_parsed_name, icon_name, pack_name, pack_id, react_icon_name FROM icons WHERE hash = $1`,

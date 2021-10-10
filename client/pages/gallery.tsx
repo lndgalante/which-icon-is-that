@@ -1,8 +1,8 @@
 // import { nanoid } from "nanoid";
 import { useRouter } from "next/router";
 import { GetServerSideProps } from "next";
-import { useEffect, useState } from "react";
 import { useDebounce } from "use-debounce";
+import { useEffect, useState, useRef } from "react";
 import { HStack, Stack, Text, SimpleGrid, Image, Button, LinkBox, LinkOverlay } from "@chakra-ui/react";
 
 // utils
@@ -13,9 +13,9 @@ import { getIconComponent } from "@modules/common/utils/getIconComponent";
 import * as Shapes from "@modules/gallery/components/Shapes";
 import { Tag } from "@modules/common/components/Tag";
 import { BoxIcon } from "@modules/common/components/BoxIcon";
-// import { BoxIconSkeleton } from "@modules/common/components/BoxIconSkeleton";
 import { IconNameInput } from "@modules/gallery/components/IconNameInput";
 import { IconLibrarySelect } from "@modules/gallery/components/IconLibrarySelect";
+import { BoxIconSkeleton } from "@modules/common/components/BoxIconSkeleton";
 
 // hooks
 import { useReadIconsByNameAndIconLibrary } from "@modules/gallery/hooks/useReadIconsByNameAndIconLibrary";
@@ -38,27 +38,21 @@ export const getServerSideProps: GetServerSideProps = async () => {
 
 /*
 TODO:
-  - [BE] Get icon_libraries options from API (value: name, label: parsed_name)
-  - [FE] On icon page display only iconTypes for that particular icon
+  - [FE] Add in and out animations for icon change
   - [FE] Add empty state when no icon is found
   - [FE] Improve mobile support
 */
-
-/* const iconsSkeletons = [
-  ["feather", Array.from({ length: 20 }, () => ({ key: nanoid() }))],
-]; */
 
 const ALL_LIBRARIES = { value: "all", label: "All icon libraries" };
 
 const iconLibrariesOptions = [
   ALL_LIBRARIES,
+  { value: "bootstrap", label: "Bootstrap Icons" },
   { value: "feather", label: "Feather Icons" },
   { value: "heroicons", label: "Heroicons" },
-  { value: "bootstrap", label: "Bootstrap" },
 ];
 
 function Gallery({ svgs, packs }) {
-  console.log('\n ~ Gallery ~ svgs', svgs)
   // next hooks
   const { push, query } = useRouter();
 
@@ -110,7 +104,7 @@ function Gallery({ svgs, packs }) {
 
   // constants
   const iconsToRender = foundIcons?.data?.svgs ?? svgs;
-  console.log('\n ~ Gallery ~ iconsToRender', iconsToRender)
+  console.log("\n ~ Gallery ~ iconsToRender", iconsToRender);
 
   return (
     <Stack pb={240}>
@@ -172,42 +166,13 @@ function Gallery({ svgs, packs }) {
               onChange={setIconLibraryQuery}
               options={iconLibrariesOptions}
             />
-            <IconNameInput value={iconNameQuery} onChange={setIconNameQuery} isFetching={isFetching} />
+            <IconNameInput value={iconNameQuery} onChange={setIconNameQuery} />
           </Stack>
         </Stack>
       </Stack>
 
       <Stack as="section" px={2}>
         <Stack maxWidth={1064} width="90%" m="0 auto" defaultIndex={[0, 1, 2, 3, 4, 5]} allowToggle allowMultiple>
-          {/*  {isFetching &&
-            iconsSkeletons.map(([iconLibrary, icons]) => {
-              console.log("\n ~ iconsSkeletons.map ~ icons", icons);
-              console.log("\n ~ iconsSkeletons.map ~ iconLibrary", iconLibrary);
-              return (
-                <Stack>
-                  <HStack justifyContent="space-between" alignItems="center">
-                    <HStack spacing={8}>
-                      <Image paddingLeft={1} maxWidth={120} alt={iconLibrary} src={`/images/${iconLibrary}.png`} />
-                      <HStack>
-                        <Tag>V1.1.1</Tag>
-                        <Tag>124 icons</Tag>
-                        <Tag>Outline</Tag>
-                      </HStack>
-                    </HStack>
-                    <Button variant="brand.ghost" fontSize={14} fontWeight={500}>
-                      View all
-                    </Button>
-                  </HStack>
-                  <Stack py={6}>
-                    <SimpleGrid minChildWidth="80px" spacing="28px">
-                      {icons.map((icon) => {
-                        return <BoxIconSkeleton key={icon.key} displayLabel primary withShadow />;
-                      })}
-                    </SimpleGrid>
-                  </Stack>
-                </Stack>
-              );
-            })} */}
           {error && <Text>error found !</Text>}
 
           {!error &&
@@ -215,7 +180,7 @@ function Gallery({ svgs, packs }) {
               const packMetadata = packs[iconLibrary];
 
               return (
-                <Stack key={iconLibrary}>
+                <Stack key={iconLibrary} className="icon-library-container">
                   <HStack
                     transform="all 400ms ease-in-out"
                     position="sticky"
@@ -224,17 +189,20 @@ function Gallery({ svgs, packs }) {
                     justifyContent="space-between"
                     alignItems="center"
                     backgroundColor="brand.white"
-                    py={2}
+                    p={2}
                   >
                     <HStack spacing={8}>
-                      <Stack width={130}>
+                      <Stack width={140}>
                         <LinkBox>
                           <LinkOverlay isExternal href={packMetadata.website}>
                             <Image
                               paddingLeft={1}
-                              maxWidth={120}
                               alt={iconLibrary}
-                              src={`/images/${iconLibrary}.png`}
+                              filter="grayscale(1)"
+                              opacity={0.6}
+                              transition="all 400ms ease-in-out"
+                              src={`/images/${iconLibrary}-color.png`}
+                              sx={{ ".icon-library-container:hover &": { filter: 'grayscale(0)', opacity: 1 } }}
                             />
                           </LinkOverlay>
                         </LinkBox>
@@ -257,7 +225,7 @@ function Gallery({ svgs, packs }) {
                           : handleLibraryViewAll(iconLibrary)
                       }
                     >
-                      {iconLibraryQuery.value === "all" ? "View all" : "Clear"}
+                      {`View ${iconLibraryQuery.value === "all" ? "all" : "less"}`}
                     </Button>
                   </HStack>
                   <Stack py={6}>
@@ -270,12 +238,16 @@ function Gallery({ svgs, packs }) {
 
                         return (
                           <Stack width="80px" key={reactIconName}>
-                            <BoxIcon
-                              href={`/${iconLibrary}/${iconType}/${iconName}`}
-                              icon={reactIcon}
-                              label={iconName}
-                              displayLabel
-                            />
+                            {isFetching ? (
+                              <BoxIconSkeleton primary displayLabel withShadow />
+                            ) : (
+                              <BoxIcon
+                                href={`/${iconLibrary}/${iconType}/${iconName}`}
+                                icon={reactIcon}
+                                label={iconName}
+                                displayLabel
+                              />
+                            )}
                           </Stack>
                         );
                       })}
