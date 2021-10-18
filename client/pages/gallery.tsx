@@ -30,7 +30,6 @@ export const getServerSideProps: GetServerSideProps = async () => {
 
     const packNames = data.svgs.map(([packName]) => packName);
     const packs = await Promise.all<IconLibraryResponse>(packNames.map((packName) => api.getIconLibrary(packName)));
-    console.log("\n ~ constgetServerSideProps:GetServerSideProps= ~ packs", packs);
     const parsedPacks: { [key: string]: IconLibrary } = packs.reduce(
       (accumulator, pack) => ({ ...accumulator, [pack.data.name]: { ...pack.data } }),
       {},
@@ -186,8 +185,8 @@ function Gallery({ svgs, packs }) {
         <Stack maxWidth={1064} width="100%" m="0 auto" paddingTop={{ base: 4, md: 0 }}>
           <MotionFade>
             {error && (
-              <Stack alignItems="center" minHeight={320}>
-                <Stack maxWidth={360} spacing={4} justifyContent="center" alignItems="center" textAlign="center">
+              <Stack alignItems="center" minHeight={320} mt={{ base: 45, md: 0 }}>
+                <Stack maxWidth={{ base: 284, md: 360 }} spacing={4} justifyContent="center" alignItems="center" textAlign="center">
                   <BrokenLogo />
                   <Text>
                     Sorry, we did not find any icon, you can try looking for another icon or in another library.
