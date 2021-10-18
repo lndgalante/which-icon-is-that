@@ -49,7 +49,7 @@ export function IconLibrary({
       </Link>
 
       <HStack>
-        <Tag>{version}</Tag>
+        <Tag>V{version}</Tag>
         <Tag>{totalIcons} Icons</Tag>
         <Tag>{license} License</Tag>
       </HStack>

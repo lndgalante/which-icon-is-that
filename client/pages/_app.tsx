@@ -8,7 +8,7 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import { Fonts } from "@modules/common/components/Fonts";
 import { Navbar } from "@modules/common/components/Navbar";
 import { Footer } from "@modules/common/components/Footer";
-import { MotionStack } from "@modules/common/components/MotionStack";
+import { MotionFade } from "@modules/common/components/MotionFade";
 
 // theme
 import { theme } from "@modules/common/theme";
@@ -42,16 +42,9 @@ export default function MyApp({ Component, pageProps, router }: AppProps) {
           />
           <Fonts />
           <Layout>
-            <MotionStack
-              as="main"
-              animate="animate"
-              initial="initial"
-              key={router.route}
-              paddingX={{ base: 4, md: 12 }}
-              variants={{ initial: { opacity: 0 }, animate: { opacity: 1 } }}
-            >
+            <MotionFade as="main" key={router.route} withPadding>
               <Component {...pageProps} />
-            </MotionStack>
+            </MotionFade>
           </Layout>
         </ChakraProvider>
       </QueryClientProvider>

@@ -27,6 +27,7 @@ export type Svg = {
   view_box: string;
   bytes: string;
   found: number;
+  hash_number: number;
   pack_id: string;
   pack_name: PacksNames;
   icon_name: string;

@@ -33,6 +33,7 @@ export const getIconByHash = async ({ params, response }: Context & { params: { 
         pack_name: packName,
         icon_type: iconType,
         icon_name: iconName,
+        hash_number: hashNumber,
         icon_file_name: iconFileName,
         react_icon_name: reactIconName,
         icon_parsed_name: parsedIconName,
@@ -49,7 +50,19 @@ export const getIconByHash = async ({ params, response }: Context & { params: { 
       success: true,
       data: {
         links: { pack, icon, source, figma },
-        svg: { hash, svg, parsedIconName, iconType, bytes, packId, packName, iconName, iconFileName, reactIconName },
+        svg: {
+          hash,
+          svg,
+          hashNumber,
+          parsedIconName,
+          iconType,
+          bytes,
+          packId,
+          packName,
+          iconName,
+          iconFileName,
+          reactIconName,
+        },
       },
     };
   } catch (error) {

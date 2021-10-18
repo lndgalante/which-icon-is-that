@@ -20,6 +20,15 @@ class Icon {
     );
   }
 
+  selectColumnsForSimilarIcons(hash: string, packName: string, hashNumber: string) {
+    return client.queryObject(
+      `SELECT icon_name, icon_type, react_icon_name FROM icons WHERE hash <> $1 AND pack_name = $2 AND hash_number >= ($3 - 10) AND hash_number <= ($3 + 10) LIMIT 20`,
+      hash,
+      packName,
+      hashNumber,
+    );
+  }
+
   selectAllByHash(hash: string) {
     return client.queryObject(`SELECT * FROM icons WHERE hash = $1`, hash);
   }

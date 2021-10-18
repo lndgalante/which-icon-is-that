@@ -189,30 +189,42 @@ async function saveIconLibraryInDB({ packId, packName }: { packId: string; packN
 
     const bytes = prettyBytes(size);
     const { innerSvg, viewBox } = getInnerHTMLFromSvgText(svg);
+
     const hash = createHash(innerSvg);
+    const hashNumber = hash
+      .split('')
+      .map((character) => character.charCodeAt(0))
+      .reduce((accumulator, characterCode) => accumulator + characterCode, 0);
+    const id = hash.slice(0, 4);
 
     const iconName = parsedIconName;
     const iconParsedName = iconNameWithSpaceWithFormattedNumber;
-    const synonyms = await generateIconNameSynonym(iconName);
 
-    if (synonyms) {
-      if (Array.isArray(synonyms)) {
-        const parsedSynonyms = synonyms.filter((synonym) => synonym.length !== 1);
-        for (const synonym of parsedSynonyms) {
-          const synonymId = createHash(synonym);
-          await transaction2.queryArray(`INSERT INTO tags (id, name) VALUES ($1, $2)`, synonymId, synonym);
+    /*
+      // OLD TAG GENERATION
+      const synonyms = await generateIconNameSynonym(iconName);
+
+      if (synonyms) {
+        if (Array.isArray(synonyms)) {
+          const parsedSynonyms = synonyms.filter((synonym) => synonym.length !== 1);
+          for (const synonym of parsedSynonyms) {
+            const synonymId = createHash(synonym);
+            await transaction2.queryArray(`INSERT INTO tags (id, name) VALUES ($1, $2)`, synonymId, synonym);
+            await transaction2.queryArray(`INSERT INTO tags_icons (hash, tag_id) VALUES ($1, $2)`, hash, synonymId);
+          }
+        } else {
+          const synonymId = createHash(synonyms);
+          await transaction2.queryArray(`INSERT INTO tags (id, name) VALUES ($1, $2)`, synonymId, synonyms);
           await transaction2.queryArray(`INSERT INTO tags_icons (hash, tag_id) VALUES ($1, $2)`, hash, synonymId);
         }
-      } else {
-        const synonymId = createHash(synonyms);
-        await transaction2.queryArray(`INSERT INTO tags (id, name) VALUES ($1, $2)`, synonymId, synonyms);
-        await transaction2.queryArray(`INSERT INTO tags_icons (hash, tag_id) VALUES ($1, $2)`, hash, synonymId);
       }
-    }
+    */
 
     await transaction2.queryArray(
-      `INSERT INTO icons (hash,svg,inner_svg,view_box,icon_type,bytes,pack_id,pack_name,icon_parsed_name,icon_name,react_icon_name,icon_file_name,found) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)`,
+      `INSERT INTO icons (id,hash,hash_number,svg,inner_svg,view_box,icon_type,bytes,pack_id,pack_name,icon_parsed_name,icon_name,react_icon_name,icon_file_name,found) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15)`,
+      id,
       hash,
+      hashNumber,
       svg,
       innerSvg,
       viewBox,
@@ -271,7 +283,7 @@ export async function saveIconsInDB() {
 
     await transaction.queryArray`CREATE TABLE paths (path TEXT, hash TEXT)`;
     await transaction.queryArray(
-      `CREATE TABLE icons (hash TEXT, svg TEXT, inner_svg TEXT, view_box TEXT, icon_type TEXT, bytes TEXT, pack_id TEXT, pack_name TEXT, icon_parsed_name TEXT, icon_name TEXT, react_icon_name TEXT, icon_file_name TEXT, found SERIAL)`,
+      `CREATE TABLE icons (id TEXT, hash TEXT, hash_number INTEGER, svg TEXT, inner_svg TEXT, view_box TEXT, icon_type TEXT, bytes TEXT, pack_id TEXT, pack_name TEXT, icon_parsed_name TEXT, icon_name TEXT, react_icon_name TEXT, icon_file_name TEXT, found SERIAL)`,
     );
     await transaction.queryArray`CREATE TABLE icon_libraries (name TEXT, total_icons INTEGER, license TEXT, stars TEXT, version TEXT, website TEXT, download_link TEXT, icon_types TEXT[][])`;
 

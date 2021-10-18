@@ -10,13 +10,21 @@ import {
   AccordionIcon,
 } from "@chakra-ui/react";
 
-// icons
-import { FiHome, FiSearch, FiClock, FiStar } from "react-icons/fi";
+//types
+import { IconsRelated } from "@modules/common/utils/types";
 
 // components
 import { BoxIcon } from "@modules/common/components/BoxIcon";
 
-export function IconRelated() {
+// utils
+import { getIconComponent } from "@modules/common/utils/getIconComponent";
+
+
+type IconRelatedProps = {
+  relatedIcons: IconsRelated[];
+};
+
+export function IconRelated({ relatedIcons }: IconRelatedProps) {
   return (
     <Stack as="article" order={{ base: 3, md: 3, lg: "inherit" }}>
       <Accordion allowToggle borderColor="brand.softGrey">
@@ -34,18 +42,21 @@ export function IconRelated() {
           </AccordionButton>
           <AccordionPanel pt={1} pb={6}>
             <Wrap spacing={5}>
-              <WrapItem>
-                <BoxIcon href="/feather/regular/home" icon={FiHome} label="Home" displayLabel />
-              </WrapItem>
-              <WrapItem>
-                <BoxIcon href="/feather/regular/search" icon={FiSearch} label="Search" displayLabel />
-              </WrapItem>
-              <WrapItem>
-                <BoxIcon href="/feather/regular/clock" icon={FiClock} label="Clock" displayLabel />
-              </WrapItem>
-              <WrapItem>
-                <BoxIcon href="/feather/regular/star" icon={FiStar} label="Star" displayLabel />
-              </WrapItem>
+              {relatedIcons?.map(({ iconName, packName, iconType, reactIconName }) => {
+                return (
+                  <WrapItem key={reactIconName}>
+                    <BoxIcon
+                      href={{
+                        pathname: "/[packName]/[iconType]/[iconName]",
+                        query: { packName, iconType, iconName },
+                      }}
+                      icon={getIconComponent(packName, reactIconName)}
+                      label={iconName}
+                      displayLabel
+                    />
+                  </WrapItem>
+                );
+              })}
             </Wrap>
           </AccordionPanel>
         </AccordionItem>

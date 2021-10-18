@@ -95,7 +95,7 @@ export function Navbar() {
       await api.postContact(values.email);
       displayToast(`Thanks to get in touch!`);
     } catch (error) {
-      console.log(`Error saving contact`, error)
+      console.log(`Error saving contact`, error);
     } finally {
       onModalClose();
     }
@@ -114,7 +114,13 @@ export function Navbar() {
     >
       <NextLink passHref href="/">
         <Link>
-          <HorizontalLogo _hover={{ backgroundColor: 'brand.lightOrange' }} transition="all 400ms ease-in-out" cursor="pointer" padding={1} borderRadius={4} />
+          <HorizontalLogo
+            _hover={{ backgroundColor: "brand.lightOrange" }}
+            transition="all 400ms ease-in-out"
+            cursor="pointer"
+            padding={1}
+            borderRadius={4}
+          />
         </Link>
       </NextLink>
 
@@ -163,11 +169,7 @@ export function Navbar() {
               {NAVBAR_LINKS.map(({ route, label }) => {
                 if (route === "/pricing") {
                   return (
-                    <Link
-                      color={isModalOpen ? "brand.softOrange" : "brand.white"}
-                      onClick={onModalOpen}
-                      key={route}
-                    >
+                    <Link color={isModalOpen ? "brand.softOrange" : "brand.white"} onClick={onModalOpen} key={route}>
                       {label}
                     </Link>
                   );
@@ -199,14 +201,28 @@ export function Navbar() {
 
       <Modal isOpen={isModalOpen} isCentered onClose={onModalClose}>
         <ModalOverlay />
-        <ModalContent minWidth={{ base: 'auto', md: 468 }} paddingX={{ base: 2, md: 6 }} paddingBottom={4}>
+        <ModalContent minWidth={{ base: "auto", md: 468 }} paddingX={{ base: 2, md: 6 }} paddingBottom={4}>
           <ModalCloseButton />
-          <ModalHeader color="brand.lightRed" fontWeight={800}>Pricing</ModalHeader>
+          <ModalHeader color="brand.lightRed" fontWeight={800}>
+            Pricing
+          </ModalHeader>
           <ModalBody>
             <Stack spacing={4} mb={6}>
               <Text fontWeight={700} fontSize={18} color="brand.darkRed">
-                These are some of the new features that we are developing for the pro version.
+                We&apos;re working on tons of new features for our free version!
               </Text>
+              <UnorderedList stylePosition="inside" spacing={1}>
+                <ListItem>New supported icon libraries</ListItem>
+                <ListItem>Sliders to modify SVG stroke width</ListItem>
+                <ListItem>Picker to modify SVG colors</ListItem>
+                <ListItem>Tags to identify groups of icons</ListItem>
+                <ListItem>Advanced filters in gallery page</ListItem>
+                <ListItem>Sponsoring popular icon libraries</ListItem>
+                <ListItem>Support for new frameworks</ListItem>
+                <ListItem>Tons of feedback, speed and usability improvements!</ListItem>
+              </UnorderedList>
+
+              <Text>But also these are some of the new features that we are developing for the pro version.</Text>
               <UnorderedList stylePosition="inside" spacing={1}>
                 <ListItem>Email support 24/7</ListItem>
                 <ListItem>Icon comparison tool</ListItem>
@@ -215,7 +231,9 @@ export function Navbar() {
                 <ListItem>Comment and rate icons libraries</ListItem>
                 <ListItem>Custom icon library with 200+ icons</ListItem>
                 <ListItem>Scene playground to drag and drop icons</ListItem>
-                <ListItem>Team project folders for your favorite icons</ListItem>
+                <ListItem>Project folders for teams with icons added</ListItem>
+                <ListItem>Profile page to display your favorite icons</ListItem>
+                {/* <ListItem>Icon Libraries NFTs Marketplace</ListItem> */}
               </UnorderedList>
             </Stack>
             <Stack>
@@ -227,7 +245,12 @@ export function Navbar() {
                   <VisuallyHidden>
                     <FormLabel htmlFor="email">Email</FormLabel>
                   </VisuallyHidden>
-                  <Input focusBorderColor="brand.softOrange" id="email" placeholder="yourmail@here.com" {...register("email")} />
+                  <Input
+                    focusBorderColor="brand.softOrange"
+                    id="email"
+                    placeholder="yourmail@here.com"
+                    {...register("email")}
+                  />
                   <FormErrorMessage color="brand.lightRed">{errors.email && errors.email.message}</FormErrorMessage>
                 </FormControl>
                 <Button variant="brand.solid" fontSize={14} fontWeight={500} isLoading={isSubmitting} type="submit">

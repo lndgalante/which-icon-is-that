@@ -8,6 +8,7 @@ import { getReverse } from './controllers/getReverse.ts';
 import { getIconByHash } from './controllers/getIconByHash.ts';
 import { getIconLibrary } from './controllers/getIconLibrary.ts';
 import { getSimilarIcons } from './controllers/getSimilarIcons.ts';
+import { getRelatedIcons } from './controllers/getRelatedIcons.ts';
 import { getIconSnippets } from './controllers/getIconSnippets.ts';
 import { getIconsGallery } from './controllers/getIconsGallery.ts';
 import { getFoundTimesIcon } from './controllers/getFoundTimesIcon.ts';
@@ -37,6 +38,8 @@ router
 
   /* Used on icon page to get icon types */
   .get('/icon/:iconName/:packName/types', getIconTypes)
+  /* Used on icon page to get icon types */
+  .get('/icon/:hash/:packName/:hashNumber/similar', getRelatedIcons)
 
   /* Used on icon page to get total found times */
   .get('/icon/:hash/found', getFoundTimesIcon)

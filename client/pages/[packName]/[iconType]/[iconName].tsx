@@ -38,20 +38,19 @@ export const getStaticProps: GetStaticProps<Props, Params> = async ({ params }) 
     const iconHash = initialData.result;
 
     // const { data: tags } = await api.getIconTags(iconHash);
-    const { data: snippets } = await api.getIconSnippets(iconHash);
-    console.log("\n ~ constgetStaticProps:GetStaticProps<Props,Params>= ~ snippets", snippets);
+    const { data: snippetsData } = await api.getIconSnippets(iconHash);
     const { data: icon } = await api.getIcon(iconHash);
-    console.log("\n ~ constgetStaticProps:GetStaticProps<Props,Params>= ~ icon", icon);
     const { data: iconLibrary } = await api.getIconLibrary(packName);
-    console.log("\n ~ constgetStaticProps:GetStaticProps<Props,Params>= ~ iconLibrary", iconLibrary);
     const { data: iconTypesData } = await api.getIconTypes(iconName, packName);
+    const { data: relatedIconsData } = await api.getSimilarIcons(iconHash, packName, icon?.svg?.hashNumber);
 
     return {
       props: {
         icon,
-        snippets,
         iconLibrary,
+        snippets: snippetsData.snippets,
         iconTypes: iconTypesData.iconTypes,
+        relatedIcons: relatedIconsData.relatedIcons,
       },
       revalidate: 86400,
     };
@@ -60,15 +59,11 @@ export const getStaticProps: GetStaticProps<Props, Params> = async ({ params }) 
   }
 };
 
-export default function IconPage({ icon, snippets, iconLibrary, iconTypes }: IconMetadata) {
-  console.log("\n ~ IconPage ~ icon", icon);
-  console.log("\n ~ iconLibrary", iconLibrary);
-
+export default function IconPage({ icon, snippets, iconLibrary, iconTypes, relatedIcons }: Props) {
   // constants
-  const { svg, links } = icon;
-  const { figma } = links
-  const { iconName, packName, reactIconName, parsedIconName, hash, bytes } = svg
+  const [svg, figma] = [icon?.svg, icon?.links?.figma];
   const { license, totalIcons, version, website, downloadLink } = iconLibrary;
+  const { iconName, packName, reactIconName, parsedIconName, hash, bytes } = svg;
 
   // next hooks
   const { query } = useRouter();
@@ -109,7 +104,7 @@ export default function IconPage({ icon, snippets, iconLibrary, iconTypes }: Ico
           downloadLink={downloadLink}
         />
         <IconExamples reactIcon={reactIcon} iconName={iconName} />
-        <IconRelated />
+        <IconRelated relatedIcons={relatedIcons} />
       </SimpleGrid>
     </Stack>
   );

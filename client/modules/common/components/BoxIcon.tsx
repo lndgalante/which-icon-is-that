@@ -1,10 +1,10 @@
-import NextLink from "next/link";
+import NextLink, { LinkProps } from "next/link";
 import { Icon, Link, Text, As } from "@chakra-ui/react";
 
 type BoxIconProps = {
   icon: As;
   label: string;
-  href: string;
+  href: LinkProps["href"];
   primary?: boolean;
   withShadow?: boolean;
   displayLabel?: boolean;

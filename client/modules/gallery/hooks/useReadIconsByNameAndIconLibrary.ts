@@ -6,17 +6,17 @@ import { IconsFoundResponse } from "@modules/common/utils/types";
 
 // fetcher
 const getIconsByIconNameAndIconLibrary = ({ queryKey }): Promise<IconsFoundResponse> => {
-  const { 2: iconName, 3: iconLibrary = "" } = queryKey;
-  return api.getIconsFindByIconNameAndIconLibrary(iconLibrary, iconName);
+  const { 2: iconName, 3: iconLibrary = "", 4: viewAllIconLibrary = "" } = queryKey;
+  return api.getIconsFindByIconNameAndIconLibrary(viewAllIconLibrary || iconLibrary, iconName);
 };
 
 // query hook
-export function useReadIconsByNameAndIconLibrary(iconName: string, iconLibrary: string) {
+export function useReadIconsByNameAndIconLibrary(iconName: string, iconLibrary: string, viewAllIconLibrary: string) {
   return useQuery<IconsFoundResponse, Error>(
-    ["icons", "find", iconName, iconLibrary],
+    ["icons", "find", iconName, iconLibrary, viewAllIconLibrary],
     getIconsByIconNameAndIconLibrary,
     {
-      enabled: Boolean(iconName || iconLibrary !== "all"),
+      enabled: Boolean(iconName || viewAllIconLibrary),
     },
   );
 }

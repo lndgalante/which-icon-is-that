@@ -16,18 +16,15 @@ export function IconNameInput({ value, onChange }: Props) {
   }
 
   return (
-    <InputGroup className="input-container" size="sm" position="relative">
-      <InputLeftElement
-        pointerEvents="none"
-        children={
-          <Icon
-            as={FiSearch}
-            transition="all 400ms ease-in-out"
-            sx={{ ".input-container:focus-within &": { color: "brand.text" } }}
-            color="brand.grey"
-          />
-        }
-      />
+    <InputGroup className="input-container" size="sm">
+      <InputLeftElement pointerEvents="none">
+        <Icon
+          as={FiSearch}
+          transition="all 400ms ease-in-out"
+          sx={{ ".input-container:focus-within &": { color: "brand.text" } }}
+          color="brand.grey"
+        />
+      </InputLeftElement>
       <Input
         value={value}
         onChange={handleInputChange}

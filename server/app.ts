@@ -4,13 +4,13 @@ import { Application } from 'https://deno.land/x/oak/mod.ts';
 
 // lib
 import { isDevelopment } from './lib/env.ts';
-import { saveIconsInDB } from './lib/icons.ts';
+// import { saveIconsInDB } from './lib/icons.ts';
 
 // routes
 import { router } from './routes.ts';
 
 // initial load
-await saveIconsInDB();
+// await saveIconsInDB();
 
 // env
 const origin = isDevelopment() ? 'http://localhost:3002' : 'https://www.whichiconisthat.com';
