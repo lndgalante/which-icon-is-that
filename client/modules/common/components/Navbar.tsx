@@ -220,20 +220,22 @@ export function Navbar() {
                 <ListItem>Sponsoring popular icon libraries</ListItem>
                 <ListItem>Support for new frameworks</ListItem>
                 <ListItem>Tons of feedback, speed and usability improvements!</ListItem>
+                <ListItem>PNG/JPG to SVG conversor</ListItem>
+                <ListItem>Google Chrome Extension</ListItem>
+                <ListItem>Bitmap support for drag and drop</ListItem>
               </UnorderedList>
 
-              <Text>But also these are some of the new features that we are developing for the pro version.</Text>
+              <Text>But we&apos;re also developing some great PRO ones, such as</Text>
               <UnorderedList stylePosition="inside" spacing={1}>
-                <ListItem>Email support 24/7</ListItem>
+                <ListItem>Support for paid libraries</ListItem>
+                <ListItem>Project folders for teams</ListItem>
                 <ListItem>Icon comparison tool</ListItem>
-                <ListItem>Support for Paid icon libaries</ListItem>
-                <ListItem>Instant icon libraries updates</ListItem>
-                <ListItem>Comment and rate icons libraries</ListItem>
-                <ListItem>Custom icon library with 200+ icons</ListItem>
-                <ListItem>Scene playground to drag and drop icons</ListItem>
-                <ListItem>Project folders for teams with icons added</ListItem>
-                <ListItem>Profile page to display your favorite icons</ListItem>
-                {/* <ListItem>Icon Libraries NFTs Marketplace</ListItem> */}
+                <ListItem>Comment, rate and favorite icons</ListItem>
+                <ListItem>Drag and Drop icon playground</ListItem>
+                <ListItem>Custom WIIT icon library</ListItem>
+                <ListItem>Instant library updates</ListItem>
+                <ListItem>Enhanced support</ListItem>
+                <ListItem>+ many more!</ListItem>
               </UnorderedList>
             </Stack>
             <Stack>
