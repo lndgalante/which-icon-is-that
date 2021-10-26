@@ -1,6 +1,5 @@
 import 'https://deno.land/x/dotenv/load.ts';
 import { Client } from 'https://deno.land/x/postgres/mod.ts';
-import { urlParse } from 'https://deno.land/x/url_parse/mod.ts';
 
 // lib
 import { isDevelopment } from '../lib/env.ts';
@@ -18,22 +17,11 @@ function createClientDevelopmentOptions() {
 }
 
 function createClientProductionOptions() {
-  const dbParsedUrl = urlParse(Deno.env.get('HEROKU_POSTGRESQL_CRIMSON_URL'));
-  console.log('\n ~ createClientProductionOptions ~ dbParsedUrl', dbParsedUrl)
-  const options = {
-    port: dbParsedUrl.port,
-    user: dbParsedUrl.username,
-    password: dbParsedUrl.password,
-    hostname: dbParsedUrl.hostname,
-    database: dbParsedUrl.pathname.slice(1),
-  };
-
-  return options;
+  return Deno.env.get('DATABASE_URL');
 }
 
 async function connectToPostgres() {
   const clientOptions = isDevelopment() ? createClientDevelopmentOptions() : createClientProductionOptions();
-  console.log('\n ~ connectToPostgres ~ clientOptions', clientOptions)
   const client = new Client(clientOptions);
 
   await client.connect();
