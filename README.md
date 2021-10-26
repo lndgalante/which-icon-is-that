@@ -48,15 +48,25 @@
   - [heroku/deno](https://github.com/chibat/heroku-buildpack-deno.git)
   - [heroku/nodejs](https://elements.heroku.com/buildpacks/heroku/heroku-buildpack-nodejs)
 
-
 - Populate Heroku DB
 
+  1. Create dump from local database
+
   ```bash
+  docker run bash -a which-icon-is-that
   PGPASSWORD=[PG_PASSWORD] pg_dump -Fc --no-acl --no-owner -h localhost -U [PG_USER] whichiconisthat > mydb.dump
   ```
 
+  2. Upload dump to
+
   ```bash
-  heroku pg:backups:restore [BUMP_URL] HEROKU_POSTGRESQL_CRIMSON_URL -a which-icon-is-that --confirm which-icon-is-that
+  curl --upload-file ./mydb.dump https://transfer.sh/91gdYu/mydump.txt
+  ```
+
+  3.
+
+  ```bash
+  heroku pg:backups:restore [BUMP_URL] DATABASE_URL -a which-icon-is-that --confirm which-icon-is-that
   ```
 
 - Logs
