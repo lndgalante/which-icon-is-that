@@ -13,18 +13,20 @@ import { IconLibrary } from "@modules/icon/components/IconLibrary";
 import { IconRelated } from "@modules/icon/components/IconRelated";
 import { IconExamples } from "@modules/icon/components/IconExamples";
 import { IconPlayground } from "@modules/icon/components/IconPlayground";
-import { DeveloperPanel } from "@modules/icon/components/DeveloperPanel";
+// import { DeveloperPanel } from "@modules/icon/components/DeveloperPanel";
 
 // types
-type Props = IconMetadata;
+type Props = Omit<IconMetadata, "snippets">;
 type Params = Pick<Svg, "packName" | "iconType" | "iconName">;
 
 // next lifecycle hooks
 export const getStaticPaths: GetStaticPaths = async () => {
   try {
     const { data } = await api.getPaths();
+    console.log('\n ~ constgetStaticPaths:GetStaticPaths= ~ data', data)
     return { paths: data.paths, fallback: false };
   } catch (error) {
+    console.log('\n ~ constgetStaticPaths:GetStaticPaths= ~ error', error)
     console.log("Error on getStaticPaths", error);
   }
 };
@@ -38,7 +40,7 @@ export const getStaticProps: GetStaticProps<Props, Params> = async ({ params }) 
     const iconHash = initialData.result;
 
     // const { data: tags } = await api.getIconTags(iconHash);
-    const { data: snippetsData } = await api.getIconSnippets(iconHash);
+    // const { data: snippetsData } = await api.getIconSnippets(iconHash);
     const { data: icon } = await api.getIcon(iconHash);
     const { data: iconLibrary } = await api.getIconLibrary(packName);
     const { data: iconTypesData } = await api.getIconTypes(iconName, packName);
@@ -48,7 +50,7 @@ export const getStaticProps: GetStaticProps<Props, Params> = async ({ params }) 
       props: {
         icon,
         iconLibrary,
-        snippets: snippetsData.snippets,
+        // snippets: snippetsData.snippets,
         iconTypes: iconTypesData.iconTypes,
         relatedIcons: relatedIconsData.relatedIcons,
       },
@@ -59,7 +61,7 @@ export const getStaticProps: GetStaticProps<Props, Params> = async ({ params }) 
   }
 };
 
-export default function IconPage({ icon, snippets, iconLibrary, iconTypes, relatedIcons }: Props) {
+export default function IconPage({ icon, iconLibrary, iconTypes, relatedIcons }: Props) {
   // constants
   const [svg, figma] = [icon?.svg, icon?.links?.figma];
   const { license, totalIcons, version, website, downloadLink } = iconLibrary;
@@ -84,7 +86,7 @@ export default function IconPage({ icon, snippets, iconLibrary, iconTypes, relat
     <Stack paddingBottom={32} spacing={10}>
       <Header iconName={parsedIconName} onOpen={onOpen} />
 
-      <DeveloperPanel packName={packName} snippets={snippets} onClose={onClose} isOpen={isOpen} />
+      {/* <DeveloperPanel packName={packName} snippets={snippets} onClose={onClose} isOpen={isOpen} /> */}
 
       <SimpleGrid columns={{ base: 1, md: 1, lg: 2 }} rowGap={{ base: 10, md: 8 }} columnGap={67} as="section">
         <IconPlayground
