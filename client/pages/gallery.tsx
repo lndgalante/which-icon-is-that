@@ -100,6 +100,10 @@ function Gallery({ svgs, packs }) {
   );
 
   // handlers
+  function handleChangeIconName(value) {
+    setIconNameQuery(value);
+  }
+
   function handleLibraryViewAll(iconLibrary: string) {
     setViewAllIconLibrary(iconLibrary);
   }
@@ -108,8 +112,18 @@ function Gallery({ svgs, packs }) {
     setViewAllIconLibrary("");
   }
 
+  function handleClearAllFilters() {
+    setIconNameQuery("");
+    setIconLibraryQuery(ALL_LIBRARIES);
+  }
+
   // constants
+  const isIconLibrarySelected = iconLibraryQuery.value !== "all";
+
+  const hasFiltersActive = Boolean(iconNameQuery || isIconLibrarySelected);
+
   const iconsToRender = foundIcons?.data?.svgs ?? svgs;
+
   const parsedIconsToRender = viewAllIconLibrary
     ? iconsToRender.filter(([iconLibrary]) => iconLibrary === viewAllIconLibrary)
     : iconsToRender;
@@ -162,7 +176,7 @@ function Gallery({ svgs, packs }) {
             margin="0 auto"
             borderRadius={8}
             shadow="6"
-            transition="all 400ms ease-in-out"
+            transition="all 200ms ease-in-out"
             _hover={{ shadow: "7" }}
             backgroundColor="brand.white"
             alignItems="center"
@@ -176,7 +190,12 @@ function Gallery({ svgs, packs }) {
               onChange={setIconLibraryQuery}
               options={iconLibrariesOptions}
             />
-            <IconNameInput value={iconNameQuery} onChange={setIconNameQuery} />
+            <IconNameInput
+              value={iconNameQuery}
+              onChange={setIconNameQuery}
+              shouldDisplayCross={hasFiltersActive}
+              onCrossClick={handleClearAllFilters}
+            />
           </Stack>
         </Stack>
       </Stack>
@@ -186,7 +205,13 @@ function Gallery({ svgs, packs }) {
           <MotionFade>
             {error && (
               <Stack alignItems="center" minHeight={320} mt={{ base: 45, md: 0 }}>
-                <Stack maxWidth={{ base: 284, md: 360 }} spacing={4} justifyContent="center" alignItems="center" textAlign="center">
+                <Stack
+                  maxWidth={{ base: 284, md: 360 }}
+                  spacing={4}
+                  justifyContent="center"
+                  alignItems="center"
+                  textAlign="center"
+                >
                   <BrokenLogo />
                   <Text>
                     Sorry, we did not find any icon, you can try looking for another icon or in another library.
@@ -202,7 +227,7 @@ function Gallery({ svgs, packs }) {
                 return (
                   <Stack key={iconLibrary} className="icon-library-container">
                     <HStack
-                      transform="all 400ms ease-in-out"
+                      transform="all 200ms ease-in-out"
                       position="sticky"
                       zIndex={5}
                       top={2}
@@ -220,7 +245,7 @@ function Gallery({ svgs, packs }) {
                                 alt={iconLibrary}
                                 filter="grayscale(1)"
                                 opacity={0.6}
-                                transition="all 400ms ease-in-out"
+                                transition="all 200ms ease-in-out"
                                 src={`/images/${iconLibrary}-color.png`}
                                 sx={{ ".icon-library-container:hover &": { filter: "grayscale(0)", opacity: 1 } }}
                               />

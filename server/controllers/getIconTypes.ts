@@ -17,7 +17,6 @@ export const getIconTypes = async ({
 
   try {
     const { rows, rowCount } = await iconTable.selectColumnsForTypes(iconName, packName);
-    console.log('\n ~ getIconTypes ~ rows', rows);
 
     if (rowCount === 0) {
       response.status = 404;

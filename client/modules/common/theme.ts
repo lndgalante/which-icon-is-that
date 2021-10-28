@@ -40,7 +40,6 @@ export const theme = extendTheme({
       lightOrangeModal: "rgba(255, 244, 239, 0.8)",
       blue: "#1C77FF",
     },
-
   },
   components: {
     Input: {
@@ -58,7 +57,7 @@ export const theme = extendTheme({
         "brand.underline": {
           fontWeight: 500,
           textDecoration: "underline",
-          transition: "all 400ms ease-in-out",
+          transition: "all 200ms ease-in-out",
           _hover: {
             opacity: 0.7,
           },
@@ -70,7 +69,7 @@ export const theme = extendTheme({
         "brand.underline": {
           fontWeight: 500,
           textDecoration: "underline",
-          transition: "all 400ms ease-in-out",
+          transition: "all 200ms ease-in-out",
           _hover: {
             opacity: 0.7,
           },
@@ -119,7 +118,7 @@ export const theme = extendTheme({
           fontSize: { base: "sm", md: "md" },
           backgroundColor: "brand.lightGrey",
           opacity: 1,
-          _hover: { backgroundColor: "brand.lightOrange", color: 'brand.darkRed' },
+          _hover: { backgroundColor: "brand.lightOrange", color: "brand.darkRed" },
         },
         "brand.outline": {
           borderWidth: 2,

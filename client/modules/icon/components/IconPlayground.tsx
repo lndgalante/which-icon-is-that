@@ -64,7 +64,7 @@ export function IconPlayground({ hash, iconSize, iconTypes, reactIcon, selectedT
                   position="relative"
                   _hover={{ "::before": { opacity: 1 }, "::after": { opacity: 1 } }}
                   _before={{
-                    transition: "all 400ms ease-in-out",
+                    transition: "all 200ms ease-in-out",
                     content: `""`,
                     opacity: 0,
                     position: "absolute",
@@ -75,7 +75,7 @@ export function IconPlayground({ hash, iconSize, iconTypes, reactIcon, selectedT
                     height: "100%",
                   }}
                   _after={{
-                    transition: "all 400ms ease-in-out",
+                    transition: "all 200ms ease-in-out",
                     content: `""`,
                     opacity: 0,
                     position: "absolute",
@@ -91,7 +91,7 @@ export function IconPlayground({ hash, iconSize, iconTypes, reactIcon, selectedT
                   <Icon as={reactIcon} w={6} h={6} opacity={0.3} />
 
                   <Stack
-                    transition="all 400ms ease-in-out"
+                    transition="all 200ms ease-in-out"
                     sx={{ ".icon-container:hover &": { opacity: 1 } }}
                     opacity={0}
                     width="fit-content"
@@ -109,7 +109,7 @@ export function IconPlayground({ hash, iconSize, iconTypes, reactIcon, selectedT
                   </Stack>
 
                   <Stack
-                    transition="all 400ms ease-in-out"
+                    transition="all 200ms ease-in-out"
                     sx={{
                       ".icon-container:hover &": {
                         opacity: 1,
@@ -129,7 +129,7 @@ export function IconPlayground({ hash, iconSize, iconTypes, reactIcon, selectedT
                   position="relative"
                   _hover={{ "::before": { opacity: 1 }, "::after": { opacity: 1 } }}
                   _before={{
-                    transition: "all 400ms ease-in-out",
+                    transition: "all 200ms ease-in-out",
                     content: `""`,
                     opacity: 0,
                     position: "absolute",
@@ -139,7 +139,7 @@ export function IconPlayground({ hash, iconSize, iconTypes, reactIcon, selectedT
                     height: "100%",
                   }}
                   _after={{
-                    transition: "all 400ms ease-in-out",
+                    transition: "all 200ms ease-in-out",
                     content: `""`,
                     opacity: 0,
                     position: "absolute",
@@ -154,7 +154,7 @@ export function IconPlayground({ hash, iconSize, iconTypes, reactIcon, selectedT
                 >
                   <Icon as={reactIcon} w={12} h={12} opacity={0.5} />
                   <Stack
-                    transition="all 400ms ease-in-out"
+                    transition="all 200ms ease-in-out"
                     sx={{ ".icon-container:hover &": { opacity: 1 } }}
                     opacity={0}
                     width="fit-content"
@@ -172,7 +172,7 @@ export function IconPlayground({ hash, iconSize, iconTypes, reactIcon, selectedT
                   </Stack>
 
                   <Stack
-                    transition="all 400ms ease-in-out"
+                    transition="all 200ms ease-in-out"
                     sx={{
                       ".icon-container:hover &": {
                         opacity: 1,
@@ -192,7 +192,7 @@ export function IconPlayground({ hash, iconSize, iconTypes, reactIcon, selectedT
                   position="relative"
                   _hover={{ "::before": { opacity: 1 }, "::after": { opacity: 1 } }}
                   _before={{
-                    transition: "all 400ms ease-in-out",
+                    transition: "all 200ms ease-in-out",
                     content: `""`,
                     opacity: 0,
                     position: "absolute",
@@ -204,7 +204,7 @@ export function IconPlayground({ hash, iconSize, iconTypes, reactIcon, selectedT
                     height: "76px",
                   }}
                   _after={{
-                    transition: "all 400ms ease-in-out",
+                    transition: "all 200ms ease-in-out",
                     content: `""`,
                     opacity: 0,
                     position: "absolute",
@@ -219,7 +219,7 @@ export function IconPlayground({ hash, iconSize, iconTypes, reactIcon, selectedT
                 >
                   <Icon as={reactIcon} w={20} h={20} />
                   <Stack
-                    transition="all 400ms ease-in-out"
+                    transition="all 200ms ease-in-out"
                     sx={{ ".icon-container:hover &": { opacity: 1 } }}
                     opacity={0}
                     width="fit-content"
@@ -237,7 +237,7 @@ export function IconPlayground({ hash, iconSize, iconTypes, reactIcon, selectedT
                   </Stack>
 
                   <Stack
-                    transition="all 400ms ease-in-out"
+                    transition="all 200ms ease-in-out"
                     sx={{
                       ".icon-container:hover &": {
                         opacity: 1,
@@ -258,7 +258,7 @@ export function IconPlayground({ hash, iconSize, iconTypes, reactIcon, selectedT
                   position="relative"
                   _hover={{ "::before": { opacity: 1 }, "::after": { opacity: 1 } }}
                   _before={{
-                    transition: "all 400ms ease-in-out",
+                    transition: "all 200ms ease-in-out",
                     content: `""`,
                     opacity: 0,
                     position: "absolute",
@@ -268,7 +268,7 @@ export function IconPlayground({ hash, iconSize, iconTypes, reactIcon, selectedT
                     height: "100%",
                   }}
                   _after={{
-                    transition: "all 400ms ease-in-out",
+                    transition: "all 200ms ease-in-out",
                     content: `""`,
                     opacity: 0,
                     position: "absolute",
@@ -283,7 +283,7 @@ export function IconPlayground({ hash, iconSize, iconTypes, reactIcon, selectedT
                 >
                   <Icon as={reactIcon} w={12} h={12} opacity={0.5} />
                   <Stack
-                    transition="all 400ms ease-in-out"
+                    transition="all 200ms ease-in-out"
                     sx={{ ".icon-container:hover &": { opacity: 1 } }}
                     opacity={0}
                     width="fit-content"
@@ -301,7 +301,7 @@ export function IconPlayground({ hash, iconSize, iconTypes, reactIcon, selectedT
                   </Stack>
 
                   <Stack
-                    transition="all 400ms ease-in-out"
+                    transition="all 200ms ease-in-out"
                     sx={{
                       ".icon-container:hover &": {
                         opacity: 1,
@@ -322,7 +322,7 @@ export function IconPlayground({ hash, iconSize, iconTypes, reactIcon, selectedT
                   position="relative"
                   _hover={{ "::before": { opacity: 1 }, "::after": { opacity: 1 } }}
                   _before={{
-                    transition: "all 400ms ease-in-out",
+                    transition: "all 200ms ease-in-out",
                     content: `""`,
                     opacity: 0,
                     position: "absolute",
@@ -332,7 +332,7 @@ export function IconPlayground({ hash, iconSize, iconTypes, reactIcon, selectedT
                     height: "100%",
                   }}
                   _after={{
-                    transition: "all 400ms ease-in-out",
+                    transition: "all 200ms ease-in-out",
                     content: `""`,
                     opacity: 0,
                     position: "absolute",
@@ -348,7 +348,7 @@ export function IconPlayground({ hash, iconSize, iconTypes, reactIcon, selectedT
                   <Icon as={reactIcon} w={6} h={6} opacity={0.3} />
 
                   <Stack
-                    transition="all 400ms ease-in-out"
+                    transition="all 200ms ease-in-out"
                     sx={{
                       ".icon-container:hover &": {
                         opacity: 1,
@@ -370,7 +370,7 @@ export function IconPlayground({ hash, iconSize, iconTypes, reactIcon, selectedT
                   </Stack>
 
                   <Stack
-                    transition="all 400ms ease-in-out"
+                    transition="all 200ms ease-in-out"
                     sx={{
                       ".icon-container:hover &": {
                         opacity: 1,

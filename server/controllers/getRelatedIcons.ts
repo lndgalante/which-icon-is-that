@@ -1,7 +1,6 @@
 import { Context } from 'https://deno.land/x/oak/mod.ts';
 
 // db
-import { tagsTable } from '../db/tags.ts';
 import { iconTable } from '../db/icon.ts';
 
 // lib
@@ -12,7 +11,6 @@ export const getRelatedIcons = async ({
   response,
 }: Context & { params: { hash: string; packName: string; hashNumber: string } }) => {
   const { hash, packName, hashNumber } = params;
-  console.log('\n ~ params', params);
 
   if (!hash && !packName) {
     response.status = 400;
@@ -37,7 +35,6 @@ export const getRelatedIcons = async ({
         reactIconName,
       }),
     );
-    console.log('\n ~ relatedIcons', relatedIcons);
 
     response.status = 200;
     response.body = {

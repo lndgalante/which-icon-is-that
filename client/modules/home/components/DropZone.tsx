@@ -160,7 +160,7 @@ export function DropZone() {
         height={{ base: 180, md: 262 }}
         position="absolute"
         width={{ base: 335, md: 454 }}
-        transition="all 400ms ease"
+        transition="all 200ms ease"
         willChange="transform"
         className="drop-zone"
         {...getRootProps()}
@@ -179,6 +179,7 @@ export function DropZone() {
           <Button
             paddingX={"1.4375rem"}
             paddingY={"1.5625rem"}
+            _focus={null}
             variant={isDragActive ? "brand.solidRed" : "brand.solid"}
             sx={{
               ".drop-zone:hover &": {

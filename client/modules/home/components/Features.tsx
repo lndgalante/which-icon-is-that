@@ -17,7 +17,7 @@ export function Features() {
         Know our features
       </Text>
 
-      <Stack spacing={{ base: 10, md: 28 }} >
+      <Stack spacing={{ base: 10, md: 28 }}>
         <Stack flexDirection={{ base: "column", md: "row" }} alignItems="center" as="article">
           <Stack
             width={{ base: 335, md: 720 }}
@@ -27,7 +27,12 @@ export function Features() {
             overflow="hidden"
             position="relative"
           >
-            <Shapes.EasyTopRight position="absolute" top={20} right={85} width={{ base: "2.0625rem", md: "6.4375rem" }} />
+            <Shapes.EasyTopRight
+              position="absolute"
+              top={20}
+              right={85}
+              width={{ base: "2.0625rem", md: "6.4375rem" }}
+            />
             <Shapes.EasyBottomLeft
               position="absolute"
               bottom={{ base: 28, md: 14 }}
@@ -41,8 +46,10 @@ export function Features() {
               top={{ base: 1, md: "8.2rem" }}
               left={{ base: 4, md: 20 }}
               position="absolute"
+              shadow="7"
+              borderRadius={{ base: 8, md: 16 }}
             >
-              <Image alt="Easy to find" src="/images/easy-to-find.png" shadow="7" borderRadius={{ base: 8, md: 16 }} />
+              <Image alt="Easy to find" src="/images/easy-to-find.png" />
             </Stack>
           </Stack>
           <Stack
@@ -104,13 +111,16 @@ export function Features() {
                 width={{ base: "1.875rem", md: "5.875rem" }}
               />
               <Stack
-                width={{ base: 302, md: 878 }}
-                height={{ base: 215, md: 624 }}
+                width={{ base: 302, md: 876 }}
+                height={{ base: 215, md: 622 }}
                 top={{ base: 1, md: 9 }}
                 left={{ base: 4, md: "5.8rem" }}
                 position="absolute"
+                overflow="hidden"
+                borderRadius={{ base: 8, md: 16 }}
+                shadow="7"
               >
-                <Image alt="Rich Icon data" src="/images/rich-icon-data.png" shadow="7" />
+                <Image alt="Rich Icon data" src="/images/rich-icon-data.png" />
               </Stack>
             </Stack>
           </Stack>
@@ -127,7 +137,7 @@ export function Features() {
               Developer Panel
             </Text>
             <Text maxWidth={452} fontSize={{ base: 14, md: 18 }}>
-              Find out how to {" "}
+              Find out how to{" "}
               <Text as="span" fontWeight={700}>
                 integrate any icon
               </Text>{" "}
@@ -143,7 +153,12 @@ export function Features() {
             overflow="hidden"
             position="relative"
           >
-            <Shapes.DeveloperBottomRight position="absolute" bottom={{ base: -28, md: -10 }} right={{ base: 1.5, md: "9.15rem" }} width={{ base: "2.0625rem", md: "6.4375rem" }} />
+            <Shapes.DeveloperBottomRight
+              position="absolute"
+              bottom={{ base: -28, md: -10 }}
+              right={{ base: 1.5, md: "9.15rem" }}
+              width={{ base: "2.0625rem", md: "6.4375rem" }}
+            />
             <Shapes.DeveloperTopLeft
               position="absolute"
               top={{ base: 12, md: "5.4rem" }}
@@ -158,13 +173,10 @@ export function Features() {
               top={{ base: 1, md: "8.2rem" }}
               right={{ base: 4, md: 20 }}
               position="absolute"
+              shadow="7"
+              borderRadius={{ base: 8, md: 16 }}
             >
-              <Image
-                alt="Developer panel"
-                src="/images/developer-panel.png"
-                shadow="7"
-                borderRadius={{ base: 8, md: 16 }}
-              />
+              <Image alt="Developer panel" src="/images/developer-panel.png" />
             </Stack>
           </Stack>
         </Stack>

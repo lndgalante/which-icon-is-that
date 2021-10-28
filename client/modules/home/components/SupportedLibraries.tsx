@@ -27,7 +27,7 @@ export function SupportedLibraries() {
               alt="Ant Design Icons"
               _hover={{ opacity: 0.6 }}
               src="/images/antdesign.png"
-              transition="all ease-in-out 400ms"
+              transition="all ease-in-out 200ms"
             />
           </Link>
         </NextLink>
@@ -38,7 +38,7 @@ export function SupportedLibraries() {
               alt="Bootstrap Icons"
               _hover={{ opacity: 0.6 }}
               src="/images/bootstrap.png"
-              transition="all ease-in-out 400ms"
+              transition="all ease-in-out 200ms"
             />
           </Link>
         </NextLink>
@@ -49,7 +49,7 @@ export function SupportedLibraries() {
               alt="Heroicons"
               _hover={{ opacity: 0.6 }}
               src="/images/heroicons.png"
-              transition="all ease-in-out 400ms"
+              transition="all ease-in-out 200ms"
             />
           </Link>
         </NextLink>
@@ -60,7 +60,7 @@ export function SupportedLibraries() {
               alt="Feather Icons"
               _hover={{ opacity: 0.6 }}
               src="/images/feather.png"
-              transition="all ease-in-out 400ms"
+              transition="all ease-in-out 200ms"
             />
           </Link>
         </NextLink>
@@ -71,7 +71,7 @@ export function SupportedLibraries() {
               alt="Font Awesome"
               _hover={{ opacity: 0.6 }}
               src="/images/font-awesome.png"
-              transition="all ease-in-out 400ms"
+              transition="all ease-in-out 200ms"
             />
           </Link>
         </NextLink>

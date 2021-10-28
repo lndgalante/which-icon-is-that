@@ -26,7 +26,7 @@ function FooterIcon({ icon, href, label, isEmail, onClick }: FooterIconProps) {
         color="brand.white"
         h={5}
         sx={{ ".footer-link:hover &": { color: "brand.softOrange" } }}
-        transition="all 400ms ease-in-out"
+        transition="all 200ms ease-in-out"
         w={5}
       />
     );
@@ -44,7 +44,7 @@ function FooterIcon({ icon, href, label, isEmail, onClick }: FooterIconProps) {
               color: "brand.softOrange",
             },
           }}
-          transition="all 400ms ease-in-out"
+          transition="all 200ms ease-in-out"
           w={5}
         />
       </LinkOverlay>

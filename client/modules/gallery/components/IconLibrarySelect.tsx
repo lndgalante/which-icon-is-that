@@ -2,7 +2,7 @@ import { Dispatch, SetStateAction } from "react";
 import { Icon, Button, Menu, MenuButton, MenuList, MenuItem, useBreakpointValue } from "@chakra-ui/react";
 
 // icons
-import { FiChevronDown, FiFilter } from "react-icons/fi";
+import { FiChevronDown, FiLayers } from "react-icons/fi";
 
 // components
 import { Feather, Heroicons, Bootstrap } from "@modules/gallery/components/Isologous";
@@ -21,17 +21,10 @@ type Props = {
 
 // constants
 const ISOLOGOUS = {
-  all: FiFilter,
+  all: FiLayers,
   feather: Feather,
   heroicons: Heroicons,
   bootstrap: Bootstrap,
-};
-
-const ISOLOGOUS_HOVER_ELEMENT = {
-  all: { stroke: "brand.darkRed" },
-  feather: { stroke: "brand.darkRed" },
-  heroicons: { fill: "brand.darkRed" },
-  bootstrap: { fill: "brand.darkRed" },
 };
 
 export function IconLibrarySelect({ label, value, options, onChange }: Props) {
@@ -72,15 +65,18 @@ export function IconLibrarySelect({ label, value, options, onChange }: Props) {
             className="menu-container"
             icon={
               <Icon
+                w={6}
+                h={6}
+                filter="grayscale(1)"
                 as={ISOLOGOUS[option.value]}
-                transition="all 400ms ease-in-out"
+                transition="all 200ms ease-in-out"
                 sx={{
-                  ".menu-container:hover & path": ISOLOGOUS_HOVER_ELEMENT[option.value],
+                  ".menu-container:hover &": { filter: "grayscale(0)" },
                 }}
               />
             }
             key={option.value}
-            transition="all 400ms ease-in-out"
+            transition="all 200ms ease-in-out"
             color="brand.text"
             fontSize={14}
             onClick={() => handleSelectOption(option)}

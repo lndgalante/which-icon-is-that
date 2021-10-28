@@ -20,7 +20,7 @@ export function InputExample({ reactIcon, size }: InputExamplesProps) {
           w={ICON_SIZES[size]}
           h={ICON_SIZES[size]}
           color="brand.grey"
-          transition="all ease-in-out 400ms"
+          transition="all ease-in-out 200ms"
           sx={{
             ".input-example:focus-within &": { color: "brand.warmBlack" },
             ".input-example:hover &": { color: "brand.warmBlack" },
@@ -32,7 +32,7 @@ export function InputExample({ reactIcon, size }: InputExamplesProps) {
         type="text"
         placeholder="Input text"
         borderColor="brand.grey"
-        transition="all ease-in-out 400ms"
+        transition="all ease-in-out 200ms"
         _focus={{ borderColor: "brand.warmBlack" }}
         _hover={{ borderColor: "brand.warmBlack" }}
       />

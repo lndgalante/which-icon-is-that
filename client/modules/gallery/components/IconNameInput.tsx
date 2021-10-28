@@ -1,5 +1,6 @@
+import { FiX } from "react-icons/fi";
 import { Dispatch, SetStateAction } from "react";
-import { Input, InputGroup, InputLeftElement, Icon } from "@chakra-ui/react";
+import { Input, InputGroup, InputLeftElement, InputRightElement, Icon } from "@chakra-ui/react";
 
 // icons
 import { FiSearch } from "react-icons/fi";
@@ -7,9 +8,11 @@ import { FiSearch } from "react-icons/fi";
 type Props = {
   value: string;
   onChange: Dispatch<SetStateAction<string>>;
+  shouldDisplayCross: boolean;
+  onCrossClick: () => void;
 };
 
-export function IconNameInput({ value, onChange }: Props) {
+export function IconNameInput({ value, onChange, shouldDisplayCross, onCrossClick }: Props) {
   // handlers
   function handleInputChange({ target }) {
     onChange(target.value);
@@ -20,11 +23,22 @@ export function IconNameInput({ value, onChange }: Props) {
       <InputLeftElement pointerEvents="none">
         <Icon
           as={FiSearch}
-          transition="all 400ms ease-in-out"
+          transition="all 200ms ease-in-out"
           sx={{ ".input-container:focus-within &": { color: "brand.text" } }}
           color="brand.grey"
         />
       </InputLeftElement>
+      {shouldDisplayCross && (
+        <InputRightElement cursor="pointer">
+          <Icon
+            as={FiX}
+            onClick={onCrossClick}
+            transition="all 200ms ease-in-out"
+            sx={{ ".input-container:focus-within &": { color: "brand.text" } }}
+            color="brand.grey"
+          />
+        </InputRightElement>
+      )}
       <Input
         value={value}
         onChange={handleInputChange}

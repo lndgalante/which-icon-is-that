@@ -78,8 +78,7 @@ export function DeveloperPanel({ packName, snippets, isOpen, onClose }: Develope
               <Tabs onChange={handleTabChange}>
                 <TabList borderBottomColor="brand.grey">
                   <Tab
-
-                    transition="border-bottom-color 400ms ease-in-out"
+                    transition="border-bottom-color 200ms ease-in-out"
                     borderBottomWidth={2}
                     _focus={{ boxShadow: "none" }}
                     _selected={{
@@ -98,8 +97,7 @@ export function DeveloperPanel({ packName, snippets, isOpen, onClose }: Develope
                     HTML
                   </Tab>
                   <Tab
-
-                    transition="border-bottom-color 400ms ease-in-out"
+                    transition="border-bottom-color 200ms ease-in-out"
                     borderBottomWidth={2}
                     _focus={{ boxShadow: "none" }}
                     _selected={{
@@ -119,8 +117,7 @@ export function DeveloperPanel({ packName, snippets, isOpen, onClose }: Develope
                     React
                   </Tab>
                   <Tab
-
-                    transition="border-bottom-color 400ms ease-in-out"
+                    transition="border-bottom-color 200ms ease-in-out"
                     borderBottomWidth={2}
                     _focus={{ boxShadow: "none" }}
                     _selected={{

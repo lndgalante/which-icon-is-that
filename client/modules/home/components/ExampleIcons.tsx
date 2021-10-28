@@ -20,7 +20,7 @@ export function ExampleIcons() {
         justifyContent="center"
         spacing={{ base: 0, md: 6 }}
       >
-        <Text color="brand.darkRed" fontSize="sm" fontWeight={700} mb={{ base: "1.3rem", md: 0 }}>
+        <Text color="brand.darkRed" fontSize={16} fontWeight={700} mb={{ base: "1.3rem", md: 0 }}>
           Try one of these:
         </Text>
         <HStack alignItems="center" justifyContent="center" spacing={4}>
@@ -38,7 +38,7 @@ export function ExampleIcons() {
             as={FiArrowRight}
             ml={1.5}
             sx={{ ".gallery-link:hover &": { transform: "translateX(1px) scaleX(1.25)" } }}
-            transition="all ease-in-out 400ms"
+            transition="all ease-in-out 200ms"
             willChange="transform"
           />
         </Link>

@@ -59,13 +59,13 @@ class Icon {
     if (iconLibrary === 'all') {
       return client.queryObject(
         `SELECT pack_name, icon_type, icon_name, react_icon_name FROM icons WHERE icon_name ~ $1`,
-        iconName,
+        iconName.toLowerCase(),
       );
     }
 
     return client.queryObject(
       `SELECT pack_name, icon_type, icon_name, react_icon_name FROM icons WHERE icon_name ~ $1 AND pack_name = $2`,
-      iconName,
+      iconName.toLowerCase(),
       iconLibrary,
     );
   }

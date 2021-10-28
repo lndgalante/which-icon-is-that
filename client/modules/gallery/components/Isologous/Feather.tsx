@@ -2,10 +2,10 @@ import { Icon, IconProps } from "@chakra-ui/react";
 
 export function Feather(props: IconProps) {
   return (
-    <Icon width={35} height={35} viewBox="0 0 35 35" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+    <Icon width={40} height={40} viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
       <path
-        d="M29.093 17.927A8.63 8.63 0 1016.89 5.723l-9.703 9.702v12.218h12.218l9.688-9.716zM22.999 11.832L2.875 31.956M25.155 21.894H12.937"
-        stroke="#797979"
+        d="M33.25 20.487A9.862 9.862 0 1019.302 6.54L8.214 17.63v13.963h13.963L33.25 20.488zM26.284 13.523L3.286 36.52M28.749 25.022H14.785"
+        stroke="#000"
         strokeWidth={3.483}
         strokeLinecap="round"
         strokeLinejoin="round"

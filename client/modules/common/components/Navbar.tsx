@@ -116,7 +116,7 @@ export function Navbar() {
         <Link>
           <HorizontalLogo
             _hover={{ backgroundColor: "brand.lightOrange" }}
-            transition="all 400ms ease-in-out"
+            transition="all 200ms ease-in-out"
             cursor="pointer"
             padding={1}
             borderRadius={4}
@@ -124,16 +124,20 @@ export function Navbar() {
         </Link>
       </NextLink>
 
-      <HStack alignItems="center" display={{ base: "none", md: "flex" }} fontSize="sm" fontWeight={500} spacing={10}>
+      <HStack alignItems="center" display={{ base: "none", md: "flex" }} fontSize="sm" fontWeight={500} spacing={4}>
         {NAVBAR_LINKS.map(({ route, label }) => {
           if (route === "/pricing") {
             return (
               <Link
-                color={isModalOpen ? "brand.orange" : "brand.warmBlack"}
-                _hover={{ color: "brand.orange" }}
-                transition="all 400ms ease-in-out"
+                color={isModalOpen ? "brand.darkRed" : "brand.warmBlack"}
+                _hover={{ color: "brand.darkRed" }}
+                transition="all 200ms ease-in-out"
                 onClick={onModalOpen}
                 key={route}
+                backgroundColor={route === pathname ? "brand.lightGrey" : "transparent"}
+                paddingX={5}
+                paddingY={2}
+                borderRadius={8}
               >
                 {label}
               </Link>
@@ -143,9 +147,13 @@ export function Navbar() {
           return (
             <NextLink passHref href={route} key={route}>
               <Link
-                color={route === pathname ? "brand.orange" : "brand.warmBlack"}
-                _hover={{ color: "brand.orange" }}
-                transition="all 400ms ease-in-out"
+                color={route === pathname ? "brand.darkRed" : "brand.warmBlack"}
+                _hover={{ color: "brand.darkRed" }}
+                transition="all 200ms ease-in-out"
+                backgroundColor={route === pathname ? "brand.lightGrey" : "transparent"}
+                paddingX={5}
+                paddingY={2}
+                borderRadius={8}
               >
                 {label}
               </Link>
@@ -156,7 +164,7 @@ export function Navbar() {
 
       <Icon as={FiMenu} cursor="pointer" display={{ base: "block", md: "none" }} h={6} w={6} onClick={onDrawerOpen} />
 
-      <Drawer isOpen={isDrawerOpen} size="full" onClose={onDrawerClose}>
+      <Drawer isOpen={isDrawerOpen} size="full" onClose={onDrawerClose} autoFocus={false}>
         <DrawerContent backgroundColor="brand.lightRed" paddingY={12}>
           <DrawerHeader>
             <Stack alignItems="flex-end">
@@ -177,7 +185,9 @@ export function Navbar() {
 
                 return (
                   <NextLink passHref href={route} key={route}>
-                    <Link color={route === pathname ? "brand.softOrange" : "brand.white"}>{label}</Link>
+                    <Link color={route === pathname ? "brand.softOrange" : "brand.white"} onClick={onDrawerClose}>
+                      {label}
+                    </Link>
                   </NextLink>
                 );
               })}

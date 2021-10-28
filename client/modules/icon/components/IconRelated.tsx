@@ -1,9 +1,8 @@
 import {
-  Wrap,
-  WrapItem,
   Stack,
   Text,
   Accordion,
+  SimpleGrid,
   AccordionItem,
   AccordionButton,
   AccordionPanel,
@@ -18,7 +17,6 @@ import { BoxIcon } from "@modules/common/components/BoxIcon";
 
 // utils
 import { getIconComponent } from "@modules/common/utils/getIconComponent";
-
 
 type IconRelatedProps = {
   relatedIcons: IconsRelated[];
@@ -41,23 +39,22 @@ export function IconRelated({ relatedIcons }: IconRelatedProps) {
             <AccordionIcon color="brand.darkRed" />
           </AccordionButton>
           <AccordionPanel pt={1} pb={6}>
-            <Wrap spacing={5}>
+            <SimpleGrid gridTemplateColumns="repeat(auto-fit, 80px)" spacing={{ base: "14px", md: "28px" }}>
               {relatedIcons?.map(({ iconName, packName, iconType, reactIconName }) => {
                 return (
-                  <WrapItem key={reactIconName}>
-                    <BoxIcon
-                      href={{
-                        pathname: "/[packName]/[iconType]/[iconName]",
-                        query: { packName, iconType, iconName },
-                      }}
-                      icon={getIconComponent(packName, reactIconName)}
-                      label={iconName}
-                      displayLabel
-                    />
-                  </WrapItem>
+                  <BoxIcon
+                    key={reactIconName}
+                    href={{
+                      pathname: "/[packName]/[iconType]/[iconName]",
+                      query: { packName, iconType, iconName },
+                    }}
+                    icon={getIconComponent(packName, reactIconName)}
+                    label={iconName}
+                    displayLabel
+                  />
                 );
               })}
-            </Wrap>
+            </SimpleGrid>
           </AccordionPanel>
         </AccordionItem>
       </Accordion>

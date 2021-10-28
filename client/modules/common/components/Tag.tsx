@@ -8,12 +8,10 @@ export function Tag(props: TagProps) {
       borderRadius={8}
       paddingX={4}
       paddingY={2}
-      transition="all 400ms ease-in-out"
+      transition="all 200ms ease-in-out"
       {...props}
     >
-      <Text color="brand.warmBlack" opacity={0.7}>
-        {props.children}
-      </Text>
+      <Text color="brand.text">{props.children}</Text>
     </ChakraTag>
   );
 }

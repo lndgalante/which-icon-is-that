@@ -50,7 +50,6 @@ function Contact() {
 
   // handlers
   async function onSubmit(values) {
-    console.log("\n ~ onSubmit ~ values", values);
     try {
       await api.postContact(values.email, values.name, values.message);
       reset();
@@ -99,7 +98,7 @@ function Contact() {
                 borderRadius={{ base: 8, md: 16 }}
                 paddingX={{ base: 2, md: 6 }}
                 paddingY={{ base: 2, md: 6 }}
-                transition='all 400ms ease-in-out'
+                transition='all 200ms ease-in-out'
                 sx={{ ".footer-link:hover &": { backgroundColor: "brand.softOrange" } }}
               >
                 <Icon as={FaDiscord} w={6} h={6} color="brand.orange" />
