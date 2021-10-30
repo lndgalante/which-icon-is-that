@@ -53,14 +53,20 @@
   1. Create dump from local database
 
   ```bash
-  docker run bash -a which-icon-is-that
-  PGPASSWORD=[PG_PASSWORD] pg_dump -Fc --no-acl --no-owner -h localhost -U [PG_USER] whichiconisthat > mydb.dump
+  docker exec -it postgres12 bash
+  PGPASSWORD=[PG_PASSWORD] pg_dump -Fc --no-acl --no-owner -h localhost -U [PG_USER] wiit > mydb.dump
   ```
 
-  2. Upload dump to
+  2. Copy dump to local machine
 
   ```bash
-  curl --upload-file ./mydb.dump https://transfer.sh/91gdYu/mydump.txt
+  docker cp postgres12:/mydb.dump [YOUR_PATH]
+  ```
+
+  3. Upload it to the cloud
+
+  ```bash
+    curl --upload-file ./mydb.dump https://transfer.sh/mydb.dump
   ```
 
   3.
