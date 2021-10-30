@@ -5,7 +5,7 @@ import { Icon, Button, Menu, MenuButton, MenuList, MenuItem, useBreakpointValue 
 import { FiChevronDown, FiLayers } from "react-icons/fi";
 
 // components
-import { Feather, Heroicons, Bootstrap } from "@modules/gallery/components/Isologous";
+import { Feather, Heroicons, Bootstrap, AntDesign, Boxicons, FontAwesome, Icons8 } from "@modules/gallery/components/Isologous";
 
 type Option = {
   label: string;
@@ -25,6 +25,10 @@ const ISOLOGOUS = {
   feather: Feather,
   heroicons: Heroicons,
   bootstrap: Bootstrap,
+  antdesign: AntDesign,
+  boxicons: Boxicons,
+  fontawesome: FontAwesome,
+  flatcoloricons: Icons8,
 };
 
 export function IconLibrarySelect({ label, value, options, onChange }: Props) {

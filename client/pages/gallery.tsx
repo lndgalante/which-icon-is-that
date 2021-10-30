@@ -47,6 +47,10 @@ const iconLibrariesOptions = [
   { value: "bootstrap", label: "Bootstrap Icons" },
   { value: "feather", label: "Feather Icons" },
   { value: "heroicons", label: "Heroicons" },
+  { value: "antdesign", label: "Ant Design" },
+  { value: "boxicons", label: "Boxicons" },
+  { value: "fontawesome", label: "Fontawesome" },
+  { value: "flatcoloricons", label: "Icons8" },
 ];
 
 function Gallery({ svgs, packs }) {
@@ -127,6 +131,7 @@ function Gallery({ svgs, packs }) {
   const parsedIconsToRender = viewAllIconLibrary
     ? iconsToRender.filter(([iconLibrary]) => iconLibrary === viewAllIconLibrary)
     : iconsToRender;
+
 
   return (
     <Stack pb={{ base: 9, md: 240 }}>
@@ -280,6 +285,7 @@ function Gallery({ svgs, packs }) {
                       <SimpleGrid gridTemplateColumns="repeat(auto-fit, 80px)" spacing={{ base: "14px", md: "28px" }}>
                         {icons.map((icon) => {
                           const { iconType, iconName, reactIconName } = icon;
+                          const isTwoTone = iconType === 'twotone';
                           const reactIcon = getIconComponent(iconLibrary, reactIconName);
 
                           if (!reactIcon) return null;
@@ -293,6 +299,7 @@ function Gallery({ svgs, packs }) {
                                   href={`/${iconLibrary}/${iconType}/${iconName}`}
                                   icon={reactIcon}
                                   label={iconName}
+                                  isTwoTone={isTwoTone}
                                   displayLabel
                                 />
                               )}

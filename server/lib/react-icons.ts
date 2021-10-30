@@ -10,16 +10,17 @@ const Ai = require('react-icons/ai');
 const Bi = require('react-icons/bi');
 const Di = require('react-icons/di');
 const Fc = require('react-icons/fc');
-
+const Fa = require('react-icons/fa');
 
 // react-icons
- const heroicons = Object.keys(Hi);
- const feather = Object.keys(Fi);
- const bootstrap = Object.keys(Bs);
- const antdesign = Object.keys(Ai);
- const boxicons = Object.keys(Bi);
- const devicon = Object.keys(Di);
- const flatcoloricons = Object.keys(Fc);
+const heroicons = Object.keys(Hi);
+const feather = Object.keys(Fi);
+const bootstrap = Object.keys(Bs);
+const antdesign = Object.keys(Ai);
+const boxicons = Object.keys(Bi);
+const devicon = Object.keys(Di);
+const flatcoloricons = Object.keys(Fc);
+const fontawesome = Object.keys(Fa);
 
 function parseReactIconsNames(icons: string[]) {
   return icons.map((icon) => {
@@ -36,8 +37,9 @@ export const reactIconsPacks = {
   antdesign,
   boxicons,
   devicon,
-  flatcoloricons
-}
+  flatcoloricons,
+  fontawesome,
+};
 
 export const reactIconsParsedPacks = {
   heroicons: parseReactIconsNames(heroicons),
@@ -47,4 +49,5 @@ export const reactIconsParsedPacks = {
   boxicons: parseReactIconsNames(boxicons),
   devicon: parseReactIconsNames(devicon),
   flatcoloricons: parseReactIconsNames(flatcoloricons),
+  fontawesome: parseReactIconsNames(fontawesome),
 };

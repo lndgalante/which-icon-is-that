@@ -6,6 +6,8 @@ import * as FeatherIcons from "react-icons/fi";
 import * as BootstrapIcons from "react-icons/bs";
 import * as AntdesignIcons from "react-icons/ai";
 import * as BoxIcons from "react-icons/bi";
+import * as FlatColorIcons from "react-icons/fc";
+import * as FontAwesome from "react-icons/fa";
 
 export function getIconComponent(packName: string, reactIconName: string): As {
   if (packName === "bootstrap") {
@@ -26,5 +28,13 @@ export function getIconComponent(packName: string, reactIconName: string): As {
 
   if (packName === "boxicons") {
     return BoxIcons[reactIconName] as As;
+  }
+
+  if (packName === "flatcoloricons") {
+    return FlatColorIcons[reactIconName] as As;
+  }
+
+  if (packName === "fontawesome") {
+    return FontAwesome[reactIconName] as As;
   }
 }

@@ -6,11 +6,12 @@ type BoxIconProps = {
   label: string;
   href: LinkProps["href"];
   primary?: boolean;
+  isTwoTone?: boolean;
   withShadow?: boolean;
   displayLabel?: boolean;
 };
 
-export function BoxIcon({ icon, label, href, primary, displayLabel, withShadow }: BoxIconProps) {
+export function BoxIcon({ icon, label, href, primary, displayLabel, withShadow, isTwoTone }: BoxIconProps) {
   return (
     <NextLink passHref href={href}>
       <Link
@@ -37,11 +38,13 @@ export function BoxIcon({ icon, label, href, primary, displayLabel, withShadow }
           w={displayLabel ? 6 : 5}
           h={displayLabel ? 6 : 5}
           aria-label={label}
-          color={primary ? "brand.darkRed" : "brand.warmBlack"}
           as={icon}
           _hover={{ backgroundColor: "transparent" }}
           backgroundColor="transparent"
-          sx={{ ".boxicon-container:hover &": { color: "brand.darkRed" } }}
+          sx={{
+            ".boxicon-container:hover &": { color: "brand.darkRed" },
+            ...(isTwoTone && { "path[fill]": { fill: "brand.softOrange" } }),
+          }}
         />
         {displayLabel && (
           <Text fontSize={12} mt={2} maxWidth={20} px={1} isTruncated>

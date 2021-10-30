@@ -57,33 +57,36 @@ export async function generateIconNameSynonym(iconName: string): Promise<string[
   return synonyms;
 }
 
-let i = 0;
-
 const PACKS_ICON_TYPES = {
   feather: {
     base: 'outlined',
   },
   bootstrap: {
-    base: 'outlined',
     fill: 'solid',
+    base: 'outlined',
   },
   heroicons: {
-    outline: 'outlined',
     solid: 'solid',
+    outline: 'outlined',
   },
   antdesign: {
+    fill: 'solid',
     outline: 'outlined',
-    fill: 'filled',
     twotone: 'twotone',
   },
-  boxicons: {
-    regular: 'regular',
-  },
   devicon: {
-    base: 'logos',
+    base: 'outlined',
+  },
+  boxicons: {
+    regular: 'outlined',
   },
   flatcoloricons: {
-    base: 'solid',
+    base: 'color',
+  },
+  fontawesome: {
+    regular: 'outlined',
+    solid: 'solid',
+    brands: 'logos',
   },
 };
 
@@ -95,6 +98,7 @@ const DEFAULT_ICON_TYPES = {
   boxicons: PACKS_ICON_TYPES.boxicons.regular,
   devicon: PACKS_ICON_TYPES.devicon.base,
   flatcoloricons: PACKS_ICON_TYPES.flatcoloricons.base,
+  fontawesome: PACKS_ICON_TYPES.fontawesome.regular,
 };
 
 type IconTypes = 'base' | 'outline' | 'solid' | 'fill' | 'twotone' | 'regular';
@@ -112,9 +116,12 @@ async function saveIconLibraryInDB({ packId, packName }: { packId: string; packN
 
   const unzippedNames = await getFiles(unzippedDirectoryPack);
 
-  const possibleTypesRegex = /outline|solid|fill|twotone|logos|regular|(original|plain|line)(-wordmark)?/gi;
+  const possibleTypesRegex = /brands|outline|solid|fill|twotone|logos|regular|(original|plain|line)(-wordmark)?/gi;
   const svgFiles = unzippedNames
+    // filter file containing all the icons from bootstrap
     .filter(({ name, ext }) => !(name === 'bootstrap-icons.svg') && ext === 'svg')
+    // filter variants from devicons
+    .filter(({ name, realPath }) => !(realPath.includes('devicon') && name.match(/plain|original/g)))
     .map(({ name, path }) => {
       const [iconType] = path.match(possibleTypesRegex) || [DEFAULT_ICON_TYPES[packName as PacksNames]];
       return { name, path, iconType };
@@ -129,8 +136,9 @@ async function saveIconLibraryInDB({ packId, packName }: { packId: string; packN
       PACKS_ICON_TYPES[packName as PacksNames][iconType as IconTypes] || DEFAULT_ICON_TYPES[packName as PacksNames];
 
     const iconNameWithoutExtension = name.replace('.svg', '');
-    const iconNameWithoutDash = iconNameWithoutExtension.replace(/-/g, '');
-    const iconNameWithSpaceWithFormattedNumber = iconNameWithoutExtension
+    const iconNameWithoutDash = iconNameWithoutExtension.replace(/-|_/g, '');
+
+    let iconNameWithSpaceWithFormattedNumber = iconNameWithoutExtension
       .replace(/-/g, ' ')
       .replace(/[0-9]/g, (match) => `(${match})`);
 
@@ -152,9 +160,19 @@ async function saveIconLibraryInDB({ packId, packName }: { packId: string; packN
       parsedIconNameForReactIcon = `${parsedIconNameForReactIcon}`;
     }
 
-    const parsedIconNameForReactIconInLowerCase = parsedIconNameForReactIcon.toLowerCase();
+    if (packName === 'devicon') {
+      parsedIconName = iconNameWithoutExtension.split('-')[0];
+      parsedIconNameForReactIcon = `${parsedIconName}`;
+    }
+
+    if (packName === 'boxicons') {
+      parsedIconName = iconNameWithoutDash.slice(2);
+      iconNameWithSpaceWithFormattedNumber = iconNameWithSpaceWithFormattedNumber.slice(3);
+    }
+
+    const parsedIconNameForReactIconInLowerCase = parsedIconNameForReactIcon.toLowerCase().trim();
     const value = reactIconPack.find((reactIconName) => {
-      let parsedReactIconName = reactIconName.toLowerCase();
+      const parsedReactIconName = reactIconName.toLowerCase().trim();
 
       if (packName === 'bootstrap') {
         return `bs${parsedIconNameForReactIconInLowerCase}` === parsedReactIconName;
@@ -166,6 +184,18 @@ async function saveIconLibraryInDB({ packId, packName }: { packId: string; packN
 
       if (packName === 'feather') {
         return parsedReactIconName.slice(2) === parsedIconNameForReactIconInLowerCase;
+      }
+
+      if (packName === 'flatcoloricons') {
+        return `fc${parsedIconNameForReactIconInLowerCase.replace(/_/g, '')}` === parsedReactIconName;
+      }
+
+      if (packName === 'fontawesome') {
+        if (parsedIconType === 'outlined') {
+          return parsedReactIconName.includes(`fareg${parsedIconNameForReactIconInLowerCase}`);
+        }
+
+        return parsedReactIconName.includes(parsedIconNameForReactIconInLowerCase);
       }
 
       return parsedReactIconName.includes(parsedIconNameForReactIconInLowerCase);

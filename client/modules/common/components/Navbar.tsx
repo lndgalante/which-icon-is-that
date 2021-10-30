@@ -130,7 +130,7 @@ export function Navbar() {
             return (
               <Link
                 color={isModalOpen ? "brand.darkRed" : "brand.warmBlack"}
-                _hover={{ color: "brand.darkRed" }}
+                _hover={{ color: "brand.darkRed", backgroundColor: "brand.lightGrey" }}
                 transition="all 200ms ease-in-out"
                 onClick={onModalOpen}
                 key={route}

@@ -30,7 +30,7 @@ export async function generateIconSnippets(
   iconName: string,
   packName: PacksNames,
   packId: string,
-  reactIconName: string
+  reactIconName: string,
 ) {
   const componentName = createReactComponentName(packName, iconName);
 
@@ -333,6 +333,7 @@ export async function generateIconSnippets(
     antdesign: FEATHER_CODES,
     bootstrap: FEATHER_CODES,
     flatcoloricons: FEATHER_CODES,
+    fontawesome: FEATHER_CODES,
   };
 
   return iconCodes[packName];
