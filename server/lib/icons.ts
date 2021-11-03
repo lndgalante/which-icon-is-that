@@ -151,7 +151,7 @@ async function saveIconLibraryInDB({ packId, packName }: { packId: string; packN
     }
 
     if (packName === 'heroicons') {
-      const iconTypeReactIcon = parsedIconType === 'outlined' ? 'outline' : '';
+      const iconTypeReactIcon = iconType === 'outline' ? 'outline' : '';
       parsedIconNameForReactIcon = `${iconTypeReactIcon}${parsedIconNameForReactIcon}`;
     }
 
@@ -174,6 +174,18 @@ async function saveIconLibraryInDB({ packId, packName }: { packId: string; packN
     const value = reactIconPack.find((reactIconName) => {
       const parsedReactIconName = reactIconName.toLowerCase().trim();
 
+      if (packName === 'heroicons') {
+        if (parsedIconType === 'outlined') {
+          return `hi${parsedIconNameForReactIconInLowerCase}` === parsedReactIconName;
+        }
+
+        return `hi${parsedIconNameForReactIconInLowerCase}` === parsedReactIconName;
+      }
+
+      if (packName === 'boxicons') {
+        return `bi${parsedIconNameForReactIconInLowerCase}` === parsedReactIconName;
+      }
+
       if (packName === 'bootstrap') {
         return `bs${parsedIconNameForReactIconInLowerCase}` === parsedReactIconName;
       }
@@ -192,10 +204,10 @@ async function saveIconLibraryInDB({ packId, packName }: { packId: string; packN
 
       if (packName === 'fontawesome') {
         if (parsedIconType === 'outlined') {
-          return parsedReactIconName.includes(`fareg${parsedIconNameForReactIconInLowerCase}`);
+          return parsedReactIconName === `fareg${parsedIconNameForReactIconInLowerCase}`;
         }
 
-        return parsedReactIconName.includes(parsedIconNameForReactIconInLowerCase);
+        return `fa${parsedIconNameForReactIconInLowerCase}` === parsedReactIconName;
       }
 
       return parsedReactIconName.includes(parsedIconNameForReactIconInLowerCase);

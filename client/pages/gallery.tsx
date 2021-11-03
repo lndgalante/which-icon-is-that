@@ -129,8 +129,8 @@ function Gallery({ svgs, packs }) {
   const iconsToRender = foundIcons?.data?.svgs ?? svgs;
 
   const parsedIconsToRender = viewAllIconLibrary
-    ? iconsToRender.filter(([iconLibrary]) => iconLibrary === viewAllIconLibrary)
-    : iconsToRender;
+  ? iconsToRender.filter(([iconLibrary]) => iconLibrary === viewAllIconLibrary)
+  : iconsToRender;
 
 
   return (
