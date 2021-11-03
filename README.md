@@ -18,24 +18,26 @@
 
 ## Development
 
-- Requirements (run only once)
+1. Requirements (run only once)
 
-  ```
-  brew install node deno
-  deno install -qAf --unstable https://deno.land/x/denon/denon.ts
-  ```
+```
+brew install node deno
+deno install -qAf --unstable https://deno.land/x/denon/denon.ts
+```
 
-* Client-side
+2. Request environment variables needed for each folder, client and server
 
-  ```bash
-  cd client/ && yarn && yarn dev
-  ```
+3. Client-side
 
-- Server-side
+```bash
+cd client/ && yarn && yarn dev
+```
 
-  ```bash
-  cd server/ && denon run --unstable --allow-run --allow-env --allow-read --allow-write --allow-net app.ts
-  ```
+4. Server-side
+
+```bash
+cd server/ && denon run --unstable --allow-run --allow-env --allow-read --allow-write --allow-net app.ts
+```
 
 ## Heroku
 
@@ -78,7 +80,7 @@
 - Logs
 
   ```bash
-  heroku logs -a which-icon-is-that
+  heroku logs -t -a which-icon-is-that
   ```
 
 ## Built using
