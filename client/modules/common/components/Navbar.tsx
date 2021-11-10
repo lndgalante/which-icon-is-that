@@ -208,43 +208,53 @@ export function Navbar() {
 
       <Modal isOpen={isModalOpen} isCentered onClose={onModalClose}>
         <ModalOverlay />
-        <ModalContent minWidth={{ base: "auto", md: 468 }} paddingX={{ base: 2, md: 6 }} paddingBottom={4}>
+        <ModalContent minWidth={{ base: "auto", md: 920 }} paddingX={{ base: 2, md: 6 }} paddingBottom={4}>
           <ModalCloseButton />
           <ModalHeader color="brand.lightRed" fontWeight={800}>
             Pricing
           </ModalHeader>
           <ModalBody>
-            <Stack spacing={4} mb={6}>
-              <Text fontWeight={700} fontSize={18} color="brand.darkRed">
-                We&apos;re working on tons of new features for our free version!
-              </Text>
-              <UnorderedList stylePosition="inside" spacing={1}>
-                <ListItem>New supported icon libraries</ListItem>
-                <ListItem>Sliders to modify SVG stroke width</ListItem>
-                <ListItem>Picker to modify SVG colors</ListItem>
-                <ListItem>Tags to identify groups of icons</ListItem>
-                <ListItem>Advanced filters in gallery page</ListItem>
-                <ListItem>Sponsoring popular icon libraries</ListItem>
-                <ListItem>Support for new frameworks</ListItem>
-                <ListItem>Tons of feedback, speed and usability improvements!</ListItem>
-                <ListItem>PNG/JPG to SVG conversor</ListItem>
-                <ListItem>Google Chrome Extension</ListItem>
-                <ListItem>Bitmap support for drag and drop</ListItem>
-              </UnorderedList>
+            <HStack spacing={{ base: 0, md: 4 }} mb={6} flexDirection={{ base: "column", md: "row" }}>
+              <Stack flex={1} mb={{ base: 4, md: 0 }}>
+                <Text fontWeight={700} fontSize={18} color="brand.darkRed">
+                  Incoming new features for the free version!
+                </Text>
+                <UnorderedList stylePosition="inside" spacing={1}>
+                  <ListItem>New supported icon libraries</ListItem>
+                  <ListItem>Sliders to modify SVG stroke width</ListItem>
+                  <ListItem>Picker to modify SVG colors</ListItem>
+                  <ListItem>Tags to identify groups of icons</ListItem>
+                  <ListItem>Advanced filters in gallery page</ListItem>
+                  <ListItem>Sponsoring popular icon libraries</ListItem>
+                  <ListItem>Support for new frameworks</ListItem>
+                  <ListItem>PNG/JPG to SVG conversor</ListItem>
+                  <ListItem>+ many more!</ListItem>
 
-              <Text>But we&apos;re also developing some great PRO ones, such as</Text>
-              <UnorderedList stylePosition="inside" spacing={1}>
-                <ListItem>Support for paid libraries</ListItem>
-                <ListItem>Project folders for teams</ListItem>
-                <ListItem>Icon comparison tool</ListItem>
-                <ListItem>Comment, rate and favorite icons</ListItem>
-                <ListItem>Drag and Drop icon playground</ListItem>
-                <ListItem>Custom WIIT icon library</ListItem>
-                <ListItem>Instant library updates</ListItem>
-                <ListItem>Enhanced support</ListItem>
-                <ListItem>+ many more!</ListItem>
-              </UnorderedList>
-            </Stack>
+                  {/*
+                  <ListItem>Google Chrome Extension</ListItem>
+                  <ListItem>Tons of feedback, speed and usability improvements!</ListItem>
+                  <ListItem>Bitmap support for drag and drop</ListItem>
+                  */}
+                </UnorderedList>
+              </Stack>
+
+              <Stack flex={1}>
+                <Text fontWeight={700} fontSize={18} color="brand.darkRed">
+                  We&apos;re also developing some great PRO ones
+                </Text>
+                <UnorderedList stylePosition="inside" spacing={1}>
+                  <ListItem>Support for paid libraries</ListItem>
+                  <ListItem>Project folders for teams</ListItem>
+                  <ListItem>Icon comparison tool</ListItem>
+                  <ListItem>Comment, rate and favorite icons</ListItem>
+                  <ListItem>Drag and Drop icon playground</ListItem>
+                  <ListItem>Custom WIIT icon library</ListItem>
+                  <ListItem>Instant library updates</ListItem>
+                  <ListItem>Enhanced support</ListItem>
+                  <ListItem>+ many more!</ListItem>
+                </UnorderedList>
+              </Stack>
+            </HStack>
             <Stack>
               <Text fontWeight={600} fontSize={18} color="brand.text">
                 Get notified
