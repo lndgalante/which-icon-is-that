@@ -2,10 +2,8 @@ import NextLink from "next/link";
 import {
   Icon,
   Stack,
-  LinkOverlay,
   HStack,
   Link,
-  LinkBox,
   Drawer,
   DrawerContent,
   DrawerHeader,
@@ -32,15 +30,18 @@ import { z } from "zod";
 import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { FiMenu, FiX, FiGithub, FiTwitter } from "react-icons/fi";
+import { FiMenu, FiMail, FiX, FiTwitter } from "react-icons/fi";
 
 // utils
 import { api } from "@modules/common/utils/api";
 
 // hooks
 import { useToast } from "@modules/common/hooks/useToast";
+import { useCopyEmail } from "@modules/common/hooks/useCopyEmail";
 
 // components
+import { Discord } from "@modules/common/components/Discord";
+import { FooterIcon } from "@modules/common/components/FooterIcon";
 import { HorizontalLogo } from "@modules/common/components/HorizontalLogo";
 
 const NAVBAR_LINKS = [
@@ -83,6 +84,7 @@ export function Navbar() {
   } = useForm({ resolver: zodResolver(VALIDATION_SCHEMA) });
 
   // custom hooks
+  const { onCopy } = useCopyEmail();
   const { displayToast } = useToast();
 
   // constants
@@ -195,16 +197,11 @@ export function Navbar() {
           </DrawerBody>
 
           <DrawerFooter alignItems="center" justifyContent="center">
-            <LinkBox>
-              <LinkOverlay isExternal href="https://twitter.com/whichiconisthat">
-                <Icon as={FiTwitter} color="brand.white" h={6} w={6} />
-              </LinkOverlay>
-            </LinkBox>
-            <LinkBox>
-              <LinkOverlay isExternal href="https://github.com/lndgalante/which-icon-is-that">
-                <Icon as={FiGithub} color="brand.white" h={6} ml={4} w={6} />
-              </LinkOverlay>
-            </LinkBox>
+            <HStack spacing={4}>
+              <FooterIcon href="whichiconisthat@gmail.com" label="Email" icon={FiMail} onClick={onCopy} isEmail />
+              <FooterIcon href="https://twitter.com/whichiconisthat" label="Twitter" icon={FiTwitter} />
+              <FooterIcon href="https://discord.gg/xTpegNF9bj" label="Discord" icon={Discord} />
+            </HStack>
           </DrawerFooter>
         </DrawerContent>
       </Drawer>

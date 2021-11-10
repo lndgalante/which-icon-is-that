@@ -1,66 +1,18 @@
 import NextLink from "next/link";
-import { useEffect } from "react";
-import { Stack, HStack, Text, Link, LinkBox, LinkOverlay, Icon, useClipboard, As } from "@chakra-ui/react";
+import { Stack, HStack, Text, Link } from "@chakra-ui/react";
 
 // icons
-import { FaDiscord, FaEnvelope, FaTwitter } from "react-icons/fa";
+import { FiTwitter, FiMail } from "react-icons/fi";
 
 // components
-import { useToast } from "@modules/common/hooks/useToast";
+import { Discord } from "@modules/common/components/Discord";
+import { FooterIcon } from "@modules/common/components/FooterIcon";
 
-type FooterIconProps = {
-  icon: As;
-  href: string;
-  label: string;
-  isEmail?: boolean;
-  onClick?: () => void;
-};
-
-function FooterIcon({ icon, href, label, isEmail, onClick }: FooterIconProps) {
-  if (isEmail) {
-    return (
-      <Icon
-        onClick={isEmail ? onClick : null}
-        as={icon}
-        cursor="pointer"
-        color="brand.white"
-        h={5}
-        sx={{ ".footer-link:hover &": { color: "brand.softOrange" } }}
-        transition="all 200ms ease-in-out"
-        w={5}
-      />
-    );
-  }
-
-  return (
-    <LinkBox cursor="pointer">
-      <LinkOverlay isExternal aria-label={label} className="footer-link" href={href}>
-        <Icon
-          as={icon}
-          color="brand.white"
-          h={5}
-          sx={{
-            ".footer-link:hover &": {
-              color: "brand.softOrange",
-            },
-          }}
-          transition="all 200ms ease-in-out"
-          w={5}
-        />
-      </LinkOverlay>
-    </LinkBox>
-  );
-}
+// hooks
+import { useCopyEmail } from "@modules/common/hooks/useCopyEmail";
 
 export function Footer() {
-  const { displayToast } = useToast();
-  const { hasCopied, onCopy } = useClipboard("whichiconisthat@gmail.com");
-
-  useEffect(() => {
-    if (hasCopied) {
-      displayToast("Email copied to your clipboard.");
-    }
-  }, [hasCopied]);
+  const { onCopy } = useCopyEmail();
 
   return (
     <Stack
@@ -82,9 +34,9 @@ export function Footer() {
           Copyright &copy; 2021 WIIT. All rights reserved.
         </Text>
         <HStack alignItems="center" spacing={4}>
-          <FooterIcon href="whichiconisthat@gmail.com" label="Email" icon={FaEnvelope} onClick={onCopy} isEmail />
-          <FooterIcon href="https://twitter.com/whichiconisthat" label="Twitter" icon={FaTwitter} />
-          <FooterIcon href="https://discord.gg/xTpegNF9bj" label="Discord" icon={FaDiscord} />
+          <FooterIcon href="whichiconisthat@gmail.com" label="Email" icon={FiMail} onClick={onCopy} isEmail />
+          <FooterIcon href="https://twitter.com/whichiconisthat" label="Twitter" icon={FiTwitter} />
+          <FooterIcon href="https://discord.gg/xTpegNF9bj" label="Discord" icon={Discord} />
         </HStack>
       </HStack>
 
