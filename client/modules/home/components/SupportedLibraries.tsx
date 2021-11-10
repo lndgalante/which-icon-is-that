@@ -70,7 +70,7 @@ export function SupportedLibraries() {
             <Image
               alt="Font Awesome"
               _hover={{ opacity: 0.6 }}
-              src="/images/font-awesome.png"
+              src="/images/fontawesome.png"
               transition="all ease-in-out 200ms"
             />
           </Link>
