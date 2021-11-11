@@ -74,7 +74,6 @@ function Gallery({ svgs, packs }) {
 
   // scroll hooks
   const { y } = useWindowScroll();
-  console.log("\n ~ Gallery ~ y", y);
 
   // query hooks
   const {
@@ -280,8 +279,8 @@ function Gallery({ svgs, packs }) {
                               <Image
                                 paddingLeft={1}
                                 alt={iconLibrary}
-                                filter="grayscale(1)"
-                                opacity={0.6}
+                                filter={iconLibrary === viewAllIconLibrary ? "grayscale(0)" : "grayscale(1)"}
+                                opacity={0.8}
                                 transition="all 200ms ease-in-out"
                                 src={`/images/${iconLibrary}-color.png`}
                                 sx={{ ".icon-library-container:hover &": { filter: "grayscale(0)", opacity: 1 } }}
