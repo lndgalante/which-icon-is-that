@@ -62,8 +62,8 @@ export const getStaticProps: GetStaticProps<Props, Params> = async ({ params }) 
 export default function IconPage({ icon, iconLibrary, iconTypes, relatedIcons }: Props) {
   // constants
   const [svg, figma] = [icon?.svg, icon?.links?.figma];
-  const { license, totalIcons, version, website, downloadLink } = iconLibrary;
   const { iconName, packName, reactIconName, parsedIconName, hash, bytes } = svg;
+  const { license, totalIcons, version, website, downloadLink, parsedName } = iconLibrary;
 
   // next hooks
   const { query } = useRouter();
@@ -82,7 +82,7 @@ export default function IconPage({ icon, iconLibrary, iconTypes, relatedIcons }:
 
   return (
     <Stack paddingBottom={32} spacing={10}>
-      <Header iconName={parsedIconName} onOpen={onOpen} />
+      <Header iconName={parsedIconName} packName={packName} packParsedName={parsedName} onOpen={onOpen} />
 
       {/* <DeveloperPanel packName={packName} snippets={snippets} onClose={onClose} isOpen={isOpen} /> */}
 

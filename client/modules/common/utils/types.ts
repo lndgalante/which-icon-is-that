@@ -35,6 +35,7 @@ export type Tag = {
 
 export type IconLibrary = {
   name: string;
+  parsedName: string;
   license: string;
   totalIcons: number;
   version: string;

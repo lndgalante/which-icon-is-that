@@ -31,16 +31,17 @@ export const getIconLibrary = async ({ params, response }: Context & { params: {
         version,
         license,
         website,
-        download_link: downloadLink,
-        total_icons: totalIcons,
         icon_types: iconTypes,
+        total_icons: totalIcons,
+        parsed_name: parsedName,
+        download_link: downloadLink,
       },
     ] = rows as [IconLibrary];
 
     response.status = 200;
     response.body = {
       success: true,
-      data: { name, stars, version, license, website, downloadLink, totalIcons, iconTypes },
+      data: { name, parsedName, stars, version, license, website, downloadLink, totalIcons, iconTypes },
     };
   } catch (error) {
     console.log('Server error', error);

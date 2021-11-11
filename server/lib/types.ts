@@ -39,6 +39,7 @@ export type Svg = {
 
 export type IconLibrary = {
   name: string;
+  parsed_name: string;
   stars: string;
   total_icons: number;
   license: string;
