@@ -21,7 +21,7 @@ export function SupportedLibraries() {
         spacing={{ base: 12, md: 8 }}
         maxWidth={1064}
       >
-        <NextLink passHref href="/gallery?iconLibrary=antd">
+        <NextLink passHref href="/gallery?iconLibrary=antdesign&iconName=%20">
           <Link aria-label="Ant Design Icons">
             <Image
               alt="Ant Design Icons"
@@ -32,7 +32,7 @@ export function SupportedLibraries() {
           </Link>
         </NextLink>
 
-        <NextLink passHref href="/gallery?iconLibrary=bootstrap">
+        <NextLink passHref href="/gallery?iconLibrary=bootstrap&iconName=%20">
           <Link aria-label="Bootstrap Icons">
             <Image
               alt="Bootstrap Icons"
@@ -43,7 +43,7 @@ export function SupportedLibraries() {
           </Link>
         </NextLink>
 
-        <NextLink passHref href="/gallery?iconLibrary=heroicons">
+        <NextLink passHref href="/gallery?iconLibrary=heroicons&iconName=%20">
           <Link aria-label="Heroicons">
             <Image
               alt="Heroicons"
@@ -54,7 +54,7 @@ export function SupportedLibraries() {
           </Link>
         </NextLink>
 
-        <NextLink passHref href="/gallery?iconLibrary=feather">
+        <NextLink passHref href="/gallery?iconLibrary=feather&iconName=%20">
           <Link aria-label="Feather Icons">
             <Image
               alt="Feather Icons"
@@ -65,7 +65,7 @@ export function SupportedLibraries() {
           </Link>
         </NextLink>
 
-        <NextLink passHref href="/gallery?iconLibrary=fontawesome">
+        <NextLink passHref href="/gallery?iconLibrary=fontawesome&iconName=%20">
           <Link aria-label="Font Awesome" display={{ base: "none", md: "inherit" }}>
             <Image
               alt="Font Awesome"
