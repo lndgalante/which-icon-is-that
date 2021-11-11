@@ -80,6 +80,12 @@ function Gallery({ svgs, packs }) {
   // effects
   useEffect(
     function updateQueryParams() {
+      const isIconNameWithWhitespace =  /^\s+$/.test(iconNameQueryDebounced)
+
+      if (isIconNameWithWhitespace && iconLibraryQuery.value === 'all' ) {
+        return
+      }
+
       push(
         {
           query: {
