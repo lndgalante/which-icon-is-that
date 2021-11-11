@@ -89,7 +89,7 @@ cd server/ && denon run --unstable --allow-run --allow-env --allow-read --allow-
 - [Next.js](https://nextjs.org) client framework
 - [Vercel](https://vercel.com) for client deployment
 - [Heroku](https://www.heroku.com) for server deployment
-- [Fathom](https://usefathom.com) for analytics
+- [Plausible](https://plausible.io) for analytics
 
 ## Investment
 
@@ -101,3 +101,4 @@ cd server/ && denon run --unstable --allow-run --allow-env --allow-read --allow-
 - [Twitter](https://twitter.com/whichiconisthat)
 - [Website](https://www.whichiconisthat.com)
 - [Repository](https://github.com/lndgalante/which-icon-is-that)
+- [Plausible](https://plausible.io/whichiconisthat.com)
