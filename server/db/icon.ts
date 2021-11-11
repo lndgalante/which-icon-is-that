@@ -49,23 +49,26 @@ class Icon {
   }
 
   selectIconsByIconNameAndIconLibrary(iconName: string, iconLibrary: string) {
-    if (iconName === '' && iconLibrary !== 'all') {
+    const parsedIconName = iconName.toLowerCase().replace(/\s+/g, '');
+
+    if (parsedIconName === '' && iconLibrary !== 'all') {
       return client.queryObject(
         `SELECT pack_name, icon_type, icon_name, react_icon_name FROM icons WHERE pack_name = $1`,
         iconLibrary,
       );
     }
 
+
     if (iconLibrary === 'all') {
       return client.queryObject(
         `SELECT pack_name, icon_type, icon_name, react_icon_name FROM icons WHERE icon_name ~ $1`,
-        iconName.toLowerCase(),
+        parsedIconName,
       );
     }
 
     return client.queryObject(
       `SELECT pack_name, icon_type, icon_name, react_icon_name FROM icons WHERE icon_name ~ $1 AND pack_name = $2`,
-      iconName.toLowerCase(),
+      parsedIconName,
       iconLibrary,
     );
   }

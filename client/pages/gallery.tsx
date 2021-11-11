@@ -1,10 +1,10 @@
 import { useRouter } from "next/router";
 import { GetServerSideProps } from "next";
 import { useDebounce } from "use-debounce";
+import { FiArrowUp } from "react-icons/fi";
 import { useEffect, useState } from "react";
 import { useWindowScroll } from "react-use";
 import { HStack, Stack, Icon, Text, SimpleGrid, Image, Button, LinkBox, LinkOverlay } from "@chakra-ui/react";
-import { FiArrowUp } from "react-icons/fi";
 
 // utils
 import { api } from "@modules/common/utils/api";
