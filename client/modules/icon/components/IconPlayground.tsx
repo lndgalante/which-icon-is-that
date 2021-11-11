@@ -57,7 +57,7 @@ export function IconPlayground({ hash, iconSize, iconTypes, reactIcon, selectedT
                   backgroundColor="brand.white"
                 >
                   <Text color="brand.warmBlack" fontSize="sm" opacity={0.5}>
-                    {isLoading ? "Loading..." : `Found: ${data?.data?.found} times`}
+                    {isLoading || !data ? "Loading..." : `Found: ${data?.data?.found} times`}
                   </Text>
                 </Stack>
                 <Stack
