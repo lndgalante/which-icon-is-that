@@ -2,8 +2,8 @@ import { useRouter } from "next/router";
 import { GetServerSideProps } from "next";
 import { useDebounce } from "use-debounce";
 import { FiArrowUp } from "react-icons/fi";
-import { useEffect, useState } from "react";
 import { useWindowScroll } from "react-use";
+import { useEffect, useState, useRef } from "react";
 import { HStack, Stack, Icon, Text, SimpleGrid, Image, Button, LinkBox, LinkOverlay } from "@chakra-ui/react";
 
 // utils
@@ -65,6 +65,7 @@ function Gallery({ svgs, packs }) {
   const defaultIconLibrary = iconLibrariesOptions.find(({ value }) => value === decodedIconLibraryQuery);
 
   // react hooks
+  const intersectionRef = useRef(null);
   const [viewAllIconLibrary, setViewAllIconLibrary] = useState("");
   const [iconNameQuery, setIconNameQuery] = useState(decodedIconNameQuery);
   const [iconLibraryQuery, setIconLibraryQuery] = useState(defaultIconLibrary);
@@ -102,7 +103,7 @@ function Gallery({ svgs, packs }) {
         { shallow: true },
       );
     },
-    [iconLibraryQuery, iconNameQueryDebounced],
+    [iconLibraryQuery, iconNameQueryDebounced], // eslint-disable-line react-hooks/exhaustive-deps
   );
 
   useEffect(
@@ -117,6 +118,10 @@ function Gallery({ svgs, packs }) {
   // handlers
   function handleChangeIconName(value) {
     setIconNameQuery(value);
+  }
+
+  function handleChangeIconLibrary(value) {
+    setIconLibraryQuery(value);
   }
 
   function handleLibraryViewAll(iconLibrary: string) {
@@ -206,12 +211,12 @@ function Gallery({ svgs, packs }) {
             <IconLibrarySelect
               label={iconLibraryQuery.label}
               value={iconLibraryQuery.value}
-              onChange={setIconLibraryQuery}
+              onChange={handleChangeIconLibrary}
               options={iconLibrariesOptions}
             />
             <IconNameInput
               value={iconNameQuery}
-              onChange={setIconNameQuery}
+              onChange={handleChangeIconName}
               shouldDisplayCross={hasFiltersActive}
               onCrossClick={handleClearAllFilters}
             />
@@ -263,6 +268,7 @@ function Gallery({ svgs, packs }) {
                 return (
                   <Stack key={iconLibrary} className="icon-library-container">
                     <HStack
+                      ref={intersectionRef}
                       transform="all 200ms ease-in-out"
                       position="sticky"
                       zIndex={5}

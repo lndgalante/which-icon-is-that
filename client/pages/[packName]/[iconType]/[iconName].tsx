@@ -69,7 +69,7 @@ export default function IconPage({ icon, iconLibrary, iconTypes, relatedIcons }:
   const { query } = useRouter();
 
   // chakra hooks
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const { onOpen } = useDisclosure();
 
   // constants
   const { iconType: iconTypeCurrentUrl } = query;

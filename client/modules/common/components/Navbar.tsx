@@ -29,7 +29,7 @@ import {
 import { z } from "zod";
 import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { zodResolver } from '@hookform/resolvers/zod/dist/zod';
 import { FiMenu, FiMail, FiX, FiTwitter } from "react-icons/fi";
 
 // utils
