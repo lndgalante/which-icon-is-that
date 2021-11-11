@@ -2,7 +2,9 @@ import { useRouter } from "next/router";
 import { GetServerSideProps } from "next";
 import { useDebounce } from "use-debounce";
 import { useEffect, useState } from "react";
-import { HStack, Stack, Text, SimpleGrid, Image, Button, LinkBox, LinkOverlay } from "@chakra-ui/react";
+import { useWindowScroll } from "react-use";
+import { HStack, Stack, Icon, Text, SimpleGrid, Image, Button, LinkBox, LinkOverlay } from "@chakra-ui/react";
+import { FiArrowUp } from "react-icons/fi";
 
 // utils
 import { api } from "@modules/common/utils/api";
@@ -70,6 +72,10 @@ function Gallery({ svgs, packs }) {
   // debounce hooks
   const [iconNameQueryDebounced] = useDebounce(iconNameQuery, 1000);
 
+  // scroll hooks
+  const { y } = useWindowScroll();
+  console.log("\n ~ Gallery ~ y", y);
+
   // query hooks
   const {
     error,
@@ -80,10 +86,10 @@ function Gallery({ svgs, packs }) {
   // effects
   useEffect(
     function updateQueryParams() {
-      const isIconNameWithWhitespace =  /^\s+$/.test(iconNameQueryDebounced)
+      const isIconNameWithWhitespace = /^\s+$/.test(iconNameQueryDebounced);
 
-      if (isIconNameWithWhitespace && iconLibraryQuery.value === 'all' ) {
-        return
+      if (isIconNameWithWhitespace && iconLibraryQuery.value === "all") {
+        return;
       }
 
       push(
@@ -127,6 +133,10 @@ function Gallery({ svgs, packs }) {
     setIconLibraryQuery(ALL_LIBRARIES);
   }
 
+  function handleScrollToTop() {
+    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+  }
+
   // constants
   const isIconLibrarySelected = iconLibraryQuery.value !== "all";
 
@@ -135,12 +145,11 @@ function Gallery({ svgs, packs }) {
   const iconsToRender = foundIcons?.data?.svgs ?? svgs;
 
   const parsedIconsToRender = viewAllIconLibrary
-  ? iconsToRender.filter(([iconLibrary]) => iconLibrary === viewAllIconLibrary)
-  : iconsToRender;
-
+    ? iconsToRender.filter(([iconLibrary]) => iconLibrary === viewAllIconLibrary)
+    : iconsToRender;
 
   return (
-    <Stack pb={{ base: 9, md: 240 }}>
+    <Stack pb={{ base: 9, md: 240 }} position="relative">
       <Stack
         alignItems="center"
         as="header"
@@ -209,6 +218,23 @@ function Gallery({ svgs, packs }) {
             />
           </Stack>
         </Stack>
+      </Stack>
+
+      <Stack
+        position="fixed"
+        bottom={4}
+        right={4}
+        zIndex={10}
+        padding={2}
+        cursor="pointer"
+        borderRadius="50%"
+        onClick={handleScrollToTop}
+        backgroundColor="brand.lightOrange"
+        transition="all 200ms ease-in-out"
+        _hover={{ transform: "scale(1.1)" }}
+        transform={y > 465 ? "translateY(0px)" : "translateY(100px)"}
+      >
+        <Icon as={FiArrowUp} color="brand.darkRed" h={6} w={6} />
       </Stack>
 
       <Stack as="section" px={2}>
@@ -291,7 +317,7 @@ function Gallery({ svgs, packs }) {
                       <SimpleGrid gridTemplateColumns="repeat(auto-fit, 80px)" spacing={{ base: "14px", md: "28px" }}>
                         {icons.map((icon) => {
                           const { iconType, iconName, reactIconName } = icon;
-                          const isTwoTone = iconType === 'twotone';
+                          const isTwoTone = iconType === "twotone";
                           const reactIcon = getIconComponent(iconLibrary, reactIconName);
 
                           if (!reactIcon) return null;
