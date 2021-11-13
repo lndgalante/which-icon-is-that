@@ -56,7 +56,6 @@ export const getStaticProps: GetStaticProps<Props, Params> = async ({ params }) 
     };
   } catch (err) {
     console.log("Error on Icon page | getStaticProps", err);
-    return { props: {} }
   }
 };
 
