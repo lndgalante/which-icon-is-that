@@ -43,7 +43,7 @@ function StatBox({ shape, title, subtitle }: StatBoxProps) {
 
 export function Stats({ totalIcons, totalLibraries, totalStyles }: StatsProps) {
   return (
-    <Stack paddingBottom={{ base: "3.75rem", md: "3.75rem" }} as="section" alignItems="center">
+    <Stack paddingBottom={{ base: "3.75rem", md: "8.75rem" }} as="section" alignItems="center">
       <Text
         textAlign="center"
         as="h2"
