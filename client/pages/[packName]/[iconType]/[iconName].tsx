@@ -52,10 +52,10 @@ export const getStaticProps: GetStaticProps<Props, Params> = async ({ params }) 
         iconTypes: iconTypesData.iconTypes,
         relatedIcons: relatedIconsData.relatedIcons,
       },
-      revalidate: 86400,
+      revalidate: false,
     };
   } catch (err) {
-    console.log("Error on getStaticProps", err);
+    console.log("Error on Icon page | getStaticProps", err);
   }
 };
 

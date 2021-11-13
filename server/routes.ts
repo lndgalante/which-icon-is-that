@@ -2,9 +2,10 @@ import { Router } from 'https://deno.land/x/oak/mod.ts';
 
 // controllers
 import { getTags } from './controllers/getTags.ts';
-import { getIconTypes } from './controllers/getIconTypes.ts';
+import { getStats } from './controllers/getStats.ts';
 import { getPaths } from './controllers/getPaths.ts';
 import { getReverse } from './controllers/getReverse.ts';
+import { getIconTypes } from './controllers/getIconTypes.ts';
 import { getIconByHash } from './controllers/getIconByHash.ts';
 import { getIconLibrary } from './controllers/getIconLibrary.ts';
 import { getSimilarIcons } from './controllers/getSimilarIcons.ts';
@@ -54,7 +55,11 @@ router
   /* Used on gallery page to get all the icons by icon name and icon library */
   .get('/icons/find/:iconLibrary/:iconName?', getIconsByIconNameAndIconLibrary)
 
+  /* Used on home page for stats */
+  .get('/stats', getStats)
+
   /* Used on contact page or pricing modal */
   .post('/contact', postContact);
+
 
 export { router };

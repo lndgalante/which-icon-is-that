@@ -1,5 +1,5 @@
+import { GetStaticProps } from "next";
 import { useRouter } from "next/router";
-import { GetServerSideProps } from "next";
 import { useDebounce } from "use-debounce";
 import { FiArrowUp } from "react-icons/fi";
 import { useWindowScroll } from "react-use";
@@ -9,6 +9,9 @@ import { HStack, Stack, Icon, Text, SimpleGrid, Image, Button, LinkBox, LinkOver
 // utils
 import { api } from "@modules/common/utils/api";
 import { getIconComponent } from "@modules/common/utils/getIconComponent";
+
+// types
+import { Gallery as GalleryType } from "@modules/common/utils/types";
 
 // components
 import * as Shapes from "@modules/gallery/components/Shapes";
@@ -24,24 +27,41 @@ import { IconLibrarySelect } from "@modules/gallery/components/IconLibrarySelect
 import { useReadIconsByNameAndIconLibrary } from "@modules/gallery/hooks/useReadIconsByNameAndIconLibrary";
 
 // types
-
 import { IconLibraryResponse, IconLibrary } from "@modules/common/utils/types";
-export const getServerSideProps: GetServerSideProps = async () => {
+
+type Packs = {
+  [key: string]: IconLibrary;
+};
+
+type Props = {
+  packs: Packs;
+  svgs: GalleryType["svgs"];
+};
+
+export const getStaticProps: GetStaticProps<Props> = async () => {
   try {
     const { data } = await api.getGalleryIcons();
 
     const packNames = data.svgs.map(([packName]) => packName);
     const packs = await Promise.all<IconLibraryResponse>(packNames.map((packName) => api.getIconLibrary(packName)));
-    const parsedPacks: { [key: string]: IconLibrary } = packs.reduce(
+    const parsedPacks: Packs = packs.reduce(
       (accumulator, pack) => ({ ...accumulator, [pack.data.name]: { ...pack.data } }),
       {},
     );
-    return { props: { ...data, packs: parsedPacks } };
+
+    return {
+      props: {
+        ...data,
+        packs: parsedPacks,
+      },
+      revalidate: false,
+    };
   } catch (error) {
-    console.log("Error on getServerSideProps", error);
+    console.log("Error on Gallery page | getStaticProps", error);
   }
 };
 
+// constants
 const ALL_LIBRARIES = { value: "all", label: "All icon libraries" };
 
 const iconLibrariesOptions = [
@@ -55,7 +75,7 @@ const iconLibrariesOptions = [
   { value: "flatcoloricons", label: "Icons8" },
 ];
 
-function Gallery({ svgs, packs }) {
+function Gallery({ svgs, packs }: Props) {
   // next hooks
   const { push, query } = useRouter();
 
@@ -138,7 +158,7 @@ function Gallery({ svgs, packs }) {
   }
 
   function handleScrollToTop() {
-    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+    window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
   }
 
   // constants
@@ -149,7 +169,8 @@ function Gallery({ svgs, packs }) {
   const iconsToRender = foundIcons?.data?.svgs ?? svgs;
 
   const parsedIconsToRender = viewAllIconLibrary
-    ? iconsToRender.filter(([iconLibrary]) => iconLibrary === viewAllIconLibrary)
+    ? // @ts-expect-error no idea my man
+      iconsToRender.filter(([iconLibrary]) => iconLibrary === viewAllIconLibrary)
     : iconsToRender;
 
   return (

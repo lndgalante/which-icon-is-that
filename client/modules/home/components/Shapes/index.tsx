@@ -12,6 +12,9 @@ import { DeveloperTopLeft } from "./DeveloperTopLeft";
 import { DeveloperBottomRight } from "./DeveloperBottomRight";
 import { RichTopRight } from "./RichTopRight";
 import { RichBottomLeft } from "./RichBottomLeft";
+import { Serve } from "./Serve";
+import { Libraries } from "./Libraries";
+import { Styles } from "./Styles";
 
 export {
   BottomLeft,
@@ -27,5 +30,8 @@ export {
   DeveloperTopLeft,
   DeveloperBottomRight,
   RichTopRight,
-  RichBottomLeft
+  RichBottomLeft,
+  Serve,
+  Libraries,
+  Styles
 };

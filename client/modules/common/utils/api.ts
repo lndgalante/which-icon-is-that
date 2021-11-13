@@ -2,10 +2,12 @@ import wretch from "wretch";
 
 import {
   IconResponse,
-  IconsFoundResponse,
-  IconFoundResponse,
-  IconLibraryResponse,
+  StatsResponse,
   IconTypeResponse,
+  IconFoundResponse,
+  IconsFoundResponse,
+  IconLibraryResponse,
+  GalleryResponse,
 } from "@modules/common/utils/types";
 
 // constants
@@ -15,6 +17,7 @@ const fetch = wretch().url(API_URL);
 // TODO: split endpoints by module
 const endpoints = {
   paths: () => `/paths`,
+  stats: () => `/stats`,
   contact: () => `/contact`,
   gallery: () => `/icons/gallery`,
   iconFindIconsByIconNameAndIconLibrary: (iconLibrary: string, iconName: string) =>
@@ -33,7 +36,8 @@ const endpoints = {
 
 // TODO: Split api by module
 export const api = {
-  getGalleryIcons: () => fetch.url(endpoints.gallery()).get().json(),
+  getStats: () => fetch.url(endpoints.stats()).get().json<StatsResponse>(),
+  getGalleryIcons: () => fetch.url(endpoints.gallery()).get().json<GalleryResponse>(),
   getPaths: () => fetch.url(endpoints.paths()).get().json(),
   getIconTypes: (iconName: string, packName: string) =>
     fetch.url(endpoints.iconTypes(iconName, packName)).get().json<IconTypeResponse>(),
