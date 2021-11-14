@@ -5,7 +5,7 @@ import * as Shapes from "@modules/home/components/Shapes";
 
 export function Features() {
   return (
-    <Stack paddingBottom={{ base: "3.75rem", md: "3.75rem" }} as="section" alignItems="center">
+    <Stack paddingBottom={{ base: "3.75rem", md: "7.3rem" }} as="section" alignItems="center">
       <Text
         textAlign="center"
         as="h2"
