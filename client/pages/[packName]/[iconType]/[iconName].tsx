@@ -46,7 +46,7 @@ export const getStaticProps: GetStaticProps<Props, Params> = async ({ params }) 
     const { data: iconTypesData } = await api.getIconTypes(iconName, packName);
     const { data: relatedIconsData } = await api.getSimilarIcons(iconHash, packName, icon?.svg?.hashNumber);
 
-    await delay(1000);
+    await delay(2000);
 
     return {
       props: {
