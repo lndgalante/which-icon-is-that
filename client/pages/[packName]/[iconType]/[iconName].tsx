@@ -46,7 +46,7 @@ export const getStaticProps: GetStaticProps<Props, Params> = async ({ params }) 
     const { data: iconTypesData } = await api.getIconTypes(iconName, packName);
     const { data: relatedIconsData } = await api.getSimilarIcons(iconHash, packName, icon?.svg?.hashNumber);
 
-    await delay(2000);
+    await delay(1000);
 
     return {
       props: {
@@ -59,7 +59,11 @@ export const getStaticProps: GetStaticProps<Props, Params> = async ({ params }) 
       revalidate: false,
     };
   } catch (err) {
+
     console.log("Error on Icon page | getStaticProps", err);
+    console.log('Params broken', `/${params?.packName}/${params?.iconType}/${params?.iconName}`)
+    await delay(1000);
+
     return { notFound: true }
   }
 };
