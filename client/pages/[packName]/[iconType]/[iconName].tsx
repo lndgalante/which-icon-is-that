@@ -23,6 +23,7 @@ type Params = Pick<Svg, "packName" | "iconType" | "iconName">;
 export const getStaticPaths: GetStaticPaths = async () => {
   try {
     const { data } = await api.getPaths();
+    console.log('\n ~ constgetStaticPaths:GetStaticPaths= ~ data', data)
     return { paths: data.paths, fallback: false };
   } catch (error) {
     console.log("Error on getStaticPaths", error);
@@ -56,6 +57,7 @@ export const getStaticProps: GetStaticProps<Props, Params> = async ({ params }) 
     };
   } catch (err) {
     console.log("Error on Icon page | getStaticProps", err);
+    return { notFound: true }
   }
 };
 
