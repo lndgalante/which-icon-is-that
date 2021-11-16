@@ -1,3 +1,4 @@
+import delay from "delay"
 import { useRouter } from "next/router";
 import { GetStaticPaths, GetStaticProps } from "next";
 import { SimpleGrid, Stack, useDisclosure } from "@chakra-ui/react";
@@ -23,6 +24,7 @@ type Params = Pick<Svg, "packName" | "iconType" | "iconName">;
 export const getStaticPaths: GetStaticPaths = async () => {
   try {
     const { data } = await api.getPaths();
+    console.log('\n ~ constgetStaticPaths:GetStaticPaths= ~ data', data)
     return { paths: data.paths, fallback: false };
   } catch (error) {
     console.log("Error on getStaticPaths", error);
@@ -44,6 +46,8 @@ export const getStaticProps: GetStaticProps<Props, Params> = async ({ params }) 
     const { data: iconTypesData } = await api.getIconTypes(iconName, packName);
     const { data: relatedIconsData } = await api.getSimilarIcons(iconHash, packName, icon?.svg?.hashNumber);
 
+    await delay(1000);
+
     return {
       props: {
         icon,
@@ -52,10 +56,15 @@ export const getStaticProps: GetStaticProps<Props, Params> = async ({ params }) 
         iconTypes: iconTypesData.iconTypes,
         relatedIcons: relatedIconsData.relatedIcons,
       },
-      revalidate: 86400,
+      revalidate: false,
     };
   } catch (err) {
-    console.log("Error on getStaticProps", err);
+
+    console.log("Error on Icon page | getStaticProps", err);
+    console.log('Params broken', `/${params?.packName}/${params?.iconType}/${params?.iconName}`)
+    await delay(1000);
+
+    return { notFound: true }
   }
 };
 
@@ -69,7 +78,7 @@ export default function IconPage({ icon, iconLibrary, iconTypes, relatedIcons }:
   const { query } = useRouter();
 
   // chakra hooks
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const { onOpen } = useDisclosure();
 
   // constants
   const { iconType: iconTypeCurrentUrl } = query;

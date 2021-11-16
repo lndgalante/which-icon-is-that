@@ -102,7 +102,7 @@ export const ICON_LIBRARIES = {
     stars: '66.3k',
     version: '5.15.4',
     parsedName: 'Font Awesome',
-    iconTypes: ['Outline', 'Solid', 'Logos'],
+    iconTypes: ['Outlined', 'Solid', 'Logos'],
     website: 'https://fontawesome.com',
     downloadLink:
       'https://github.com/FortAwesome/Font-Awesome/releases/download/5.15.4/fontawesome-free-5.15.4-web.zip',

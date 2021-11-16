@@ -41,6 +41,7 @@ export type IconLibrary = {
   version: string;
   website: string;
   downloadLink: string;
+  iconTypes: string[]
 };
 
 export type Icon = {
@@ -63,6 +64,19 @@ export type IconMetadata = {
   relatedIcons: IconsRelated[];
 };
 
+export type Stats = {
+  totalIcons: number;
+  totalStyles: number;
+  totalLibraries: number;
+};
+
+
+type GallerySvg = [string, IconFound]
+
+export type Gallery = {
+  svgs: GallerySvg[]
+}
+
 export type Response<T> = {
   success: boolean;
   data?: T;
@@ -79,3 +93,7 @@ export type IconsFoundResponse = Response<{ svgs: IconFound[] }>;
 export type IconLibraryResponse = Response<IconLibrary>;
 
 export type IconTypeResponse = Response<IconTypes>;
+
+export type StatsResponse = Response<Stats>;
+
+export type GalleryResponse = Response<Gallery>;

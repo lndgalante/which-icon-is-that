@@ -38,6 +38,7 @@ export function FooterIcon({ icon, href, label, isEmail, onClick }: FooterIconPr
           }}
           transition="all 200ms ease-in-out"
           w={5}
+          mt={label === "Twitter" ? 1.5 :0}
         />
       </LinkOverlay>
     </LinkBox>

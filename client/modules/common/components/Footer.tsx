@@ -24,6 +24,7 @@ export function Footer() {
       paddingX={{ base: 4, md: 12 }}
       paddingY={{ base: "2.07rem", md: 6 }}
       spacing={{ base: 20, md: 0 }}
+      zIndex={1}
     >
       <HStack
         alignItems={{ base: "center", md: "center" }}
