@@ -31,14 +31,26 @@ export function IconRelated({ relatedIcons }: IconRelatedProps) {
             paddingX={0}
             paddingY={4}
             _focus={{ boxShadow: "0 0 0 3px brand.softOrange" }}
-            _hover={{ backgroundColor: "brand.lightOrange" }}
+            _hover={{ backgroundColor: "transparent" }}
+            role="group"
           >
-            <Text fontWeight={700} mr={1} fontSize="lg" color="brand.darkRed">
+            <Text
+              fontWeight={700}
+              mr={1}
+              fontSize="lg"
+              color="brand.darkRed"
+              _groupHover={{ color: "brand.orange" }}
+              transition="color 200ms ease-in-out"
+            >
               Related Icons
             </Text>
-            <AccordionIcon color="brand.darkRed" />
+            <AccordionIcon
+              color="brand.darkRed"
+              _groupHover={{ color: "brand.orange" }}
+              transition="all 200ms ease-in-out"
+            />
           </AccordionButton>
-          <AccordionPanel pt={1} pb={6}>
+          <AccordionPanel pb={4} px={0}>
             <SimpleGrid gridTemplateColumns="repeat(auto-fit, 80px)" spacing={{ base: "14px", md: "28px" }}>
               {relatedIcons?.map(({ iconName, packName, iconType, reactIconName }) => {
                 return (
