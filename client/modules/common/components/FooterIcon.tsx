@@ -17,7 +17,7 @@ export function FooterIcon({ icon, href, label, isEmail, onClick }: FooterIconPr
         cursor="pointer"
         color="brand.white"
         h={5}
-        sx={{ ".footer-link:hover &": { color: "brand.softOrange" } }}
+        _hover={{ color: "brand.softOrange" }}
         transition="all 200ms ease-in-out"
         w={5}
       />
@@ -38,7 +38,7 @@ export function FooterIcon({ icon, href, label, isEmail, onClick }: FooterIconPr
           }}
           transition="all 200ms ease-in-out"
           w={5}
-          mt={label === "Twitter" ? 1.5 :0}
+          mt={label === "Twitter" ? 1.5 : 0}
         />
       </LinkOverlay>
     </LinkBox>
