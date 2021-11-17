@@ -29,7 +29,7 @@ import {
 import { z } from "zod";
 import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
-import { zodResolver } from '@hookform/resolvers/zod/dist/zod';
+import { zodResolver } from "@hookform/resolvers/zod/dist/zod";
 import { FiMenu, FiMail, FiX, FiTwitter } from "react-icons/fi";
 
 // utils
@@ -206,16 +206,20 @@ export function Navbar() {
         </DrawerContent>
       </Drawer>
 
-      <Modal isOpen={isModalOpen} isCentered onClose={onModalClose}>
+      <Modal
+        isOpen={isModalOpen}
+        // isCentered={!isSmallerThan768}
+        onClose={onModalClose}
+      >
         <ModalOverlay />
-        <ModalContent minWidth={{ base: "auto", md: 920 }} paddingX={{ base: 2, md: 6 }} paddingBottom={4}>
+        <ModalContent maxWidth={{ base: 480, md: 700 }} paddingTop={2} margin="auto">
           <ModalCloseButton />
           <ModalHeader color="brand.lightRed" fontWeight={800}>
             Pricing
           </ModalHeader>
-          <ModalBody>
+          <ModalBody flexDirection={{ base: "column", md: "row" }}>
             <HStack spacing={{ base: 0, md: 4 }} mb={6} flexDirection={{ base: "column", md: "row" }}>
-              <Stack flex={1} mb={{ base: 4, md: 0 }}>
+              <Stack width={{ base: "100%" }} flex={1} mb={{ base: 4, md: 0 }}>
                 <Text fontWeight={700} fontSize={18} color="brand.darkRed">
                   Incoming new features for the free version!
                 </Text>
@@ -238,7 +242,7 @@ export function Navbar() {
                 </UnorderedList>
               </Stack>
 
-              <Stack flex={1}>
+              <Stack width={{ base: "100%" }} flex={1}>
                 <Text fontWeight={700} fontSize={18} color="brand.darkRed">
                   We&apos;re also developing some great PRO ones
                 </Text>

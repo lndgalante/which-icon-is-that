@@ -5,6 +5,7 @@ export const theme = extendTheme({
     global: {
       ".chakra-modal__content-container": {
         backdropFilter: "blur(6px)",
+        padding: 4,
       },
     },
   },
