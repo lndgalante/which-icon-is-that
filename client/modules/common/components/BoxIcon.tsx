@@ -9,9 +9,19 @@ type BoxIconProps = {
   isTwoTone?: boolean;
   withShadow?: boolean;
   displayLabel?: boolean;
+  simpleHover?: boolean;
 };
 
-export function BoxIcon({ icon, label, href, primary, displayLabel, withShadow, isTwoTone }: BoxIconProps) {
+export function BoxIcon({
+  icon,
+  label,
+  href,
+  primary,
+  displayLabel,
+  withShadow,
+  isTwoTone,
+  simpleHover,
+}: BoxIconProps) {
   return (
     <NextLink passHref href={href}>
       <Link
@@ -30,7 +40,7 @@ export function BoxIcon({ icon, label, href, primary, displayLabel, withShadow, 
         _hover={{
           color: "brand.darkRed",
           transform: "translateY(-1px)",
-          backgroundColor: primary ? "brand.softOrange" : "brand.lightOrange",
+          backgroundColor: simpleHover ? "brand.white" : primary ? "brand.softOrange" : "brand.lightOrange",
         }}
         className="boxicon-container"
       >
