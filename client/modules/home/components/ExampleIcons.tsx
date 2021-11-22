@@ -32,8 +32,8 @@ export function ExampleIcons() {
       </HStack>
 
       <NextLink passHref href="/gallery">
-        <Link className="gallery-link" textDecoration="underline" fontSize="md">
-          or find your icon in the gallery
+        <Link className="gallery-link" textDecoration="underline" fontSize="md" display="flex" flexDirection="row" alignItems="center">
+          <Text>or find your icon in the gallery</Text>
           <Icon
             as={FiArrowRight}
             ml={1.5}
