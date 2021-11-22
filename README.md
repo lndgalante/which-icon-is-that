@@ -41,16 +41,16 @@ cd server/ && denon run --unstable --allow-run --allow-env --allow-read --allow-
 
 ## Heroku
 
-- Disable SSL mode
+- Important for Vercel Build
 
-> heroku config:set PGSSLMODE=no-verify --app=which-icon-is-that
+We need to scale WIIT web Dyno to 8 dynos in order to execute a build, since we've more that 5000+ requests to the API that end ups breaking it
 
 - Buildpacks
 
   - [heroku/deno](https://github.com/chibat/heroku-buildpack-deno.git)
   - [heroku/nodejs](https://elements.heroku.com/buildpacks/heroku/heroku-buildpack-nodejs)
 
-- Populate Heroku DB
+* Populate Heroku DB
 
   1. Create dump from local database
 
@@ -77,7 +77,7 @@ cd server/ && denon run --unstable --allow-run --allow-env --allow-read --allow-
   heroku pg:backups:restore [BUMP_URL] DATABASE_URL -a which-icon-is-that --confirm which-icon-is-that
   ```
 
-- Logs
+* Logs
 
   ```bash
   heroku logs -t -a which-icon-is-that

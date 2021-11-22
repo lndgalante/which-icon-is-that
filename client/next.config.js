@@ -7,6 +7,9 @@ const { withSentryConfig } = require("@sentry/nextjs");
 
 const moduleExports = {
   // Your existing module.exports
+  experimental: {
+    esmExternals: false
+  }
 };
 
 const sentryWebpackPluginOptions = {
