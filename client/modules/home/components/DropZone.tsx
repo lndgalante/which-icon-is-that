@@ -15,6 +15,7 @@ import {
   useToast,
   useDisclosure,
 } from "@chakra-ui/react";
+import Zoom from "react-reveal/Zoom";
 
 // utils
 import { api } from "@modules/common/utils/api";
@@ -174,27 +175,31 @@ export function DropZone() {
           justifyContent={{ base: "center", md: "flex-start" }}
         >
           <DropInnerRadius height={{ base: 154, md: 214 }} position="absolute" top={{ base: 3, md: 6 }} />
-          {/* @ts-expect-error Unable to fix this problem */}
-          <Input {...getInputProps()} />
-          <Button
-            paddingX={"1.4375rem"}
-            paddingY={"1.5625rem"}
-            _focus={null}
-            variant={isDragActive ? "brand.solidRed" : "brand.solid"}
-            sx={{
-              ".drop-zone:hover &": {
-                color: "brand.white",
-                backgroundColor: "brand.lightRed",
-              },
-            }}
-            fontWeight={700}
-            fontSize="md"
-          >
-            Upload Icon
-          </Button>
-          <Text display={{ base: "none", md: "block" }} fontSize="sm" maxWidth={288} mt={4}>
-            Drag &amp; Drop the SVG file, paste the SVG code or the icon URL
-          </Text>
+          <Zoom delay={100}>
+            {/* @ts-expect-error Unable to fix this problem */}
+            <Input {...getInputProps()} />
+            <Button
+              paddingX={"1.4375rem"}
+              paddingY={"1.5625rem"}
+              _focus={null}
+              variant={isDragActive ? "brand.solidRed" : "brand.solid"}
+              sx={{
+                ".drop-zone:hover &": {
+                  color: "brand.white",
+                  backgroundColor: "brand.lightRed",
+                },
+              }}
+              fontWeight={700}
+              fontSize="md"
+            >
+              Upload Icon
+            </Button>
+          </Zoom>
+          <Zoom delay={300}>
+            <Text display={{ base: "none", md: "block" }} fontSize="sm" maxWidth={288} mt={4}>
+              Drag &amp; Drop the SVG file, paste the SVG code or the icon URL
+            </Text>
+          </Zoom>
         </Stack>
       </Stack>
 

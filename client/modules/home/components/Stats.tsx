@@ -1,4 +1,5 @@
 import { Stack, Text, Wrap } from "@chakra-ui/react";
+import Fade from "react-reveal/Fade";
 
 // types
 import { Stats as StatsType } from "@modules/common/utils/types";
@@ -24,7 +25,7 @@ function StatBox({ shape, title, subtitle }: StatBoxProps) {
       flexDirection="column"
       alignItems="center"
       justifyContent="center"
-      spacing={{base:10, md:14}}
+      spacing={{ base: 10, md: 14 }}
       textAlign="center"
       as="article"
     >
@@ -55,10 +56,17 @@ export function Stats({ totalIcons, totalLibraries, totalStyles }: StatsProps) {
         Our Product in Numbers
       </Text>
 
-      <Wrap spacing={{ base: 5, md:10 }} justify="center" align="center" shouldWrapChildren>
-        <StatBox shape={<Serve />} title="we serve" subtitle={`+${totalIcons} icons`} />
-        <StatBox shape={<Libraries />} title="from" subtitle={`+${totalLibraries - 1} libraries`} />
-        <StatBox shape={<Styles />} title="in" subtitle={`${totalStyles} styles`} />
+      <Wrap spacing={{ base: 5, md: 10 }} justify="center" align="center" shouldWrapChildren>
+        <Fade bottom delay={200}>
+          <StatBox shape={<Serve />} title="we serve" subtitle={`+${totalIcons} icons`} />
+        </Fade>
+        <Fade bottom delay={400}>
+          <StatBox shape={<Libraries />} title="from" subtitle={`+${totalLibraries - 1} libraries`} />
+        </Fade>
+
+        <Fade bottom delay={600}>
+          <StatBox shape={<Styles />} title="in" subtitle={`${totalStyles} styles`} />
+        </Fade>
       </Wrap>
     </Stack>
   );

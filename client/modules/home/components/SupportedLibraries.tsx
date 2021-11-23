@@ -1,5 +1,6 @@
 import NextLink from "next/link";
 import { Stack, Text, Link, Image, SimpleGrid } from "@chakra-ui/react";
+import Fade from "react-reveal/Fade";
 
 // components
 import { LinkButton } from "@modules/common/components/LinkButton";
@@ -23,56 +24,66 @@ export function SupportedLibraries() {
       >
         <NextLink passHref href="/gallery?iconLibrary=antdesign&iconName=%20">
           <Link aria-label="Ant Design Icons">
-            <Image
-              alt="Ant Design Icons"
-              _hover={{ opacity: 0.6 }}
-              src="/images/antdesign.png"
-              transition="all ease-in-out 200ms"
-            />
+            <Fade bottom delay={0}>
+              <Image
+                alt="Ant Design Icons"
+                _hover={{ opacity: 0.6 }}
+                src="/images/antdesign.png"
+                transition="all ease-in-out 200ms"
+              />
+            </Fade>
           </Link>
         </NextLink>
 
         <NextLink passHref href="/gallery?iconLibrary=bootstrap&iconName=%20">
           <Link aria-label="Bootstrap Icons">
-            <Image
-              alt="Bootstrap Icons"
-              _hover={{ opacity: 0.6 }}
-              src="/images/bootstrap.png"
-              transition="all ease-in-out 200ms"
-            />
+            <Fade bottom delay={200}>
+              <Image
+                alt="Bootstrap Icons"
+                _hover={{ opacity: 0.6 }}
+                src="/images/bootstrap.png"
+                transition="all ease-in-out 200ms"
+              />
+            </Fade>
           </Link>
         </NextLink>
 
         <NextLink passHref href="/gallery?iconLibrary=heroicons&iconName=%20">
           <Link aria-label="Heroicons">
-            <Image
-              alt="Heroicons"
-              _hover={{ opacity: 0.6 }}
-              src="/images/heroicons.png"
-              transition="all ease-in-out 200ms"
-            />
+            <Fade bottom delay={400}>
+              <Image
+                alt="Heroicons"
+                _hover={{ opacity: 0.6 }}
+                src="/images/heroicons.png"
+                transition="all ease-in-out 200ms"
+              />
+            </Fade>
           </Link>
         </NextLink>
 
         <NextLink passHref href="/gallery?iconLibrary=feather&iconName=%20">
           <Link aria-label="Feather Icons">
-            <Image
-              alt="Feather Icons"
-              _hover={{ opacity: 0.6 }}
-              src="/images/feather.png"
-              transition="all ease-in-out 200ms"
-            />
+            <Fade bottom delay={600}>
+              <Image
+                alt="Feather Icons"
+                _hover={{ opacity: 0.6 }}
+                src="/images/feather.png"
+                transition="all ease-in-out 200ms"
+              />
+            </Fade>
           </Link>
         </NextLink>
 
         <NextLink passHref href="/gallery?iconLibrary=fontawesome&iconName=%20">
           <Link aria-label="Font Awesome" display={{ base: "none", md: "inherit" }}>
-            <Image
-              alt="Font Awesome"
-              _hover={{ opacity: 0.6 }}
-              src="/images/fontawesome.png"
-              transition="all ease-in-out 200ms"
-            />
+            <Fade bottom delay={800}>
+              <Image
+                alt="Font Awesome"
+                _hover={{ opacity: 0.6 }}
+                src="/images/fontawesome.png"
+                transition="all ease-in-out 200ms"
+              />
+            </Fade>
           </Link>
         </NextLink>
       </SimpleGrid>

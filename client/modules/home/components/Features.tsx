@@ -1,4 +1,5 @@
 import { Stack, Text, Image } from "@chakra-ui/react";
+import Fade from "react-reveal/Fade";
 
 // components
 import * as Shapes from "@modules/home/components/Shapes";
@@ -50,7 +51,14 @@ export function Features() {
               margin={{ base: "0 !important", md: 0 }}
               pos="relative"
             >
-              <Image alt="Easy to find" src="/images/easy-to-find.png" shadow="7" borderRadius={{ base: 8, md: 16 }} />
+              <Fade right distance="100px">
+                <Image
+                  alt="Easy to find"
+                  src="/images/easy-to-find.png"
+                  shadow="7"
+                  borderRadius={{ base: 8, md: 16 }}
+                />
+              </Fade>
             </Stack>
           </Stack>
 
@@ -61,15 +69,20 @@ export function Features() {
             spacing={{ base: "0.63rem", md: 6 }}
           >
             <Text as="h3" fontSize={{ base: 24, md: 40 }} fontWeight={800} color="brand.darkRed">
-              Easy To Find
+              <Fade cascade right>
+                Easy To Find
+              </Fade>
             </Text>
-            <Text maxWidth={452} fontSize={{ base: 14, md: 18 }}>
-              Just{" "}
-              <Text as="span" fontWeight={700}>
-                drag and drop
-              </Text>{" "}
-              your icon, and we will find it for you! Or use our Icon Gallery to find it visually or by the icon name.
-            </Text>
+
+            <Fade right delay={500} distance="50px">
+              <Text maxWidth={452} fontSize={{ base: 14, md: 18 }}>
+                Just{" "}
+                <Text as="span" fontWeight={700}>
+                  drag and drop
+                </Text>{" "}
+                your icon, and we will find it for you! Or use our Icon Gallery to find it visually or by the icon name.
+              </Text>
+            </Fade>
           </Stack>
         </Stack>
 
@@ -80,17 +93,21 @@ export function Features() {
           spacing={{ base: "0.63rem", md: 6 }}
         >
           <Text as="h3" fontSize={{ base: 24, md: 40 }} fontWeight={800} color="brand.darkRed">
-            Rich Icon Data
+            <Fade cascade bottom>
+              Rich Icon Data
+            </Fade>
           </Text>
 
           <Stack alignItems="center" spacing={{ base: 4, md: "3.65rem" }} width="100%">
-            <Text maxWidth={452} textAlign={{ base: "left", md: "center" }} fontSize={{ base: 14, md: 18 }}>
-              All you need to know about your icon: Size, Weight,{" "}
-              <Text as="span" fontWeight={700}>
-                UI examples,
-              </Text>{" "}
-              related icons, plus all the data from its library.
-            </Text>
+            <Fade bottom delay={500} distance="50px">
+              <Text maxWidth={452} textAlign={{ base: "left", md: "center" }} fontSize={{ base: 14, md: 18 }}>
+                All you need to know about your icon: Size, Weight,{" "}
+                <Text as="span" fontWeight={700}>
+                  UI examples,
+                </Text>{" "}
+                related icons, plus all the data from its library.
+              </Text>
+            </Fade>
 
             <Stack
               backgroundColor="brand.softGrey"
@@ -111,6 +128,7 @@ export function Features() {
                 right={{ base: "2%", md: "5%" }}
                 height="auto"
               />
+
               <Shapes.RichBottomLeft
                 position="absolute"
                 width={{ base: "10%", md: "12%" }}
@@ -123,13 +141,18 @@ export function Features() {
                 width={{ base: "100%", md: "80%" }}
                 height={"auto"}
                 overflow="hidden"
-                borderRadius={{ base: 8, md: 16 }}
                 marginTop={{ md: "10% !important" }}
                 marginBottom={{ md: "-5% !important" }}
-                shadow="7"
                 zIndex={1}
               >
-                <Image alt="Rich Icon data" src="/images/rich-icon-data.png" />
+                <Fade bottom distance="100px">
+                  <Image
+                    alt="Rich Icon data"
+                    src="/images/rich-icon-data.png"
+                    shadow="7"
+                    borderRadius={{ base: 8, md: 16 }}
+                  />
+                </Fade>
               </Stack>
             </Stack>
           </Stack>
@@ -143,15 +166,19 @@ export function Features() {
             spacing={{ base: "0.63rem", md: 6 }}
           >
             <Text as="h3" fontSize={{ base: 24, md: 40 }} fontWeight={800} color="brand.darkRed">
-              Developer Panel
+              <Fade cascade left>
+                Developer Panel
+              </Fade>
             </Text>
-            <Text maxWidth={452} fontSize={{ base: 14, md: 18 }}>
-              Find out how to{" "}
-              <Text as="span" fontWeight={700}>
-                integrate any icon
-              </Text>{" "}
-              into your existing codebase supporting all major technologies: From HTML to Vue or React.
-            </Text>
+            <Fade left delay={500} distance="50px">
+              <Text maxWidth={452} fontSize={{ base: 14, md: 18 }}>
+                Find out how to{" "}
+                <Text as="span" fontWeight={700}>
+                  integrate any icon
+                </Text>{" "}
+                into your existing codebase supporting all major technologies: From HTML to Vue or React.
+              </Text>
+            </Fade>
           </Stack>
 
           <Stack
@@ -188,7 +215,9 @@ export function Features() {
               marginLeft={{ base: 0, md: "-30% !important" }}
               zIndex={1}
             >
-              <Image alt="Developer panel" src="/images/developer-panel.png" />
+              <Fade left>
+                <Image alt="Developer panel" src="/images/developer-panel.png" />
+              </Fade>
             </Stack>
           </Stack>
         </Stack>
