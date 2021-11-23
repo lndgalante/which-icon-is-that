@@ -26,7 +26,6 @@ export type Svg = {
   inner_svg: string;
   view_box: string;
   bytes: string;
-  found: number;
   hash_number: number;
   pack_id: string;
   pack_name: PacksNames;
@@ -47,4 +46,7 @@ export type IconLibrary = {
   icon_types: string[];
   website: string;
   download_link: string;
+  figma_link: string;
+  github_link: string;
+  contributors: number;
 };

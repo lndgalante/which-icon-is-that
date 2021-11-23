@@ -5,21 +5,18 @@ import { CustomTab } from "@modules/icon/components/CustomTab";
 import { CustomTabPanel } from "@modules/icon/components/CustomTabPanel";
 
 // hooks
-import { useReadFoundTimes } from "@modules/icon/hooks/useReadFoundTimes";
 import { useGenerateTabUrl } from "@modules/common/hooks/useGenerateTabUrl";
 
 type IconPlaygroundProps = {
-  hash: string;
   reactIcon: As;
   iconSize: string;
   iconTypes: string[];
   selectedTabIndex: number;
 };
 
-export function IconPlayground({ hash, iconSize, iconTypes, reactIcon, selectedTabIndex }: IconPlaygroundProps) {
+export function IconPlayground({ iconSize, iconTypes, reactIcon, selectedTabIndex }: IconPlaygroundProps) {
   // custom hooks
   const { generateTabUrl } = useGenerateTabUrl();
-  const { data, isLoading } = useReadFoundTimes(hash);
 
   return (
     <Stack as="article">
@@ -46,18 +43,6 @@ export function IconPlayground({ hash, iconSize, iconTypes, reactIcon, selectedT
                 >
                   <Text color="brand.warmBlack" fontSize="sm" opacity={0.5}>
                     Size: {iconSize}
-                  </Text>
-                </Stack>
-                <Stack
-                  paddingX={2}
-                  paddingY={0.5}
-                  position="absolute"
-                  right={3}
-                  bottom={-14}
-                  backgroundColor="brand.white"
-                >
-                  <Text color="brand.warmBlack" fontSize="sm" opacity={0.5}>
-                    {isLoading || !data ? "Loading..." : `Found: ${data?.data?.found} times`}
                   </Text>
                 </Stack>
                 <Stack

@@ -4,9 +4,9 @@ import {
   IconResponse,
   StatsResponse,
   IconTypeResponse,
-  IconFoundResponse,
   IconsFoundResponse,
   IconLibraryResponse,
+  IconLibrariesResponse,
   GalleryResponse,
 } from "@modules/common/utils/types";
 
@@ -25,8 +25,8 @@ const endpoints = {
   icon: (hash: string) => `/icon/${hash}`,
   iconTypes: (iconName: string, packName: string) => `/icon/${iconName}/${packName}/types`,
   iconLibrary: (libraryName: string) => `/icon/library/${libraryName}`,
+  iconLibraries: () => `/icons/all/libraries`,
   iconTags: (hash: string) => `/icon/${hash}/tags`,
-  iconFound: (hash: string) => `/icon/${hash}/found`,
   iconSnippets: (hash: string) => `/icon/${hash}/snippets`,
   pathReverse: (path: string) => `/reverse/?path=${path}`,
   hashReverse: (hash: string) => `/reverse/?hash=${hash}`,
@@ -46,8 +46,8 @@ export const api = {
   getIcon: (hash: string) => fetch.url(endpoints.icon(hash)).get().json<IconResponse>(),
   getIconLibrary: (libraryName: string) =>
     fetch.url(endpoints.iconLibrary(libraryName)).get().json<IconLibraryResponse>(),
+  getIconLibraries: () => fetch.url(endpoints.iconLibraries()).get().json<IconLibrariesResponse>(),
   getIconTags: (hash: string) => fetch.url(endpoints.iconTags(hash)).get().json(),
-  getIconFoundTimes: (hash: string) => fetch.url(endpoints.iconFound(hash)).get().json<IconFoundResponse>(),
   getIconSnippets: (hash: string) => fetch.url(endpoints.iconSnippets(hash)).get().json(),
   getHashFromPath: (path: string) => fetch.url(endpoints.pathReverse(path)).get().json(),
   getPathFromHash: (hash: string) => fetch.url(endpoints.hashReverse(hash)).get().json(),

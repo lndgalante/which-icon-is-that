@@ -2,10 +2,10 @@ import { Dispatch, SetStateAction } from "react";
 import { Icon, Button, Menu, MenuButton, MenuList, MenuItem, useBreakpointValue } from "@chakra-ui/react";
 
 // icons
-import { FiChevronDown, FiLayers } from "react-icons/fi";
+import { FiChevronDown } from "react-icons/fi";
 
 // components
-import { Feather, Heroicons, Bootstrap, AntDesign, Boxicons, FontAwesome, Icons8 } from "@modules/gallery/components/Isologous";
+import { ISOLOGOUS } from "@modules/common/components/Isologous";
 
 type Option = {
   label: string;
@@ -17,18 +17,6 @@ type Props = {
   value: string;
   options: Option[];
   onChange: Dispatch<SetStateAction<{ label: string; value: string }>>;
-};
-
-// constants
-const ISOLOGOUS = {
-  all: FiLayers,
-  feather: Feather,
-  heroicons: Heroicons,
-  bootstrap: Bootstrap,
-  antdesign: AntDesign,
-  boxicons: Boxicons,
-  fontawesome: FontAwesome,
-  flatcoloricons: Icons8,
 };
 
 export function IconLibrarySelect({ label, value, options, onChange }: Props) {

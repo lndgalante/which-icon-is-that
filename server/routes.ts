@@ -8,14 +8,13 @@ import { getReverse } from './controllers/getReverse.ts';
 import { getIconTypes } from './controllers/getIconTypes.ts';
 import { getIconByHash } from './controllers/getIconByHash.ts';
 import { getIconLibrary } from './controllers/getIconLibrary.ts';
+import { getIconLibraries } from './controllers/getIconLibraries.ts';
 import { getSimilarIcons } from './controllers/getSimilarIcons.ts';
 import { getRelatedIcons } from './controllers/getRelatedIcons.ts';
 import { getIconSnippets } from './controllers/getIconSnippets.ts';
 import { getIconsGallery } from './controllers/getIconsGallery.ts';
-import { getFoundTimesIcon } from './controllers/getFoundTimesIcon.ts';
 import { getIconsByIconNameAndIconLibrary } from './controllers/getIconsByIconNameAndIconLibrary.ts';
 
-import { putIcon } from './controllers/putIcon.ts';
 import { postContact } from './controllers/postContact.ts';
 
 const router = new Router();
@@ -29,9 +28,6 @@ router
 
   /* Used on icon page on ISR */
   .get('/icon/:hash', getIconByHash)
-  /* Used on icon page to increment the view of that icon */
-  .put('/icon/:hash', putIcon)
-
   /* Used on icon page to get tags from that icon */
   .get('/icon/:hash/tags', getTags)
   /* Used on icon page to get similar icons based on a certain tag */
@@ -41,9 +37,6 @@ router
   .get('/icon/:iconName/:packName/types', getIconTypes)
   /* Used on icon page to get icon types */
   .get('/icon/:hash/:packName/:hashNumber/similar', getRelatedIcons)
-
-  /* Used on icon page to get total found times */
-  .get('/icon/:hash/found', getFoundTimesIcon)
   /* Used on icon page on developer panel to get all snippets per library */
   .get('/icon/:hash/snippets', getIconSnippets)
 
@@ -54,6 +47,9 @@ router
   .get('/icons/gallery', getIconsGallery)
   /* Used on gallery page to get all the icons by icon name and icon library */
   .get('/icons/find/:iconLibrary/:iconName?', getIconsByIconNameAndIconLibrary)
+
+  /* Usewd on supported libraries page to get all the  */
+  .get('/icons/all/libraries', getIconLibraries)
 
   /* Used on home page for stats */
   .get('/stats', getStats)

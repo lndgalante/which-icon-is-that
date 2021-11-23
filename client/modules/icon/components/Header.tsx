@@ -1,17 +1,12 @@
 import { capitalCase } from "change-case";
 import { Stack, Text, HStack, Button } from "@chakra-ui/react";
 
-// common
-import { LinkButton } from "@modules/common/components/LinkButton";
-
 type HeaderProps = {
   onOpen: () => void;
-  packName: string;
   iconName: string;
-  packParsedName: string;
 };
 
-export function Header({ iconName, packName, packParsedName, onOpen }: HeaderProps) {
+export function Header({ iconName, onOpen }: HeaderProps) {
   return (
     <Stack
       as="header"
@@ -35,8 +30,6 @@ export function Header({ iconName, packName, packParsedName, onOpen }: HeaderPro
       </HStack>
 
       <HStack spacing={4}>
-        <LinkButton  href={`/gallery?iconLibrary=${packName}&iconName=%20`} variant="brand.outline" text={`${packParsedName} Gallery`} />
-
         <Button variant="brand.solid" onClick={onOpen}>
           Developer Panel
         </Button>

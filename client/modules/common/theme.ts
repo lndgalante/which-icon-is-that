@@ -40,6 +40,7 @@ export const theme = extendTheme({
       white: "#FFFFFF",
       lightOrangeModal: "rgba(255, 244, 239, 0.8)",
       blue: "#1C77FF",
+      tableGrey: "#777777",
     },
   },
   components: {

@@ -2,7 +2,7 @@ import { Context } from 'https://deno.land/x/oak/mod.ts';
 
 // lib
 import { Svg } from '../lib/types.ts';
-import { getIconLink, getIconPackWebsite, getIconSource, getIconPackFigmaLink } from '../lib/icons.ts';
+import { getIconLink, getIconSource } from '../lib/icons.ts';
 
 // db
 import { iconTable } from '../db/icon.ts';
@@ -40,8 +40,6 @@ export const getIconByHash = async ({ params, response }: Context & { params: { 
       },
     ] = rows as [Svg];
 
-    const pack = getIconPackWebsite(packName);
-    const figma = getIconPackFigmaLink(packName);
     const icon = getIconLink(packName, iconName);
     const source = getIconSource(packName, iconFileName, iconType);
 
@@ -49,7 +47,7 @@ export const getIconByHash = async ({ params, response }: Context & { params: { 
     response.body = {
       success: true,
       data: {
-        links: { pack, icon, source, figma },
+        links: { icon, source },
         svg: {
           hash,
           svg,

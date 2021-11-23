@@ -1,4 +1,4 @@
-import delay from "delay"
+import delay from "delay";
 import { useRouter } from "next/router";
 import { GetStaticPaths, GetStaticProps } from "next";
 import { SimpleGrid, Stack, useDisclosure } from "@chakra-ui/react";
@@ -24,7 +24,6 @@ type Params = Pick<Svg, "packName" | "iconType" | "iconName">;
 export const getStaticPaths: GetStaticPaths = async () => {
   try {
     const { data } = await api.getPaths();
-    console.log('\n ~ constgetStaticPaths:GetStaticPaths= ~ data', data)
     return { paths: data.paths, fallback: false };
   } catch (error) {
     console.log("Error on getStaticPaths", error);
@@ -59,20 +58,19 @@ export const getStaticProps: GetStaticProps<Props, Params> = async ({ params }) 
       revalidate: false,
     };
   } catch (err) {
-
     console.log("Error on Icon page | getStaticProps", err);
-    console.log('Params broken', `/${params?.packName}/${params?.iconType}/${params?.iconName}`)
+    console.log("Params broken", `/${params?.packName}/${params?.iconType}/${params?.iconName}`);
     await delay(1000);
 
-    return { notFound: true }
+    return { notFound: true };
   }
 };
 
 export default function IconPage({ icon, iconLibrary, iconTypes, relatedIcons }: Props) {
   // constants
-  const [svg, figma] = [icon?.svg, icon?.links?.figma];
-  const { iconName, packName, reactIconName, parsedIconName, hash, bytes } = svg;
-  const { license, totalIcons, version, website, downloadLink, parsedName } = iconLibrary;
+  const [svg] = [icon?.svg];
+  const { iconName, packName, reactIconName, parsedIconName, bytes } = svg;
+  const { license, totalIcons, version, website, parsedName } = iconLibrary;
 
   // next hooks
   const { query } = useRouter();
@@ -91,13 +89,12 @@ export default function IconPage({ icon, iconLibrary, iconTypes, relatedIcons }:
 
   return (
     <Stack paddingBottom={32} spacing={10}>
-      <Header iconName={parsedIconName} packName={packName} packParsedName={parsedName} onOpen={onOpen} />
+      <Header iconName={parsedIconName} onOpen={onOpen} />
 
       {/* <DeveloperPanel packName={packName} snippets={snippets} onClose={onClose} isOpen={isOpen} /> */}
 
       <SimpleGrid columns={{ base: 1, md: 1, lg: 2 }} rowGap={{ base: 10, md: 8 }} columnGap={67} as="section">
         <IconPlayground
-          hash={hash}
           selectedTabIndex={selectedTabIndex}
           reactIcon={reactIcon}
           iconTypes={iconTypes}
@@ -108,9 +105,8 @@ export default function IconPage({ icon, iconLibrary, iconTypes, relatedIcons }:
           version={version}
           license={license}
           packName={packName}
+          packParsedName={parsedName}
           totalIcons={totalIcons}
-          figmaLink={figma}
-          downloadLink={downloadLink}
         />
         <IconExamples reactIcon={reactIcon} iconName={iconName} />
         <IconRelated relatedIcons={relatedIcons} />

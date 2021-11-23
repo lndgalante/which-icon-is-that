@@ -4,15 +4,7 @@ import { prettyBytes } from 'https://raw.githubusercontent.com/brunnerlivio/deno
 // utils
 import { createHash } from './hash.ts';
 import { getInnerHTMLFromSvgText } from './dom.ts';
-import {
-  PacksNames,
-  ICONS_LIST,
-  ICON_PAGE_LINK,
-  ICON_LIBRARIES,
-  ICONS_FIGMA_LINKS,
-  ICONS_SOURCE_LINKS,
-  ICONS_WEBSITE_LINKS,
-} from './constants.ts';
+import { PacksNames, ICONS_LIST, ICON_PAGE_LINK, ICON_LIBRARIES, ICONS_SOURCE_LINKS } from './constants.ts';
 import { reactIconsPacks } from './react-icons.ts';
 
 // database
@@ -29,12 +21,12 @@ export function getIconLink(iconPack: PacksNames, iconName: string) {
 }
 
 export function getIconPackWebsite(svgPackName: PacksNames) {
-  const iconPackWebsite = ICONS_WEBSITE_LINKS[svgPackName];
+  const iconPackWebsite = ICON_LIBRARIES[svgPackName].website;
   return iconPackWebsite;
 }
 
 export function getIconPackFigmaLink(svgPackName: string) {
-  const iconPackFigmaLink = ICONS_FIGMA_LINKS[svgPackName as PacksNames];
+  const iconPackFigmaLink = ICON_LIBRARIES[svgPackName as PacksNames].figmaLink;
   return iconPackFigmaLink;
 }
 
@@ -263,7 +255,7 @@ async function saveIconLibraryInDB({ packId, packName }: { packId: string; packN
     */
 
     await transaction2.queryArray(
-      `INSERT INTO icons (id,hash,hash_number,svg,inner_svg,view_box,icon_type,bytes,pack_id,pack_name,icon_parsed_name,icon_name,react_icon_name,icon_file_name,found) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15)`,
+      `INSERT INTO icons (id,hash,hash_number,svg,inner_svg,view_box,icon_type,bytes,pack_id,pack_name,icon_parsed_name,icon_name,react_icon_name,icon_file_name) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14)`,
       id,
       hash,
       hashNumber,
@@ -278,16 +270,16 @@ async function saveIconLibraryInDB({ packId, packName }: { packId: string; packN
       iconName,
       reactIconName,
       name,
-      0,
     );
 
     const encodedPath = encodeURIComponent(`/${packName}/${parsedIconType}/${iconName}`);
     await transaction2.queryArray(`INSERT INTO paths (path,hash) VALUES ($1, $2)`, encodedPath, hash);
   }
 
-  const { license, stars, version, iconTypes, website, downloadLink, parsedName } = ICON_LIBRARIES[packName as PacksNames];
+  const { license, stars, version, iconTypes, website, downloadLink, parsedName, figmaLink, githubLink, contributors } =
+    ICON_LIBRARIES[packName as PacksNames];
   await transaction2.queryArray(
-    `INSERT INTO icon_libraries (name, parsed_name, total_icons, license, stars, version, icon_types, website, download_link) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)`,
+    `INSERT INTO icon_libraries (name, parsed_name, total_icons, license, stars, version, icon_types, website, download_link, figma_link, github_link, contributors) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)`,
     packName,
     parsedName,
     totalIcons,
@@ -297,6 +289,9 @@ async function saveIconLibraryInDB({ packId, packName }: { packId: string; packN
     iconTypes,
     website,
     downloadLink,
+    figmaLink,
+    githubLink,
+    contributors,
   );
 
   await transaction2.commit();
@@ -326,9 +321,9 @@ export async function saveIconsInDB() {
 
     await transaction.queryArray`CREATE TABLE paths (path TEXT, hash TEXT)`;
     await transaction.queryArray(
-      `CREATE TABLE icons (id TEXT, hash TEXT, hash_number INTEGER, svg TEXT, inner_svg TEXT, view_box TEXT, icon_type TEXT, bytes TEXT, pack_id TEXT, pack_name TEXT, icon_parsed_name TEXT, icon_name TEXT, react_icon_name TEXT, icon_file_name TEXT, found SERIAL)`,
+      `CREATE TABLE icons (id TEXT, hash TEXT, hash_number INTEGER, svg TEXT, inner_svg TEXT, view_box TEXT, icon_type TEXT, bytes TEXT, pack_id TEXT, pack_name TEXT, icon_parsed_name TEXT, icon_name TEXT, react_icon_name TEXT, icon_file_name TEXT)`,
     );
-    await transaction.queryArray`CREATE TABLE icon_libraries (name TEXT, parsed_name TEXT, total_icons INTEGER, license TEXT, stars TEXT, version TEXT, website TEXT, download_link TEXT, icon_types TEXT[][])`;
+    await transaction.queryArray`CREATE TABLE icon_libraries (name TEXT, parsed_name TEXT, total_icons INTEGER, license TEXT, stars TEXT, version TEXT, website TEXT, download_link TEXT, figma_link TEXT, github_link TEXT, contributors INTEGER, icon_types TEXT[][])`;
 
     // generate indexes
     await transaction.queryArray`CREATE INDEX hash_index ON icons(hash)`;

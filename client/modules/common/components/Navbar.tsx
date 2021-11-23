@@ -227,7 +227,7 @@ export function Navbar() {
                   <ListItem>New supported icon libraries</ListItem>
                   <ListItem>Sliders to modify SVG stroke width</ListItem>
                   <ListItem>Picker to modify SVG colors</ListItem>
-                  <ListItem>Tags to identify groups of icons</ListItem>
+                  <ListItem>Tags to search groups of icons</ListItem>
                   <ListItem>Advanced filters in gallery page</ListItem>
                   <ListItem>Sponsoring popular icon libraries</ListItem>
                   <ListItem>Support for new frameworks</ListItem>

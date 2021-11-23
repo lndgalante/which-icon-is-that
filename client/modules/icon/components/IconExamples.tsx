@@ -18,6 +18,7 @@ export function IconExamples({ reactIcon, iconName }: IconExamplesProps) {
       spacing={{ base: "1.18rem", md: "1.18rem" }}
       borderColor="brand.softGrey"
       borderRadius={8}
+      height="fit-content"
     >
       <Text fontWeight={700} fontSize="lg" color="brand.darkRed">
         Usage Examples

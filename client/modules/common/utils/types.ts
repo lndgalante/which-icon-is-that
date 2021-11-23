@@ -3,7 +3,6 @@ export type Svg = {
   svg: string;
   hash: string;
   bytes: string;
-  found: number;
   packId: string;
   packName: string;
   iconName: string;
@@ -41,7 +40,11 @@ export type IconLibrary = {
   version: string;
   website: string;
   downloadLink: string;
-  iconTypes: string[]
+  stars: string;
+  githubLink: string;
+  figmaLink: string;
+  iconTypes: string[];
+  contributors: number;
 };
 
 export type Icon = {
@@ -70,12 +73,11 @@ export type Stats = {
   totalLibraries: number;
 };
 
-
-type GallerySvg = [string, IconFound]
+type GallerySvg = [string, IconFound];
 
 export type Gallery = {
-  svgs: GallerySvg[]
-}
+  svgs: GallerySvg[];
+};
 
 export type Response<T> = {
   success: boolean;
@@ -84,13 +86,13 @@ export type Response<T> = {
 
 export type IconResponse = Response<Icon>;
 
-export type IconFoundResponse = Response<Pick<Svg, "found">>;
-
 export type IconFound = Pick<Svg, "packName" | "iconName" | "iconType" | "reactIconName">;
 
 export type IconsFoundResponse = Response<{ svgs: IconFound[] }>;
 
 export type IconLibraryResponse = Response<IconLibrary>;
+
+export type IconLibrariesResponse = Response<{ iconLibraries: IconLibrary[] }>;
 
 export type IconTypeResponse = Response<IconTypes>;
 

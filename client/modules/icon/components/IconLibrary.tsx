@@ -1,5 +1,8 @@
-import { FiShare2, FiDownload, FiFigma } from "react-icons/fi";
+import NextLink from "next/link";
 import { Icon, Link, Stack, Text, HStack, Image, useClipboard } from "@chakra-ui/react";
+
+// icons
+import { FiShare2, FiExternalLink, FiLayout } from "react-icons/fi";
 
 // components
 import { Tag } from "@modules/common/components/Tag";
@@ -7,25 +10,21 @@ import { Tag } from "@modules/common/components/Tag";
 // hooks
 import { useToast } from "@modules/common/hooks/useToast";
 
+// common
+/*
+  <LinkButton  href={`/gallery?iconLibrary=${packName}&iconName=%20`} variant="brand.outline" text={`${packParsedName} Gallery`} />
+*/
+
 type IconLibraryProps = {
   website: string;
   packName: string;
+  packParsedName: string;
   version: string;
   totalIcons: number;
   license: string;
-  downloadLink: string;
-  figmaLink: string;
 };
 
-export function IconLibrary({
-  website,
-  version,
-  license,
-  packName,
-  totalIcons,
-  figmaLink,
-  downloadLink,
-}: IconLibraryProps) {
+export function IconLibrary({ website, version, license, packName, packParsedName, totalIcons }: IconLibraryProps) {
   // custom hooks
   const { displayToast } = useToast();
 
@@ -44,9 +43,7 @@ export function IconLibrary({
         Icon Library
       </Text>
 
-      <Link width="fit-content" href={website} aria-label="Heroicons" isExternal>
-        <Image paddingLeft={1} maxWidth={188} alt={packName} src={`/images/${packName}-color.png`} />
-      </Link>
+      <Image paddingLeft={1} alt={packName} maxWidth={188} objectFit="cover" src={`/images/${packName}-color.png`} />
 
       <HStack>
         <Tag>V{version}</Tag>
@@ -55,19 +52,21 @@ export function IconLibrary({
       </HStack>
 
       <HStack spacing={5} paddingTop={4}>
-        <Text variant="brand.underline" onClick={shareUrl} cursor="pointer">
+        <Text variant="brand.underline" alignItems="center" display="flex" onClick={shareUrl} cursor="pointer">
           <Icon as={FiShare2} mr={1.5} />
           Share
         </Text>
 
-        <Link variant="brand.underline" href={downloadLink} download>
-          <Icon as={FiDownload} mr={1.5} />
-          Download iconset
-        </Link>
+        <NextLink passHref href={`/gallery?iconLibrary=${packName}&iconName=%20`}>
+          <Link aria-label={packParsedName} variant="brand.underline" alignItems="center" display="flex">
+            <Icon as={FiLayout} mr={1.5} />
+            Go to gallery
+          </Link>
+        </NextLink>
 
-        <Link variant="brand.underline" href={figmaLink} isExternal>
-          <Icon as={FiFigma} mr={1.5} />
-          Figma
+        <Link variant="brand.underline" alignItems="center" display="flex" href={website}>
+          <Icon as={FiExternalLink} mr={1.5} />
+          Website
         </Link>
       </HStack>
     </Stack>
