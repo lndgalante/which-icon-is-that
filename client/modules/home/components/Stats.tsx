@@ -57,14 +57,14 @@ export function Stats({ totalIcons, totalLibraries, totalStyles }: StatsProps) {
       </Text>
 
       <Wrap spacing={{ base: 5, md: 10 }} justify="center" align="center" shouldWrapChildren>
-        <Fade bottom delay={200}>
+        <Fade bottom distance="100px" delay={200}>
           <StatBox shape={<Serve />} title="we serve" subtitle={`+${totalIcons} icons`} />
         </Fade>
-        <Fade bottom delay={400}>
+        <Fade bottom distance="100px" delay={400}>
           <StatBox shape={<Libraries />} title="from" subtitle={`+${totalLibraries - 1} libraries`} />
         </Fade>
 
-        <Fade bottom delay={600}>
+        <Fade bottom distance="100px" delay={600}>
           <StatBox shape={<Styles />} title="in" subtitle={`${totalStyles} styles`} />
         </Fade>
       </Wrap>
