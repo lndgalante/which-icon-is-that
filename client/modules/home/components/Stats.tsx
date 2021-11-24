@@ -25,7 +25,7 @@ function StatBox({ shape, title, subtitle }: StatBoxProps) {
       flexDirection="column"
       alignItems="center"
       justifyContent="center"
-      spacing={{ base: 10, md: 14 }}
+      spacing={{ base: 10, md: 2 }}
       textAlign="center"
       as="article"
     >
@@ -58,14 +58,38 @@ export function Stats({ totalIcons, totalLibraries, totalStyles }: StatsProps) {
 
       <Wrap spacing={{ base: 5, md: 10 }} justify="center" align="center" shouldWrapChildren>
         <Fade bottom distance="100px" delay={200}>
-          <StatBox shape={<Serve />} title="we serve" subtitle={`+${totalIcons} icons`} />
+          <StatBox
+            shape={
+              <Stack height={140} pt={3}>
+                <Serve />
+              </Stack>
+            }
+            title="we serve"
+            subtitle={`+${totalIcons} icons`}
+          />
         </Fade>
         <Fade bottom distance="100px" delay={400}>
-          <StatBox shape={<Libraries />} title="from" subtitle={`+${totalLibraries - 1} libraries`} />
+          <StatBox
+            shape={
+              <Stack height={140}>
+                <Libraries />
+              </Stack>
+            }
+            title="from"
+            subtitle={`+${totalLibraries - 1} libraries`}
+          />
         </Fade>
 
         <Fade bottom distance="100px" delay={600}>
-          <StatBox shape={<Styles />} title="in" subtitle={`${totalStyles} styles`} />
+          <StatBox
+            shape={
+              <Stack height={140}>
+                <Styles />
+              </Stack>
+            }
+            title="in"
+            subtitle={`${totalStyles} styles`}
+          />
         </Fade>
       </Wrap>
     </Stack>

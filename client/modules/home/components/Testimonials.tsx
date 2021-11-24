@@ -23,7 +23,7 @@ function TestimonialCard({ name, imageUrl, testimony, job }: TestimonialCardProp
     >
       <Avatar name={name} size="xl" src={imageUrl} />
       <Stack flex={1} justifyContent="space-between">
-        <Text color="brand.text" mt={{ base: 4, md: 0 }}>
+        <Text color="brand.text" mt={{ base: 4, md: 0 }} lineHeight={2}>
           {testimony}
         </Text>
 
