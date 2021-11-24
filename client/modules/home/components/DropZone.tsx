@@ -196,7 +196,7 @@ export function DropZone() {
             </Button>
           </Zoom>
           <Zoom delay={300}>
-            <Text display={{ base: "none", md: "block" }} fontSize="sm" maxWidth={288} mt={4}>
+            <Text display={{ base: "none", md: "block" }} fontSize="sm" maxWidth={288}>
               Drag &amp; Drop the SVG file, paste the SVG code or the icon URL
             </Text>
           </Zoom>
