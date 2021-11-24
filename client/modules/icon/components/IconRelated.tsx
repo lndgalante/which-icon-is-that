@@ -51,22 +51,26 @@ export function IconRelated({ relatedIcons }: IconRelatedProps) {
             />
           </AccordionButton>
           <AccordionPanel pb={4} px={0}>
-            <SimpleGrid gridTemplateColumns="repeat(auto-fit, 80px)" spacing={{ base: "14px", md: "28px" }}>
-              {relatedIcons?.map(({ iconName, packName, iconType, reactIconName }) => {
-                return (
-                  <BoxIcon
-                    key={reactIconName}
-                    href={{
-                      pathname: "/[packName]/[iconType]/[iconName]",
-                      query: { packName, iconType, iconName },
-                    }}
-                    icon={getIconComponent(packName, reactIconName)}
-                    label={iconName}
-                    displayLabel
-                  />
-                );
-              })}
-            </SimpleGrid>
+            {!relatedIcons || relatedIcons?.length === 0 ? (
+              <Text>No related icons found</Text>
+            ) : (
+              <SimpleGrid gridTemplateColumns="repeat(auto-fit, 80px)" spacing={{ base: "14px", md: "28px" }}>
+                {relatedIcons?.map(({ iconName, packName, iconType, reactIconName }) => {
+                  return (
+                    <BoxIcon
+                      key={reactIconName}
+                      href={{
+                        pathname: "/[packName]/[iconType]/[iconName]",
+                        query: { packName, iconType, iconName },
+                      }}
+                      icon={getIconComponent(packName, reactIconName)}
+                      label={iconName}
+                      displayLabel
+                    />
+                  );
+                })}
+              </SimpleGrid>
+            )}
           </AccordionPanel>
         </AccordionItem>
       </Accordion>
