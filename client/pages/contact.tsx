@@ -14,7 +14,7 @@ import {
 } from "@chakra-ui/react";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
-import { zodResolver } from '@hookform/resolvers/zod/dist/zod';
+import { zodResolver } from "@hookform/resolvers/zod/dist/zod";
 
 // icons
 import { FiMail } from "react-icons/fi";
@@ -65,13 +65,14 @@ function Contact() {
       position="relative"
       justifyContent="center"
       alignItems="center"
-      spacing={6}
+      spacing={{ base: 6, md: 6 }}
       marginX={{ base: -4, md: -12 }}
       paddingBottom={{ base: 16, md: 48 }}
       paddingX={{ base: 5, md: 0 }}
+      paddingY={{ base: "2.7rem", md: 0 }}
       overflow="hidden"
     >
-      <Stack spacing={{ base: 6, md: 6 }} textAlign="center" alignItems="center">
+      <Stack spacing={{ base: 3, md: 6 }} textAlign="center" alignItems="center">
         <Text color="brand.darkRed" fontWeight={800} fontSize={{ base: 24, md: 40 }}>
           Get in Touch!
         </Text>
@@ -98,12 +99,13 @@ function Contact() {
                 borderRadius={{ base: 8, md: 16 }}
                 paddingX={{ base: 2, md: 6 }}
                 paddingY={{ base: 2, md: 6 }}
-                transition='all 200ms ease-in-out'
+                transition="all 200ms ease-in-out"
                 sx={{ ".footer-link:hover &": { backgroundColor: "brand.softOrange" } }}
               >
                 <Icon as={FaDiscord} w={6} h={6} color="brand.orange" />
-                <Text color="brand.text" sx={{ ".footer-link:hover &": { color: "brand.darkRed" } }}
-                >Discord Channel</Text>
+                <Text color="brand.text" sx={{ ".footer-link:hover &": { color: "brand.darkRed" } }}>
+                  Discord Channel
+                </Text>
               </HStack>
             </LinkOverlay>
           </LinkBox>
@@ -168,12 +170,12 @@ function Contact() {
         </Stack>
       </Stack>
 
-      <Stack top={{ base: -20, md: 100 }} left={{ base: -1, md: -4 }} position="absolute">
+      <Stack top={{ base: "-5.2rem", md: 100 }} left={{ base: 0, md: -4 }} position="absolute">
         <Shapes.TopLeft width={{ base: "55px", md: "214px" }} />
       </Stack>
 
-      <Stack bottom={{ base: -5, md: 10 }} right={{ base: 20, md: 268 }} position="absolute">
-        <Shapes.BottomRight width={{ base: "66px", md: "120px" }} />
+      <Stack bottom={{ base: -2, md: 10 }} right={{ base: 20, md: 268 }} position="absolute">
+        <Shapes.BottomRight width={{ base: "4.1rem", md: "120px" }} height={{ base: "2.6rem" }} />
       </Stack>
 
       <Stack
@@ -185,7 +187,7 @@ function Contact() {
         <Shapes.MiddleLeft width={{ base: "70px", md: "130px" }} />
       </Stack>
 
-      <Stack top={{ base: 4, md: 56 }} right={{ base: 0, md: 0 }} position="absolute">
+      <Stack top={{ base: 2, md: 56 }} right={{ base: 0, md: 0 }} position="absolute">
         <Shapes.TopRight width={{ base: "64px", md: "124px" }} />
       </Stack>
     </Stack>

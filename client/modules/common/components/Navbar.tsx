@@ -232,8 +232,6 @@ export function Navbar() {
                   <ListItem>Sponsoring popular icon libraries</ListItem>
                   <ListItem>Support for new frameworks</ListItem>
                   <ListItem>PNG/JPG to SVG conversor</ListItem>
-                  <ListItem>+ many more!</ListItem>
-
                   {/*
                   <ListItem>Google Chrome Extension</ListItem>
                   <ListItem>Tons of feedback, speed and usability improvements!</ListItem>
@@ -255,7 +253,6 @@ export function Navbar() {
                   <ListItem>Custom WIIT icon library</ListItem>
                   <ListItem>Instant library updates</ListItem>
                   <ListItem>Enhanced support</ListItem>
-                  <ListItem>+ many more!</ListItem>
                 </UnorderedList>
               </Stack>
             </HStack>
