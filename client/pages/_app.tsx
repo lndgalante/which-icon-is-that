@@ -37,12 +37,6 @@ export default function MyApp({ Component, pageProps, router }: AppProps) {
         <ChakraProvider theme={theme}>
           <NextSeo
             title="Which Icon Is That?"
-            additionalMetaTags={[
-              {
-                name: "viewport",
-                content: "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0",
-              },
-            ]}
             description="The missing tool to work with icons for developers and designers"
             twitter={{ handle: "@whichiconisthat", site: "@whichiconisthat", cardType: "/images/dps.png" }}
           />

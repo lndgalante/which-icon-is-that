@@ -33,6 +33,7 @@ export function IconRelated({ relatedIcons }: IconRelatedProps) {
             _focus={{ boxShadow: "0 0 0 3px brand.softOrange" }}
             _hover={{ backgroundColor: "transparent" }}
             role="group"
+            ariaLabel="Related Icons"
           >
             <Text
               fontWeight={700}
