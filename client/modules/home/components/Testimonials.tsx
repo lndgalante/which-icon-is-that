@@ -18,7 +18,6 @@ function TestimonialCard({ name, imageUrl, testimony, job }: TestimonialCardProp
       borderRadius={24}
       align="stretch"
       backgroundColor="brand.white"
-      scrollSnapAlign="start"
       flexDirection={{ base: "column", md: "row" }}
     >
       <Avatar name={name} size="xl" src={imageUrl} />
