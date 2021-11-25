@@ -43,7 +43,7 @@ export default function MyApp({ Component, pageProps, router }: AppProps) {
                 content: "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0",
               },
             ]}
-            description="Find your icon name and pack easily from your SVG"
+            description="The missing tool to work with icons for developers and designers"
             twitter={{ handle: "@whichiconisthat", site: "@whichiconisthat", cardType: "/images/dps.png" }}
           />
           <Fonts />

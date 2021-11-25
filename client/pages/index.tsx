@@ -1,4 +1,5 @@
 import { Fragment } from "react";
+import { NextSeo } from "next-seo";
 import { GetStaticProps } from "next";
 
 // utils
@@ -15,7 +16,7 @@ import { ExampleIcons } from "@modules/home/components/ExampleIcons";
 import { Testimonials } from "@modules/home/components/Testimonials";
 import { SupportedLibraries } from "@modules/home/components/SupportedLibraries";
 
-type Props = StatsType
+type Props = StatsType;
 
 export const getStaticProps: GetStaticProps<Props> = async () => {
   try {
@@ -33,6 +34,14 @@ export const getStaticProps: GetStaticProps<Props> = async () => {
 export default function Home({ totalIcons, totalLibraries, totalStyles }: Props) {
   return (
     <Fragment>
+      <NextSeo
+        additionalMetaTags={[
+          {
+            name: "robots",
+            content: "all",
+          },
+        ]}
+      />
       <Header />
       <ExampleIcons />
       <SupportedLibraries />

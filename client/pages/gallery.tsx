@@ -1,3 +1,5 @@
+import { Fragment } from "react";
+import { NextSeo } from "next-seo";
 import { GetStaticProps } from "next";
 import { useRouter } from "next/router";
 import { useDebounce } from "use-debounce";
@@ -174,205 +176,215 @@ function Gallery({ svgs, packs }: Props) {
     : iconsToRender;
 
   return (
-    <Stack pb={{ base: 9, md: 240 }} position="relative">
-      <Stack
-        alignItems="center"
-        as="header"
-        backgroundColor="brand.lightOrange"
-        borderRadius={{ base: 0, md: 24 }}
-        minHeight={{ base: 275, md: 242 }}
-        marginX={-4}
-        position="relative"
-        textAlign="center"
-        spacing={{ base: 4, md: 3 }}
-        justifyContent="center"
-        mb={20}
-      >
-        <Stack left={{ base: -3, md: "1.38rem" }} bottom={{ base: 12, md: "3.25rem" }} position="absolute">
-          <Shapes.BottomLeft width={{ base: "4.06rem", md: "7.94rem" }} height={{ base: "3.5rem", md: "6.88rem" }} />
-        </Stack>
-
-        <Stack top={{ base: "0.55em", md: "2.25rem" }} right={{ base: 0, md: 0 }} position="absolute">
-          <Shapes.TopRight width={{ base: "7.06rem", md: "11.19rem" }} height={{ base: "3rem", md: "5.21rem" }} />
-        </Stack>
-
-        <Text
-          as="h1"
-          maxWidth={{ base: 241, md: "inherit" }}
-          fontSize={{ base: 24, md: 40 }}
-          mixBlendMode="multiply"
-          color="brand.darkRed"
+    <Fragment>
+      <NextSeo
+        additionalMetaTags={[
+          {
+            name: "robots",
+            content: "all",
+          },
+        ]}
+      />
+      <Stack pb={{ base: 9, md: 240 }} position="relative">
+        <Stack
+          alignItems="center"
+          as="header"
+          backgroundColor="brand.lightOrange"
+          borderRadius={{ base: 0, md: 24 }}
+          minHeight={{ base: 275, md: 242 }}
+          marginX={-4}
+          position="relative"
+          textAlign="center"
+          spacing={{ base: 4, md: 3 }}
+          justifyContent="center"
+          mb={20}
         >
-          All library icons{" "}
-          <Text as="b" fontWeight={700}>
-            in one place
-          </Text>
-        </Text>
-        <Text as="h2" fontSize={{ base: 14, md: 18 }} color="brand.warmBlack">
-          One finder to rule them all
-        </Text>
+          <Stack left={{ base: -3, md: "1.38rem" }} bottom={{ base: 12, md: "3.25rem" }} position="absolute">
+            <Shapes.BottomLeft width={{ base: "4.06rem", md: "7.94rem" }} height={{ base: "3.5rem", md: "6.88rem" }} />
+          </Stack>
 
-        <Stack position="absolute" bottom={-4} left={0} right={0}>
-          <Stack
-            maxWidth={1064}
-            width="90%"
-            spacing={0}
-            flexDirection={{ base: "column", md: "row" }}
-            margin="0 auto"
-            borderRadius={8}
-            shadow="6"
-            transition="all 200ms ease-in-out"
-            _hover={{ shadow: "7" }}
-            backgroundColor="brand.white"
-            alignItems="center"
-            justifyContent="center"
-            p={2}
-            position="relative"
+          <Stack top={{ base: "0.55em", md: "2.25rem" }} right={{ base: 0, md: 0 }} position="absolute">
+            <Shapes.TopRight width={{ base: "7.06rem", md: "11.19rem" }} height={{ base: "3rem", md: "5.21rem" }} />
+          </Stack>
+
+          <Text
+            as="h1"
+            maxWidth={{ base: 241, md: "inherit" }}
+            fontSize={{ base: 24, md: 40 }}
+            mixBlendMode="multiply"
+            color="brand.darkRed"
           >
-            <IconLibrarySelect
-              label={iconLibraryQuery.label}
-              value={iconLibraryQuery.value}
-              onChange={handleChangeIconLibrary}
-              options={iconLibrariesOptions}
-            />
-            <IconNameInput
-              value={iconNameQuery}
-              onChange={handleChangeIconName}
-              shouldDisplayCross={hasFiltersActive}
-              onCrossClick={handleClearAllFilters}
-            />
+            All library icons{" "}
+            <Text as="b" fontWeight={700}>
+              in one place
+            </Text>
+          </Text>
+          <Text as="h2" fontSize={{ base: 14, md: 18 }} color="brand.warmBlack">
+            One finder to rule them all
+          </Text>
+
+          <Stack position="absolute" bottom={-4} left={0} right={0}>
+            <Stack
+              maxWidth={1064}
+              width="90%"
+              spacing={0}
+              flexDirection={{ base: "column", md: "row" }}
+              margin="0 auto"
+              borderRadius={8}
+              shadow="6"
+              transition="all 200ms ease-in-out"
+              _hover={{ shadow: "7" }}
+              backgroundColor="brand.white"
+              alignItems="center"
+              justifyContent="center"
+              p={2}
+              position="relative"
+            >
+              <IconLibrarySelect
+                label={iconLibraryQuery.label}
+                value={iconLibraryQuery.value}
+                onChange={handleChangeIconLibrary}
+                options={iconLibrariesOptions}
+              />
+              <IconNameInput
+                value={iconNameQuery}
+                onChange={handleChangeIconName}
+                shouldDisplayCross={hasFiltersActive}
+                onCrossClick={handleClearAllFilters}
+              />
+            </Stack>
+          </Stack>
+        </Stack>
+
+        <Stack
+          position="fixed"
+          bottom={4}
+          right={4}
+          zIndex={10}
+          padding={2}
+          cursor="pointer"
+          borderRadius="50%"
+          onClick={handleScrollToTop}
+          backgroundColor="brand.lightOrange"
+          transition="all 200ms ease-in-out"
+          _hover={{ transform: "scale(1.1)" }}
+          transform={y > 465 ? "translateY(0px)" : "translateY(100px)"}
+        >
+          <Icon as={FiArrowUp} color="brand.darkRed" h={6} w={6} />
+        </Stack>
+
+        <Stack as="section" px={2}>
+          <Stack maxWidth={1064} width="100%" m="0 auto" paddingTop={{ base: 4, md: 0 }}>
+            <MotionFade>
+              {error && (
+                <Stack alignItems="center" minHeight={320} mt={{ base: 45, md: 0 }}>
+                  <Stack
+                    maxWidth={{ base: 284, md: 360 }}
+                    spacing={4}
+                    justifyContent="center"
+                    alignItems="center"
+                    textAlign="center"
+                  >
+                    <BrokenLogo />
+                    <Text>
+                      Sorry, we did not find any icon, you can try looking for another icon or in another library.
+                    </Text>
+                  </Stack>
+                </Stack>
+              )}
+
+              {!error &&
+                parsedIconsToRender.map(([iconLibrary, icons]) => {
+                  const packMetadata = packs[iconLibrary];
+
+                  return (
+                    <Stack key={iconLibrary} className="icon-library-container">
+                      <HStack
+                        ref={intersectionRef}
+                        transform="all 200ms ease-in-out"
+                        position="sticky"
+                        zIndex={5}
+                        top={2}
+                        justifyContent="space-between"
+                        alignItems="center"
+                        backgroundColor="brand.white"
+                        p={2}
+                      >
+                        <HStack spacing={{ base: 4, md: 8 }}>
+                          <Stack width={140}>
+                            <LinkBox>
+                              <LinkOverlay isExternal href={packMetadata.website}>
+                                <Image
+                                  paddingLeft={1}
+                                  alt={iconLibrary}
+                                  filter={iconLibrary === viewAllIconLibrary ? "grayscale(0)" : "grayscale(1)"}
+                                  opacity={0.8}
+                                  transition="all 200ms ease-in-out"
+                                  src={`/images/${iconLibrary}-color.png`}
+                                  sx={{ ".icon-library-container:hover &": { filter: "grayscale(0)", opacity: 1 } }}
+                                />
+                              </LinkOverlay>
+                            </LinkBox>
+                          </Stack>
+                          <HStack display={{ base: "none", md: "inherit" }}>
+                            <Tag>V{packMetadata.version}</Tag>
+                            <Tag display={{ base: "none", md: "inherit" }}>{packMetadata.totalIcons} icons</Tag>
+                            {packMetadata.iconTypes.map((iconType) => (
+                              <Tag key={`${iconLibrary}-${iconType}`} display={{ base: "none", md: "inherit" }}>
+                                {iconType}
+                              </Tag>
+                            ))}
+                          </HStack>
+                        </HStack>
+                        <Button
+                          variant="brand.ghost"
+                          fontSize={14}
+                          fontWeight={500}
+                          display={iconNameQueryDebounced ? "none" : "inherit"}
+                          onClick={() =>
+                            iconLibrary === viewAllIconLibrary
+                              ? handleClearLibrarySelection()
+                              : handleLibraryViewAll(iconLibrary)
+                          }
+                        >
+                          {`View ${iconLibrary === viewAllIconLibrary ? "less" : "all"}`}
+                        </Button>
+                      </HStack>
+                      <Stack py={6}>
+                        <SimpleGrid gridTemplateColumns="repeat(auto-fit, 80px)" spacing={{ base: "14px", md: "28px" }}>
+                          {icons.map((icon) => {
+                            const { iconType, iconName, reactIconName } = icon;
+                            const isTwoTone = iconType === "twotone";
+                            const reactIcon = getIconComponent(iconLibrary, reactIconName);
+
+                            if (!reactIcon) return null;
+
+                            return (
+                              <Stack width="80px" key={reactIconName}>
+                                {isFetching ? (
+                                  <BoxIconSkeleton primary displayLabel withShadow />
+                                ) : (
+                                  <BoxIcon
+                                    href={`/${iconLibrary}/${iconType}/${iconName}`}
+                                    icon={reactIcon}
+                                    label={iconName}
+                                    isTwoTone={isTwoTone}
+                                    displayLabel
+                                  />
+                                )}
+                              </Stack>
+                            );
+                          })}
+                        </SimpleGrid>
+                      </Stack>
+                    </Stack>
+                  );
+                })}
+            </MotionFade>
           </Stack>
         </Stack>
       </Stack>
-
-      <Stack
-        position="fixed"
-        bottom={4}
-        right={4}
-        zIndex={10}
-        padding={2}
-        cursor="pointer"
-        borderRadius="50%"
-        onClick={handleScrollToTop}
-        backgroundColor="brand.lightOrange"
-        transition="all 200ms ease-in-out"
-        _hover={{ transform: "scale(1.1)" }}
-        transform={y > 465 ? "translateY(0px)" : "translateY(100px)"}
-      >
-        <Icon as={FiArrowUp} color="brand.darkRed" h={6} w={6} />
-      </Stack>
-
-      <Stack as="section" px={2}>
-        <Stack maxWidth={1064} width="100%" m="0 auto" paddingTop={{ base: 4, md: 0 }}>
-          <MotionFade>
-            {error && (
-              <Stack alignItems="center" minHeight={320} mt={{ base: 45, md: 0 }}>
-                <Stack
-                  maxWidth={{ base: 284, md: 360 }}
-                  spacing={4}
-                  justifyContent="center"
-                  alignItems="center"
-                  textAlign="center"
-                >
-                  <BrokenLogo />
-                  <Text>
-                    Sorry, we did not find any icon, you can try looking for another icon or in another library.
-                  </Text>
-                </Stack>
-              </Stack>
-            )}
-
-            {!error &&
-              parsedIconsToRender.map(([iconLibrary, icons]) => {
-                const packMetadata = packs[iconLibrary];
-
-                return (
-                  <Stack key={iconLibrary} className="icon-library-container">
-                    <HStack
-                      ref={intersectionRef}
-                      transform="all 200ms ease-in-out"
-                      position="sticky"
-                      zIndex={5}
-                      top={2}
-                      justifyContent="space-between"
-                      alignItems="center"
-                      backgroundColor="brand.white"
-                      p={2}
-                    >
-                      <HStack spacing={{ base: 4, md: 8 }}>
-                        <Stack width={140}>
-                          <LinkBox>
-                            <LinkOverlay isExternal href={packMetadata.website}>
-                              <Image
-                                paddingLeft={1}
-                                alt={iconLibrary}
-                                filter={iconLibrary === viewAllIconLibrary ? "grayscale(0)" : "grayscale(1)"}
-                                opacity={0.8}
-                                transition="all 200ms ease-in-out"
-                                src={`/images/${iconLibrary}-color.png`}
-                                sx={{ ".icon-library-container:hover &": { filter: "grayscale(0)", opacity: 1 } }}
-                              />
-                            </LinkOverlay>
-                          </LinkBox>
-                        </Stack>
-                        <HStack display={{ base: "none", md: "inherit" }}>
-                          <Tag>V{packMetadata.version}</Tag>
-                          <Tag display={{ base: "none", md: "inherit" }}>{packMetadata.totalIcons} icons</Tag>
-                          {packMetadata.iconTypes.map((iconType) => (
-                            <Tag key={`${iconLibrary}-${iconType}`} display={{ base: "none", md: "inherit" }}>
-                              {iconType}
-                            </Tag>
-                          ))}
-                        </HStack>
-                      </HStack>
-                      <Button
-                        variant="brand.ghost"
-                        fontSize={14}
-                        fontWeight={500}
-                        display={iconNameQueryDebounced ? "none" : "inherit"}
-                        onClick={() =>
-                          iconLibrary === viewAllIconLibrary
-                            ? handleClearLibrarySelection()
-                            : handleLibraryViewAll(iconLibrary)
-                        }
-                      >
-                        {`View ${iconLibrary === viewAllIconLibrary ? "less" : "all"}`}
-                      </Button>
-                    </HStack>
-                    <Stack py={6}>
-                      <SimpleGrid gridTemplateColumns="repeat(auto-fit, 80px)" spacing={{ base: "14px", md: "28px" }}>
-                        {icons.map((icon) => {
-                          const { iconType, iconName, reactIconName } = icon;
-                          const isTwoTone = iconType === "twotone";
-                          const reactIcon = getIconComponent(iconLibrary, reactIconName);
-
-                          if (!reactIcon) return null;
-
-                          return (
-                            <Stack width="80px" key={reactIconName}>
-                              {isFetching ? (
-                                <BoxIconSkeleton primary displayLabel withShadow />
-                              ) : (
-                                <BoxIcon
-                                  href={`/${iconLibrary}/${iconType}/${iconName}`}
-                                  icon={reactIcon}
-                                  label={iconName}
-                                  isTwoTone={isTwoTone}
-                                  displayLabel
-                                />
-                              )}
-                            </Stack>
-                          );
-                        })}
-                      </SimpleGrid>
-                    </Stack>
-                  </Stack>
-                );
-              })}
-          </MotionFade>
-        </Stack>
-      </Stack>
-    </Stack>
+    </Fragment>
   );
 }
 
