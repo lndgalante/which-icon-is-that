@@ -1,5 +1,6 @@
 import isUrl from "is-url";
 import isSvg from "is-svg";
+import Zoom from "react-reveal/Zoom";
 import { useRouter } from "next/router";
 import { useDropzone } from "react-dropzone";
 import { Fragment, useState, useEffect } from "react";
@@ -15,7 +16,6 @@ import {
   useToast,
   useDisclosure,
 } from "@chakra-ui/react";
-import Zoom from "react-reveal/Zoom";
 
 // utils
 import { api } from "@modules/common/utils/api";
@@ -224,11 +224,11 @@ export function DropZone() {
                 textTransform="uppercase"
                 mb="0.125rem"
               >
-                That's a nice one!
+                That&apos;s a nice one!
               </Text>
               <Isotype />
               <Text fontWeight={600} paddingTop={3} color="brand.text">
-                We're searching for it...
+                We&apos;re searching for it...
               </Text>
             </Stack>
           </ModalBody>

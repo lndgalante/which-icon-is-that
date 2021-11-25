@@ -1,6 +1,6 @@
 import NextLink from "next/link";
-import { Stack, Text, Link, Image, SimpleGrid } from "@chakra-ui/react";
 import Fade from "react-reveal/Fade";
+import { Stack, Text, Link, Image, SimpleGrid } from "@chakra-ui/react";
 
 // components
 import { LinkButton } from "@modules/common/components/LinkButton";

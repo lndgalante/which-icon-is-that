@@ -1,5 +1,5 @@
-import { Stack, Text, Wrap } from "@chakra-ui/react";
 import Fade from "react-reveal/Fade";
+import { Stack, Text, Wrap } from "@chakra-ui/react";
 
 // types
 import { Stats as StatsType } from "@modules/common/utils/types";

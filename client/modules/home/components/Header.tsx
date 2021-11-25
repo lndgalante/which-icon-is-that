@@ -1,6 +1,6 @@
-import { Stack, Text } from "@chakra-ui/react";
 import Fade from "react-reveal/Fade";
 import Zoom from "react-reveal/Zoom";
+import { Stack, Text } from "@chakra-ui/react";
 
 // components
 import * as Shapes from "@modules/home/components/Shapes";

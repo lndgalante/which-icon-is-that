@@ -1,5 +1,5 @@
-import { Stack, Text, Image } from "@chakra-ui/react";
 import Fade from "react-reveal/Fade";
+import { Stack, Text, Image } from "@chakra-ui/react";
 
 // components
 import * as Shapes from "@modules/home/components/Shapes";
@@ -54,9 +54,13 @@ export function Features() {
               <Fade right distance="100px">
                 <Image
                   alt="Easy to find"
-                  src="/images/easy-to-find.png"
-                  shadow="7"
+                  src="/images/icon-gallery.png"
                   borderRadius={{ base: 8, md: 16 }}
+                  width={{ base: 580, md: 2080 }}
+                  height={{ base: 250, md: 650 }}
+                  objectFit="cover"
+                  objectPosition={{ base: "center", md: "left" }}
+                  boxShadow="9"
                 />
               </Fade>
             </Stack>
@@ -148,9 +152,13 @@ export function Features() {
                 <Fade bottom distance="100px">
                   <Image
                     alt="Rich Icon data"
-                    src="/images/rich-icon-data.png"
-                    shadow="7"
+                    src="/images/icon-page.png"
                     borderRadius={{ base: 8, md: 16 }}
+                    objectFit="cover"
+                    objectPosition="left"
+                    boxShadow="9"
+                    width={{ base: 580, md: 1130 }}
+                    height={{ base: 250, md: 590 }}
                   />
                 </Fade>
               </Stack>
@@ -216,7 +224,16 @@ export function Features() {
               zIndex={1}
             >
               <Fade left>
-                <Image alt="Developer panel" src="/images/developer-panel.png" />
+                <Image
+                  alt="Developer panel"
+                  src="/images/developer-panel.png"
+                  borderRadius={{ base: 8, md: 16 }}
+                  objectFit="cover"
+                  objectPosition="right"
+                  boxShadow="9"
+                  width={{ base: 580, md: 1017 }}
+                  height={{ base: 250, md: 636 }}
+                />
               </Fade>
             </Stack>
           </Stack>

@@ -18,6 +18,7 @@ export const theme = extendTheme({
     6: "0px 8px 18px -6px rgba(181, 167, 167, 0.12), 0px 12px 42px -4px rgba(181, 167, 167, 0.12)",
     7: "0px 8px 22px -6px rgba(32, 29, 29, 0.12), 0px 14px 64px -4px rgba(32, 29, 29, 0.12)",
     8: "0px 8px 28px -6px rgba(129, 49, 49, 0.12), 0px 18px 88px -4px rgba(129, 49, 49, 0.12)",
+    9: "0px 8px 28px -6px rgba(0, 0, 0, 0.12), 0px 18px 88px -4px rgba(0, 0, 0, 0.12)",
     outline: "0 0 0 3px #F4D0C0",
   },
   fonts: {
