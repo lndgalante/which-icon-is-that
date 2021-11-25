@@ -1,4 +1,3 @@
-import delay from "delay";
 import { useRouter } from "next/router";
 import { GetStaticPaths, GetStaticProps } from "next";
 import { SimpleGrid, Stack, useDisclosure } from "@chakra-ui/react";
@@ -45,8 +44,6 @@ export const getStaticProps: GetStaticProps<Props, Params> = async ({ params }) 
     const { data: iconTypesData } = await api.getIconTypes(iconName, packName);
     const { data: relatedIconsData } = await api.getSimilarIcons(iconHash, packName, icon?.svg?.hashNumber);
 
-    await delay(1000);
-
     return {
       props: {
         icon,
@@ -60,7 +57,6 @@ export const getStaticProps: GetStaticProps<Props, Params> = async ({ params }) 
   } catch (err) {
     console.log("Error on Icon page | getStaticProps", err);
     console.log("Params broken", `/${params?.packName}/${params?.iconType}/${params?.iconName}`);
-    await delay(1000);
 
     return { notFound: true };
   }
