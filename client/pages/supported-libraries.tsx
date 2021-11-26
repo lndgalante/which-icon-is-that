@@ -156,6 +156,7 @@ function SupportedLibraries({ iconLibraries }: Props) {
                       <Icon
                         w={name === "fontawesome" ? 6 : 8}
                         h={name === "fontawesome" ? 6 : 8}
+                        minWidth={34}
                         mr={5}
                         as={ISOLOGOUS[name]}
                       />

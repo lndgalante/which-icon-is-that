@@ -1,8 +1,9 @@
 import NextLink from "next/link";
 import Fade from "react-reveal/Fade";
-import { Stack, Text, Link, Image, SimpleGrid } from "@chakra-ui/react";
+import { Stack, Text, Link, Icon, SimpleGrid } from "@chakra-ui/react";
 
 // components
+import { LOGOS } from "@modules/common/components/Logos";
 import { LinkButton } from "@modules/common/components/LinkButton";
 
 export function SupportedLibraries() {
@@ -21,15 +22,18 @@ export function SupportedLibraries() {
         paddingX={{ base: 10, md: 4 }}
         spacing={{ base: 12, md: 8 }}
         maxWidth={1064}
+        maxHeight={180}
       >
         <NextLink passHref href="/gallery?iconLibrary=antdesign&iconName=%20">
           <Link aria-label="Ant Design Icons">
             <Fade bottom delay={0}>
-              <Image
-                alt="Ant Design Icons"
-                _hover={{ opacity: 0.6 }}
-                src="/images/antdesign.png"
+              <Icon
+                w={181}
+                height={14}
+                _hover={{ filter: "grayscale(0) contrast(1)" }}
+                filter="grayscale(1) contrast(0.6)"
                 transition="all ease-in-out 200ms"
+                as={LOGOS.antdesign}
               />
             </Fade>
           </Link>
@@ -38,11 +42,13 @@ export function SupportedLibraries() {
         <NextLink passHref href="/gallery?iconLibrary=bootstrap&iconName=%20">
           <Link aria-label="Bootstrap Icons">
             <Fade bottom delay={200}>
-              <Image
-                alt="Bootstrap Icons"
-                _hover={{ opacity: 0.6 }}
-                src="/images/bootstrap.png"
+              <Icon
+                w={177}
+                height={14}
+                _hover={{ filter: "grayscale(0) contrast(1)" }}
+                filter="grayscale(1) contrast(0.7)"
                 transition="all ease-in-out 200ms"
+                as={LOGOS.bootstrap}
               />
             </Fade>
           </Link>
@@ -51,11 +57,13 @@ export function SupportedLibraries() {
         <NextLink passHref href="/gallery?iconLibrary=heroicons&iconName=%20">
           <Link aria-label="Heroicons">
             <Fade bottom delay={400}>
-              <Image
-                alt="Heroicons"
-                _hover={{ opacity: 0.6 }}
-                src="/images/heroicons.png"
+              <Icon
+                w={187}
+                height={14}
+                _hover={{ filter: "grayscale(0) contrast(1)" }}
+                filter="grayscale(1) contrast(0.8)"
                 transition="all ease-in-out 200ms"
+                as={LOGOS.heroicons}
               />
             </Fade>
           </Link>
@@ -64,11 +72,13 @@ export function SupportedLibraries() {
         <NextLink passHref href="/gallery?iconLibrary=feather&iconName=%20">
           <Link aria-label="Feather Icons">
             <Fade bottom delay={600}>
-              <Image
-                alt="Feather Icons"
-                _hover={{ opacity: 0.6 }}
-                src="/images/feather.png"
+              <Icon
+                w={170}
+                height={12}
+                _hover={{ filter: "grayscale(0) contrast(1)" }}
+                filter="grayscale(1) contrast(0.4)"
                 transition="all ease-in-out 200ms"
+                as={LOGOS.feather}
               />
             </Fade>
           </Link>
@@ -77,18 +87,22 @@ export function SupportedLibraries() {
         <NextLink passHref href="/gallery?iconLibrary=fontawesome&iconName=%20">
           <Link aria-label="Font Awesome" display={{ base: "none", md: "inherit" }}>
             <Fade bottom delay={800}>
-              <Image
-                alt="Font Awesome"
-                _hover={{ opacity: 0.6 }}
-                src="/images/fontawesome.png"
+              <Icon
+                w={220}
+                height={8}
+                _hover={{ filter: "grayscale(0) contrast(1)" }}
+                filter="grayscale(1) contrast(0.8)"
                 transition="all ease-in-out 200ms"
+                as={LOGOS.fontawesome}
               />
             </Fade>
           </Link>
         </NextLink>
       </SimpleGrid>
 
-      <LinkButton href="/supported-libraries" variant="brand.outline" text="See all the libraries" />
+      <Stack pt={8}>
+        <LinkButton href="/supported-libraries" variant="brand.outline" text="See all the libraries" />
+      </Stack>
     </Stack>
   );
 }
