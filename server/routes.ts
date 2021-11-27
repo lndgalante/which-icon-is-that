@@ -48,7 +48,7 @@ router
   /* Used on gallery page to get all the icons by icon name and icon library */
   .get('/icons/find/:iconLibrary/:iconName?', getIconsByIconNameAndIconLibrary)
 
-  /* Usewd on supported libraries page to get all the  */
+  /* Used on supported libraries page to get all the  */
   .get('/icons/all/libraries', getIconLibraries)
 
   /* Used on home page for stats */
