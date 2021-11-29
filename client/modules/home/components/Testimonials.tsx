@@ -31,7 +31,7 @@ function TestimonialCard({ name, imageUrl, testimony, job }: TestimonialCardProp
           <Text color="brand.warmBlack" fontWeight={800}>
             {name}
           </Text>
-          <Text color="brand.grey">{job}</Text>
+          <Text color="brand.text">{job}</Text>
         </Stack>
       </Stack>
     </HStack>
@@ -52,7 +52,7 @@ export function Testimonials() {
 
       <Stack zIndex={1} spacing={{ base: 6, md: 14 }}>
         <Stack textAlign="center">
-          <Text as="h2" fontSize={{ base: 24, md: 40 }} fontWeight={800} color="brand.orange">
+          <Text as="h2" fontSize={{ base: 24, md: 40 }} fontWeight={800} color="brand.darkRed">
             Dev&apos;s & Designers love us
           </Text>
           <Text as="h3" fontSize={{ base: 18, md: 18 }} color="brand.warmBlack">

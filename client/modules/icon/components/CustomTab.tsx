@@ -22,9 +22,9 @@ export function CustomTab({ children, href, ...otherProps }: CustomTabProps) {
           borderTopLeftRadius: 8,
           borderTopRightRadius: 8,
           borderBottomWidth: "0.25rem",
-          borderBottomColor: "brand.orange",
+          borderBottomColor: "brand.darkRed",
           bg: "brand.lightOrange",
-          color: "brand.orange",
+          color: "brand.darkRed",
           fontWeight: 700,
         }}
         {...otherProps}

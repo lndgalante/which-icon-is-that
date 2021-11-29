@@ -24,10 +24,8 @@ export function IconExamples({ reactIcon, iconName }: IconExamplesProps) {
         Usage Examples
       </Text>
 
-      <Stack
-        spacing={{ base: 7, md: 7 }}>
-
-        <Stack >
+      <Stack spacing={{ base: 7, md: 7 }}>
+        <Stack>
           <Text fontWeight={600} fontSize="md" color="brand.text">
             Text
           </Text>
@@ -35,18 +33,31 @@ export function IconExamples({ reactIcon, iconName }: IconExamplesProps) {
           <Wrap spacing={7}>
             <WrapItem alignItems="center">
               <Icon as={reactIcon} w={6} h={6} mr={1.5} />
-              <Text fontSize="lg" pt={1}>Heading</Text>
+              <Text fontSize="lg" pt={1}>
+                Heading
+              </Text>
             </WrapItem>
             <WrapItem alignItems="center">
               <Icon as={reactIcon} w={5} h={5} mr={1.5} />
-              <Text fontSize="md" pt={1}>Smaller heading</Text>
+              <Text fontSize="md" pt={1}>
+                Smaller heading
+              </Text>
             </WrapItem>
             <WrapItem alignItems="center">
               <Icon as={reactIcon} w={4} h={4} mr={1.5} />
-              <Text fontSize="sm" pt={1}>Inline text</Text>
+              <Text fontSize="sm" pt={1}>
+                Inline text
+              </Text>
             </WrapItem>
             <WrapItem alignItems="center">
-              <Link fontSize="sm" href="https://chakra-ui.com" isExternal color="brand.blue" display="flex" alignItems="center">
+              <Link
+                fontSize="sm"
+                href="https://chakra-ui.com"
+                isExternal
+                color="brand.blue"
+                display="flex"
+                alignItems="center"
+              >
                 <Icon as={reactIcon} w={4} h={4} mr={1.5} />
                 <Text pt={1}>Example link text</Text>
               </Link>
@@ -61,12 +72,12 @@ export function IconExamples({ reactIcon, iconName }: IconExamplesProps) {
 
           <Wrap spacing={7}>
             <WrapItem alignItems="center">
-              <Button leftIcon={<Icon as={reactIcon} w={6} h={6} />} variant="brand.solidRed">
+              <Button leftIcon={<Icon as={reactIcon} w={6} h={6} />} variant="brand.solid">
                 Button
               </Button>
             </WrapItem>
             <WrapItem alignItems="center">
-              <Button leftIcon={<Icon as={reactIcon} w={6} h={6} />} variant="brand.disabled">
+              <Button leftIcon={<Icon as={reactIcon} w={6} h={6} />} variant="brand.darkRed">
                 Button
               </Button>
             </WrapItem>
@@ -76,10 +87,10 @@ export function IconExamples({ reactIcon, iconName }: IconExamplesProps) {
               </Button>
             </WrapItem>
             <WrapItem alignItems="center">
-              <IconButton aria-label={iconName} variant="brand.solidRed" icon={<Icon as={reactIcon} w={6} h={6} />} />
+              <IconButton aria-label={iconName} variant="brand.solid" icon={<Icon as={reactIcon} w={6} h={6} />} />
             </WrapItem>
             <WrapItem alignItems="center">
-              <IconButton aria-label={iconName} variant="brand.disabled" icon={<Icon as={reactIcon} w={6} h={6} />} />
+              <IconButton aria-label={iconName} variant="brand.darkRed" icon={<Icon as={reactIcon} w={6} h={6} />} />
             </WrapItem>
             <WrapItem alignItems="center">
               <IconButton aria-label={iconName} variant="brand.ghost" icon={<Icon as={reactIcon} w={6} h={6} />} />
@@ -99,7 +110,6 @@ export function IconExamples({ reactIcon, iconName }: IconExamplesProps) {
           </Wrap>
         </Stack>
       </Stack>
-
     </Stack>
   );
 }

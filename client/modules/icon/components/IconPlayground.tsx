@@ -41,7 +41,7 @@ export function IconPlayground({ iconSize, iconTypes, reactIcon, selectedTabInde
                   bottom={-14}
                   backgroundColor="brand.white"
                 >
-                  <Text color="brand.warmBlack" fontSize="sm" opacity={0.5}>
+                  <Text color="brand.text" fontSize="sm">
                     Size: {iconSize}
                   </Text>
                 </Stack>

@@ -129,7 +129,7 @@ function SupportedLibraries({ iconLibraries }: Props) {
               <Th borderRadius={8}></Th>
             </Tr>
           </Thead>
-          <Tbody color="brand.tableGrey" fontSize={14}>
+          <Tbody color="brand.text" fontSize={14}>
             {iconLibraries?.map((iconLibrary) => {
               const {
                 name,

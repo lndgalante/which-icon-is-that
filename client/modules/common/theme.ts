@@ -32,8 +32,7 @@ export const theme = extendTheme({
       lightGrey: "#FDFCFC",
       white: "#FFFFFF",
       lightOrangeModal: "rgba(255, 244, 239, 0.8)",
-      blue: "#1C77FF",
-      tableGrey: "#777777",
+      blue: "#001AFF",
     },
   },
   components: {
@@ -85,13 +84,13 @@ export const theme = extendTheme({
             backgroundColor: "brand.lightRed",
           },
         },
-        "brand.solidRed": {
+        "brand.darkRed": {
           borderWidth: 1,
           borderRadius: 8,
           color: "brand.white",
           borderColor: "transparent",
           fontSize: { base: "sm", md: "md" },
-          backgroundColor: "brand.lightRed",
+          backgroundColor: "brand.darkRed",
           opacity: 1,
           _hover: { opacity: 0.8 },
         },
