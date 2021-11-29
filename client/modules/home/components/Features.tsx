@@ -1,12 +1,15 @@
 import Fade from "react-reveal/Fade";
 import { Stack, Text, Image } from "@chakra-ui/react";
-import { MotionBox } from "@modules/common/components/MotionBox";
-// components
-import * as Shapes from "@modules/home/components/Shapes";
 import { useTransform, useViewportScroll } from "framer-motion";
 
+// components
+import * as Shapes from "@modules/home/components/Shapes";
+import { MotionBox } from "@modules/common/components/MotionBox";
+
 export function Features() {
+  // framer motion hooks
   const { scrollYProgress } = useViewportScroll();
+
   const yShapes = useTransform(scrollYProgress, [0, 1], [-250, 250]);
   const yImages = useTransform(scrollYProgress, [0, 1], [150, -150]);
   const xImages = useTransform(scrollYProgress, [0, 1], [-300, 0]);
