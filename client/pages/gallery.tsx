@@ -342,7 +342,7 @@ function Gallery({ svgs, packs }: Props) {
                         <HStack spacing={{ base: 4, md: 8 }}>
                           <Stack width={140}>
                             <LinkBox>
-                              <LinkOverlay isExternal href={packMetadata.website}>
+                              <LinkOverlay isExternal href={packMetadata.website} aria-label={packMetadata.parsedName}>
                                 <Icon
                                   paddingLeft={1}
                                   as={LOGOS[iconLibrary]}
@@ -352,15 +352,6 @@ function Gallery({ svgs, packs }: Props) {
                               </LinkOverlay>
                             </LinkBox>
                           </Stack>
-                          <HStack display={{ base: "none", md: "inherit" }}>
-                            <Tag>V{packMetadata.version}</Tag>
-                            <Tag display={{ base: "none", md: "inherit" }}>{packMetadata.totalIcons} icons</Tag>
-                            {packMetadata.iconTypes.map((iconType) => (
-                              <Tag key={`${iconLibrary}-${iconType}`} display={{ base: "none", md: "inherit" }}>
-                                {iconType}
-                              </Tag>
-                            ))}
-                          </HStack>
                         </HStack>
                         <Button
                           variant="brand.ghost"
