@@ -1,12 +1,32 @@
 import NextLink from "next/link";
+import { nanoid } from "nanoid";
+import { useRouter } from "next/router";
 import { Stack, Text, HStack, Button } from "@chakra-ui/react";
-import { FiHome, FiSearch, FiClock, FiStar } from "react-icons/fi";
 
 // components
 import { BoxIcon } from "@modules/common/components/BoxIcon";
 import * as Shapes from "@modules/not-found/components/Shapes";
+import { BoxIconSkeleton } from "@modules/common/components/BoxIconSkeleton";
+
+// hooks
+import { useReadRelatedIcons } from "@modules/not-found/hooks/useReadRelatedIcons";
+
+// utils
+import { getIconComponent } from "@modules/common/utils/getIconComponent";
+
+// constants
+const LOADING_ARRAY = Array.from({ length: 4 }, () => nanoid());
 
 function NotFound() {
+  // next hooks
+  const { query } = useRouter();
+
+  // constants
+  const hash = query?.hash;
+
+  // query hooks
+  const { data, isFetching } = useReadRelatedIcons(hash as string);
+
   return (
     <Stack
       backgroundColor="brand.lightOrange"
@@ -32,10 +52,25 @@ function NotFound() {
 
       <Stack paddingBottom={4} spacing={6} alignItems="center">
         <HStack alignItems="center" justifyContent="center" spacing={4}>
-          <BoxIcon withShadow href="/feather/regular/home" icon={FiHome} displayLabel label="Home" simpleHover />
-          <BoxIcon withShadow href="/feather/regular/search" icon={FiSearch} displayLabel label="Search" simpleHover />
-          <BoxIcon withShadow href="/feather/regular/clock" icon={FiClock} displayLabel label="Clock" simpleHover />
-          <BoxIcon withShadow href="/feather/regular/star" icon={FiStar} displayLabel label="Star" simpleHover />
+          {isFetching && !data
+            ? LOADING_ARRAY.map((icon) => <BoxIconSkeleton key={icon} primary displayLabel withShadow />)
+            : data?.data?.relatedIcons?.map(({ packName, iconType, iconName, reactIconName }) => {
+                const isTwoTone = iconType === "twotone";
+                const reactIcon = getIconComponent(packName, reactIconName);
+
+                return (
+                  <BoxIcon
+                    key={iconName}
+                    href={`/${packName}/${iconType}/${iconName}`}
+                    icon={reactIcon}
+                    label={iconName}
+                    isTwoTone={isTwoTone}
+                    displayLabel
+                    simpleHover
+                    withShadow
+                  />
+                );
+              })}
         </HStack>
       </Stack>
 

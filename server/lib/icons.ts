@@ -2,10 +2,10 @@ import getFiles from 'https://deno.land/x/getfiles/mod.ts';
 import { prettyBytes } from 'https://raw.githubusercontent.com/brunnerlivio/deno-pretty-bytes/master/mod.ts';
 
 // utils
-import { createHash } from './hash.ts';
 import { getInnerHTMLFromSvgText } from './dom.ts';
-import { PacksNames, ICONS_LIST, ICON_PAGE_LINK, ICON_LIBRARIES, ICONS_SOURCE_LINKS } from './constants.ts';
 import { reactIconsPacks } from './react-icons.ts';
+import { createHash, createHashNumber } from './hash.ts';
+import { PacksNames, ICONS_LIST, ICON_PAGE_LINK, ICON_LIBRARIES, ICONS_SOURCE_LINKS } from './constants.ts';
 
 // database
 import client from '../db/database.ts';
@@ -225,10 +225,7 @@ async function saveIconLibraryInDB({ packId, packName }: { packId: string; packN
     const { innerSvg, viewBox } = getInnerHTMLFromSvgText(svg);
 
     const hash = createHash(innerSvg);
-    const hashNumber = hash
-      .split('')
-      .map((character) => character.charCodeAt(0))
-      .reduce((accumulator, characterCode) => accumulator + characterCode, 0);
+    const hashNumber = createHashNumber(hash);
     const id = hash.slice(0, 4);
 
     const iconName = parsedIconName;
