@@ -8,7 +8,7 @@ import { useDebounce } from "use-debounce";
 import { FiArrowUp } from "react-icons/fi";
 import { useWindowScroll } from "react-use";
 import { useEffect, useState, useRef } from "react";
-import { HStack, Stack, Icon, Text, SimpleGrid, Button, LinkBox, LinkOverlay } from "@chakra-ui/react";
+import { HStack, Stack, Icon, Text, SimpleGrid, Button, LinkBox, LinkOverlay, Divider } from "@chakra-ui/react";
 
 // utils
 import { api } from "@modules/common/utils/api";
@@ -178,6 +178,10 @@ function Gallery({ svgs, packs }: Props) {
       iconsToRender.filter(([iconLibrary]) => iconLibrary === viewAllIconLibrary)
     : iconsToRender;
 
+  const totalIcons = parsedIconsToRender?.reduce((accumulator, [, icons]) => accumulator + icons.length, 0);
+
+  const shouldDisplayFoundIconsData = !error && foundIcons && !/^\s+$/.test(iconNameQueryDebounced);
+
   return (
     <Fragment>
       <NextSeo
@@ -200,7 +204,7 @@ function Gallery({ svgs, packs }: Props) {
           textAlign="center"
           spacing={{ base: 4, md: 3 }}
           justifyContent="center"
-          mb={20}
+          mb={shouldDisplayFoundIconsData ? 10 : 16}
         >
           <Stack left={{ base: -3, md: "1.38rem" }} bottom={{ base: 12, md: "3.25rem" }} position="absolute">
             <Zoom delay={800}>
@@ -304,6 +308,17 @@ function Gallery({ svgs, packs }: Props) {
                       Sorry, we did not find any icon, you can try looking for another icon or in another library.
                     </Text>
                   </Stack>
+                </Stack>
+              )}
+
+              {shouldDisplayFoundIconsData && (
+                <Stack spacing={6} mb={4}>
+                  <HStack spacing={4}>
+                    <Text fontSize={14}>Results for &quot;{iconNameQueryDebounced}&quot;</Text>
+                    <Tag backgroundColor="brand.softGrey">{totalIcons} icons</Tag>
+                    <Tag backgroundColor="brand.softGrey">{parsedIconsToRender.length} icon libraries</Tag>
+                  </HStack>
+                  <Divider />
                 </Stack>
               )}
 
