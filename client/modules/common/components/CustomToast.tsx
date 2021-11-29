@@ -9,17 +9,17 @@ export function CustomToast({ message }: CustomToastProps) {
   return (
     <Stack
       padding={4}
-      backgroundColor="brand.white"
+      backgroundColor="brand.warmBlack"
       flexDirection="row"
       spacing={0}
       alignItems="center"
-      color="brand.text"
+      color="brand.white"
       borderRadius={16}
-      boxShadow={6}
+      shadow={6}
     >
       <Icon
         as={HiOutlineInformationCircle}
-        color="brand.text"
+        color="brand.grey"
         h={5}
         sx={{
           ".footer-link:hover &": {
