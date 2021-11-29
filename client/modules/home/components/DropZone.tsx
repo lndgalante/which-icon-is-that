@@ -7,9 +7,9 @@ import { Fragment, useState, useEffect } from "react";
 import {
   Text,
   Stack,
-  Button,
-  Input,
   Modal,
+  Input,
+  Button,
   ModalBody,
   ModalOverlay,
   ModalContent,
@@ -72,19 +72,29 @@ export function DropZone() {
     reader.onerror = () => toastError(`File reading has failed`);
 
     reader.onload = async () => {
+      let hash = "";
+
       try {
         setIsLoading(true);
 
         const svgInnerHtml = getInnerHTMLFromSvgText(reader.result as string);
-        const hash = createHash(svgInnerHtml);
+
+        hash = createHash(svgInnerHtml);
         const iconPageUrl = await getIconPageUrl(hash);
 
         await delay(600);
         push(iconPageUrl, undefined, { shallow: true });
       } catch (error) {
         await delay(600);
-        push("not-found", undefined, { shallow: true });
-        console.log("Error on handling svg pasted code or url", error);
+
+        push(
+          {
+            query: { hash },
+            pathname: "/not-found",
+          },
+          undefined,
+          { shallow: true },
+        );
       } finally {
         setIsLoading(false);
       }
@@ -100,11 +110,12 @@ export function DropZone() {
     } else {
       onClose();
     }
-  }, [isLoading]);
+  }, [isLoading]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // handle paste svg code or url
   useEffect(() => {
     async function handlePasteSvgCodeOrUrl(event) {
+      let hash = "";
       let iconPageUrl = "";
       const pastedText = event.clipboardData.getData("Text");
 
@@ -113,7 +124,8 @@ export function DropZone() {
 
         if (isSvg(pastedText)) {
           const svgInnerHtml = getInnerHTMLFromSvgText(pastedText);
-          const hash = createHash(svgInnerHtml);
+
+          hash = createHash(svgInnerHtml);
           iconPageUrl = await getIconPageUrl(hash);
         }
 
@@ -127,7 +139,7 @@ export function DropZone() {
           const svg = await fetch(pastedText).then((response) => response.text());
           const svgInnerHtml = getInnerHTMLFromSvgText(svg);
 
-          const hash = createHash(svgInnerHtml);
+          hash = createHash(svgInnerHtml);
           iconPageUrl = await getIconPageUrl(hash);
 
           await delay(600);
@@ -135,8 +147,14 @@ export function DropZone() {
         }
       } catch (error) {
         await delay(600);
-        push("/not-found", undefined, { shallow: true });
-        console.log("Error on handling svg pasted code or url", error);
+        push(
+          {
+            query: { hash },
+            pathname: "/not-found",
+          },
+          undefined,
+          { shallow: true },
+        );
       } finally {
         setIsLoading(false);
       }

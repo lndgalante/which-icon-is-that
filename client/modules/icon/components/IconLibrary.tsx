@@ -1,11 +1,13 @@
 import NextLink from "next/link";
-import { Icon, Link, Stack, Text, HStack, Image, useClipboard } from "@chakra-ui/react";
+import { Icon, Link, Stack, Text, HStack, useClipboard } from "@chakra-ui/react";
 
 // icons
+
 import { FiShare2, FiExternalLink, FiLayout } from "react-icons/fi";
 
 // components
 import { Tag } from "@modules/common/components/Tag";
+import { LOGOS, LOGOS_SIZES_HOME_PAGE } from "@modules/common/components/Logos";
 
 // hooks
 import { useToast } from "@modules/common/hooks/useToast";
@@ -43,7 +45,12 @@ export function IconLibrary({ website, version, license, packName, packParsedNam
         Icon Library
       </Text>
 
-      <Image paddingLeft={1} alt={packName} maxWidth={188} objectFit="cover" src={`/images/${packName}-color.png`} />
+      <Icon
+        width={LOGOS_SIZES_HOME_PAGE[packName].width}
+        height={LOGOS_SIZES_HOME_PAGE[packName].height}
+        filter={"grayscale(0) contrast(1)"}
+        as={LOGOS[packName]}
+      />
 
       <HStack>
         <Tag>V{version}</Tag>

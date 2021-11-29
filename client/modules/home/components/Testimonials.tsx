@@ -19,6 +19,7 @@ function TestimonialCard({ name, imageUrl, testimony, job }: TestimonialCardProp
       align="stretch"
       backgroundColor="brand.white"
       flexDirection={{ base: "column", md: "row" }}
+      sx={{ scrollSnapAlign: "start" }}
     >
       <Avatar name={name} size="xl" src={imageUrl} />
       <Stack flex={1} justifyContent="space-between">
@@ -60,9 +61,8 @@ export function Testimonials() {
         </Stack>
 
         <HStack
-          scrollSnapType="x mandatory"
+          sx={{ scrollSnapType: "x mandatory", scrollBehaviour: "smooth", "::-webkit-scrollbar": { display: "none" } }}
           overflowX="auto"
-          scrollBehaviour="smooth"
           spacing={{ base: 5, md: 10 }}
           width="100vw"
           paddingX={{ base: 5, md: 10 }}

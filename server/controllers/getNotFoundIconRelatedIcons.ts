@@ -5,30 +5,29 @@ import { iconTable } from '../db/icon.ts';
 
 // lib
 import { Svg } from '../lib/types.ts';
+import { createHashNumber } from '../lib/hash.ts';
 
-export const getRelatedIcons = async ({
-  params,
-  response,
-}: Context & { params: { hash: string; packName: string; hashNumber: string } }) => {
-  const { hash, packName, hashNumber } = params;
+export const getNotFoundIconRelatedIcons = async ({ params, response }: Context & { params: { hash: string } }) => {
+  const { hash } = params;
 
-  if (!hash && !packName) {
+  if (!hash) {
     response.status = 400;
-    response.body = { success: false, message: 'No hash or packName provided' };
+    response.body = { success: false, message: 'No hash provided' };
     return;
   }
 
   try {
-    const { rows, rowCount } = await iconTable.selectColumnsForSimilarIcons(hash, packName, hashNumber);
+    const hashNumber = createHashNumber(hash);
+    const { rows, rowCount } = await iconTable.selectColumnsForSimilarIconsNotFound(hash, hashNumber);
 
-    /*   if (rowCount === 0) {
+    if (rowCount === 0) {
       response.status = 404;
       response.body = { success: false, message: 'No related icons found' };
       return;
-    } */
+    }
 
     const relatedIcons = (rows as [Svg]).map(
-      ({ icon_name: iconName, icon_type: iconType, react_icon_name: reactIconName }) => ({
+      ({ icon_name: iconName, icon_type: iconType, react_icon_name: reactIconName, pack_name: packName }) => ({
         iconName,
         packName,
         iconType,

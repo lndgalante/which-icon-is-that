@@ -13,7 +13,7 @@ import { IconLibrary } from "@modules/icon/components/IconLibrary";
 import { IconRelated } from "@modules/icon/components/IconRelated";
 import { IconExamples } from "@modules/icon/components/IconExamples";
 import { IconPlayground } from "@modules/icon/components/IconPlayground";
-// import { DeveloperPanel } from "@modules/icon/components/DeveloperPanel";
+// import { DeveloperPanel } from "@modules/icon/components /DeveloperPanel";
 
 // types
 type Props = Omit<IconMetadata, "snippets">;
@@ -37,10 +37,12 @@ export const getStaticProps: GetStaticProps<Props, Params> = async ({ params }) 
     const { data: initialData } = await api.getHashFromPath(encodedPath);
     const iconHash = initialData.result;
 
-    // const { data: tags } = await api.getIconTags(iconHash);
-    // const { data: snippetsData } = await api.getIconSnippets(iconHash);
     const { data: icon } = await api.getIcon(iconHash);
     const { data: iconLibrary } = await api.getIconLibrary(packName);
+
+    // const { data: tags } = await api.getIconTags(iconHash);
+    // const { data: snippetsData } = await api.getIconSnippets(iconHash);
+
     const { data: iconTypesData } = await api.getIconTypes(iconName, packName);
     const { data: relatedIconsData } = await api.getSimilarIcons(iconHash, packName, icon?.svg?.hashNumber);
 
@@ -73,6 +75,7 @@ export default function IconPage({ icon, iconLibrary, iconTypes, relatedIcons }:
 
   // chakra hooks
   const { onOpen } = useDisclosure();
+  // const { onOpen, onClose, isOpen } = useDisclosure();
 
   // constants
   const { iconType: iconTypeCurrentUrl } = query;

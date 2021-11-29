@@ -6,7 +6,7 @@ import { useDebounce } from "use-debounce";
 import { FiArrowUp } from "react-icons/fi";
 import { useWindowScroll } from "react-use";
 import { useEffect, useState, useRef } from "react";
-import { HStack, Stack, Icon, Text, SimpleGrid, Image, Button, LinkBox, LinkOverlay } from "@chakra-ui/react";
+import { HStack, Stack, Icon, Text, SimpleGrid, Button, LinkBox, LinkOverlay } from "@chakra-ui/react";
 import Fade from "react-reveal/Fade";
 import Zoom from "react-reveal/Zoom";
 
@@ -26,6 +26,7 @@ import { MotionFade } from "@modules/common/components/MotionFade";
 import { IconNameInput } from "@modules/gallery/components/IconNameInput";
 import { BoxIconSkeleton } from "@modules/common/components/BoxIconSkeleton";
 import { IconLibrarySelect } from "@modules/gallery/components/IconLibrarySelect";
+import { LOGOS, LOGOS_SIZES_GALLERY_PAGE } from "@modules/common/components/Logos";
 
 // hooks
 import { useReadIconsByNameAndIconLibrary } from "@modules/gallery/hooks/useReadIconsByNameAndIconLibrary";
@@ -327,14 +328,19 @@ function Gallery({ svgs, packs }: Props) {
                           <Stack width={140}>
                             <LinkBox>
                               <LinkOverlay isExternal href={packMetadata.website}>
-                                <Image
+                                <Icon
+                                  width={LOGOS_SIZES_GALLERY_PAGE[iconLibrary].width}
+                                  height={LOGOS_SIZES_GALLERY_PAGE[iconLibrary].height}
                                   paddingLeft={1}
-                                  alt={iconLibrary}
-                                  filter={iconLibrary === viewAllIconLibrary ? "grayscale(0)" : "grayscale(1)"}
-                                  opacity={0.8}
-                                  transition="all 200ms ease-in-out"
-                                  src={`/images/${iconLibrary}-color.png`}
+                                  _hover={{ filter: "grayscale(0) contrast(1)" }}
                                   sx={{ ".icon-library-container:hover &": { filter: "grayscale(0)", opacity: 1 } }}
+                                  filter={
+                                    iconLibrary === viewAllIconLibrary
+                                      ? "grayscale(0) contrast(1)"
+                                      : "grayscale(1) contrast(0.6)"
+                                  }
+                                  transition="all ease-in-out 200ms"
+                                  as={LOGOS[iconLibrary]}
                                 />
                               </LinkOverlay>
                             </LinkBox>

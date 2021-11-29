@@ -7,6 +7,7 @@ import {
   IconsFoundResponse,
   IconLibraryResponse,
   IconLibrariesResponse,
+  RelatedIconsResponse,
   GalleryResponse,
 } from "@modules/common/utils/types";
 
@@ -20,6 +21,7 @@ const endpoints = {
   stats: () => `/stats`,
   contact: () => `/contact`,
   gallery: () => `/icons/gallery`,
+  notFoundRelatedIcons: (hash: string) => `/not-found/${hash}`,
   iconFindIconsByIconNameAndIconLibrary: (iconLibrary: string, iconName: string) =>
     `/icons/find/${iconLibrary}/${iconName}`,
   icon: (hash: string) => `/icon/${hash}`,
@@ -30,7 +32,7 @@ const endpoints = {
   iconSnippets: (hash: string) => `/icon/${hash}/snippets`,
   pathReverse: (path: string) => `/reverse/?path=${path}`,
   hashReverse: (hash: string) => `/reverse/?hash=${hash}`,
-  similarIcons: (iconName: string, packName: string, hashNumber) =>
+  similarIcons: (iconName: string, packName: string, hashNumber: number) =>
     `/icon/${iconName}/${packName}/${hashNumber}/similar`,
 };
 
@@ -53,6 +55,7 @@ export const api = {
   getPathFromHash: (hash: string) => fetch.url(endpoints.hashReverse(hash)).get().json(),
   getSimilarIcons: (iconName: string, packName: string, hashNumber: number) =>
     fetch.url(endpoints.similarIcons(iconName, packName, hashNumber)).get().json(),
+  getNotFoundSimilarIcons: (hash: string) => fetch.url(endpoints.notFoundRelatedIcons(hash)).get().json<RelatedIconsResponse>(),
   putIconIncrement: (hash: string) => fetch.url(endpoints.icon(hash)).put(),
   postContact: (email: string, name?: string, message?: string) =>
     fetch.url(endpoints.contact()).post({ email, name, message }),

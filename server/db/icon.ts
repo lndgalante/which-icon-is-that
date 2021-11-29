@@ -29,6 +29,14 @@ class Icon {
     );
   }
 
+  selectColumnsForSimilarIconsNotFound(hash: string, hashNumber: string) {
+    return client.queryObject(
+      `SELECT icon_name, icon_type, react_icon_name, pack_name FROM icons WHERE hash <> $1 AND hash_number >= ($2 - 10) AND hash_number <= ($2 + 10) LIMIT 4`,
+      hash,
+      hashNumber,
+    );
+  }
+
   selectAllByHash(hash: string) {
     return client.queryObject(`SELECT * FROM icons WHERE hash = $1`, hash);
   }

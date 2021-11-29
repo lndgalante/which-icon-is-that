@@ -73,7 +73,7 @@ export type Stats = {
   totalLibraries: number;
 };
 
-type GallerySvg = [string, IconFound];
+export type GallerySvg = [string, IconFound];
 
 export type Gallery = {
   svgs: GallerySvg[];
@@ -83,6 +83,8 @@ export type Response<T> = {
   success: boolean;
   data?: T;
 };
+
+export type RelatedIconsResponse = Response<{ relatedIcons: IconsRelated[] }>;
 
 export type IconResponse = Response<Icon>;
 
