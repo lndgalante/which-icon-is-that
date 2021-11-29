@@ -1,5 +1,7 @@
 import { Fragment } from "react";
 import { NextSeo } from "next-seo";
+import Fade from "react-reveal/Fade";
+import Zoom from "react-reveal/Zoom";
 import { GetStaticProps } from "next";
 import { useRouter } from "next/router";
 import { useDebounce } from "use-debounce";
@@ -7,8 +9,6 @@ import { FiArrowUp } from "react-icons/fi";
 import { useWindowScroll } from "react-use";
 import { useEffect, useState, useRef } from "react";
 import { HStack, Stack, Icon, Text, SimpleGrid, Button, LinkBox, LinkOverlay } from "@chakra-ui/react";
-import Fade from "react-reveal/Fade";
-import Zoom from "react-reveal/Zoom";
 
 // utils
 import { api } from "@modules/common/utils/api";
