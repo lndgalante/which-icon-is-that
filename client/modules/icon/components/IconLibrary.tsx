@@ -2,7 +2,6 @@ import NextLink from "next/link";
 import { Icon, Link, Stack, Text, HStack, useClipboard } from "@chakra-ui/react";
 
 // icons
-
 import { FiShare2, FiExternalLink, FiLayout } from "react-icons/fi";
 
 // components
@@ -11,11 +10,6 @@ import { LOGOS, LOGOS_SIZES_HOME_PAGE } from "@modules/common/components/Logos";
 
 // hooks
 import { useToast } from "@modules/common/hooks/useToast";
-
-// common
-/*
-  <LinkButton  href={`/gallery?iconLibrary=${packName}&iconName=%20`} variant="brand.outline" text={`${packParsedName} Gallery`} />
-*/
 
 type IconLibraryProps = {
   website: string;
@@ -71,7 +65,7 @@ export function IconLibrary({ website, version, license, packName, packParsedNam
           </Link>
         </NextLink>
 
-        <Link variant="brand.underline" alignItems="center" display="flex" href={website}>
+        <Link variant="brand.underline" alignItems="center" display="flex" href={website} isExternal>
           <Icon as={FiExternalLink} mr={1.5} />
           Website
         </Link>
