@@ -1,10 +1,16 @@
 import Fade from "react-reveal/Fade";
 import { Stack, Text, Image } from "@chakra-ui/react";
-
+import { MotionBox } from "@modules/common/components/MotionBox";
 // components
 import * as Shapes from "@modules/home/components/Shapes";
+import { useTransform, useViewportScroll } from "framer-motion";
 
 export function Features() {
+  const { scrollYProgress } = useViewportScroll();
+  const yShapes = useTransform(scrollYProgress, [0, 1], [-250, 250]);
+  const yImages = useTransform(scrollYProgress, [0, 1], [150, -150]);
+  const xImages = useTransform(scrollYProgress, [0, 1], [-300, 0]);
+
   return (
     <Stack paddingBottom={{ base: "3.75rem", md: "7.3rem" }} as="section" alignItems="center">
       <Text
@@ -30,22 +36,26 @@ export function Features() {
             overflow="hidden"
             position="relative"
           >
-            <Shapes.EasyTopRight
+            <MotionBox
+              style={{ y: yShapes }}
               position="absolute"
               width={{ base: "12%", md: "18%" }}
-              top={{ base: "50%", md: "8%" }}
+              top={{ base: "50%", md: "20%" }}
               right={{ base: "2%", md: "10%" }}
-              height="auto"
-            />
-            <Shapes.EasyBottomLeft
+            >
+              <Shapes.EasyTopRight width="100%" height="auto" />
+            </MotionBox>
+            <MotionBox
+              style={{ y: yShapes }}
               position="absolute"
               width={{ base: "10%", md: "20%" }}
-              bottom={{ base: "65%", md: "5%" }}
+              bottom={{ base: "65%", md: "0%" }}
               left={{ base: "2%", md: "0%" }}
-              transform={{ base: "rotate(230deg)", md: "none" }}
-              height="auto"
-            />
-            <Stack
+            >
+              <Shapes.EasyBottomLeft transform={{ base: "rotate(230deg)", md: "none" }} height="auto" />
+            </MotionBox>
+            <MotionBox
+              style={{ x: yImages }}
               width={{ base: "100%", md: "140%" }}
               pl={{ base: 0, md: "10%" }}
               margin={{ base: "0 !important", md: 0 }}
@@ -56,14 +66,14 @@ export function Features() {
                   alt="Easy to find"
                   src="/images/icon-gallery.png"
                   borderRadius={{ base: 8, md: 16 }}
-                  width={{ base: 580, md: 2080 }}
-                  height={{ base: 250, md: 650 }}
+                  width={{ base: 580, md: "auto" }}
+                  height={{ base: 250, md: "auto" }}
                   objectFit="cover"
                   objectPosition={{ base: "center", md: "left" }}
                   boxShadow="9"
                 />
               </Fade>
-            </Stack>
+            </MotionBox>
           </Stack>
 
           <Stack
@@ -73,12 +83,10 @@ export function Features() {
             spacing={{ base: "0.63rem", md: 6 }}
           >
             <Text as="h3" fontSize={{ base: 24, md: 40 }} fontWeight={800} color="brand.darkRed">
-              <Fade cascade right>
-                Easy To Find
-              </Fade>
+              <Fade bottom>Easy To Find</Fade>
             </Text>
 
-            <Fade right delay={500} distance="50px">
+            <Fade bottom delay={500} distance="10px">
               <Text maxWidth={452} fontSize={{ base: 14, md: 18 }}>
                 Just{" "}
                 <Text as="span" fontWeight={700}>
@@ -97,13 +105,11 @@ export function Features() {
           spacing={{ base: "0.63rem", md: 6 }}
         >
           <Text as="h3" fontSize={{ base: 24, md: 40 }} fontWeight={800} color="brand.darkRed">
-            <Fade cascade bottom>
-              Rich Icon Data
-            </Fade>
+            <Fade bottom>Rich Icon Data</Fade>
           </Text>
 
           <Stack alignItems="center" spacing={{ base: 4, md: "3.65rem" }} width="100%">
-            <Fade bottom delay={500} distance="50px">
+            <Fade bottom delay={500} distance="10px">
               <Text maxWidth={452} textAlign={{ base: "left", md: "center" }} fontSize={{ base: 14, md: 18 }}>
                 All you need to know about your icon: Size, Weight,{" "}
                 <Text as="span" fontWeight={700}>
@@ -119,32 +125,36 @@ export function Features() {
               borderRadius={24}
               width={{ base: "100%", md: "80%" }}
               maxWidth={{ base: 452, md: 1064 }}
-              height={{ base: "auto", md: "40vw" }}
-              maxHeight={{ base: "auto", md: 576 }}
+              height={{ base: "auto", md: "34vw" }}
+              maxHeight={{ base: "auto", md: 480 }}
               padding={{ base: "5%", md: "0" }}
               alignItems="center"
               overflow="hidden"
             >
-              <Shapes.RichTopRight
+              <MotionBox
+                style={{ y: yShapes }}
                 position="absolute"
                 width={{ base: "13%", md: "10%" }}
                 top={{ base: "20%", md: "30%" }}
                 right={{ base: "2%", md: "5%" }}
-                height="auto"
-              />
+              >
+                <Shapes.RichTopRight height="auto" />
+              </MotionBox>
 
-              <Shapes.RichBottomLeft
+              <MotionBox
+                style={{ y: yShapes }}
                 position="absolute"
                 width={{ base: "10%", md: "12%" }}
                 bottom={{ base: "15%", md: "10%" }}
                 left={{ base: "2%", md: "5%" }}
-                height="auto"
-              />
+              >
+                <Shapes.RichBottomLeft height="auto" />
+              </MotionBox>
 
-              <Stack
+              <MotionBox
+                style={{ y: yImages }}
                 width={{ base: "100%", md: "80%" }}
                 height={"auto"}
-                overflow="hidden"
                 marginTop={{ md: "10% !important" }}
                 marginBottom={{ md: "-5% !important" }}
                 zIndex={1}
@@ -157,11 +167,11 @@ export function Features() {
                     objectFit="cover"
                     objectPosition="left"
                     boxShadow="9"
-                    width={{ base: 580, md: 1130 }}
-                    height={{ base: 250, md: 590 }}
+                    width={{ base: 580, md: "auto" }}
+                    height={{ base: 250, md: "auto" }}
                   />
                 </Fade>
-              </Stack>
+              </MotionBox>
             </Stack>
           </Stack>
         </Stack>
@@ -174,11 +184,9 @@ export function Features() {
             spacing={{ base: "0.63rem", md: 6 }}
           >
             <Text as="h3" fontSize={{ base: 24, md: 40 }} fontWeight={800} color="brand.darkRed">
-              <Fade cascade left>
-                Developer Panel
-              </Fade>
+              <Fade bottom>Developer Panel</Fade>
             </Text>
-            <Fade left delay={500} distance="50px">
+            <Fade bottom delay={500} distance="10px">
               <Text maxWidth={452} fontSize={{ base: 14, md: 18 }}>
                 Find out how to{" "}
                 <Text as="span" fontWeight={700}>
@@ -199,23 +207,28 @@ export function Features() {
             overflow="hidden"
             position="relative"
           >
-            <Shapes.DeveloperBottomRight
+            <MotionBox
+              style={{ y: yShapes }}
               position="absolute"
-              bottom={{ base: "15%", md: "6%" }}
-              right={{ base: 1.5, md: "20%" }}
-              width={{ base: "2.0625rem", md: "18%" }}
-              height="auto"
-            />
-            <Shapes.DeveloperTopLeft
-              position="absolute"
-              top={{ base: 12, md: "8%" }}
+              top={{ base: 12, md: "0%" }}
               left={{ base: 10, md: "10%" }}
               width={{ base: "3rem", md: "22%" }}
-              height="auto"
-              transform={{ base: "rotate(180deg)", md: "none" }}
-            />
+            >
+              <Shapes.DeveloperTopLeft height="auto" transform={{ base: "rotate(180deg)", md: "none" }} />
+            </MotionBox>
 
-            <Stack
+            <MotionBox
+              style={{ y: yShapes }}
+              position="absolute"
+              bottom={{ base: "15%", md: "26%" }}
+              right={{ base: 1.5, md: "20%" }}
+              width={{ base: "2.0625rem", md: "18%" }}
+            >
+              <Shapes.DeveloperBottomRight height="auto" />
+            </MotionBox>
+
+            <MotionBox
+              style={{ x: xImages }}
               width={{ base: "100%", md: "120%" }}
               height="auto"
               shadow="7"
@@ -231,11 +244,11 @@ export function Features() {
                   objectFit="cover"
                   objectPosition="right"
                   boxShadow="9"
-                  width={{ base: 580, md: 1017 }}
-                  height={{ base: 250, md: 636 }}
+                  width={{ base: 580, md: "auto" }}
+                  height={{ base: 250, md: "auto" }}
                 />
               </Fade>
-            </Stack>
+            </MotionBox>
           </Stack>
         </Stack>
       </Stack>

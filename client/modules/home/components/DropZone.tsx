@@ -1,6 +1,6 @@
 import isUrl from "is-url";
 import isSvg from "is-svg";
-import Zoom from "react-reveal/Zoom";
+import Fade from "react-reveal/Fade";
 import { useRouter } from "next/router";
 import { useDropzone } from "react-dropzone";
 import { Fragment, useState, useEffect } from "react";
@@ -175,7 +175,7 @@ export function DropZone() {
           justifyContent={{ base: "center", md: "flex-start" }}
         >
           <DropInnerRadius height={{ base: 154, md: 214 }} position="absolute" top={{ base: 3, md: 6 }} />
-          <Zoom delay={100}>
+          <Fade bottom delay={200} distance="20px">
             {/* @ts-expect-error Unable to fix this problem */}
             <Input {...getInputProps()} />
             <Button
@@ -194,12 +194,11 @@ export function DropZone() {
             >
               Upload Icon
             </Button>
-          </Zoom>
-          <Zoom delay={300}>
+
             <Text display={{ base: "none", md: "block" }} fontSize="sm" maxWidth={288}>
               Drag &amp; Drop the SVG file, paste the SVG code or the icon URL
             </Text>
-          </Zoom>
+          </Fade>
         </Stack>
       </Stack>
 

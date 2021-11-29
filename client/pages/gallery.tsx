@@ -7,6 +7,8 @@ import { FiArrowUp } from "react-icons/fi";
 import { useWindowScroll } from "react-use";
 import { useEffect, useState, useRef } from "react";
 import { HStack, Stack, Icon, Text, SimpleGrid, Image, Button, LinkBox, LinkOverlay } from "@chakra-ui/react";
+import Fade from "react-reveal/Fade";
+import Zoom from "react-reveal/Zoom";
 
 // utils
 import { api } from "@modules/common/utils/api";
@@ -200,28 +202,39 @@ function Gallery({ svgs, packs }: Props) {
           mb={20}
         >
           <Stack left={{ base: -3, md: "1.38rem" }} bottom={{ base: 12, md: "3.25rem" }} position="absolute">
-            <Shapes.BottomLeft width={{ base: "4.06rem", md: "7.94rem" }} height={{ base: "3.5rem", md: "6.88rem" }} />
+            <Zoom delay={800}>
+              <Shapes.BottomLeft
+                width={{ base: "4.06rem", md: "7.94rem" }}
+                height={{ base: "3.5rem", md: "6.88rem" }}
+              />
+            </Zoom>
           </Stack>
 
           <Stack top={{ base: "0.55em", md: "2.25rem" }} right={{ base: 0, md: 0 }} position="absolute">
-            <Shapes.TopRight width={{ base: "7.06rem", md: "11.19rem" }} height={{ base: "3rem", md: "5.21rem" }} />
+            <Zoom delay={1000}>
+              <Shapes.TopRight width={{ base: "7.06rem", md: "11.19rem" }} height={{ base: "3rem", md: "5.21rem" }} />
+            </Zoom>
           </Stack>
 
-          <Text
-            as="h1"
-            maxWidth={{ base: 241, md: "inherit" }}
-            fontSize={{ base: 24, md: 40 }}
-            mixBlendMode="multiply"
-            color="brand.darkRed"
-          >
-            All library icons{" "}
-            <Text as="b" fontWeight={700}>
-              in one place
+          <Fade bottom delay={200} distance="30px">
+            <Text
+              as="h1"
+              maxWidth={{ base: 241, md: "inherit" }}
+              fontSize={{ base: 24, md: 40 }}
+              mixBlendMode="multiply"
+              color="brand.darkRed"
+            >
+              All library icons{" "}
+              <Text as="b" fontWeight={700}>
+                in one place
+              </Text>
             </Text>
-          </Text>
-          <Text as="h2" fontSize={{ base: 14, md: 18 }} color="brand.warmBlack">
-            One finder to rule them all
-          </Text>
+          </Fade>
+          <Fade bottom delay={400} distance="30px">
+            <Text as="h2" fontSize={{ base: 14, md: 18 }} color="brand.warmBlack">
+              One finder to rule them all
+            </Text>
+          </Fade>
 
           <Stack position="absolute" bottom={-4} left={0} right={0}>
             <Stack
