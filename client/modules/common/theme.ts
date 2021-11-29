@@ -1,14 +1,6 @@
 import { extendTheme } from "@chakra-ui/react";
 
 export const theme = extendTheme({
-  styles: {
-    global: {
-      ".chakra-modal__content-container": {
-        backdropFilter: "blur(6px)",
-        padding: 4,
-      },
-    },
-  },
   shadows: {
     1: "0px 2px 4px -2px rgba(32, 29, 29, 0.12), 0px 4px 4px -2px rgba(32, 29, 29, 0.08)",
     2: "0px 4px 6px -4px rgba(32, 29, 29, 0.12), 0px 8px 8px -4px rgba(32, 29, 29, 0.08)",
