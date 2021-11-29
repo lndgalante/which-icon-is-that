@@ -329,18 +329,10 @@ function Gallery({ svgs, packs }: Props) {
                             <LinkBox>
                               <LinkOverlay isExternal href={packMetadata.website}>
                                 <Icon
+                                  paddingLeft={1}
+                                  as={LOGOS[iconLibrary]}
                                   width={LOGOS_SIZES_GALLERY_PAGE[iconLibrary].width}
                                   height={LOGOS_SIZES_GALLERY_PAGE[iconLibrary].height}
-                                  paddingLeft={1}
-                                  _hover={{ filter: "grayscale(0) contrast(1)" }}
-                                  sx={{ ".icon-library-container:hover &": { filter: "grayscale(0)", opacity: 1 } }}
-                                  filter={
-                                    iconLibrary === viewAllIconLibrary
-                                      ? "grayscale(0) contrast(1)"
-                                      : "grayscale(1) contrast(0.6)"
-                                  }
-                                  transition="all ease-in-out 200ms"
-                                  as={LOGOS[iconLibrary]}
                                 />
                               </LinkOverlay>
                             </LinkBox>
