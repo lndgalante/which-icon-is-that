@@ -24,7 +24,7 @@ export function SupportedLibraries() {
         maxWidth={1064}
         maxHeight={180}
       >
-        <NextLink passHref href="/gallery?iconLibrary=antdesign&iconName=%20">
+        <NextLink passHref href="/gallery?iconLibrary=antdesign&iconName=%2520">
           <Link aria-label="Ant Design Icons">
             <Fade bottom delay={0}>
               <Icon
@@ -39,7 +39,7 @@ export function SupportedLibraries() {
           </Link>
         </NextLink>
 
-        <NextLink passHref href="/gallery?iconLibrary=bootstrap&iconName=%20">
+        <NextLink passHref href="/gallery?iconLibrary=bootstrap&iconName=%2520">
           <Link aria-label="Bootstrap Icons">
             <Fade bottom delay={200}>
               <Icon
@@ -54,7 +54,7 @@ export function SupportedLibraries() {
           </Link>
         </NextLink>
 
-        <NextLink passHref href="/gallery?iconLibrary=heroicons&iconName=%20">
+        <NextLink passHref href="/gallery?iconLibrary=heroicons&iconName=%2520">
           <Link aria-label="Heroicons">
             <Fade bottom delay={400}>
               <Icon
@@ -69,7 +69,7 @@ export function SupportedLibraries() {
           </Link>
         </NextLink>
 
-        <NextLink passHref href="/gallery?iconLibrary=feather&iconName=%20">
+        <NextLink passHref href="/gallery?iconLibrary=feather&iconName=%2520">
           <Link aria-label="Feather Icons">
             <Fade bottom delay={600}>
               <Icon
@@ -84,7 +84,7 @@ export function SupportedLibraries() {
           </Link>
         </NextLink>
 
-        <NextLink passHref href="/gallery?iconLibrary=fontawesome&iconName=%20">
+        <NextLink passHref href="/gallery?iconLibrary=fontawesome&iconName=%2520">
           <Link aria-label="Font Awesome" display={{ base: "none", md: "inherit" }}>
             <Fade bottom delay={800}>
               <Icon

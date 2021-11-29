@@ -16,6 +16,7 @@ import {
   LinkBox,
   LinkOverlay,
 } from "@chakra-ui/react";
+import NextLink from "next/link";
 import { GetStaticProps } from "next";
 
 // icons
@@ -196,16 +197,18 @@ function SupportedLibraries({ iconLibraries }: Props) {
                         variant="brand.ghost"
                       />
                       <MenuList color="brand.text">
-                        <LinkBox
-                          transition="all 200ms ease-in-out"
-                          _hover={{ color: "brand.lightRed", backgroundColor: "brand.lightGrey" }}
-                        >
-                          <LinkOverlay isExternal href={website}>
-                            <MenuItem _hover={null} icon={<Icon d="flex" as={FiLayout} w={4} h={4} />}>
-                              <Text>Go to gallery page</Text>
-                            </MenuItem>
-                          </LinkOverlay>
-                        </LinkBox>
+                        <NextLink passHref href={`/gallery?iconLibrary=${name}&iconName=%2520`}>
+                          <LinkBox
+                            transition="all 200ms ease-in-out"
+                            _hover={{ color: "brand.lightRed", backgroundColor: "brand.lightGrey" }}
+                          >
+                            <LinkOverlay isExternal>
+                              <MenuItem _hover={null} icon={<Icon d="flex" as={FiLayout} w={4} h={4} />}>
+                                <Text>Go to gallery page</Text>
+                              </MenuItem>
+                            </LinkOverlay>
+                          </LinkBox>
+                        </NextLink>
 
                         <LinkBox
                           transition="all 200ms ease-in-out"
