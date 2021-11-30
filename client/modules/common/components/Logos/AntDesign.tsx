@@ -2,7 +2,7 @@ import { Icon, IconProps } from "@chakra-ui/react";
 
 export function AntDesign(props: IconProps) {
   return (
-    <Icon width={165} height={40} fill="none" viewBox="0 0 165 40" xmlns="http://www.w3.org/2000/svg" {...props}>
+    <Icon width={135} height={40} fill="none" viewBox="0 0 135 40" xmlns="http://www.w3.org/2000/svg" {...props}>
       <path
         d="M17.93.712L.695 18.293a2.448 2.448 0 000 3.417L17.93 39.291a2.333 2.333 0 003.35 0l7.226-7.371c.83-.847.83-2.22 0-3.066a2.095 2.095 0 00-3.005 0l-5.479 5.589a.554.554 0 01-.81 0L5.447 20.403a.581.581 0 010-.828l13.763-14.04a.555.555 0 01.812 0l5.478 5.589c.83.846 2.175.846 3.005 0 .83-.847.83-2.22 0-3.066L21.28.688a2.355 2.355 0 00-3.35.024z"
         fill="url(#prefix__paint0_linear_747_6209)"

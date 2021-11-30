@@ -75,10 +75,10 @@ export function Features() {
               >
                 <Image
                   alt="Easy to find"
-                  src="/images/icon-gallery.png"
+                  src="/images/features/icon-gallery.png"
                   borderRadius={{ base: 8, md: 16 }}
-                  width={{ base: 580, md: "auto" }}
-                  height={{ base: 250, md: "auto" }}
+                  width={{ base: "auto", md: "auto" }}
+                  height={{ base: "auto", md: "auto" }}
                   objectFit="cover"
                   objectPosition={{ base: "center", md: "left" }}
                   boxShadow="9"
@@ -150,8 +150,8 @@ export function Features() {
               borderRadius={24}
               width={{ base: "100%", md: "80%" }}
               maxWidth={{ base: 452, md: 1064 }}
-              height={{ base: "auto", md: "34vw" }}
-              maxHeight={{ base: "auto", md: 480 }}
+              height={{ base: "auto", md: "40vw" }}
+              maxHeight={{ base: "auto", md: 560 }}
               padding={{ base: "5%", md: "0" }}
               alignItems="center"
               overflow="hidden"
@@ -180,7 +180,7 @@ export function Features() {
                 style={{ y: prefersReducedMotion ? 0 : yImages }}
                 width={{ base: "100%", md: "80%" }}
                 height={"auto"}
-                marginTop={{ md: "10% !important" }}
+                marginTop={{ base: "0 !important", md: "10% !important" }}
                 marginBottom={{ md: "-5% !important" }}
                 zIndex={1}
               >
@@ -192,13 +192,13 @@ export function Features() {
                 >
                   <Image
                     alt="Rich Icon data"
-                    src="/images/icon-page.png"
+                    src="/images/features/icon-page.png"
                     borderRadius={{ base: 8, md: 16 }}
                     objectFit="cover"
                     objectPosition="left"
                     boxShadow="9"
-                    width={{ base: 580, md: "auto" }}
-                    height={{ base: 250, md: "auto" }}
+                    width={{ base: "auto", md: "auto" }}
+                    height={{ base: "auto", md: "auto" }}
                   />
                 </Fade>
               </MotionBox>
@@ -247,7 +247,7 @@ export function Features() {
             <MotionBox
               style={{ y: prefersReducedMotion ? 0 : yShapes }}
               position="absolute"
-              top={{ base: 12, md: "0%" }}
+              top={{ base: 12, md: "-5%" }}
               left={{ base: 10, md: "10%" }}
               width={{ base: "3rem", md: "22%" }}
             >
@@ -270,19 +270,20 @@ export function Features() {
               height="auto"
               shadow="7"
               borderRadius={{ base: 8, md: 16 }}
+              marginTop={{ base: "0 !important" }}
               marginLeft={{ base: 0, md: "-30% !important" }}
               zIndex={1}
             >
               <Fade duration={prefersReducedMotion ? 0 : 1000} fraction={prefersReducedMotion ? 0 : 0.2} left>
                 <Image
                   alt="Developer panel"
-                  src="/images/developer-panel.png"
+                  src="/images/features/developer-panel.png"
                   borderRadius={{ base: 8, md: 16 }}
                   objectFit="cover"
                   objectPosition="right"
                   boxShadow="9"
-                  width={{ base: 580, md: "auto" }}
-                  height={{ base: 250, md: "auto" }}
+                  width={{ base: "auto", md: "auto" }}
+                  height={{ base: "auto", md: "auto" }}
                 />
               </Fade>
             </MotionBox>

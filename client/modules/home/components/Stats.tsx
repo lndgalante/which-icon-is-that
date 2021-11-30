@@ -62,7 +62,7 @@ export function Stats({ totalIcons, totalLibraries, totalStyles }: StatsProps) {
         <Fade duration={prefersReducedMotion ? 0 : 1000} bottom distance="100px" delay={prefersReducedMotion ? 0 : 200}>
           <StatBox
             shape={
-              <Stack height={140} pt={3}>
+              <Stack height={"auto"} pt={3}>
                 <Serve />
               </Stack>
             }
@@ -73,7 +73,7 @@ export function Stats({ totalIcons, totalLibraries, totalStyles }: StatsProps) {
         <Fade duration={prefersReducedMotion ? 0 : 1000} bottom distance="100px" delay={prefersReducedMotion ? 0 : 400}>
           <StatBox
             shape={
-              <Stack height={140}>
+              <Stack height={"auto"}>
                 <Libraries />
               </Stack>
             }
@@ -85,7 +85,7 @@ export function Stats({ totalIcons, totalLibraries, totalStyles }: StatsProps) {
         <Fade duration={prefersReducedMotion ? 0 : 1000} bottom distance="100px" delay={prefersReducedMotion ? 0 : 600}>
           <StatBox
             shape={
-              <Stack height={140}>
+              <Stack height={"auto"}>
                 <Styles />
               </Stack>
             }
