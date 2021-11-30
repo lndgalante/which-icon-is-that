@@ -11,6 +11,7 @@ import {
   FormErrorMessage,
   Button,
   Textarea,
+  usePrefersReducedMotion,
 } from "@chakra-ui/react";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
@@ -28,6 +29,9 @@ import { useToast } from "@modules/common/hooks/useToast";
 
 // components
 import * as Shapes from "@modules/contact/components/Shapes";
+import { MotionBox } from "@modules/common/components/MotionBox";
+import { useSpring, useTransform } from "framer-motion";
+import { useRef } from "react";
 
 // constants
 const VALIDATION_SCHEMA = z.object({
@@ -47,6 +51,30 @@ function Contact() {
 
   // custom hooks
   const { displayToast } = useToast();
+
+  // motion
+  const shouldReduceMotion = usePrefersReducedMotion();
+  const wrapperRef = useRef(null);
+
+  const x = useSpring(0, { mass: 0.4, restDelta: 0.001 });
+  const y = useSpring(0, { mass: 0.4, restDelta: 0.001 });
+
+  const translateX = useTransform(x, [0, 1], [-45, 45]);
+  const translateXSlower = useTransform(x, [0, 1], [-20, 20]);
+  const translateY = useTransform(y, [0, 1], [-45, 45]);
+  const translateYSlower = useTransform(y, [0, 1], [-20, 20]);
+
+  function handleMouse(event) {
+    if (wrapperRef.current) {
+      const { pageX, pageY } = event;
+
+      const wrapperWidth = wrapperRef.current.offsetWidth;
+      const wrapperHeight = wrapperRef.current.offsetHeight;
+
+      x.set(pageX / wrapperWidth);
+      y.set(pageY / wrapperHeight);
+    }
+  }
 
   // handlers
   async function onSubmit(values) {
@@ -71,6 +99,8 @@ function Contact() {
       paddingX={{ base: 5, md: 0 }}
       paddingY={{ base: "2.7rem", md: 0 }}
       overflow="hidden"
+      onMouseMove={shouldReduceMotion ? null : handleMouse}
+      ref={wrapperRef}
     >
       <Stack spacing={{ base: 3, md: 6 }} textAlign="center" alignItems="center">
         <Text color="brand.darkRed" fontWeight={800} fontSize={{ base: 24, md: 40 }}>
@@ -170,26 +200,42 @@ function Contact() {
         </Stack>
       </Stack>
 
-      <Stack top={{ base: "-5.2rem", md: 100 }} left={{ base: 0, md: -4 }} position="absolute">
+      <MotionBox
+        style={{ x: translateX, y: translateY }}
+        top={{ base: "-5.2rem", md: 100 }}
+        left={{ base: 0, md: -4 }}
+        position="absolute"
+      >
         <Shapes.TopLeft width={{ base: "55px", md: "214px" }} />
-      </Stack>
+      </MotionBox>
 
-      <Stack bottom={{ base: -2, md: 10 }} right={{ base: 20, md: 268 }} position="absolute">
+      <MotionBox
+        style={{ x: translateX, y: translateY }}
+        bottom={{ base: -2, md: 10 }}
+        right={{ base: 20, md: 268 }}
+        position="absolute"
+      >
         <Shapes.BottomRight width={{ base: "4.1rem", md: "120px" }} height={{ base: "2.6rem" }} />
-      </Stack>
+      </MotionBox>
 
-      <Stack
+      <MotionBox
+        style={{ x: translateXSlower, y: translateYSlower }}
         bottom={{ base: 56, md: 272 }}
         left={{ base: -6, md: 56 }}
         display={{ base: "none", md: "flex" }}
         position="absolute"
       >
         <Shapes.MiddleLeft width={{ base: "70px", md: "130px" }} />
-      </Stack>
+      </MotionBox>
 
-      <Stack top={{ base: 2, md: 56 }} right={{ base: 0, md: 0 }} position="absolute">
-        <Shapes.TopRight width={{ base: "64px", md: "124px" }} />
-      </Stack>
+      <MotionBox
+        style={{ x: translateXSlower, y: translateYSlower }}
+        top={{ base: 2, md: 56 }}
+        right={{ base: 0, md: 0 }}
+        position="absolute"
+      >
+        <Shapes.TopRight width={{ base: "64px", md: "194px" }} />
+      </MotionBox>
     </Stack>
   );
 }

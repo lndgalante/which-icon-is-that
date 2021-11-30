@@ -1,7 +1,7 @@
 import NextLink from "next/link";
 import { nanoid } from "nanoid";
 import { useRouter } from "next/router";
-import { Stack, Text, HStack, Button } from "@chakra-ui/react";
+import { Stack, Text, HStack, Button, usePrefersReducedMotion } from "@chakra-ui/react";
 
 // components
 import { BoxIcon } from "@modules/common/components/BoxIcon";
@@ -13,6 +13,9 @@ import { useReadRelatedIcons } from "@modules/not-found/hooks/useReadRelatedIcon
 
 // utils
 import { getIconComponent } from "@modules/common/utils/getIconComponent";
+import { MotionBox } from "@modules/common/components/MotionBox";
+import { useRef } from "react";
+import { useSpring, useTransform } from "framer-motion";
 
 // constants
 const LOADING_ARRAY = Array.from({ length: 4 }, () => nanoid());
@@ -27,6 +30,30 @@ function NotFound() {
   // query hooks
   const { data, isFetching } = useReadRelatedIcons(hash as string);
 
+  // motion
+  const shouldReduceMotion = usePrefersReducedMotion();
+  const wrapperRef = useRef(null);
+
+  const x = useSpring(0, { mass: 0.4, restDelta: 0.001 });
+  const y = useSpring(0, { mass: 0.4, restDelta: 0.001 });
+
+  const translateX = useTransform(x, [0, 1], [-45, 45]);
+  const translateXSlower = useTransform(x, [0, 1], [-20, 20]);
+  const translateY = useTransform(y, [0, 1], [-45, 45]);
+  const translateYSlower = useTransform(y, [0, 1], [-20, 20]);
+
+  function handleMouse(event) {
+    if (wrapperRef.current) {
+      const { pageX, pageY } = event;
+
+      const wrapperWidth = wrapperRef.current.offsetWidth;
+      const wrapperHeight = wrapperRef.current.offsetHeight;
+
+      x.set(pageX / wrapperWidth);
+      y.set(pageY / wrapperHeight);
+    }
+  }
+
   return (
     <Stack
       backgroundColor="brand.lightOrange"
@@ -37,6 +64,8 @@ function NotFound() {
       spacing={6}
       marginX={{ base: -4, md: -12 }}
       overflow="hidden"
+      ref={wrapperRef}
+      onMouseMove={shouldReduceMotion ? null : handleMouse}
     >
       <Stack spacing={{ base: 6, md: 6 }} textAlign="center" alignItems="center">
         <Text color="brand.darkRed" fontWeight={800} fontSize={{ base: 24, md: 40 }}>
@@ -78,47 +107,79 @@ function NotFound() {
         <Button variant="brand.outline">Back to the Homepage</Button>
       </NextLink>
 
-      <Stack top={{ base: 4, md: 95 }} left={{ base: 0, md: 90 }} position="absolute">
+      <MotionBox
+        style={{ x: translateXSlower, y: translateYSlower }}
+        top={{ base: 4, md: 95 }}
+        left={{ base: 0, md: 90 }}
+        position="absolute"
+      >
         <Shapes.LeftMiddleTop width={{ base: "92px", md: "216px" }} />
-      </Stack>
+      </MotionBox>
 
-      <Stack
+      <MotionBox
+        style={{ x: translateX, y: translateY }}
         top={{ base: 56, md: 320 }}
         left={{ base: -6, md: -1 }}
         display={{ base: "none", md: "flex" }}
         position="absolute"
       >
         <Shapes.LeftMiddle width={{ base: "70px", md: "130px" }} />
-      </Stack>
+      </MotionBox>
 
-      <Stack bottom={{ base: "1.4rem", md: 148 }} left={{ base: -1, md: 180 }} position="absolute">
+      <MotionBox
+        style={{ x: translateXSlower, y: translateYSlower }}
+        bottom={{ base: "1.4rem", md: 148 }}
+        left={{ base: -1, md: 180 }}
+        position="absolute"
+      >
         <Shapes.LeftMiddleBottom width={{ base: "24px", md: "50px" }} />
-      </Stack>
+      </MotionBox>
 
-      <Stack bottom={{ base: "-1.45rem", md: -2 }} left={{ base: "6.45rem", md: 340 }} position="absolute">
+      <MotionBox
+        style={{ x: translateX, y: translateY }}
+        bottom={{ base: "-1.45rem", md: -2 }}
+        left={{ base: "6.45rem", md: 340 }}
+        position="absolute"
+      >
         <Shapes.LeftBottom width={{ base: "64px", md: "124px" }} />
-      </Stack>
+      </MotionBox>
 
-      <Stack top={{ base: "-1.45rem", md: 4 }} right={{ base: "7.7rem", md: 280 }} position="absolute">
+      <MotionBox
+        style={{ x: translateX, y: translateY }}
+        top={{ base: "-1.45rem", md: 4 }}
+        right={{ base: "7.7rem", md: 280 }}
+        position="absolute"
+      >
         <Shapes.RightTop width={{ base: "70px", md: "124px" }} />
-      </Stack>
+      </MotionBox>
 
-      <Stack top={{ base: "-0.6rem", md: 81 }} right={{ base: -4, md: 20 }} position="absolute">
+      <MotionBox
+        style={{ x: translateXSlower, y: translateYSlower }}
+        top={{ base: "-0.6rem", md: 81 }}
+        right={{ base: -4, md: 20 }}
+        position="absolute"
+      >
         <Shapes.RightTopSecondary width={{ base: "70px", md: "114px" }} />
-      </Stack>
+      </MotionBox>
 
-      <Stack
+      <MotionBox
+        style={{ x: translateX, y: translateY }}
         bottom={{ base: 56, md: 390 }}
         right={{ base: -6, md: 20 }}
         display={{ base: "none", md: "flex" }}
         position="absolute"
       >
         <Shapes.RightMiddle width={{ base: "70px", md: "66px" }} />
-      </Stack>
+      </MotionBox>
 
-      <Stack bottom={{ base: "0.1rem", md: 10 }} right={{ base: "-1.14rem", md: 0 }} position="absolute">
-        <Shapes.RightBottom width={{ base: "70px", md: "90px" }} />
-      </Stack>
+      <MotionBox
+        style={{ x: translateXSlower, y: translateYSlower }}
+        bottom={{ base: "0.1rem", md: 10 }}
+        right={{ base: "-1.14rem", md: 0 }}
+        position="absolute"
+      >
+        <Shapes.RightBottom width={{ base: "70px", md: "110px" }} />
+      </MotionBox>
     </Stack>
   );
 }
