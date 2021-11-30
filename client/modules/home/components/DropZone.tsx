@@ -15,6 +15,7 @@ import {
   ModalContent,
   useToast,
   useDisclosure,
+  usePrefersReducedMotion,
 } from "@chakra-ui/react";
 
 // utils
@@ -37,6 +38,7 @@ export function DropZone() {
   // chakra hooks
   const toast = useToast();
   const { onOpen, onClose } = useDisclosure();
+  const prefersReducedMotion = usePrefersReducedMotion();
 
   // dropzone hooks
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop: handleDrop });
@@ -193,7 +195,12 @@ export function DropZone() {
           justifyContent={{ base: "center", md: "flex-start" }}
         >
           <DropInnerRadius height={{ base: 154, md: 214 }} position="absolute" top={{ base: 3, md: 6 }} />
-          <Fade bottom delay={200} distance="20px">
+          <Fade
+            bottom
+            duration={prefersReducedMotion ? 0 : 1000}
+            delay={prefersReducedMotion ? 0 : 200}
+            distance="20px"
+          >
             {/* @ts-expect-error Unable to fix this problem */}
             <Input {...getInputProps()} />
             <Button

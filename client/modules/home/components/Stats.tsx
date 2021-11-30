@@ -1,5 +1,5 @@
 import Fade from "react-reveal/Fade";
-import { Stack, Text, Wrap } from "@chakra-ui/react";
+import { Stack, Text, usePrefersReducedMotion, Wrap } from "@chakra-ui/react";
 
 // types
 import { Stats as StatsType } from "@modules/common/utils/types";
@@ -43,6 +43,8 @@ function StatBox({ shape, title, subtitle }: StatBoxProps) {
 }
 
 export function Stats({ totalIcons, totalLibraries, totalStyles }: StatsProps) {
+  const prefersReducedMotion = usePrefersReducedMotion();
+
   return (
     <Stack paddingBottom={{ base: "1.25rem", md: "8.75rem" }} as="section" alignItems="center" zIndex={1}>
       <Text
@@ -57,7 +59,7 @@ export function Stats({ totalIcons, totalLibraries, totalStyles }: StatsProps) {
       </Text>
 
       <Wrap spacing={{ base: 5, md: 10 }} justify="center" align="center" shouldWrapChildren>
-        <Fade bottom distance="100px" delay={200}>
+        <Fade duration={prefersReducedMotion ? 0 : 1000} bottom distance="100px" delay={prefersReducedMotion ? 0 : 200}>
           <StatBox
             shape={
               <Stack height={140} pt={3}>
@@ -68,7 +70,7 @@ export function Stats({ totalIcons, totalLibraries, totalStyles }: StatsProps) {
             subtitle={`+${totalIcons} icons`}
           />
         </Fade>
-        <Fade bottom distance="100px" delay={400}>
+        <Fade duration={prefersReducedMotion ? 0 : 1000} bottom distance="100px" delay={prefersReducedMotion ? 0 : 400}>
           <StatBox
             shape={
               <Stack height={140}>
@@ -80,7 +82,7 @@ export function Stats({ totalIcons, totalLibraries, totalStyles }: StatsProps) {
           />
         </Fade>
 
-        <Fade bottom distance="100px" delay={600}>
+        <Fade duration={prefersReducedMotion ? 0 : 1000} bottom distance="100px" delay={prefersReducedMotion ? 0 : 600}>
           <StatBox
             shape={
               <Stack height={140}>

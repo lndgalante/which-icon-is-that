@@ -1,6 +1,21 @@
 import { extendTheme } from "@chakra-ui/react";
 
 export const theme = extendTheme({
+  styles: {
+    // global: {
+    //   "@media (prefers-reduced-motion: reduce)": {
+    //     "html:focus-within": {
+    //       scrollBehavior: "auto",
+    //     },
+    //     "*, *::before, *::after": {
+    //       animationDuration: "0.01ms !important",
+    //       animationIterationCount: "1 !important",
+    //       transitionDuration: "0.01ms !important",
+    //       scrollBehavior: "auto !important",
+    //     },
+    //   },
+    // },
+  },
   shadows: {
     1: "0px 2px 4px -2px rgba(32, 29, 29, 0.12), 0px 4px 4px -2px rgba(32, 29, 29, 0.08)",
     2: "0px 4px 6px -4px rgba(32, 29, 29, 0.12), 0px 8px 8px -4px rgba(32, 29, 29, 0.08)",

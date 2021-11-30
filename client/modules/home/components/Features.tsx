@@ -1,5 +1,5 @@
 import Fade from "react-reveal/Fade";
-import { Stack, Text, Image } from "@chakra-ui/react";
+import { Stack, Text, Image, usePrefersReducedMotion } from "@chakra-ui/react";
 import { useTransform, useViewportScroll } from "framer-motion";
 
 // components
@@ -7,6 +7,9 @@ import * as Shapes from "@modules/home/components/Shapes";
 import { MotionBox } from "@modules/common/components/MotionBox";
 
 export function Features() {
+  // chakra hooks
+  const prefersReducedMotion = usePrefersReducedMotion();
+
   // framer motion hooks
   const { scrollYProgress } = useViewportScroll();
 
@@ -40,7 +43,7 @@ export function Features() {
             position="relative"
           >
             <MotionBox
-              style={{ y: yShapes }}
+              style={{ y: prefersReducedMotion ? 0 : yShapes }}
               position="absolute"
               width={{ base: "12%", md: "18%" }}
               top={{ base: "50%", md: "20%" }}
@@ -49,7 +52,7 @@ export function Features() {
               <Shapes.EasyTopRight width="100%" height="auto" />
             </MotionBox>
             <MotionBox
-              style={{ y: yShapes }}
+              style={{ y: prefersReducedMotion ? 0 : yShapes }}
               position="absolute"
               width={{ base: "10%", md: "20%" }}
               bottom={{ base: "65%", md: "0%" }}
@@ -58,13 +61,18 @@ export function Features() {
               <Shapes.EasyBottomLeft transform={{ base: "rotate(230deg)", md: "none" }} height="auto" />
             </MotionBox>
             <MotionBox
-              style={{ x: yImages }}
+              style={{ x: prefersReducedMotion ? 0 : yImages }}
               width={{ base: "100%", md: "140%" }}
               pl={{ base: 0, md: "10%" }}
               margin={{ base: "0 !important", md: 0 }}
               pos="relative"
             >
-              <Fade right distance="100px">
+              <Fade
+                duration={prefersReducedMotion ? 0 : 1000}
+                fraction={prefersReducedMotion ? 0 : 0.2}
+                right
+                distance="100px"
+              >
                 <Image
                   alt="Easy to find"
                   src="/images/icon-gallery.png"
@@ -86,10 +94,17 @@ export function Features() {
             spacing={{ base: "0.63rem", md: 6 }}
           >
             <Text as="h3" fontSize={{ base: 24, md: 40 }} fontWeight={800} color="brand.darkRed">
-              <Fade bottom>Easy To Find</Fade>
+              <Fade duration={prefersReducedMotion ? 0 : 1000} bottom>
+                Easy To Find
+              </Fade>
             </Text>
 
-            <Fade bottom delay={500} distance="10px">
+            <Fade
+              duration={prefersReducedMotion ? 0 : 1000}
+              bottom
+              delay={prefersReducedMotion ? 0 : 500}
+              distance="10px"
+            >
               <Text maxWidth={452} fontSize={{ base: 14, md: 18 }}>
                 Just{" "}
                 <Text as="span" fontWeight={700}>
@@ -108,11 +123,18 @@ export function Features() {
           spacing={{ base: "0.63rem", md: 6 }}
         >
           <Text as="h3" fontSize={{ base: 24, md: 40 }} fontWeight={800} color="brand.darkRed">
-            <Fade bottom>Rich Icon Data</Fade>
+            <Fade duration={prefersReducedMotion ? 0 : 1000} bottom>
+              Rich Icon Data
+            </Fade>
           </Text>
 
           <Stack alignItems="center" spacing={{ base: 4, md: "3.65rem" }} width="100%">
-            <Fade bottom delay={500} distance="10px">
+            <Fade
+              duration={prefersReducedMotion ? 0 : 1000}
+              bottom
+              delay={prefersReducedMotion ? 0 : 500}
+              distance="10px"
+            >
               <Text maxWidth={452} textAlign={{ base: "left", md: "center" }} fontSize={{ base: 14, md: 18 }}>
                 All you need to know about your icon: Size, Weight,{" "}
                 <Text as="span" fontWeight={700}>
@@ -135,7 +157,7 @@ export function Features() {
               overflow="hidden"
             >
               <MotionBox
-                style={{ y: yShapes }}
+                style={{ y: prefersReducedMotion ? 0 : yShapes }}
                 position="absolute"
                 width={{ base: "13%", md: "10%" }}
                 top={{ base: "20%", md: "30%" }}
@@ -145,7 +167,7 @@ export function Features() {
               </MotionBox>
 
               <MotionBox
-                style={{ y: yShapes }}
+                style={{ y: prefersReducedMotion ? 0 : yShapes }}
                 position="absolute"
                 width={{ base: "10%", md: "12%" }}
                 bottom={{ base: "15%", md: "10%" }}
@@ -155,14 +177,19 @@ export function Features() {
               </MotionBox>
 
               <MotionBox
-                style={{ y: yImages }}
+                style={{ y: prefersReducedMotion ? 0 : yImages }}
                 width={{ base: "100%", md: "80%" }}
                 height={"auto"}
                 marginTop={{ md: "10% !important" }}
                 marginBottom={{ md: "-5% !important" }}
                 zIndex={1}
               >
-                <Fade bottom distance="100px">
+                <Fade
+                  duration={prefersReducedMotion ? 0 : 1000}
+                  fraction={prefersReducedMotion ? 0 : 0.2}
+                  bottom
+                  distance="100px"
+                >
                   <Image
                     alt="Rich Icon data"
                     src="/images/icon-page.png"
@@ -187,9 +214,16 @@ export function Features() {
             spacing={{ base: "0.63rem", md: 6 }}
           >
             <Text as="h3" fontSize={{ base: 24, md: 40 }} fontWeight={800} color="brand.darkRed">
-              <Fade bottom>Developer Panel</Fade>
+              <Fade duration={prefersReducedMotion ? 0 : 1000} bottom>
+                Developer Panel
+              </Fade>
             </Text>
-            <Fade bottom delay={500} distance="10px">
+            <Fade
+              duration={prefersReducedMotion ? 0 : 1000}
+              bottom
+              delay={prefersReducedMotion ? 0 : 500}
+              distance="10px"
+            >
               <Text maxWidth={452} fontSize={{ base: 14, md: 18 }}>
                 Find out how to{" "}
                 <Text as="span" fontWeight={700}>
@@ -211,7 +245,7 @@ export function Features() {
             position="relative"
           >
             <MotionBox
-              style={{ y: yShapes }}
+              style={{ y: prefersReducedMotion ? 0 : yShapes }}
               position="absolute"
               top={{ base: 12, md: "0%" }}
               left={{ base: 10, md: "10%" }}
@@ -221,7 +255,7 @@ export function Features() {
             </MotionBox>
 
             <MotionBox
-              style={{ y: yShapes }}
+              style={{ y: prefersReducedMotion ? 0 : yShapes }}
               position="absolute"
               bottom={{ base: "15%", md: "26%" }}
               right={{ base: 1.5, md: "20%" }}
@@ -231,7 +265,7 @@ export function Features() {
             </MotionBox>
 
             <MotionBox
-              style={{ x: xImages }}
+              style={{ x: prefersReducedMotion ? 0 : xImages }}
               width={{ base: "100%", md: "120%" }}
               height="auto"
               shadow="7"
@@ -239,7 +273,7 @@ export function Features() {
               marginLeft={{ base: 0, md: "-30% !important" }}
               zIndex={1}
             >
-              <Fade left>
+              <Fade duration={prefersReducedMotion ? 0 : 1000} fraction={prefersReducedMotion ? 0 : 0.2} left>
                 <Image
                   alt="Developer panel"
                   src="/images/developer-panel.png"

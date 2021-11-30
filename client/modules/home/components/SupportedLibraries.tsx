@@ -1,12 +1,14 @@
 import NextLink from "next/link";
 import Fade from "react-reveal/Fade";
-import { Stack, Text, Link, Icon, SimpleGrid } from "@chakra-ui/react";
+import { Stack, Text, Link, Icon, SimpleGrid, usePrefersReducedMotion } from "@chakra-ui/react";
 
 // components
 import { LOGOS } from "@modules/common/components/Logos";
 import { LinkButton } from "@modules/common/components/LinkButton";
 
 export function SupportedLibraries() {
+  const prefersReducedMotion = usePrefersReducedMotion();
+
   return (
     <Stack alignItems="center" as="section" paddingBottom={{ base: "1.7rem", md: 150 }} spacing={0}>
       <Text color="brand.darkRed" fontSize={{ base: 16, md: 40 }} as="h2" fontWeight={700}>
@@ -26,7 +28,7 @@ export function SupportedLibraries() {
       >
         <NextLink passHref href="/gallery?iconLibrary=antdesign&iconName=%2520">
           <Link aria-label="Ant Design Icons">
-            <Fade bottom delay={0}>
+            <Fade duration={prefersReducedMotion ? 0 : 1000} bottom delay={0}>
               <Icon
                 w={181}
                 height={14}
@@ -41,7 +43,7 @@ export function SupportedLibraries() {
 
         <NextLink passHref href="/gallery?iconLibrary=bootstrap&iconName=%2520">
           <Link aria-label="Bootstrap Icons">
-            <Fade bottom delay={200}>
+            <Fade duration={prefersReducedMotion ? 0 : 1000} bottom delay={prefersReducedMotion ? 0 : 200}>
               <Icon
                 w={177}
                 height={14}
@@ -56,7 +58,7 @@ export function SupportedLibraries() {
 
         <NextLink passHref href="/gallery?iconLibrary=heroicons&iconName=%2520">
           <Link aria-label="Heroicons">
-            <Fade bottom delay={400}>
+            <Fade duration={prefersReducedMotion ? 0 : 1000} bottom delay={prefersReducedMotion ? 0 : 400}>
               <Icon
                 w={187}
                 height={14}
@@ -71,7 +73,7 @@ export function SupportedLibraries() {
 
         <NextLink passHref href="/gallery?iconLibrary=feather&iconName=%2520">
           <Link aria-label="Feather Icons">
-            <Fade bottom delay={600}>
+            <Fade duration={prefersReducedMotion ? 0 : 1000} bottom delay={prefersReducedMotion ? 0 : 600}>
               <Icon
                 w={170}
                 height={12}
@@ -86,7 +88,7 @@ export function SupportedLibraries() {
 
         <NextLink passHref href="/gallery?iconLibrary=fontawesome&iconName=%2520">
           <Link aria-label="Font Awesome" display={{ base: "none", md: "inherit" }}>
-            <Fade bottom delay={800}>
+            <Fade duration={prefersReducedMotion ? 0 : 1000} bottom delay={prefersReducedMotion ? 0 : 800}>
               <Icon
                 w={220}
                 height={8}

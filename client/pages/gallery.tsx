@@ -8,7 +8,18 @@ import { useDebounce } from "use-debounce";
 import { FiArrowUp } from "react-icons/fi";
 import { useWindowScroll } from "react-use";
 import { useEffect, useState, useRef } from "react";
-import { HStack, Stack, Icon, Text, SimpleGrid, Button, LinkBox, LinkOverlay, Divider } from "@chakra-ui/react";
+import {
+  HStack,
+  Stack,
+  Icon,
+  Text,
+  SimpleGrid,
+  Button,
+  LinkBox,
+  LinkOverlay,
+  Divider,
+  usePrefersReducedMotion,
+} from "@chakra-ui/react";
 
 // utils
 import { api } from "@modules/common/utils/api";
@@ -94,6 +105,9 @@ function Gallery({ svgs, packs }: Props) {
   const [viewAllIconLibrary, setViewAllIconLibrary] = useState("");
   const [iconNameQuery, setIconNameQuery] = useState(decodedIconNameQuery);
   const [iconLibraryQuery, setIconLibraryQuery] = useState(defaultIconLibrary);
+
+  // chakra hooks
+  const prefersReducedMotion = usePrefersReducedMotion();
 
   // debounce hooks
   const [iconNameQueryDebounced] = useDebounce(iconNameQuery, 1000);
@@ -207,7 +221,7 @@ function Gallery({ svgs, packs }: Props) {
           mb={shouldDisplayFoundIconsData ? 10 : 16}
         >
           <Stack left={{ base: -3, md: "1.38rem" }} bottom={{ base: 12, md: "3.25rem" }} position="absolute">
-            <Zoom delay={800}>
+            <Zoom duration={prefersReducedMotion ? 0 : 1000} delay={prefersReducedMotion ? 0 : 800}>
               <Shapes.BottomLeft
                 width={{ base: "4.06rem", md: "7.94rem" }}
                 height={{ base: "3.5rem", md: "6.88rem" }}
@@ -216,12 +230,17 @@ function Gallery({ svgs, packs }: Props) {
           </Stack>
 
           <Stack top={{ base: "0.55em", md: "2.25rem" }} right={{ base: 0, md: 0 }} position="absolute">
-            <Zoom delay={1000}>
+            <Zoom duration={prefersReducedMotion ? 0 : 1000} delay={prefersReducedMotion ? 0 : 1000}>
               <Shapes.TopRight width={{ base: "7.06rem", md: "11.19rem" }} height={{ base: "3rem", md: "5.21rem" }} />
             </Zoom>
           </Stack>
 
-          <Fade bottom delay={200} distance="30px">
+          <Fade
+            duration={prefersReducedMotion ? 0 : 1000}
+            bottom
+            delay={prefersReducedMotion ? 0 : 200}
+            distance="30px"
+          >
             <Text
               as="h1"
               maxWidth={{ base: 241, md: "inherit" }}
@@ -235,7 +254,12 @@ function Gallery({ svgs, packs }: Props) {
               </Text>
             </Text>
           </Fade>
-          <Fade bottom delay={400} distance="30px">
+          <Fade
+            duration={prefersReducedMotion ? 0 : 1000}
+            bottom
+            delay={prefersReducedMotion ? 0 : 400}
+            distance="30px"
+          >
             <Text as="h2" fontSize={{ base: 14, md: 18 }} color="brand.warmBlack">
               One finder to rule them all
             </Text>
