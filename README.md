@@ -108,7 +108,8 @@ We're currently having a total investment of ~80usd/month for backend/frontend d
 
 ## Links
 
+- [Web](https://www.whichiconisthat.com)
 - [Twitter](https://twitter.com/whichiconisthat)
-- [Website](https://www.whichiconisthat.com)
-- [Repository](https://github.com/lndgalante/which-icon-is-that)
+- [Discord](https://discord.gg/xTpegNF9bj)
+- [GitHub](https://github.com/lndgalante/which-icon-is-that)
 - [Plausible](https://plausible.io/whichiconisthat.com)
