@@ -231,7 +231,7 @@ export function Navbar() {
                   <ListItem>Advanced filters in gallery page</ListItem>
                   <ListItem>Sponsoring popular icon libraries</ListItem>
                   <ListItem>Support for new frameworks</ListItem>
-                  <ListItem>PNG/JPG to SVG conversor</ListItem>
+                  <ListItem>Sandbox examples for each library</ListItem>
                   {/*
                   <ListItem>Google Chrome Extension</ListItem>
                   <ListItem>Tons of feedback, speed and usability improvements!</ListItem>
