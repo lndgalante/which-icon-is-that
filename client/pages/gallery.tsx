@@ -113,7 +113,9 @@ function Gallery({ svgs, packs }: Props) {
 
   // scroll hooks
   const headerRef = useRef(null);
+  const bottomRef = useRef(null);
   const headerIntersected = useIntersection(headerRef, { threshold: 0 });
+  const bottomIntersected = useIntersection(bottomRef, { threshold: 0 });
 
   // query hooks
   const {
@@ -311,7 +313,12 @@ function Gallery({ svgs, packs }: Props) {
           backgroundColor="brand.lightOrange"
           transition="all 200ms ease-in-out"
           _hover={{ transform: "scale(1.1)" }}
-          transform={headerIntersected && headerIntersected.isIntersecting ? "translateY(100px)" : "translateY(0px)"}
+          transform={
+            (headerIntersected && headerIntersected.isIntersecting) ||
+            (bottomIntersected && bottomIntersected.isIntersecting)
+              ? "translateY(100px)"
+              : "translateY(0px)"
+          }
         >
           <Icon as={FiArrowUp} color="brand.darkRed" h={6} w={6} />
         </Stack>
@@ -426,6 +433,7 @@ function Gallery({ svgs, packs }: Props) {
           </Stack>
         </Stack>
       </Stack>
+      <Stack ref={bottomRef}></Stack>
     </Fragment>
   );
 }
