@@ -59,8 +59,7 @@ function styledComponentJsTemplate({ template }, opts, { imports, componentName,
         height: \${width || theme.sizes.width};
         fill: \${fill || theme.colors.fillColor};
       \`
-    );
-
+    );\n
 
     export default ${componentName};
   `;
@@ -80,48 +79,57 @@ function styledComponentTsTemplate({ template }, opts, { imports, componentName,
         height: \${width || theme.sizes.width};
         fill: \${fill || theme.colors.fillColor};
       \`
-    );
-
+    );\n
 
     export default ${componentName};
   `;
 }
 
+function createReactChakraIcon(viewBox, innerSvg) {
+  return svgr(`<Icon viewBox="${viewBox}">${innerSvg}</Icon>`, {
+    plugins: ['@svgr/plugin-svgo', '@svgr/plugin-prettier'],
+  }).then(semicolonRemover);
+}
+
 // vue template
 async function createVueTemplate(svg) {
-  const { component } = await toVue(svg);
-  const template = await prettifyMarkup(component);
-
-  return template;
+  return prettifyMarkup(`<template>${svg}</template>`);
 }
 
 async function output() {
-  const [, , svg, componentName] = process.argv;
+  try {
+    const [, , svg, componentName, viewBox, innerSvg] = process.argv;
 
-  const html = await createHtmlMarkup(svg);
-  const vueTemplate = await createVueTemplate(svg);
+    const html = await createHtmlMarkup(svg);
+    const vueTemplate = await createVueTemplate(svg);
 
-  const reactComponentJs = await createReactComponent(svg, componentName);
-  const reactComponentTs = await createReactComponent(svg, componentName, true);
+    const reactComponentJs = await createReactComponent(svg, componentName);
+    const reactComponentTs = await createReactComponent(svg, componentName, true);
 
-  const styledComponentJs = await createStyledComponent(svg, `Styled${componentName}`);
-  const styledComponentTs = await createStyledComponent(svg, `Styled${componentName}`, true);
+    const styledComponentJs = await createStyledComponent(svg, `Styled${componentName}`);
+    const styledComponentTs = await createStyledComponent(svg, `Styled${componentName}`, true);
 
-  const reactNativeComponentJs = await createReactNativeComponent(svg, componentName);
-  const reactNativeComponentTs = await createReactNativeComponent(svg, componentName, true);
+    const reactNativeComponentJs = await createReactNativeComponent(svg, componentName);
+    const reactNativeComponentTs = await createReactNativeComponent(svg, componentName, true);
 
-  console.log(
-    JSON.stringify([
-      html,
-      vueTemplate,
-      reactComponentJs,
-      reactComponentTs,
-      reactNativeComponentJs,
-      reactNativeComponentTs,
-      styledComponentJs,
-      styledComponentTs,
-    ]),
-  );
+    const reactChakraIcon = await createReactChakraIcon(viewBox, innerSvg);
+
+    console.log(
+      JSON.stringify([
+        html,
+        vueTemplate,
+        reactComponentJs,
+        reactComponentTs,
+        reactNativeComponentJs,
+        reactNativeComponentTs,
+        styledComponentJs,
+        styledComponentTs,
+        reactChakraIcon,
+      ]),
+    );
+  } catch (error) {
+    console.log('\n ~ output ~ error', error);
+  }
 }
 
 output();

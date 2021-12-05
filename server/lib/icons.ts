@@ -1,9 +1,11 @@
 import getFiles from 'https://deno.land/x/getfiles/mod.ts';
+import stripHtmlComments from 'https://cdn.skypack.dev/strip-html-comments';
 import { prettyBytes } from 'https://raw.githubusercontent.com/brunnerlivio/deno-pretty-bytes/master/mod.ts';
 
 // utils
-import { getInnerHTMLFromSvgText } from './dom.ts';
 import { reactIconsPacks } from './react-icons.ts';
+import { getInnerHTMLFromSvgText } from './dom.ts';
+import { getIconPackSnippets } from './snippets.ts';
 import { createHash, createHashNumber } from './hash.ts';
 import { PacksNames, ICONS_LIST, ICON_PAGE_LINK, ICON_LIBRARIES, ICONS_SOURCE_LINKS } from './constants.ts';
 
@@ -100,7 +102,6 @@ async function saveIconLibraryInDB({ packId, packName }: { packId: string; packN
   const transaction2 = client.createTransaction(`tx-create-${packName}`);
 
   await transaction2.begin();
-  let totalIcons = 0;
 
   const downloadDirectory = './downloads';
   const unzippedDirectory = `${downloadDirectory}/unzipped`;
@@ -119,160 +120,175 @@ async function saveIconLibraryInDB({ packId, packName }: { packId: string; packN
       return { name, path, iconType };
     });
 
-  for (const { name, path, iconType } of svgFiles) {
-    totalIcons += 1;
+  const totalIcons = svgFiles.length;
 
-    const reactIconPack = reactIconsPacks[packName as PacksNames] as string[];
-    const parsedIconType =
-      // @ts-ignore
-      PACKS_ICON_TYPES[packName as PacksNames][iconType as IconTypes] || DEFAULT_ICON_TYPES[packName as PacksNames];
+  for (let index = 0; index < svgFiles.length; index++) {
+    // TODO: Deno is not capable of handling more than 1287 icons, so we do < 1000, and then >= 1000 for fa and bi
+    if (index < 1000) {
+      console.log(`Current index / ${svgFiles.length - 1}`, index);
+      const { name, path, iconType } = svgFiles[index];
 
-    const iconNameWithoutExtension = name.replace('.svg', '');
-    const iconNameWithoutDash = iconNameWithoutExtension.replace(/-|_/g, '');
+      const reactIconPack = reactIconsPacks[packName as PacksNames] as string[];
+      const parsedIconType =
+        // @ts-ignore
+        PACKS_ICON_TYPES[packName as PacksNames][iconType as IconTypes] || DEFAULT_ICON_TYPES[packName as PacksNames];
 
-    let iconNameWithSpaceWithFormattedNumber = iconNameWithoutExtension
-      .replace(/-/g, ' ')
-      .replace(/[0-9]/g, (match) => `(${match})`);
+      const iconNameWithoutExtension = name.replace('.svg', '');
+      const iconNameWithoutDash = iconNameWithoutExtension.replace(/-|_/g, '');
 
-    let parsedIconName = iconNameWithoutDash;
-    let parsedIconNameForReactIcon = iconNameWithoutDash;
+      let iconNameWithSpaceWithFormattedNumber = iconNameWithoutExtension
+        .replace(/-/g, ' ')
+        .replace(/[0-9]/g, (match) => `(${match})`);
 
-    if (packName === 'boxicons') {
-      const [_, ...otherParts] = iconNameWithoutExtension.split('-');
-      parsedIconNameForReactIcon = otherParts.join('');
-    }
-
-    if (packName === 'heroicons') {
-      const iconTypeReactIcon = iconType === 'outline' ? 'outline' : '';
-      parsedIconNameForReactIcon = `${iconTypeReactIcon}${parsedIconNameForReactIcon}`;
-    }
-
-    if (packName === 'bootstrap') {
-      parsedIconName = iconNameWithoutDash.replace('fill', '');
-      parsedIconNameForReactIcon = `${parsedIconNameForReactIcon}`;
-    }
-
-    if (packName === 'devicon') {
-      parsedIconName = iconNameWithoutExtension.split('-')[0];
-      parsedIconNameForReactIcon = `${parsedIconName}`;
-    }
-
-    if (packName === 'boxicons') {
-      parsedIconName = iconNameWithoutDash.slice(2);
-      iconNameWithSpaceWithFormattedNumber = iconNameWithSpaceWithFormattedNumber.slice(3);
-    }
-
-    const parsedIconNameForReactIconInLowerCase = parsedIconNameForReactIcon.toLowerCase().trim();
-    const value = reactIconPack.find((reactIconName) => {
-      const parsedReactIconName = reactIconName.toLowerCase().trim();
-
-      if (packName === 'heroicons') {
-        if (parsedIconType === 'outlined') {
-          return `hi${parsedIconNameForReactIconInLowerCase}` === parsedReactIconName;
-        }
-
-        return `hi${parsedIconNameForReactIconInLowerCase}` === parsedReactIconName;
-      }
+      let parsedIconName = iconNameWithoutDash;
+      let parsedIconNameForReactIcon = iconNameWithoutDash;
 
       if (packName === 'boxicons') {
-        return `bi${parsedIconNameForReactIconInLowerCase}` === parsedReactIconName;
+        const [_, ...otherParts] = iconNameWithoutExtension.split('-');
+        parsedIconNameForReactIcon = otherParts.join('');
+      }
+
+      if (packName === 'heroicons') {
+        const iconTypeReactIcon = iconType === 'outline' ? 'outline' : '';
+        parsedIconNameForReactIcon = `${iconTypeReactIcon}${parsedIconNameForReactIcon}`;
       }
 
       if (packName === 'bootstrap') {
-        return `bs${parsedIconNameForReactIconInLowerCase}` === parsedReactIconName;
+        parsedIconName = iconNameWithoutDash.replace('fill', '');
+        parsedIconNameForReactIcon = `${parsedIconNameForReactIcon}`;
       }
 
-      if (packName === 'antdesign') {
-        return `ai${iconType}${parsedIconNameForReactIconInLowerCase}` === parsedReactIconName;
+      if (packName === 'devicon') {
+        parsedIconName = iconNameWithoutExtension.split('-')[0];
+        parsedIconNameForReactIcon = `${parsedIconName}`;
       }
 
-      if (packName === 'feather') {
-        return parsedReactIconName.slice(2) === parsedIconNameForReactIconInLowerCase;
+      if (packName === 'boxicons') {
+        parsedIconName = iconNameWithoutDash.slice(2);
+        iconNameWithSpaceWithFormattedNumber = iconNameWithSpaceWithFormattedNumber.slice(3);
       }
 
-      if (packName === 'flatcoloricons') {
-        return `fc${parsedIconNameForReactIconInLowerCase.replace(/_/g, '')}` === parsedReactIconName;
-      }
+      const parsedIconNameForReactIconInLowerCase = parsedIconNameForReactIcon.toLowerCase().trim();
+      const value = reactIconPack.find((reactIconName) => {
+        const parsedReactIconName = reactIconName.toLowerCase().trim();
 
-      if (packName === 'fontawesome') {
-        if (parsedIconType === 'outlined') {
-          return parsedReactIconName === `fareg${parsedIconNameForReactIconInLowerCase}`;
-        }
-
-        return `fa${parsedIconNameForReactIconInLowerCase}` === parsedReactIconName;
-      }
-
-      return parsedReactIconName.includes(parsedIconNameForReactIconInLowerCase);
-    });
-
-    if (!value) {
-      console.log(`no value found for ${parsedIconNameForReactIconInLowerCase} in ${packName}`, value);
-    }
-
-    const reactIconName = value as string;
-
-    const { size } = await Deno.stat(path);
-
-    let svg = await Deno.readTextFile(path);
-
-    if (svg.includes('<?xml')) {
-      const svgArray = svg.split(/\n/g);
-      svgArray.shift();
-      svg = svgArray.join('');
-    }
-
-    const bytes = prettyBytes(size);
-    const { innerSvg, viewBox } = getInnerHTMLFromSvgText(svg);
-
-    const hash = createHash(innerSvg);
-    const hashNumber = createHashNumber(hash);
-    const id = hash.slice(0, 4);
-
-    const iconName = parsedIconName;
-    const iconParsedName = iconNameWithSpaceWithFormattedNumber;
-
-    /*
-      // OLD TAG GENERATION
-      const synonyms = await generateIconNameSynonym(iconName);
-
-      if (synonyms) {
-        if (Array.isArray(synonyms)) {
-          const parsedSynonyms = synonyms.filter((synonym) => synonym.length !== 1);
-          for (const synonym of parsedSynonyms) {
-            const synonymId = createHash(synonym);
-            await transaction2.queryArray(`INSERT INTO tags (id, name) VALUES ($1, $2)`, synonymId, synonym);
-            await transaction2.queryArray(`INSERT INTO tags_icons (hash, tag_id) VALUES ($1, $2)`, hash, synonymId);
+        if (packName === 'heroicons') {
+          if (parsedIconType === 'outlined') {
+            return `hi${parsedIconNameForReactIconInLowerCase}` === parsedReactIconName;
           }
-        } else {
-          const synonymId = createHash(synonyms);
-          await transaction2.queryArray(`INSERT INTO tags (id, name) VALUES ($1, $2)`, synonymId, synonyms);
-          await transaction2.queryArray(`INSERT INTO tags_icons (hash, tag_id) VALUES ($1, $2)`, hash, synonymId);
+
+          return `hi${parsedIconNameForReactIconInLowerCase}` === parsedReactIconName;
         }
+
+        if (packName === 'boxicons') {
+          return `bi${parsedIconNameForReactIconInLowerCase}` === parsedReactIconName;
+        }
+
+        if (packName === 'bootstrap') {
+          return `bs${parsedIconNameForReactIconInLowerCase}` === parsedReactIconName;
+        }
+
+        if (packName === 'antdesign') {
+          return `ai${iconType}${parsedIconNameForReactIconInLowerCase}` === parsedReactIconName;
+        }
+
+        if (packName === 'feather') {
+          return parsedReactIconName.slice(2) === parsedIconNameForReactIconInLowerCase;
+        }
+
+        if (packName === 'flatcoloricons') {
+          return `fc${parsedIconNameForReactIconInLowerCase.replace(/_/g, '')}` === parsedReactIconName;
+        }
+
+        if (packName === 'fontawesome') {
+          if (parsedIconType === 'outlined') {
+            return parsedReactIconName === `fareg${parsedIconNameForReactIconInLowerCase}`;
+          }
+
+          return `fa${parsedIconNameForReactIconInLowerCase}` === parsedReactIconName;
+        }
+
+        return parsedReactIconName.includes(parsedIconNameForReactIconInLowerCase);
+      });
+
+      if (!value) {
+        console.log(`no value found for ${parsedIconNameForReactIconInLowerCase} in ${packName}`, value);
       }
-    */
 
-    await transaction2.queryArray(
-      `INSERT INTO icons (id,hash,hash_number,svg,inner_svg,view_box,icon_type,bytes,pack_id,pack_name,icon_parsed_name,icon_name,react_icon_name,icon_file_name) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14)`,
-      id,
-      hash,
-      hashNumber,
-      svg,
-      innerSvg,
-      viewBox,
-      parsedIconType,
-      bytes,
-      packId,
-      packName,
-      iconParsedName,
-      iconName,
-      reactIconName,
-      name,
-    );
+      const reactIconName = value as string;
 
-    const encodedPath = encodeURIComponent(`/${packName}/${parsedIconType}/${iconName}`);
-    await transaction2.queryArray(`INSERT INTO paths (path,hash) VALUES ($1, $2)`, encodedPath, hash);
+      const { size } = await Deno.stat(path);
+
+      let svg = await Deno.readTextFile(path);
+
+      svg = stripHtmlComments(svg);
+
+      if (svg.startsWith('<?xml')) {
+        const svgArray = svg.split(/\n/g);
+        svgArray.shift();
+        svg = svgArray.join('');
+      }
+
+      if (svg.includes('<!DOCTYPE')) {
+        svg = svg.replace(
+          '<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">',
+          '',
+        );
+      }
+
+      const bytes = prettyBytes(size);
+      const { innerSvg, viewBox } = getInnerHTMLFromSvgText(svg);
+
+      const hash = createHash(innerSvg);
+      const hashNumber = createHashNumber(hash);
+      const id = hash.slice(0, 4);
+
+      const iconName = parsedIconName;
+      const iconParsedName = iconNameWithSpaceWithFormattedNumber;
+
+      await transaction2.queryArray(
+        `INSERT INTO icons (id,hash,hash_number,svg,inner_svg,view_box,icon_type,bytes,pack_id,pack_name,icon_parsed_name,icon_name,react_icon_name,icon_file_name) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14)`,
+        id,
+        hash,
+        hashNumber,
+        svg,
+        innerSvg,
+        viewBox,
+        parsedIconType,
+        bytes,
+        packId,
+        packName,
+        iconParsedName,
+        iconName,
+        reactIconName,
+        name,
+      );
+
+      const encodedPath = encodeURIComponent(`/${packName}/${parsedIconType}/${iconName}`);
+      await transaction2.queryArray(`INSERT INTO paths (path,hash) VALUES ($1, $2)`, encodedPath, hash);
+
+      // snippets
+      const snippets = await getIconPackSnippets(
+        svg,
+        innerSvg,
+        viewBox,
+        iconParsedName,
+        iconName,
+        packName as PacksNames,
+        packId,
+        reactIconName,
+        iconType,
+      );
+
+      await transaction2.queryArray(
+        `INSERT INTO snippets (hash, snippet) VALUES ($1, $2)`,
+        hash,
+        JSON.stringify(snippets),
+      );
+    }
   }
 
+  /*   // icon libraries
   const { license, stars, version, iconTypes, website, downloadLink, parsedName, figmaLink, githubLink, contributors } =
     ICON_LIBRARIES[packName as PacksNames];
   await transaction2.queryArray(
@@ -289,7 +305,7 @@ async function saveIconLibraryInDB({ packId, packName }: { packId: string; packN
     figmaLink,
     githubLink,
     contributors,
-  );
+  ); */
 
   await transaction2.commit();
 
@@ -298,7 +314,17 @@ async function saveIconLibraryInDB({ packId, packName }: { packId: string; packN
 
 export async function saveIconsInDB() {
   try {
+    /*  // cleanup icon_libraries
     const transaction = client.createTransaction('tx-create-db');
+    await transaction.begin();
+
+    await transaction.queryArray`DROP TABLE icon_libraries`;
+    await transaction.queryArray`CREATE TABLE icon_libraries (name TEXT, parsed_name TEXT, total_icons INTEGER, license TEXT, stars TEXT, version TEXT, website TEXT, download_link TEXT, figma_link TEXT, github_link TEXT, contributors INTEGER, icon_types TEXT[][])`;
+
+    await transaction.commit();
+ */
+
+    /* const transaction = client.createTransaction('tx-create-db');
 
     await transaction.begin();
 
@@ -307,8 +333,9 @@ export async function saveIconsInDB() {
     await transaction.queryArray`DROP TABLE paths`;
     await transaction.queryArray`DROP TABLE tags`;
     await transaction.queryArray`DROP TABLE tags_icons`;
-    await transaction.queryArray`DROP TABLE icon_libraries`;
+    // await transaction.queryArray`DROP TABLE icon_libraries`;
     await transaction.queryArray`DROP TABLE contacts`;
+    await transaction.queryArray`DROP TABLE snippets`;
 
     // create tables
     await transaction.queryArray`CREATE TABLE contacts (email TEXT, name TEXT, message TEXT)`;
@@ -320,7 +347,9 @@ export async function saveIconsInDB() {
     await transaction.queryArray(
       `CREATE TABLE icons (id TEXT, hash TEXT, hash_number INTEGER, svg TEXT, inner_svg TEXT, view_box TEXT, icon_type TEXT, bytes TEXT, pack_id TEXT, pack_name TEXT, icon_parsed_name TEXT, icon_name TEXT, react_icon_name TEXT, icon_file_name TEXT)`,
     );
-    await transaction.queryArray`CREATE TABLE icon_libraries (name TEXT, parsed_name TEXT, total_icons INTEGER, license TEXT, stars TEXT, version TEXT, website TEXT, download_link TEXT, figma_link TEXT, github_link TEXT, contributors INTEGER, icon_types TEXT[][])`;
+
+    // await transaction.queryArray`CREATE TABLE icon_libraries (name TEXT, parsed_name TEXT, total_icons INTEGER, license TEXT, stars TEXT, version TEXT, website TEXT, download_link TEXT, figma_link TEXT, github_link TEXT, contributors INTEGER, icon_types TEXT[][])`;
+    await transaction.queryArray`CREATE TABLE snippets (hash TEXT, snippet JSON)`;
 
     // generate indexes
     await transaction.queryArray`CREATE INDEX hash_index ON icons(hash)`;
@@ -328,10 +357,9 @@ export async function saveIconsInDB() {
     await transaction.queryArray`CREATE INDEX path_index ON paths(path)`;
     await transaction.queryArray`CREATE INDEX hash_on_paths_index ON paths(hash)`;
 
-    await transaction.queryArray`CREATE INDEX hash_index_on_tags ON tags_icons(hash)`;
-    await transaction.queryArray`CREATE INDEX hash_on_tag_id_index ON tags_icons(tag_id)`;
+    await transaction.queryArray`CREATE INDEX hash_on_snippet_index ON snippets(HASH)`;
 
-    await transaction.commit();
+    await transaction.commit(); */
 
     for await (const { packId, packName } of ICONS_LIST) {
       await saveIconLibraryInDB({ packId, packName });
@@ -342,33 +370,3 @@ export async function saveIconsInDB() {
     console.log('Error on saveIconsInDB', error);
   }
 }
-
-/*
-import { delay } from 'https://deno.land/x/delay@v0.2.0/mod.ts';
-import { unZipFromFile } from 'https://deno.land/x/zip@v1.1.1/mod.ts';
-import upperFirstCase from 'https://deno.land/x/case/upperFirstCase.ts';
-import { download, Destination } from 'https://deno.land/x/download/mod.ts';
-
-// .filter(({ name, ext }) => !(name === 'bootstrap-icons.svg' || name.endsWith('-preview.svg')) && ext === 'svg')
-
-const response = await fetch`https://api.github.com/repos/${owner}/${repo}/${type}`;
-const [lastRelease] = await response.json();
-const { zipball_url } = lastRelease;'
-
-// download zip
-const downloadDirectory = './downloads';
-const unzippedDirectory = `${downloadDirectory}/unzipped`;
-const unzippedDirectoryPack = `${unzippedDirectory}/${packName}`;
-
-const fileName = `${packName}.zip`;
-const fullPath = `${downloadDirectory}/${fileName}`;
-
-const destination: Destination = { dir: downloadDirectory, file: fileName };
-await download(zipball_url, destination);
-
-// unZipFromFile
-unZipFromFile(fullPath, unzippedDirectory, { includeFileName: true });
-
-// wait for unzipping
-await delay(15000);
-*/

@@ -101,14 +101,15 @@ export const ICON_LIBRARIES = {
 };
 
 export const ICONS_LIST = [
-  { packId: 'fa', packName: 'fontawesome', owner: 'fontawesome', repo: 'font-awesome', type: 'releases' },
-  { packId: 'bs', packName: 'bootstrap', owner: 'twbs', repo: 'icons', type: 'releases' },
-  { packId: 'fi', packName: 'feather', owner: 'feathericons', repo: 'feather', type: 'releases' },
-  { packId: 'hi', packName: 'heroicons', owner: 'tailwindlabs', repo: 'heroicons', type: 'releases' },
-  { packId: 'ai', packName: 'antdesign', owner: 'ant-design', repo: 'ant-design-icons', type: 'tags' },
-  { packId: 'bi', packName: 'boxicons', owner: 'atisawd', repo: 'boxicons', type: 'releases' },
-  { packId: 'fc', packName: 'flatcoloricons', owner: 'icons8', repo: 'flat-color-icons', type: 'releases' },
-  // TODO: complicadito integrar devicon
+  // fa and bs are divided into 2 parts inside the for-loop
+  // { packId: 'fa', packName: 'fontawesome', owner: 'fontawesome', repo: 'font-awesome', type: 'releases' },
+  // { packId: 'bs', packName: 'bootstrap', owner: 'twbs', repo: 'icons', type: 'releases' },
+  // { packId: 'fi', packName: 'feather', owner: 'feathericons', repo: 'feather', type: 'releases' },
+  // { packId: 'hi', packName: 'heroicons', owner: 'tailwindlabs', repo: 'heroicons', type: 'releases' },
+  // { packId: 'ai', packName: 'antdesign', owner: 'ant-design', repo: 'ant-design-icons', type: 'tags' },
+  // { packId: 'bi', packName: 'boxicons', owner: 'atisawd', repo: 'boxicons', type: 'releases' },
+  // { packId: 'fc', packName: 'flatcoloricons', owner: 'icons8', repo: 'flat-color-icons', type: 'releases' },
+  // TODO: we need more work to integrate devicon
   // { packId: 'di', packName: 'devicon', owner: 'devicons', repo: 'devicon', type: 'releases' },
 ];
 

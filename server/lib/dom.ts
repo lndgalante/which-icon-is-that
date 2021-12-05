@@ -4,8 +4,8 @@ export function getInnerHTMLFromSvgText(svg: string) {
   const document = new DOMParser().parseFromString(svg.toLowerCase(), 'text/html');
   const svgElement = document?.querySelector('svg');
 
+  const viewBox = svgElement?.attributes?.viewBox ?? '';
   const innerSvg = svgElement?.innerHTML?.toLowerCase().trim() ?? '';
-  const viewBox = svgElement?.getAttribute('viewBox') ?? '';
 
   return { innerSvg, viewBox };
 }

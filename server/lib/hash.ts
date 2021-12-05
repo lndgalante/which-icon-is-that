@@ -1,4 +1,4 @@
-import { Md5 } from 'https://deno.land/std/hash/md5.ts';
+import { Md5 } from 'https://deno.land/std@0.116.0/hash/md5.ts';
 
 export function createHash(value: string): string {
   const parsedValue = value.replace(/\s|\n/g, '');

@@ -1,11 +1,7 @@
 import { Context } from 'https://deno.land/x/oak/mod.ts';
 
-// lib
-import { Svg } from '../lib/types.ts';
-import { generateIconSnippets } from '../lib/snippets.ts';
-
 // db
-import { iconTable } from '../db/icon.ts';
+import { snippetsTable } from '../db/snippets.ts';
 
 export const getIconSnippets = async ({ params, response }: Context & { params: { hash: string } }) => {
   try {
@@ -17,7 +13,7 @@ export const getIconSnippets = async ({ params, response }: Context & { params: 
       return;
     }
 
-    const { rows, rowCount } = await iconTable.selectColumnsForSnippets(hash);
+    const { rows, rowCount } = await snippetsTable.selectColumnsForSnippets(hash);
 
     if (rowCount === 0) {
       response.status = 404;
@@ -25,22 +21,10 @@ export const getIconSnippets = async ({ params, response }: Context & { params: 
       return;
     }
 
-    const [svgRow] = rows as [Svg];
-    const {
-      svg,
-      pack_id: packId,
-      view_box: viewBox,
-      inner_svg: innerSvg,
-      pack_name: packName,
-      icon_name: iconName,
-      react_icon_name: reactIconName,
-      icon_parsed_name: iconParsedName,
-    } = svgRow;
-
-    const snippets = await generateIconSnippets(svg, innerSvg, viewBox, iconParsedName, iconName, packName, packId,reactIconName);
+    const [snippetRow] = rows as [any];
 
     response.status = 200;
-    response.body = { success: true, data: { snippets } };
+    response.body = { success: true, data: { snippets: snippetRow.snippet } };
   } catch (error) {
     console.log('Server error', error);
     response.status = 500;

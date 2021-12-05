@@ -13,13 +13,6 @@ class Icon {
     );
   }
 
-  selectColumnsForSnippets(hash: string) {
-    return client.queryObject(
-      `SELECT svg, inner_svg, view_box, icon_parsed_name, icon_name, pack_name, pack_id, react_icon_name FROM icons WHERE hash = $1`,
-      hash,
-    );
-  }
-
   selectColumnsForSimilarIcons(hash: string, packName: string, hashNumber: string) {
     return client.queryObject(
       `SELECT icon_name, icon_type, react_icon_name FROM icons WHERE hash <> $1 AND pack_name = $2 AND hash_number >= ($3 - 10) AND hash_number <= ($3 + 10) LIMIT 20`,

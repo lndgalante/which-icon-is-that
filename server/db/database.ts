@@ -27,6 +27,7 @@ async function connectToPostgres() {
   await client.connect();
 
   return client;
+
 }
 
 const client = await connectToPostgres();

@@ -1,4 +1,4 @@
-import { createRequire } from 'https://deno.land/std/node/module.ts';
+import { createRequire } from 'https://deno.land/std@0.116.0/node/module.ts';
 
 // commonjs require
 const require = createRequire(import.meta.url);
