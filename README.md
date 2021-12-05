@@ -20,6 +20,8 @@
 
 1. Requirements (run only once)
 
+Install node latest LTS, and Deno v1.16.3
+
 ```
 brew install node deno
 deno install -qAf --unstable https://deno.land/x/denon/denon.ts
@@ -43,7 +45,7 @@ cd server/ && denon run --unstable --allow-run --allow-env --allow-read --allow-
 
 - Important for Vercel Build
 
-We need to scale WIIT web Dyno to 8 dynos in order to execute a build, since we've more that 5000+ requests to the API that end ups breaking it
+We need to scale WIIT web Dyno to 10 dynos in order to execute a build, since we've more that 5000+ requests to the API that end ups breaking it
 
 - Buildpacks
 
@@ -52,10 +54,15 @@ We need to scale WIIT web Dyno to 8 dynos in order to execute a build, since we'
 
 * Populate Heroku DB
 
-  1. Create dump from local database
+  1. Enter postgres terminal
 
   ```bash
   docker exec -it postgres12 bash
+  ```
+
+  1. Create dump from local database
+
+  ```bash
   PGPASSWORD=[PG_PASSWORD] pg_dump -Fc --no-acl --no-owner -h localhost -U [PG_USER] wiit > mydb.dump
   ```
 
@@ -65,13 +72,13 @@ We need to scale WIIT web Dyno to 8 dynos in order to execute a build, since we'
   docker cp postgres12:/mydb.dump [YOUR_PATH]
   ```
 
-  3. Upload it to the cloud
+  3. Upload it to the cloud or through [web](https://transfer.sh)
 
   ```bash
     curl --upload-file ./mydb.dump https://transfer.sh/mydb.dump
   ```
 
-  3.
+  4. Upload new dump into Heroku DB
 
   ```bash
   heroku pg:backups:restore [BUMP_URL] DATABASE_URL -a which-icon-is-that --confirm which-icon-is-that
