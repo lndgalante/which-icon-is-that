@@ -1,5 +1,6 @@
-import NextLink from "next/link";
-import { Stack, HStack, Text, Link } from "@chakra-ui/react";
+// import NextLink from "next/link";
+// import { Stack, HStack, Text, Link } from "@chakra-ui/react";
+import { Stack, HStack, Text } from "@chakra-ui/react";
 
 // icons
 import { FiTwitter, FiMail } from "react-icons/fi";
@@ -41,7 +42,7 @@ export function Footer() {
         </HStack>
       </HStack>
 
-      <HStack
+      {/* <HStack
         alignItems={{ base: "center", md: "flex-start" }}
         flexDirection={{ base: "column", md: "row" }}
         spacing={{ base: 0, md: 10 }}
@@ -53,7 +54,7 @@ export function Footer() {
         <NextLink passHref href="/terms">
           <Link>Terms and Conditions</Link>
         </NextLink>
-      </HStack>
+      </HStack> */}
     </Stack>
   );
 }
