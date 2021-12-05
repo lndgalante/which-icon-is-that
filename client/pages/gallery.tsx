@@ -6,7 +6,7 @@ import { GetStaticProps } from "next";
 import { useRouter } from "next/router";
 import { useDebounce } from "use-debounce";
 import { FiArrowUp } from "react-icons/fi";
-import { useWindowScroll } from "react-use";
+import { useIntersection } from "react-use";
 import { useEffect, useState, useRef } from "react";
 import {
   HStack,
@@ -41,7 +41,6 @@ import { LOGOS, LOGOS_SIZES_GALLERY_PAGE } from "@modules/common/components/Logo
 
 // hooks
 import { useReadIconsByNameAndIconLibrary } from "@modules/gallery/hooks/useReadIconsByNameAndIconLibrary";
-
 // types
 import { IconLibraryResponse, IconLibrary } from "@modules/common/utils/types";
 
@@ -113,7 +112,8 @@ function Gallery({ svgs, packs }: Props) {
   const [iconNameQueryDebounced] = useDebounce(iconNameQuery, 1000);
 
   // scroll hooks
-  const { y } = useWindowScroll();
+  const headerRef = useRef(null);
+  const headerIntersected = useIntersection(headerRef, { threshold: 0 });
 
   // query hooks
   const {
@@ -219,6 +219,7 @@ function Gallery({ svgs, packs }: Props) {
           spacing={{ base: 4, md: 3 }}
           justifyContent="center"
           mb={shouldDisplayFoundIconsData ? 10 : 16}
+          ref={headerRef}
         >
           <Stack left={{ base: -3, md: "1.38rem" }} bottom={{ base: 12, md: "3.25rem" }} position="absolute">
             <Zoom duration={prefersReducedMotion ? 0 : 1000} delay={prefersReducedMotion ? 0 : 800}>
@@ -310,7 +311,7 @@ function Gallery({ svgs, packs }: Props) {
           backgroundColor="brand.lightOrange"
           transition="all 200ms ease-in-out"
           _hover={{ transform: "scale(1.1)" }}
-          transform={y > 465 ? "translateY(0px)" : "translateY(100px)"}
+          transform={headerIntersected && headerIntersected.isIntersecting ? "translateY(100px)" : "translateY(0px)"}
         >
           <Icon as={FiArrowUp} color="brand.darkRed" h={6} w={6} />
         </Stack>
