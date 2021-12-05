@@ -20,11 +20,17 @@ export type Links = {
   figma: string;
 };
 
+type Snippet = { options: { label: string; value: string }[] } & {
+  [key: string]: {
+    steps: { label: string; language: string; content: { npm: string; yarn: string } }[];
+    metadata: { link: string };
+  };
+};
+
 export type Snippets = {
-  vue: string;
-  html: string;
-  react: string;
-  reactIconsImport: string;
+  vue: Snippet;
+  html: Snippet;
+  react: Snippet;
 };
 
 export type Tag = {

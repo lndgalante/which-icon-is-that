@@ -13,10 +13,10 @@ import { IconLibrary } from "@modules/icon/components/IconLibrary";
 import { IconRelated } from "@modules/icon/components/IconRelated";
 import { IconExamples } from "@modules/icon/components/IconExamples";
 import { IconPlayground } from "@modules/icon/components/IconPlayground";
-// import { DeveloperPanel } from "@modules/icon/components /DeveloperPanel";
+import { DeveloperPanel } from "@modules/icon/components/DeveloperPanel";
 
 // types
-type Props = Omit<IconMetadata, "snippets">;
+type Props = IconMetadata;
 type Params = Pick<Svg, "packName" | "iconType" | "iconName">;
 
 // next lifecycle hooks
@@ -41,7 +41,7 @@ export const getStaticProps: GetStaticProps<Props, Params> = async ({ params }) 
     const { data: iconLibrary } = await api.getIconLibrary(packName);
 
     // const { data: tags } = await api.getIconTags(iconHash);
-    // const { data: snippetsData } = await api.getIconSnippets(iconHash);
+    const { data: snippetsData } = await api.getIconSnippets(iconHash);
 
     const { data: iconTypesData } = await api.getIconTypes(iconName, packName);
     const { data: relatedIconsData } = await api.getSimilarIcons(iconHash, packName, icon?.svg?.hashNumber);
@@ -50,21 +50,23 @@ export const getStaticProps: GetStaticProps<Props, Params> = async ({ params }) 
       props: {
         icon,
         iconLibrary,
-        // snippets: snippetsData.snippets,
+        snippets: snippetsData.snippets,
         iconTypes: iconTypesData.iconTypes,
         relatedIcons: relatedIconsData.relatedIcons,
       },
       revalidate: false,
     };
   } catch (err) {
-    console.log("Error on Icon page | getStaticProps", err);
-    console.log("Params broken", `/${params?.packName}/${params?.iconType}/${params?.iconName}`);
+    console.log(
+      `Error on Icon page (/${params?.packName}/${params?.iconType}/${params?.iconName}) | getStaticProps`,
+      err,
+    );
 
     return { notFound: true };
   }
 };
 
-export default function IconPage({ icon, iconLibrary, iconTypes, relatedIcons }: Props) {
+export default function IconPage({ icon, iconLibrary, iconTypes, relatedIcons, snippets }: Props) {
   // constants
   const [svg] = [icon?.svg];
   const { iconName, packName, reactIconName, parsedIconName, bytes } = svg;
@@ -74,8 +76,8 @@ export default function IconPage({ icon, iconLibrary, iconTypes, relatedIcons }:
   const { query } = useRouter();
 
   // chakra hooks
-  const { onOpen } = useDisclosure();
-  // const { onOpen, onClose, isOpen } = useDisclosure();
+  // const { onOpen } = useDisclosure();
+  const { onOpen, onClose, isOpen } = useDisclosure();
 
   // constants
   const { iconType: iconTypeCurrentUrl } = query;
@@ -89,8 +91,7 @@ export default function IconPage({ icon, iconLibrary, iconTypes, relatedIcons }:
   return (
     <Stack paddingBottom={32} spacing={10}>
       <Header iconName={parsedIconName} onOpen={onOpen} />
-
-      {/* <DeveloperPanel packName={packName} snippets={snippets} onClose={onClose} isOpen={isOpen} /> */}
+      <DeveloperPanel snippets={snippets} onClose={onClose} isOpen={isOpen} />
 
       <SimpleGrid columns={{ base: 1, md: 1, lg: 2 }} rowGap={{ base: 10, md: 8 }} columnGap={67} as="section">
         <IconPlayground

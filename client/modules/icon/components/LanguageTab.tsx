@@ -58,8 +58,20 @@ export function LanguageTab({
   const importSnippet = currentSnippet?.steps?.find((snippet) => snippet.label === "Import")?.content;
   const usageSnippet = currentSnippet?.steps?.find((snippet) => snippet.label === "Usage")?.content;
 
+  const shouldTrimLastLine = [
+    "react-component-js",
+    "react-component-ts",
+    "react-native-component-js",
+    "react-native-component-ts",
+    "styled-component-js",
+    "styled-component-ts",
+    "chakra-ui",
+    "optimized-svg",
+    "vue-template",
+  ].includes(selectedUse);
+
   // chakra hooks
-  const { onCopy: onCopyInstall, hasCopied: hasCopiedInstallSnippet } = useClipboard(installSnippet);
+  const { onCopy: onCopyInstall, hasCopied: hasCopiedInstallSnippet } = useClipboard(installSnippet?.[packageManager]);
   const { onCopy: onCopySetup, hasCopied: hasCopiedSetupSnippet } = useClipboard(setupSnippet);
   const { onCopy: onCopyImport, hasCopied: hasCopiedImportSnippet } = useClipboard(importSnippet);
   const { onCopy: onCopyUsage, hasCopied: hasCopiedUsageSnippet } = useClipboard(usageSnippet);
@@ -106,7 +118,10 @@ export function LanguageTab({
 
         const handleCopyMethod = LABELS_METHODS[label];
         const hasCopiedToClipboard = LABELS_HAS_COPIED[label];
+
+        const isUsage = label === "Usage";
         const isContentPackageManager = Boolean(content?.npm);
+        const sliceEndIndex = isUsage && shouldTrimLastLine ? -1 : undefined;
 
         return (
           <Stack width={460} key={`${selectedLanguage}-${selectedUse}-${label}}`}>
@@ -160,7 +175,7 @@ export function LanguageTab({
                       </Stack>
                     </RadioGroup>
                   )}
-                  {tokens.map((line, i) => (
+                  {tokens.slice(0, sliceEndIndex).map((line, i) => (
                     /* eslint-disable-next-line */
                     <div {...getLineProps({ line, key: i })}>
                       {line.map((token, key) => (

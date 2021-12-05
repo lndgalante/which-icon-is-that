@@ -23,40 +23,30 @@ import { LanguageTab } from "@modules/icon/components/LanguageTab";
 
 type DeveloperPanelProps = {
   isOpen: boolean;
-  packName: string;
   onClose: () => void;
   snippets: IconMetadata["snippets"];
 };
 
-export function DeveloperPanel({ packName, snippets, isOpen, onClose }: DeveloperPanelProps) {
+export function DeveloperPanel({ snippets, isOpen, onClose }: DeveloperPanelProps) {
   // react hooks
-  const [selectedUse, setSelectedUse] = useState("optimizedSvg");
+  const [selectedUse, setSelectedUse] = useState("optimized-svg");
   const [selectedLanguage, setSelectedLanguage] = useState("html");
 
   // constants
   const languages = Object.keys(snippets);
   const currentSnippet = snippets[selectedLanguage]?.[selectedUse];
 
-  // TODO: Review this array of icon pack names
-  const hasIcongramSupport = [
-    "clarity",
-    "devicon",
-    "entypo",
-    "feather",
-    "font-awesome",
-    "jam",
-    "material",
-    "octicons",
-    "simple",
-  ];
+  const vueOptions = snippets.vue.options;
+  const htmlOptions = snippets.html.options;
+  const reactOptions = snippets.react.options;
 
   // handlers
   function handleTabChange(index: number) {
     const newLanguage = languages[index];
-    const [use] = Object.keys(snippets[newLanguage]);
+    const [use] = snippets[newLanguage].options;
 
     setSelectedLanguage(newLanguage);
-    setSelectedUse(use);
+    setSelectedUse(use.value);
   }
 
   function handleChangeSelectedUse({ target }) {
@@ -145,12 +135,7 @@ export function DeveloperPanel({ packName, snippets, isOpen, onClose }: Develope
                       handleChangeSelectedUse={handleChangeSelectedUse}
                       selectedLanguage={selectedLanguage}
                       selectedUse={selectedUse}
-                      usesOptions={[
-                        { label: "Optimized SVG", value: "optimizedSvg" },
-                        { label: "Font (CDN)", value: "font" },
-                        { label: "Script", value: "script" },
-                        hasIcongramSupport.includes(packName) ? { label: "Icongram", value: "icongram" } : null,
-                      ].filter(Boolean)}
+                      usesOptions={htmlOptions}
                     />
                   </TabPanel>
                   <TabPanel px={0} py={6}>
@@ -159,43 +144,7 @@ export function DeveloperPanel({ packName, snippets, isOpen, onClose }: Develope
                       handleChangeSelectedUse={handleChangeSelectedUse}
                       selectedLanguage={selectedLanguage}
                       selectedUse={selectedUse}
-                      usesOptions={[
-                        {
-                          label: "React Component (JavaScript)",
-                          value: "react-component-js",
-                        },
-                        {
-                          label: "React Component (TypeScript)",
-                          value: "react-component-ts",
-                        },
-                        {
-                          label: "React Native Component (JavaScript)",
-                          value: "react-native-component-js",
-                        },
-                        {
-                          label: "React Native Component (TypeScript)",
-                          value: "react-native-component-ts",
-                        },
-                        { label: "React-icons", value: "react-icons" },
-                        { label: "React-feather", value: "react-feather" },
-                        { label: "Chakra UI", value: "chakra-ui" },
-                        {
-                          label: "Styled Component (JavaScript)",
-                          value: "styled-component-js",
-                        },
-                        {
-                          label: "Styled Component (TypeScript)",
-                          value: "styled-component-ts",
-                        },
-                        {
-                          label: "Emotion Component (JavaScript)",
-                          value: "emotion-component-js",
-                        },
-                        {
-                          label: "Emotion Component (TypeScript)",
-                          value: "emotion-component-ts",
-                        },
-                      ]}
+                      usesOptions={reactOptions}
                     />
                   </TabPanel>
                   <TabPanel px={0} py={6}>
@@ -204,10 +153,7 @@ export function DeveloperPanel({ packName, snippets, isOpen, onClose }: Develope
                       handleChangeSelectedUse={handleChangeSelectedUse}
                       selectedLanguage={selectedLanguage}
                       selectedUse={selectedUse}
-                      usesOptions={[
-                        { label: "Vue Template", value: "vue-template" },
-                        { label: "Vue-feather", value: "vue-feather" },
-                      ]}
+                      usesOptions={vueOptions}
                     />
                   </TabPanel>
                 </TabPanels>
