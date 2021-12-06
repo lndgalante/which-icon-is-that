@@ -23,12 +23,12 @@ function StatBox({ shape, title, subtitle }: StatBoxProps) {
       flexDirection="column"
       alignItems="center"
       justifyContent="center"
-      spacing={{ base: 10, md: 2 }}
+      spacing={10}
       textAlign="center"
       as="article"
     >
       {shape}
-      <Stack>
+      <Stack spacing={4}>
         <Text fontSize={18} textTransform="uppercase" color="brand.darkRed">
           {title}
         </Text>
