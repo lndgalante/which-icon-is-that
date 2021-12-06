@@ -15,9 +15,12 @@ import {
   MenuItem,
   LinkBox,
   LinkOverlay,
+  usePrefersReducedMotion,
 } from "@chakra-ui/react";
 import NextLink from "next/link";
 import { GetStaticProps } from "next";
+import Fade from "react-reveal/Fade";
+import Zoom from "react-reveal/Zoom";
 
 // icons
 import { FiCheck, FiX, FiMoreVertical, FiLayout, FiDownload, FiExternalLink, FiFigma, FiGithub } from "react-icons/fi";
@@ -50,6 +53,9 @@ export const getStaticProps: GetStaticProps<Props> = async () => {
 };
 
 function SupportedLibraries({ iconLibraries }: Props) {
+  // chakra hooks
+  const prefersReducedMotion = usePrefersReducedMotion();
+
   return (
     <Stack pb={{ base: 9, md: 240 }} position="relative">
       <Stack
@@ -63,39 +69,56 @@ function SupportedLibraries({ iconLibraries }: Props) {
         textAlign="center"
         spacing={{ base: 4, md: 3 }}
         justifyContent="center"
+        overflowX="hidden"
         mb={10}
       >
-        <Stack left={{ base: "4.5rem", md: "13.3rem" }} bottom={{ base: 0, md: 0 }} position="absolute">
-          <Shapes.BottomLeft width={{ base: "5.25rem", md: "7.94rem" }} height={{ base: "1.875rem", md: "2.75rem" }} />
+        <Stack top={{ base: "0rem", md: "0rem" }} right={{ base: "4.75rem", md: "13rem" }} position="absolute">
+          <Zoom duration={prefersReducedMotion ? 0 : 1000} delay={prefersReducedMotion ? 0 : 800}>
+            <Shapes.TopRight width={{ base: "5.5rem", md: "7.93rem" }} height={{ base: "1.375rem", md: "2rem" }} />
+          </Zoom>
         </Stack>
 
         <Stack left={{ base: 0, md: 0 }} top={{ base: "3.5rem", md: "3.93rem" }} position="absolute">
-          <Shapes.MiddleLeft width={{ base: "3.75rem", md: "5.625rem" }} height={{ base: "2.5rem", md: "3.75rem" }} />
-        </Stack>
-
-        <Stack top={{ base: "-0.95rem", md: "-0.75rem" }} right={{ base: "4.75rem", md: "13rem" }} position="absolute">
-          <Shapes.TopRight width={{ base: "5.5rem", md: "7.93rem" }} height={{ base: "1.375rem", md: "2rem" }} />
+          <Zoom duration={prefersReducedMotion ? 0 : 1000} delay={prefersReducedMotion ? 0 : 900}>
+            <Shapes.MiddleLeft width={{ base: "3.75rem", md: "5.625rem" }} height={{ base: "2.5rem", md: "3.75rem" }} />
+          </Zoom>
         </Stack>
 
         <Stack bottom={{ base: "3rem", md: "3.75rem" }} right={{ base: "-0.3rem", md: 0 }} position="absolute">
-          <Shapes.MiddleRight width={{ base: "6.875rem", md: "11rem" }} height={{ base: "1.5rem", md: "1rem" }} />
+          <Zoom duration={prefersReducedMotion ? 0 : 1000} delay={prefersReducedMotion ? 0 : 1000}>
+            <Shapes.MiddleRight width={{ base: "6.875rem", md: "11rem" }} height={{ base: "1.5rem", md: "1rem" }} />
+          </Zoom>
         </Stack>
 
-        <Text
-          as="h1"
-          maxWidth={{ base: 180, md: "inherit" }}
-          fontSize={{ base: 24, md: 40 }}
-          mixBlendMode="multiply"
-          color="brand.darkRed"
-        >
-          Supported{" "}
-          <Text as="b" fontWeight={700}>
-            Icon Libraries
+        <Stack left={{ base: "4.5rem", md: "13.3rem" }} bottom={{ base: 0, md: 0 }} position="absolute">
+          <Zoom duration={prefersReducedMotion ? 0 : 1000} delay={prefersReducedMotion ? 0 : 1100}>
+            <Shapes.BottomLeft
+              width={{ base: "5.25rem", md: "7.94rem" }}
+              height={{ base: "1.875rem", md: "2.75rem" }}
+            />
+          </Zoom>
+        </Stack>
+
+        <Fade duration={prefersReducedMotion ? 0 : 1000} bottom delay={prefersReducedMotion ? 0 : 200} distance="30px">
+          <Text
+            as="h1"
+            maxWidth={{ base: 180, md: "inherit" }}
+            fontSize={{ base: 24, md: 40 }}
+            mixBlendMode="multiply"
+            color="brand.darkRed"
+          >
+            Supported{" "}
+            <Text as="b" fontWeight={700}>
+              Icon Libraries
+            </Text>
           </Text>
-        </Text>
-        <Text as="h2" fontSize={{ base: 14, md: 18 }} color="brand.warmBlack">
-          There are some of the most popular
-        </Text>
+        </Fade>
+
+        <Fade duration={prefersReducedMotion ? 0 : 1000} bottom delay={prefersReducedMotion ? 0 : 400} distance="30px">
+          <Text as="h2" fontSize={{ base: 14, md: 18 }} color="brand.warmBlack">
+            There are some of the most popular
+          </Text>
+        </Fade>
       </Stack>
 
       <Stack px={{ base: 0, md: 8, lg: 16 }}>
