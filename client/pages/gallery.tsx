@@ -196,7 +196,8 @@ function Gallery({ svgs, packs }: Props) {
 
   const totalIcons = parsedIconsToRender?.reduce((accumulator, [, icons]) => accumulator + icons.length, 0);
 
-  const shouldDisplayFoundIconsData = !error && foundIcons && !/^\s+$/.test(iconNameQueryDebounced);
+  const shouldDisplayFoundIconsData =
+    !error && foundIcons && !/^\s+$/.test(iconNameQueryDebounced) && !Boolean(viewAllIconLibrary);
 
   return (
     <Fragment>
