@@ -15,7 +15,7 @@ import {
 } from "@chakra-ui/react";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod/dist/zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 // icons
 import { FiMail } from "react-icons/fi";

@@ -26,7 +26,7 @@ import { api } from "@modules/common/utils/api";
 import { getIconComponent } from "@modules/common/utils/getIconComponent";
 
 // types
-import { Gallery as GalleryType } from "@modules/common/utils/types";
+import { Gallery as GalleryType, IconLibraryResponse, IconLibrary } from "@modules/common/utils/types";
 
 // components
 import * as Shapes from "@modules/gallery/components/Shapes";
@@ -41,8 +41,6 @@ import { LOGOS, LOGOS_SIZES_GALLERY_PAGE } from "@modules/common/components/Logo
 
 // hooks
 import { useReadIconsByNameAndIconLibrary } from "@modules/gallery/hooks/useReadIconsByNameAndIconLibrary";
-// types
-import { IconLibraryResponse, IconLibrary } from "@modules/common/utils/types";
 
 type Packs = {
   [key: string]: IconLibrary;
@@ -99,8 +97,12 @@ function Gallery({ svgs, packs }: Props) {
   const decodedIconLibraryQuery = decodeURI((query.iconLibrary ?? "all") as string);
   const defaultIconLibrary = iconLibrariesOptions.find(({ value }) => value === decodedIconLibraryQuery);
 
-  // react hooks
+  // react ref hooks
+  const headerRef = useRef(null);
+  const bottomRef = useRef(null);
   const intersectionRef = useRef(null);
+
+  // react state hooks
   const [viewAllIconLibrary, setViewAllIconLibrary] = useState("");
   const [iconNameQuery, setIconNameQuery] = useState(decodedIconNameQuery);
   const [iconLibraryQuery, setIconLibraryQuery] = useState(defaultIconLibrary);
@@ -112,8 +114,6 @@ function Gallery({ svgs, packs }: Props) {
   const [iconNameQueryDebounced] = useDebounce(iconNameQuery, 1000);
 
   // scroll hooks
-  const headerRef = useRef(null);
-  const bottomRef = useRef(null);
   const headerIntersected = useIntersection(headerRef, { threshold: 0 });
   const bottomIntersected = useIntersection(bottomRef, { threshold: 0 });
 
@@ -313,12 +313,12 @@ function Gallery({ svgs, packs }: Props) {
           backgroundColor="brand.lightOrange"
           transition="all 200ms ease-in-out"
           _hover={{ transform: "scale(1.1)" }}
-          transform={
+          transform={`translateY(${
             (headerIntersected && headerIntersected.isIntersecting) ||
             (bottomIntersected && bottomIntersected.isIntersecting)
-              ? "translateY(100px)"
-              : "translateY(0px)"
-          }
+              ? "100px"
+              : "0px"
+          })`}
         >
           <Icon as={FiArrowUp} color="brand.darkRed" h={6} w={6} />
         </Stack>
@@ -433,7 +433,7 @@ function Gallery({ svgs, packs }: Props) {
           </Stack>
         </Stack>
       </Stack>
-      <Stack ref={bottomRef}></Stack>
+      <Stack ref={bottomRef} />
     </Fragment>
   );
 }
