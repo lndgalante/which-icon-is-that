@@ -3,8 +3,7 @@ import { Icon, IconProps } from "@chakra-ui/react";
 export function TopRight(props: IconProps) {
   return (
     <Icon width={127} height={32} viewBox="0 0 127 32" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
-
-    <g clipPath="url(#prefix__clip0_914_8773)">
+      <g clipPath="url(#prefix__clip0_914_8773)">
         <path d="M127-31H63.5v63.5H127V-31z" fill="#fff" />
         <path d="M63.5-31H0v63.5h63.5V-31z" fill="#E95848" />
         <path d="M51.497-18.25H12.003v39.495h39.494V-18.25z" fill="#F4D0C0" />

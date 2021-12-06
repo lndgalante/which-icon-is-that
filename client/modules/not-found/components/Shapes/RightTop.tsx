@@ -1,4 +1,5 @@
 import { Icon, IconProps } from "@chakra-ui/react";
+
 export function RightTop(props: IconProps) {
   return (
     <Icon width={144} height={85} viewBox="0 0 144 85" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>

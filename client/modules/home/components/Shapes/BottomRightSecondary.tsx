@@ -2,14 +2,7 @@ import { Icon, IconProps } from "@chakra-ui/react";
 
 export function BottomRightSecondary(props: IconProps) {
   return (
-    <Icon
-      fill="none"
-      height={104}
-      viewBox="0 0 105 104"
-      width={105}
-      xmlns="http://www.w3.org/2000/svg"
-      {...props}
-    >
+    <Icon fill="none" height={104} viewBox="0 0 105 104" width={105} xmlns="http://www.w3.org/2000/svg" {...props}>
       <path
         d="M52.715 104C81.59 104 105 80.719 105 52S81.591 0 52.715 0C23.838 0 .43 23.281.43 52s23.409 52 52.285 52z"
         fill="#F4D0C0"

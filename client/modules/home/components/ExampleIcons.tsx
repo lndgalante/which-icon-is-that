@@ -1,6 +1,9 @@
 import NextLink from "next/link";
 import { Stack, Text, Icon, HStack, Link } from "@chakra-ui/react";
-import { FiHome, FiSearch, FiClock, FiStar, FiArrowRight } from "react-icons/fi";
+
+// icons
+import { FiArrowRight } from "react-icons/fi";
+import { HiOutlineHome, HiOutlineSearch, HiOutlineClock, HiOutlineStar } from "react-icons/hi";
 
 // components
 import { BoxIcon } from "@modules/common/components/BoxIcon";
@@ -24,15 +27,22 @@ export function ExampleIcons() {
           Try one of these:
         </Text>
         <HStack alignItems="center" justifyContent="center" spacing={4}>
-          <BoxIcon href="/feather/outlined/home" icon={FiHome} primary label="Home" />
-          <BoxIcon href="/feather/outlined/search" icon={FiSearch} primary label="Search" />
-          <BoxIcon href="/feather/outlined/clock" icon={FiClock} primary label="Clock" />
-          <BoxIcon href="/feather/outlined/star" icon={FiStar} primary label="Star" />
+          <BoxIcon href="/heroicons/outlined/home" icon={HiOutlineHome} primary label="Home" />
+          <BoxIcon href="/heroicons/outlined/search" icon={HiOutlineSearch} primary label="Search" />
+          <BoxIcon href="/heroicons/outlined/clock" icon={HiOutlineClock} primary label="Clock" />
+          <BoxIcon href="/heroicons/outlined/star" icon={HiOutlineStar} primary label="Star" />
         </HStack>
       </HStack>
 
       <NextLink passHref href="/gallery">
-        <Link className="gallery-link" textDecoration="underline" fontSize="md" display="flex" flexDirection="row" alignItems="center">
+        <Link
+          className="gallery-link"
+          textDecoration="underline"
+          fontSize="md"
+          display="flex"
+          flexDirection="row"
+          alignItems="center"
+        >
           <Text>or find your icon in the gallery</Text>
           <Icon
             as={FiArrowRight}

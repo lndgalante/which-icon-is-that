@@ -3,10 +3,10 @@ import {
   Text,
   Accordion,
   SimpleGrid,
-  AccordionItem,
-  AccordionButton,
-  AccordionPanel,
   AccordionIcon,
+  AccordionItem,
+  AccordionPanel,
+  AccordionButton,
 } from "@chakra-ui/react";
 
 //types
@@ -18,11 +18,11 @@ import { BoxIcon } from "@modules/common/components/BoxIcon";
 // utils
 import { getIconComponent } from "@modules/common/utils/getIconComponent";
 
-type IconRelatedProps = {
+type Props = {
   relatedIcons: IconsRelated[];
 };
 
-export function IconRelated({ relatedIcons }: IconRelatedProps) {
+export function IconRelated({ relatedIcons }: Props) {
   return (
     <Stack as="article" order={{ base: 3, md: 3, lg: "inherit" }}>
       <Accordion allowToggle borderColor="brand.softGrey">

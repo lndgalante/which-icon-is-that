@@ -33,5 +33,5 @@ export {
   RichBottomLeft,
   Serve,
   Libraries,
-  Styles
+  Styles,
 };

@@ -1,14 +1,8 @@
 import { Icon, IconProps } from "@chakra-ui/react";
+
 export function BottomRight(props: IconProps) {
   return (
-    <Icon
-      width={124}
-      height={84}
-      viewBox="0 0 124 84"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      {...props}>
-
+    <Icon width={124} height={84} viewBox="0 0 124 84" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
       <path
         d="M4 80.019C38.173 55.029 70.405 28.841 104.429 4"
         stroke="#813131"

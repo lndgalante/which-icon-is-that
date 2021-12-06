@@ -239,7 +239,7 @@ function Gallery({ svgs, packs }: Props) {
             duration={prefersReducedMotion ? 0 : 1000}
             bottom
             delay={prefersReducedMotion ? 0 : 200}
-            distance="30px"
+            distance="1.875rem"
           >
             <Text
               as="h1"
@@ -258,7 +258,7 @@ function Gallery({ svgs, packs }: Props) {
             duration={prefersReducedMotion ? 0 : 1000}
             bottom
             delay={prefersReducedMotion ? 0 : 400}
-            distance="30px"
+            distance="1.875rem"
           >
             <Text as="h2" fontSize={{ base: 14, md: 18 }} color="brand.warmBlack">
               One finder to rule them all

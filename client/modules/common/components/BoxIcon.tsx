@@ -1,7 +1,7 @@
 import NextLink, { LinkProps } from "next/link";
 import { Icon, Link, Text, As } from "@chakra-ui/react";
 
-type BoxIconProps = {
+type Props = {
   icon: As;
   label: string;
   href: LinkProps["href"];
@@ -12,16 +12,7 @@ type BoxIconProps = {
   simpleHover?: boolean;
 };
 
-export function BoxIcon({
-  icon,
-  label,
-  href,
-  primary,
-  displayLabel,
-  withShadow,
-  isTwoTone,
-  simpleHover,
-}: BoxIconProps) {
+export function BoxIcon({ icon, label, href, primary, displayLabel, withShadow, isTwoTone, simpleHover }: Props) {
   return (
     <NextLink passHref href={href}>
       <Link

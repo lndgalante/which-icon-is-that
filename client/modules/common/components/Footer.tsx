@@ -13,6 +13,7 @@ import { FooterIcon } from "@modules/common/components/FooterIcon";
 import { useCopyEmail } from "@modules/common/hooks/useCopyEmail";
 
 export function Footer() {
+  // custom hooks
   const { onCopy } = useCopyEmail();
 
   return (

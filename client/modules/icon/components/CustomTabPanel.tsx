@@ -1,6 +1,5 @@
 import { TabPanel, TabPanelProps } from "@chakra-ui/react";
 
-
 type CustomTabPanelProps = {
   children?: React.ReactNode;
   otherProps?: TabPanelProps;

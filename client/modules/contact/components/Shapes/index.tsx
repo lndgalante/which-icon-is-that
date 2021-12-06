@@ -1,11 +1,6 @@
-import { BottomRight } from "./BottomRight";
 import { TopLeft } from "./TopLeft";
-import { MiddleLeft } from "./MiddleLeft";
 import { TopRight } from "./TopRight";
+import { MiddleLeft } from "./MiddleLeft";
+import { BottomRight } from "./BottomRight";
 
-export {
-  BottomRight,
-  TopLeft,
-  MiddleLeft,
-  TopRight,
-};
+export { BottomRight, TopLeft, MiddleLeft, TopRight };

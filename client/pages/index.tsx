@@ -13,8 +13,8 @@ import { Header } from "@modules/home/components/Header";
 import { Stats } from "@modules/home/components/Stats";
 import { Features } from "@modules/home/components/Features";
 import { ExampleIcons } from "@modules/home/components/ExampleIcons";
-// import { Testimonials } from "@modules/home/components/Testimonials";
 import { SupportedLibraries } from "@modules/home/components/SupportedLibraries";
+// import { Testimonials } from "@modules/home/components/Testimonials";
 
 type Props = StatsType;
 

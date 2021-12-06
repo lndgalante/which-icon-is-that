@@ -199,7 +199,7 @@ export function DropZone() {
             bottom
             duration={prefersReducedMotion ? 0 : 1000}
             delay={prefersReducedMotion ? 0 : 200}
-            distance="20px"
+            distance="1.25rem"
           >
             {/* @ts-expect-error Unable to fix this problem */}
             <Input {...getInputProps()} />
@@ -207,7 +207,7 @@ export function DropZone() {
               paddingX={"1.4375rem"}
               paddingY={"1.5625rem"}
               _focus={null}
-              variant={isDragActive ? "brand.solidRed" : "brand.solid"}
+              variant={isDragActive ? "brand.darkRed" : "brand.solid"}
               sx={{
                 ".drop-zone:hover &": {
                   color: "brand.white",

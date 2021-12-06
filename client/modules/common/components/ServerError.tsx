@@ -1,6 +1,6 @@
-import { Icon } from "@chakra-ui/react";
+import { Icon, IconProps } from "@chakra-ui/react";
 
-export function ServerError(props) {
+export function ServerError(props: IconProps) {
   return (
     <Icon width={630} height={358} viewBox="0 0 630 358" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
       <path

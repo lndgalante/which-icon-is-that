@@ -55,7 +55,8 @@ export const api = {
   getPathFromHash: (hash: string) => fetch.url(endpoints.hashReverse(hash)).get().json(),
   getSimilarIcons: (iconName: string, packName: string, hashNumber: number) =>
     fetch.url(endpoints.similarIcons(iconName, packName, hashNumber)).get().json(),
-  getNotFoundSimilarIcons: (hash: string) => fetch.url(endpoints.notFoundRelatedIcons(hash)).get().json<RelatedIconsResponse>(),
+  getNotFoundSimilarIcons: (hash: string) =>
+    fetch.url(endpoints.notFoundRelatedIcons(hash)).get().json<RelatedIconsResponse>(),
   putIconIncrement: (hash: string) => fetch.url(endpoints.icon(hash)).put(),
   postContact: (email: string, name?: string, message?: string) =>
     fetch.url(endpoints.contact()).post({ email, name, message }),

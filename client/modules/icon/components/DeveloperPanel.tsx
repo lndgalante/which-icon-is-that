@@ -21,13 +21,13 @@ import { IconMetadata } from "@modules/common/utils/types";
 // components
 import { LanguageTab } from "@modules/icon/components/LanguageTab";
 
-type DeveloperPanelProps = {
+type Props = {
   isOpen: boolean;
   onClose: () => void;
   snippets: IconMetadata["snippets"];
 };
 
-export function DeveloperPanel({ snippets, isOpen, onClose }: DeveloperPanelProps) {
+export function DeveloperPanel({ snippets, isOpen, onClose }: Props) {
   // react hooks
   const [selectedUse, setSelectedUse] = useState("optimized-svg");
   const [selectedLanguage, setSelectedLanguage] = useState("html");

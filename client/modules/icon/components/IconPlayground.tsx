@@ -5,16 +5,16 @@ import { CustomTab } from "@modules/icon/components/CustomTab";
 import { CustomTabPanel } from "@modules/icon/components/CustomTabPanel";
 
 // hooks
-import { useGenerateTabUrl } from "@modules/common/hooks/useGenerateTabUrl";
+import { useGenerateTabUrl } from "@modules/icon/hooks/useGenerateTabUrl";
 
-type IconPlaygroundProps = {
+type Props = {
   reactIcon: As;
   iconSize: string;
   iconTypes: string[];
   selectedTabIndex: number;
 };
 
-export function IconPlayground({ iconSize, iconTypes, reactIcon, selectedTabIndex }: IconPlaygroundProps) {
+export function IconPlayground({ iconSize, iconTypes, reactIcon, selectedTabIndex }: Props) {
   // custom hooks
   const { generateTabUrl } = useGenerateTabUrl();
 

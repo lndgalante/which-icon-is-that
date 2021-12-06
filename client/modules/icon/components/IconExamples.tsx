@@ -3,12 +3,12 @@ import { As, Wrap, Icon, Link, Text, Stack, Button, WrapItem, IconButton } from 
 // components
 import { InputExample } from "@modules/icon/components/InputExample";
 
-type IconExamplesProps = {
+type Props = {
   reactIcon: As;
   iconName: string;
 };
 
-export function IconExamples({ reactIcon, iconName }: IconExamplesProps) {
+export function IconExamples({ reactIcon, iconName }: Props) {
   return (
     <Stack
       as="article"

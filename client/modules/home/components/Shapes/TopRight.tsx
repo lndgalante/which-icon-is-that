@@ -1,15 +1,8 @@
-import { Icon, IconProps } from "@chakra-ui/react"
+import { Icon, IconProps } from "@chakra-ui/react";
 
 export function TopRight(props: IconProps) {
   return (
-    <Icon
-      width={73}
-      height={71}
-      viewBox="0 0 73 71"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      {...props}
-    >
+    <Icon width={73} height={71} viewBox="0 0 73 71" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
       <g
         clipPath="url(#prefix__clip0)"
         stroke="#F4D0C0"
@@ -26,5 +19,5 @@ export function TopRight(props: IconProps) {
         </clipPath>
       </defs>
     </Icon>
-  )
+  );
 }

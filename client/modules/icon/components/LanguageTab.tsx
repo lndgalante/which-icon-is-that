@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { Text, Link, Stack, Button, Select, HStack, Radio, RadioGroup, useClipboard } from "@chakra-ui/react";
 
+// highlighters
 import PrismTheme from "prism-react-renderer/themes/dracula";
 import Highlight, { defaultProps, Language } from "prism-react-renderer";
 
+// icons
 import { FiClipboard, FiExternalLink, FiCopy } from "react-icons/fi";
 
 type UsesOption = {

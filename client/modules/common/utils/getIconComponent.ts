@@ -1,13 +1,13 @@
 import { As } from "@chakra-ui/react";
 
 // icons
+import * as BoxIcons from "react-icons/bi";
 import * as Heroicons from "react-icons/hi";
+import * as FontAwesome from "react-icons/fa";
 import * as FeatherIcons from "react-icons/fi";
 import * as BootstrapIcons from "react-icons/bs";
 import * as AntdesignIcons from "react-icons/ai";
-import * as BoxIcons from "react-icons/bi";
 import * as FlatColorIcons from "react-icons/fc";
-import * as FontAwesome from "react-icons/fa";
 
 export function getIconComponent(packName: string, reactIconName: string): As {
   if (packName === "bootstrap") {

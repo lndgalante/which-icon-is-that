@@ -7,8 +7,6 @@ import { Stats as StatsType } from "@modules/common/utils/types";
 // components
 import { Serve, Libraries, Styles } from "@modules/home/components/Shapes";
 
-type StatsProps = StatsType;
-
 type StatBoxProps = {
   shape: JSX.Element;
   title: string;
@@ -42,7 +40,9 @@ function StatBox({ shape, title, subtitle }: StatBoxProps) {
   );
 }
 
-export function Stats({ totalIcons, totalLibraries, totalStyles }: StatsProps) {
+type Props = StatsType;
+
+export function Stats({ totalIcons, totalLibraries, totalStyles }: Props) {
   const prefersReducedMotion = usePrefersReducedMotion();
 
   return (
@@ -59,10 +59,15 @@ export function Stats({ totalIcons, totalLibraries, totalStyles }: StatsProps) {
       </Text>
 
       <Wrap spacing={{ base: 5, md: 10 }} justify="center" align="center" shouldWrapChildren>
-        <Fade duration={prefersReducedMotion ? 0 : 1000} bottom distance="100px" delay={prefersReducedMotion ? 0 : 200}>
+        <Fade
+          duration={prefersReducedMotion ? 0 : 1000}
+          bottom
+          distance="6.25rem"
+          delay={prefersReducedMotion ? 0 : 200}
+        >
           <StatBox
             shape={
-              <Stack height={"auto"} pt={3}>
+              <Stack height="auto" pt={3}>
                 <Serve />
               </Stack>
             }
@@ -70,10 +75,15 @@ export function Stats({ totalIcons, totalLibraries, totalStyles }: StatsProps) {
             subtitle={`+${totalIcons} icons`}
           />
         </Fade>
-        <Fade duration={prefersReducedMotion ? 0 : 1000} bottom distance="100px" delay={prefersReducedMotion ? 0 : 400}>
+        <Fade
+          duration={prefersReducedMotion ? 0 : 1000}
+          bottom
+          distance="6.25rem"
+          delay={prefersReducedMotion ? 0 : 400}
+        >
           <StatBox
             shape={
-              <Stack height={"auto"}>
+              <Stack height="auto">
                 <Libraries />
               </Stack>
             }
@@ -82,7 +92,12 @@ export function Stats({ totalIcons, totalLibraries, totalStyles }: StatsProps) {
           />
         </Fade>
 
-        <Fade duration={prefersReducedMotion ? 0 : 1000} bottom distance="100px" delay={prefersReducedMotion ? 0 : 600}>
+        <Fade
+          duration={prefersReducedMotion ? 0 : 1000}
+          bottom
+          distance="6.25rem"
+          delay={prefersReducedMotion ? 0 : 600}
+        >
           <StatBox
             shape={
               <Stack height={"auto"}>

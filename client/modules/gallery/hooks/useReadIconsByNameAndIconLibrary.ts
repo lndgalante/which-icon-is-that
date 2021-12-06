@@ -1,7 +1,9 @@
 import { useQuery } from "react-query";
 
-// common
+// utils
 import { api } from "@modules/common/utils/api";
+
+// types
 import { IconsFoundResponse } from "@modules/common/utils/types";
 
 // fetcher
@@ -12,13 +14,13 @@ const getIconsByIconNameAndIconLibrary = ({ queryKey }): Promise<IconsFoundRespo
 
 // query hook
 export function useReadIconsByNameAndIconLibrary(iconName: string, iconLibrary: string, viewAllIconLibrary: string) {
-  const isIconNameWithWhitespace =  /^\s+$/.test(iconName)
+  const isIconNameWithWhitespace = /^\s+$/.test(iconName);
 
   return useQuery<IconsFoundResponse, Error>(
     ["icons", "find", iconName, iconLibrary, viewAllIconLibrary],
     getIconsByIconNameAndIconLibrary,
     {
-      enabled: Boolean(iconName || viewAllIconLibrary) && !Boolean(isIconNameWithWhitespace && iconLibrary === 'all'),
+      enabled: Boolean(iconName || viewAllIconLibrary) && !Boolean(isIconNameWithWhitespace && iconLibrary === "all"),
     },
   );
 }
