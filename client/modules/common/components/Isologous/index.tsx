@@ -1,5 +1,6 @@
 import { FiLayers } from "react-icons/fi";
 
+// isologous
 import { Feather } from "./Feather";
 import { Heroicons } from "./Heroicons";
 import { Bootstrap } from "./Bootstrap";
@@ -7,7 +8,6 @@ import { AntDesign } from "./AntDesign";
 import { Boxicons } from "./Boxicons";
 import { FontAwesome } from "./FontAwesome";
 import { Icons8 } from "./Icons8";
-
 
 // constants
 export const ISOLOGOUS = {

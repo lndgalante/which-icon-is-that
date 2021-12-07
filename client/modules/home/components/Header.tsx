@@ -11,7 +11,7 @@ export function Header() {
   const prefersReducedMotion = usePrefersReducedMotion();
 
   return (
-    <Fade bottom distance="100px" duration={prefersReducedMotion ? 0 : 1000}>
+    <Fade bottom distance="6.25rem" duration={prefersReducedMotion ? 0 : 1000}>
       <Stack
         alignItems="center"
         as="header"

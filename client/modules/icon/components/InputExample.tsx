@@ -1,17 +1,18 @@
 import { As, InputProps, Icon, Input, InputGroup, InputLeftElement } from "@chakra-ui/react";
 
-type InputExamplesProps = {
-  reactIcon: As;
-  size: InputProps["size"];
-};
-
+// constants
 const ICON_SIZES = {
   sm: 4,
   md: 5,
   lg: 6,
 };
 
-export function InputExample({ reactIcon, size }: InputExamplesProps) {
+type Props = {
+  reactIcon: As;
+  size: InputProps["size"];
+};
+
+export function InputExample({ reactIcon, size }: Props) {
   return (
     <InputGroup size={size} className="input-example">
       <InputLeftElement pointerEvents="none">

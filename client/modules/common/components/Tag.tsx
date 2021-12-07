@@ -1,4 +1,3 @@
-import React from "react";
 import { Text, Tag as ChakraTag, TagProps } from "@chakra-ui/react";
 
 export function Tag(props: TagProps) {

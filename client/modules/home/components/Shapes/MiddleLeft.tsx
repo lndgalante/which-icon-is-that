@@ -2,14 +2,7 @@ import { Icon, IconProps } from "@chakra-ui/react";
 
 export function MiddleLeft(props: IconProps) {
   return (
-    <Icon
-      fill="none"
-      height={78}
-      viewBox="0 0 127 78"
-      width={127}
-      xmlns="http://www.w3.org/2000/svg"
-      {...props}
-    >
+    <Icon fill="none" height={78} viewBox="0 0 127 78" width={127} xmlns="http://www.w3.org/2000/svg" {...props}>
       <path
         d="M26.898 64.755l80.862-25.222c6.363-1.985 9.668-9.235 7.358-16.142l-.178-.531c-2.212-6.938-9.382-10.92-15.745-8.936L18.334 39.146l8.564 25.61z"
         fill="#F4D0C0"

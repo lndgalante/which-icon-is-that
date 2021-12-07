@@ -1,13 +1,24 @@
 import NextLink from "next/link";
 import { Tab, TabProps } from "@chakra-ui/react";
 
-type CustomTabProps = {
-  href: any;
+type Query = {
+  packName: string;
+  iconType: string;
+  iconName: string;
+};
+
+type Href = {
+  pathname: string;
+  query: Query;
+};
+
+type Props = {
+  href: Href;
   otherProps?: TabProps;
   children: React.ReactNode;
 };
 
-export function CustomTab({ children, href, ...otherProps }: CustomTabProps) {
+export function CustomTab({ children, href, ...otherProps }: Props) {
   return (
     <NextLink passHref href={href} scroll={false}>
       <Tab

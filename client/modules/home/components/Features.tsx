@@ -1,6 +1,6 @@
 import Fade from "react-reveal/Fade";
-import { Stack, Text, Image, usePrefersReducedMotion } from "@chakra-ui/react";
 import { useTransform, useViewportScroll } from "framer-motion";
+import { Stack, Text, Image, usePrefersReducedMotion } from "@chakra-ui/react";
 
 // components
 import * as Shapes from "@modules/home/components/Shapes";
@@ -10,9 +10,8 @@ export function Features() {
   // chakra hooks
   const prefersReducedMotion = usePrefersReducedMotion();
 
-  // framer motion hooks
+  // motion hooks
   const { scrollYProgress } = useViewportScroll();
-
   const yShapes = useTransform(scrollYProgress, [0, 1], [-250, 250]);
   const yImages = useTransform(scrollYProgress, [0, 1], [150, -150]);
   const xImages = useTransform(scrollYProgress, [0, 1], [-300, 0]);
@@ -71,7 +70,7 @@ export function Features() {
                 duration={prefersReducedMotion ? 0 : 1000}
                 fraction={prefersReducedMotion ? 0 : 0.2}
                 right
-                distance="100px"
+                distance="6.25rem"
               >
                 <Image
                   alt="Easy to find"
@@ -103,7 +102,7 @@ export function Features() {
               duration={prefersReducedMotion ? 0 : 1000}
               bottom
               delay={prefersReducedMotion ? 0 : 500}
-              distance="10px"
+              distance="0.625rem"
             >
               <Text maxWidth={452} fontSize={{ base: 14, md: 18 }}>
                 Just{" "}
@@ -133,7 +132,7 @@ export function Features() {
               duration={prefersReducedMotion ? 0 : 1000}
               bottom
               delay={prefersReducedMotion ? 0 : 500}
-              distance="10px"
+              distance="0.625rem"
             >
               <Text maxWidth={452} textAlign={{ base: "left", md: "center" }} fontSize={{ base: 14, md: 18 }}>
                 All you need to know about your icon: Size, Weight,{" "}
@@ -188,7 +187,7 @@ export function Features() {
                   duration={prefersReducedMotion ? 0 : 1000}
                   fraction={prefersReducedMotion ? 0 : 0.2}
                   bottom
-                  distance="100px"
+                  distance="6.25rem"
                 >
                   <Image
                     alt="Rich Icon data"
@@ -222,7 +221,7 @@ export function Features() {
               duration={prefersReducedMotion ? 0 : 1000}
               bottom
               delay={prefersReducedMotion ? 0 : 500}
-              distance="10px"
+              distance="0.625rem"
             >
               <Text maxWidth={452} fontSize={{ base: 14, md: 18 }}>
                 Find out how to{" "}

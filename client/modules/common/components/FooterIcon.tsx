@@ -1,6 +1,6 @@
 import { LinkBox, LinkOverlay, Icon, As } from "@chakra-ui/react";
 
-type FooterIconProps = {
+type Props = {
   icon: As;
   href: string;
   label: string;
@@ -8,7 +8,7 @@ type FooterIconProps = {
   onClick?: () => void;
 };
 
-export function FooterIcon({ icon, href, label, isEmail, onClick }: FooterIconProps) {
+export function FooterIcon({ icon, href, label, isEmail, onClick }: Props) {
   if (isEmail) {
     return (
       <Icon

@@ -2,6 +2,8 @@ import { useQuery } from "react-query";
 
 // utils
 import { api } from "@modules/common/utils/api";
+
+// types
 import { RelatedIconsResponse } from "@modules/common/utils/types";
 
 // fetcher

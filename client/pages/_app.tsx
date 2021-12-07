@@ -19,6 +19,7 @@ import { theme } from "@modules/common/theme";
 const queryClient = new QueryClient();
 
 export default function MyApp({ Component, pageProps, router }: AppProps) {
+  // custom hooks
   useHotjar();
 
   return (

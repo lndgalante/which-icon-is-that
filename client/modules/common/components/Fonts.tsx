@@ -1,4 +1,4 @@
-import { Global } from "@emotion/react"
+import { Global } from "@emotion/react";
 
 export function Fonts() {
   return (
@@ -34,5 +34,5 @@ export function Fonts() {
         }
       `}
     />
-  )
+  );
 }

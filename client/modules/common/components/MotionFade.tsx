@@ -3,14 +3,14 @@ import { StackProps, As } from "@chakra-ui/react";
 // components
 import { MotionStack } from "@modules/common/components/MotionStack";
 
-type MotionFadeProps = {
+type Props = {
   as?: As;
   withPadding?: boolean;
   stackProps?: StackProps;
   children: React.ReactNode;
 };
 
-export function MotionFade({ children, as, withPadding, ...stackProps }: MotionFadeProps) {
+export function MotionFade({ children, as, withPadding, ...stackProps }: Props) {
   return (
     <MotionStack
       as={as}

@@ -1,11 +1,11 @@
 import { Stack, Text, Icon } from "@chakra-ui/react";
 import { HiOutlineInformationCircle } from "react-icons/hi";
 
-type CustomToastProps = {
+type Props = {
   message: string;
 };
 
-export function CustomToast({ message }: CustomToastProps) {
+export function CustomToast({ message }: Props) {
   return (
     <Stack
       padding={4}

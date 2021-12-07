@@ -8,7 +8,7 @@ export function useGenerateTabUrl() {
 
     return {
       pathname: "/[packName]/[iconType]/[iconName]",
-      query: { packName, iconType, iconName },
+      query: { iconType, packName: packName as string, iconName: iconName as string },
     };
   }
 

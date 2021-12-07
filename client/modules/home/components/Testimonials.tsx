@@ -1,13 +1,13 @@
 import { Stack, Text, HStack, Avatar } from "@chakra-ui/react";
 
-type TestimonialCardProps = {
+type Props = {
+  job: string;
   name: string;
   imageUrl: string;
   testimony: string;
-  job: string;
 };
 
-function TestimonialCard({ name, imageUrl, testimony, job }: TestimonialCardProps) {
+function TestimonialCard({ name, imageUrl, testimony, job }: Props) {
   return (
     <HStack
       flex={{ base: "0 0 323px", md: "0 0 630px" }}

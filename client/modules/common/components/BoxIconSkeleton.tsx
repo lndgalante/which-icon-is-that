@@ -1,12 +1,12 @@
 import { Skeleton } from "@chakra-ui/react";
 
-type BoxIconSkeletonProps = {
+type Props = {
   primary?: boolean;
   withShadow?: boolean;
   displayLabel?: boolean;
 };
 
-export function BoxIconSkeleton({ primary, displayLabel, withShadow }: BoxIconSkeletonProps) {
+export function BoxIconSkeleton({ primary, displayLabel, withShadow }: Props) {
   return (
     <Skeleton
       minWidth={{ base: displayLabel ? "4.38rem" : "auto", md: displayLabel ? 20 : "auto" }}

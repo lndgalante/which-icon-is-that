@@ -1,4 +1,5 @@
 import { Icon, IconProps } from "@chakra-ui/react";
+
 export function MiddleLeft(props: IconProps) {
   return (
     <Icon width={155} height={14} viewBox="0 0 155 14" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>

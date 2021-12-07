@@ -17,7 +17,6 @@ export const LOGOS = {
   flatcoloricons: Icons8,
 };
 
-// constants
 export const LOGOS_SIZES_GALLERY_PAGE = {
   feather: { width: 132, height: 12 },
   heroicons: { width: 132, height: 14 },
