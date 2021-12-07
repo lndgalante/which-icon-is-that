@@ -31,6 +31,8 @@ import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FiMenu, FiMail, FiX, FiTwitter } from "react-icons/fi";
+import { useState } from "react";
+import { AnimateSharedLayout, AnimatePresence } from "framer-motion";
 
 // utils
 import { api } from "@modules/common/utils/api";
@@ -43,8 +45,7 @@ import { useCopyEmail } from "@modules/common/hooks/useCopyEmail";
 import { Discord } from "@modules/common/components/Discord";
 import { FooterIcon } from "@modules/common/components/FooterIcon";
 import { HorizontalLogo } from "@modules/common/components/HorizontalLogo";
-import { useState } from "react";
-import { motion, AnimateSharedLayout, AnimatePresence } from "framer-motion";
+import { MotionBox } from "./MotionBox";
 
 const NAVBAR_LINKS = [
   { route: "/gallery", label: "Icon Gallery" },
@@ -152,21 +153,19 @@ export function Navbar() {
                 >
                   <AnimatePresence>
                     {isHovered && (
-                      <motion.span
-                        style={{
-                          position: "absolute",
-                          top: 0,
-                          left: 0,
-                          width: "100%",
-                          height: "100%",
-                          backgroundColor: "var(--chakra-colors-brand-lightOrange)",
-                          zIndex: 1,
-                          borderRadius: "5px",
-                        }}
+                      <MotionBox
+                        pos="absolute"
+                        top="0"
+                        left="0"
+                        width="100%"
+                        height="100%"
+                        bgColor="brand.lightOrange"
+                        zIndex="0"
+                        borderRadius={8}
                         layoutId="nav"
-                        initial={{ opacity: 1 }}
+                        initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
-                        exit={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
                       />
                     )}
                   </AnimatePresence>
@@ -192,17 +191,15 @@ export function Navbar() {
                 >
                   <AnimatePresence>
                     {isHovered && (
-                      <motion.span
-                        style={{
-                          position: "absolute",
-                          top: 0,
-                          left: 0,
-                          width: "100%",
-                          height: "100%",
-                          backgroundColor: "var(--chakra-colors-brand-lightOrange)",
-                          zIndex: 1,
-                          borderRadius: "5px",
-                        }}
+                      <MotionBox
+                        pos="absolute"
+                        top="0"
+                        left="0"
+                        width="100%"
+                        height="100%"
+                        bgColor="brand.lightOrange"
+                        zIndex="0"
+                        borderRadius={8}
                         layoutId="nav"
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
