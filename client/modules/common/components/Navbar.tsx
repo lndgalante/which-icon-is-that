@@ -43,6 +43,8 @@ import { useCopyEmail } from "@modules/common/hooks/useCopyEmail";
 import { Discord } from "@modules/common/components/Discord";
 import { FooterIcon } from "@modules/common/components/FooterIcon";
 import { HorizontalLogo } from "@modules/common/components/HorizontalLogo";
+import { useState } from "react";
+import { motion, AnimateSharedLayout, AnimatePresence } from "framer-motion";
 
 const NAVBAR_LINKS = [
   { route: "/gallery", label: "Icon Gallery" },
@@ -103,184 +105,239 @@ export function Navbar() {
     }
   }
 
+  // nav hover effect
+  const [hovered, setHovered] = useState(pathname);
+
   return (
-    <Stack
-      alignItems="center"
-      as="nav"
-      flexDirection="row"
-      justifyContent="space-between"
-      paddingX={{ base: 4, md: 12 }}
-      paddingY={{ base: 6, md: 4 }}
-      paddingBottom={{ base: basePadding, md: mdPadding }}
-      spacing={0}
-    >
-      <NextLink passHref href="/">
-        <Link>
-          <HorizontalLogo
-            _hover={{ backgroundColor: "brand.lightOrange" }}
-            transition="all 200ms ease-in-out"
-            cursor="pointer"
-            padding={1}
-            borderRadius={4}
-          />
-        </Link>
-      </NextLink>
-
-      <HStack alignItems="center" display={{ base: "none", md: "flex" }} fontSize="sm" fontWeight={500} spacing={4}>
-        {NAVBAR_LINKS.map(({ route, label }) => {
-          if (route === "/pricing") {
-            return (
-              <Link
-                color={isModalOpen ? "brand.darkRed" : "brand.warmBlack"}
-                _hover={{ color: "brand.darkRed", backgroundColor: "brand.lightOrange" }}
-                transition="all 200ms ease-in-out"
-                onClick={onModalOpen}
-                key={route}
-                backgroundColor={route === pathname ? "brand.lightOrange" : "transparent"}
-                paddingX={5}
-                paddingY={2}
-                borderRadius={8}
-              >
-                {label}
-              </Link>
-            );
-          }
-
-          return (
-            <NextLink passHref href={route} key={route}>
-              <Link
-                color={route === pathname ? "brand.darkRed" : "brand.warmBlack"}
-                _hover={{ color: "brand.darkRed", backgroundColor: "brand.lightOrange" }}
-                transition="all 200ms ease-in-out"
-                backgroundColor={route === pathname ? "brand.lightOrange" : "transparent"}
-                paddingX={5}
-                paddingY={2}
-                borderRadius={8}
-              >
-                {label}
-              </Link>
-            </NextLink>
-          );
-        })}
-      </HStack>
-
-      <Icon as={FiMenu} cursor="pointer" display={{ base: "block", md: "none" }} h={6} w={6} onClick={onDrawerOpen} />
-
-      <Drawer isOpen={isDrawerOpen} size="full" onClose={onDrawerClose} autoFocus={false}>
-        <DrawerContent backgroundColor="brand.lightRed" paddingY={12}>
-          <DrawerHeader>
-            <Stack alignItems="flex-end">
-              <Icon as={FiX} color="brand.white" cursor="pointer" h={6} w={6} onClick={onDrawerClose} />
-            </Stack>
-          </DrawerHeader>
-
-          <DrawerBody>
-            <Stack alignItems="center" fontSize="xl" fontWeight={600} paddingY={16} spacing={10}>
-              {NAVBAR_LINKS.map(({ route, label }) => {
-                if (route === "/pricing") {
-                  return (
-                    <Link color={isModalOpen ? "brand.softOrange" : "brand.white"} onClick={onModalOpen} key={route}>
-                      {label}
-                    </Link>
-                  );
-                }
-
-                return (
-                  <NextLink passHref href={route} key={route}>
-                    <Link color={route === pathname ? "brand.softOrange" : "brand.white"} onClick={onDrawerClose}>
-                      {label}
-                    </Link>
-                  </NextLink>
-                );
-              })}
-            </Stack>
-          </DrawerBody>
-
-          <DrawerFooter alignItems="center" justifyContent="center">
-            <HStack spacing={4}>
-              <FooterIcon href="whichiconisthat@gmail.com" label="Email" icon={FiMail} onClick={onCopy} isEmail />
-              <FooterIcon href="https://twitter.com/whichiconisthat" label="Twitter" icon={FiTwitter} />
-              <FooterIcon href="https://discord.gg/xTpegNF9bj" label="Discord" icon={Discord} />
-            </HStack>
-          </DrawerFooter>
-        </DrawerContent>
-      </Drawer>
-
-      <Modal
-        isOpen={isModalOpen}
-        // isCentered={!isSmallerThan768}
-        onClose={onModalClose}
+    <AnimateSharedLayout>
+      <Stack
+        alignItems="center"
+        as="nav"
+        flexDirection="row"
+        justifyContent="space-between"
+        paddingX={{ base: 4, md: 12 }}
+        paddingY={{ base: 6, md: 4 }}
+        paddingBottom={{ base: basePadding, md: mdPadding }}
+        spacing={0}
       >
-        <ModalOverlay />
-        <ModalContent maxWidth={{ base: 480, md: 700 }} paddingTop={2} margin="auto">
-          <ModalCloseButton />
-          <ModalHeader color="brand.lightRed" fontWeight={800}>
-            Pricing
-          </ModalHeader>
-          <ModalBody flexDirection={{ base: "column", md: "row" }}>
-            <HStack spacing={{ base: 0, md: 4 }} mb={6} flexDirection={{ base: "column", md: "row" }}>
-              <Stack width={{ base: "100%" }} flex={1} mb={{ base: 4, md: 0 }}>
-                <Text fontWeight={700} fontSize={18} color="brand.darkRed">
-                  Incoming new features for the free version!
-                </Text>
-                <UnorderedList stylePosition="inside" spacing={1}>
-                  <ListItem>New supported icon libraries</ListItem>
-                  <ListItem>Sliders to modify SVG stroke width</ListItem>
-                  <ListItem>Picker to modify SVG colors</ListItem>
-                  <ListItem>Tags to search groups of icons</ListItem>
-                  <ListItem>Advanced filters in gallery page</ListItem>
-                  <ListItem>Sponsoring popular icon libraries</ListItem>
-                  <ListItem>Support for new frameworks</ListItem>
-                  <ListItem>Sandbox examples for each library</ListItem>
-                  {/*
+        <NextLink passHref href="/">
+          <Link>
+            <HorizontalLogo
+              _hover={{ backgroundColor: "brand.lightOrange" }}
+              transition="all 200ms ease-in-out"
+              cursor="pointer"
+              padding={1}
+              borderRadius={4}
+            />
+          </Link>
+        </NextLink>
+
+        <HStack alignItems="center" display={{ base: "none", md: "flex" }} fontSize="sm" fontWeight={500} spacing={0}>
+          {NAVBAR_LINKS.map(({ route, label }) => {
+            const isHovered = hovered === route;
+            console.log(`isHovered ${route}: ${isHovered}`);
+
+            if (route === "/pricing") {
+              return (
+                <Link
+                  color={isModalOpen ? "brand.darkRed" : "brand.warmBlack"}
+                  transition="all 200ms ease-in-out"
+                  onClick={onModalOpen}
+                  key={route}
+                  paddingX={6}
+                  paddingY={2}
+                  borderRadius={8}
+                  position="relative"
+                  onMouseEnter={() => setHovered(route)}
+                  onMouseLeave={() => setHovered(pathname)}
+                >
+                  <AnimatePresence>
+                    {isHovered && (
+                      <motion.span
+                        style={{
+                          position: "absolute",
+                          top: 0,
+                          left: 0,
+                          width: "100%",
+                          height: "100%",
+                          backgroundColor: "var(--chakra-colors-brand-lightOrange)",
+                          zIndex: 1,
+                          borderRadius: "5px",
+                        }}
+                        layoutId="nav"
+                        initial={{ opacity: 1 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 1 }}
+                      />
+                    )}
+                  </AnimatePresence>
+                  <Text pos="relative" zIndex={5}>
+                    {label}
+                  </Text>
+                </Link>
+              );
+            }
+
+            return (
+              <NextLink passHref href={route} key={route}>
+                <Link
+                  color={route === pathname ? "brand.darkRed" : "brand.warmBlack"}
+                  transition="all 200ms ease-in-out"
+                  // backgroundColor={route === pathname ? "brand.lightOrange" : "transparent"}
+                  paddingX={6}
+                  paddingY={2}
+                  borderRadius={8}
+                  position="relative"
+                  onMouseEnter={() => setHovered(route)}
+                  onMouseLeave={() => setHovered(pathname)}
+                >
+                  <AnimatePresence>
+                    {isHovered && (
+                      <motion.span
+                        style={{
+                          position: "absolute",
+                          top: 0,
+                          left: 0,
+                          width: "100%",
+                          height: "100%",
+                          backgroundColor: "var(--chakra-colors-brand-lightOrange)",
+                          zIndex: 1,
+                          borderRadius: "5px",
+                        }}
+                        layoutId="nav"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                      />
+                    )}
+                  </AnimatePresence>
+                  <Text pos="relative" zIndex={5}>
+                    {label}
+                  </Text>
+                </Link>
+              </NextLink>
+            );
+          })}
+        </HStack>
+
+        <Icon as={FiMenu} cursor="pointer" display={{ base: "block", md: "none" }} h={6} w={6} onClick={onDrawerOpen} />
+
+        <Drawer isOpen={isDrawerOpen} size="full" onClose={onDrawerClose} autoFocus={false}>
+          <DrawerContent backgroundColor="brand.lightRed" paddingY={12}>
+            <DrawerHeader>
+              <Stack alignItems="flex-end">
+                <Icon as={FiX} color="brand.white" cursor="pointer" h={6} w={6} onClick={onDrawerClose} />
+              </Stack>
+            </DrawerHeader>
+
+            <DrawerBody>
+              <Stack alignItems="center" fontSize="xl" fontWeight={600} paddingY={16} spacing={10}>
+                {NAVBAR_LINKS.map(({ route, label }) => {
+                  if (route === "/pricing") {
+                    return (
+                      <Link color={isModalOpen ? "brand.softOrange" : "brand.white"} onClick={onModalOpen} key={route}>
+                        {label}
+                      </Link>
+                    );
+                  }
+
+                  return (
+                    <NextLink passHref href={route} key={route}>
+                      <Link color={route === pathname ? "brand.softOrange" : "brand.white"} onClick={onDrawerClose}>
+                        {label}
+                      </Link>
+                    </NextLink>
+                  );
+                })}
+              </Stack>
+            </DrawerBody>
+
+            <DrawerFooter alignItems="center" justifyContent="center">
+              <HStack spacing={4}>
+                <FooterIcon href="whichiconisthat@gmail.com" label="Email" icon={FiMail} onClick={onCopy} isEmail />
+                <FooterIcon href="https://twitter.com/whichiconisthat" label="Twitter" icon={FiTwitter} />
+                <FooterIcon href="https://discord.gg/xTpegNF9bj" label="Discord" icon={Discord} />
+              </HStack>
+            </DrawerFooter>
+          </DrawerContent>
+        </Drawer>
+
+        <Modal
+          isOpen={isModalOpen}
+          // isCentered={!isSmallerThan768}
+          onClose={onModalClose}
+        >
+          <ModalOverlay />
+          <ModalContent maxWidth={{ base: 480, md: 700 }} paddingTop={2} margin="auto">
+            <ModalCloseButton />
+            <ModalHeader color="brand.lightRed" fontWeight={800}>
+              Pricing
+            </ModalHeader>
+            <ModalBody flexDirection={{ base: "column", md: "row" }}>
+              <HStack spacing={{ base: 0, md: 4 }} mb={6} flexDirection={{ base: "column", md: "row" }}>
+                <Stack width={{ base: "100%" }} flex={1} mb={{ base: 4, md: 0 }}>
+                  <Text fontWeight={700} fontSize={18} color="brand.darkRed">
+                    Incoming new features for the free version!
+                  </Text>
+                  <UnorderedList stylePosition="inside" spacing={1}>
+                    <ListItem>New supported icon libraries</ListItem>
+                    <ListItem>Sliders to modify SVG stroke width</ListItem>
+                    <ListItem>Picker to modify SVG colors</ListItem>
+                    <ListItem>Tags to search groups of icons</ListItem>
+                    <ListItem>Advanced filters in gallery page</ListItem>
+                    <ListItem>Sponsoring popular icon libraries</ListItem>
+                    <ListItem>Support for new frameworks</ListItem>
+                    <ListItem>Sandbox examples for each library</ListItem>
+                    {/*
                   <ListItem>Google Chrome Extension</ListItem>
                   <ListItem>Tons of feedback, speed and usability improvements!</ListItem>
                   <ListItem>Bitmap support for drag and drop</ListItem>
                   */}
-                </UnorderedList>
-              </Stack>
+                  </UnorderedList>
+                </Stack>
 
-              <Stack width={{ base: "100%" }} flex={1}>
-                <Text fontWeight={700} fontSize={18} color="brand.darkRed">
-                  We&apos;re also developing some great PRO ones
-                </Text>
-                <UnorderedList stylePosition="inside" spacing={1}>
-                  <ListItem>Support for paid libraries</ListItem>
-                  <ListItem>Project folders for teams</ListItem>
-                  <ListItem>Icon comparison tool</ListItem>
-                  <ListItem>Comment, rate and favorite icons</ListItem>
-                  <ListItem>Drag and Drop icon playground</ListItem>
-                  <ListItem>Custom WIIT icon library</ListItem>
-                  <ListItem>Instant library updates</ListItem>
-                  <ListItem>Enhanced support</ListItem>
-                </UnorderedList>
-              </Stack>
-            </HStack>
-            <Stack>
-              <Text fontWeight={600} fontSize={18} color="brand.text">
-                Get notified
-              </Text>
-              <HStack as="form" alignItems="flex-start" height={70} spacing={4} onSubmit={handleSubmit(onSubmit)}>
-                <FormControl isInvalid={Boolean(errors.email)}>
-                  <VisuallyHidden>
-                    <FormLabel htmlFor="email">Email</FormLabel>
-                  </VisuallyHidden>
-                  <Input
-                    focusBorderColor="brand.softOrange"
-                    id="email"
-                    placeholder="yourmail@here.com"
-                    {...register("email")}
-                  />
-                  <FormErrorMessage color="brand.lightRed">{errors.email && errors.email.message}</FormErrorMessage>
-                </FormControl>
-                <Button variant="brand.solid" fontSize={14} fontWeight={500} isLoading={isSubmitting} type="submit">
-                  Send
-                </Button>
+                <Stack width={{ base: "100%" }} flex={1}>
+                  <Text fontWeight={700} fontSize={18} color="brand.darkRed">
+                    We&apos;re also developing some great PRO ones
+                  </Text>
+                  <UnorderedList stylePosition="inside" spacing={1}>
+                    <ListItem>Support for paid libraries</ListItem>
+                    <ListItem>Project folders for teams</ListItem>
+                    <ListItem>Icon comparison tool</ListItem>
+                    <ListItem>Comment, rate and favorite icons</ListItem>
+                    <ListItem>Drag and Drop icon playground</ListItem>
+                    <ListItem>Custom WIIT icon library</ListItem>
+                    <ListItem>Instant library updates</ListItem>
+                    <ListItem>Enhanced support</ListItem>
+                  </UnorderedList>
+                </Stack>
               </HStack>
-            </Stack>
-          </ModalBody>
-        </ModalContent>
-      </Modal>
-    </Stack>
+              <Stack>
+                <Text fontWeight={600} fontSize={18} color="brand.text">
+                  Get notified
+                </Text>
+                <HStack as="form" alignItems="flex-start" height={70} spacing={4} onSubmit={handleSubmit(onSubmit)}>
+                  <FormControl isInvalid={Boolean(errors.email)}>
+                    <VisuallyHidden>
+                      <FormLabel htmlFor="email">Email</FormLabel>
+                    </VisuallyHidden>
+                    <Input
+                      focusBorderColor="brand.softOrange"
+                      id="email"
+                      placeholder="yourmail@here.com"
+                      {...register("email")}
+                    />
+                    <FormErrorMessage color="brand.lightRed">{errors.email && errors.email.message}</FormErrorMessage>
+                  </FormControl>
+                  <Button variant="brand.solid" fontSize={14} fontWeight={500} isLoading={isSubmitting} type="submit">
+                    Send
+                  </Button>
+                </HStack>
+              </Stack>
+            </ModalBody>
+          </ModalContent>
+        </Modal>
+      </Stack>
+    </AnimateSharedLayout>
   );
 }
