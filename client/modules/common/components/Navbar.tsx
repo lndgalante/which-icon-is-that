@@ -135,7 +135,6 @@ export function Navbar() {
         <HStack alignItems="center" display={{ base: "none", md: "flex" }} fontSize="sm" fontWeight={500} spacing={0}>
           {NAVBAR_LINKS.map(({ route, label }) => {
             const isHovered = hovered === route;
-            console.log(`isHovered ${route}: ${isHovered}`);
 
             if (route === "/pricing") {
               return (
