@@ -1,6 +1,7 @@
+import { useRef } from "react";
 import NextLink from "next/link";
-import { nanoid } from "nanoid";
 import { useRouter } from "next/router";
+import { useSpring, useTransform } from "framer-motion";
 import { Stack, Text, HStack, Button, usePrefersReducedMotion } from "@chakra-ui/react";
 
 // components
@@ -8,17 +9,18 @@ import { BoxIcon } from "@modules/common/components/BoxIcon";
 import * as Shapes from "@modules/not-found/components/Shapes";
 import { BoxIconSkeleton } from "@modules/common/components/BoxIconSkeleton";
 
+// array
+import { getArray } from "@modules/common/utils/array";
+
 // hooks
 import { useReadRelatedIcons } from "@modules/not-found/hooks/useReadRelatedIcons";
 
 // utils
-import { getIconComponent } from "@modules/common/utils/getIconComponent";
 import { MotionBox } from "@modules/common/components/MotionBox";
-import { useRef } from "react";
-import { useSpring, useTransform } from "framer-motion";
+import { getIconComponent } from "@modules/common/utils/getIconComponent";
 
 // constants
-const LOADING_ARRAY = Array.from({ length: 4 }, () => nanoid());
+const LOADING_ARRAY = getArray(4);
 
 function NotFound() {
   // next hooks
