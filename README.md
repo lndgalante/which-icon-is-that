@@ -45,7 +45,7 @@ cd server/ && denon run --unstable --allow-run --allow-env --allow-read --allow-
 
 - Important for Vercel Build
 
-We need to scale WIIT web Dyno to 10 dynos in order to execute a build, since we've more that 5000+ requests to the API that end ups breaking it
+We need to scale WIIT web Dyno to 20 dynos in order to execute a build, since we've more that 5000+ requests to the API that end ups breaking it
 
 - Buildpacks
 
