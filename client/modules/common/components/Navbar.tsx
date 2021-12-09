@@ -1,4 +1,3 @@
-import NextLink from "next/link";
 import {
   Icon,
   Stack,
@@ -27,11 +26,12 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import { z } from "zod";
+import { useState } from "react";
+import NextLink from "next/link";
 import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FiMenu, FiMail, FiX, FiTwitter } from "react-icons/fi";
-import { useState } from "react";
 import { AnimateSharedLayout, AnimatePresence } from "framer-motion";
 
 // utils
@@ -43,9 +43,9 @@ import { useCopyEmail } from "@modules/common/hooks/useCopyEmail";
 
 // components
 import { Discord } from "@modules/common/components/Discord";
+import { MotionBox } from "@modules/common/components/MotionBox";
 import { FooterIcon } from "@modules/common/components/FooterIcon";
 import { HorizontalLogo } from "@modules/common/components/HorizontalLogo";
-import { MotionBox } from "./MotionBox";
 
 const NAVBAR_LINKS = [
   { route: "/gallery", label: "Icon Gallery" },
@@ -74,6 +74,9 @@ const VALIDATION_SCHEMA = z.object({ email: z.string().email() });
 export function Navbar() {
   // next hooks
   const { pathname } = useRouter();
+
+  // react hooks
+  const [hovered, setHovered] = useState(pathname);
 
   // chakra hooks
   const { isOpen: isModalOpen, onOpen: onModalOpen, onClose: onModalClose } = useDisclosure();
@@ -105,9 +108,6 @@ export function Navbar() {
       onModalClose();
     }
   }
-
-  // nav hover effect
-  const [hovered, setHovered] = useState(pathname);
 
   return (
     <AnimateSharedLayout>
@@ -181,7 +181,6 @@ export function Navbar() {
                 <Link
                   color={route === pathname ? "brand.darkRed" : "brand.warmBlack"}
                   transition="all 200ms ease-in-out"
-                  // backgroundColor={route === pathname ? "brand.lightOrange" : "transparent"}
                   paddingX={6}
                   paddingY={2}
                   borderRadius={8}

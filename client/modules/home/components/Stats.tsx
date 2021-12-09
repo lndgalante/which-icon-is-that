@@ -100,7 +100,7 @@ export function Stats({ totalIcons, totalLibraries, totalStyles }: Props) {
         >
           <StatBox
             shape={
-              <Stack height={"auto"}>
+              <Stack height="auto">
                 <Styles />
               </Stack>
             }

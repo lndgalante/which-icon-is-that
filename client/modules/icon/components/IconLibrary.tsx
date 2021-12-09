@@ -42,7 +42,7 @@ export function IconLibrary({ website, version, license, packName, packParsedNam
       <Icon
         width={LOGOS_SIZES_HOME_PAGE[packName].width}
         height={LOGOS_SIZES_HOME_PAGE[packName].height}
-        filter={"grayscale(0) contrast(1)"}
+        filter="grayscale(0) contrast(1)"
         as={LOGOS[packName]}
       />
 

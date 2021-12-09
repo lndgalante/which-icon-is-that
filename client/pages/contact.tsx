@@ -124,7 +124,12 @@ function Contact() {
           </HStack>
 
           <LinkBox cursor="pointer">
-            <LinkOverlay isExternal aria-label={"label"} className="footer-link" href="https://discord.gg/xTpegNF9bj">
+            <LinkOverlay
+              isExternal
+              className="footer-link"
+              aria-label="Discord channel"
+              href="https://discord.gg/xTpegNF9bj"
+            >
               <HStack
                 borderRadius={{ base: 8, md: 16 }}
                 paddingX={{ base: 2, md: 6 }}

@@ -178,7 +178,7 @@ export function Features() {
               <MotionBox
                 style={{ y: prefersReducedMotion ? 0 : yImages }}
                 width={{ base: "100%", md: "80%" }}
-                height={"auto"}
+                height="auto"
                 marginTop={{ base: "0 !important", md: "10% !important" }}
                 marginBottom={{ md: "-5% !important" }}
                 zIndex={1}
