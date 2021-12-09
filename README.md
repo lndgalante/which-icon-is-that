@@ -98,13 +98,13 @@ We need to scale WIIT web Dyno to 10 dynos in order to execute a build, since we
 - [Heroku](https://www.heroku.com) for server deployment
 - [Plausible](https://plausible.io) for analytics
 
-## Bills
+## Invest
 
-We're currently having a total investment of ~80usd/month for backend/frontend deploy services.
+We're currently having a total investment of ~130usd/month for backend/frontend deploy services.
 
 - [Vercel - PRO](https://www.heroku.com/pricing#containers) - 20usd/month
 - [Heroku Dyno - Hobby](https://www.heroku.com/pricing#containers) - 7usd/month
-- [Heroku Postgres - Standard 0](https://elements.heroku.com/addons/heroku-postgresql) - 50usd/month
+- [Heroku Postgres - Standard 2X - 2 Dynos](https://elements.heroku.com/addons/heroku-postgresql) - 100usd/month
 
 ## Links
 
