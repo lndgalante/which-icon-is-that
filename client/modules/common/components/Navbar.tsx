@@ -148,6 +148,7 @@ export function Navbar() {
                   paddingY={2}
                   borderRadius={8}
                   position="relative"
+                  _hover={{ textDecoration: "none" }}
                   onMouseEnter={() => setHovered(route)}
                   onMouseLeave={() => setHovered(pathname)}
                 >
@@ -185,6 +186,7 @@ export function Navbar() {
                   paddingY={2}
                   borderRadius={8}
                   position="relative"
+                  _hover={{ textDecoration: "none" }}
                   onMouseEnter={() => setHovered(route)}
                   onMouseLeave={() => setHovered(pathname)}
                 >
